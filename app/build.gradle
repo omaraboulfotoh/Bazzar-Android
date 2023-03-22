@@ -1,0 +1,180 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.devtools.ksp' version '1.7.10-1.0.6'
+}
+
+android {
+
+    compileSdk 33
+    buildToolsVersion '33.0.0'
+    defaultConfig {
+        applicationId Configs.applicationId
+        minSdk Configs.minSdkVersion
+        targetSdk Configs.targetSdkVersion
+        versionCode Configs.versionCode
+        versionName Configs.versionName
+        flavorDimensions "default"
+        testInstrumentationRunner Configs.testInstrumentationRunner
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled true
+            shrinkResources false
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        dev {
+            dimension 'default'
+            buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
+            buildConfigField "String", "IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/original\""
+            buildConfigField "String", "MDB_ID", "\"c9856d0cb57c3f14bf75bdc6c063b8f3\""
+            versionNameSuffix "-dev"
+        }
+        prod {
+            dimension 'default'
+            buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
+            buildConfigField "String", "IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/original\""
+            buildConfigField "String", "MDB_ID", "\"c9856d0cb57c3f14bf75bdc6c063b8f3\""
+            versionNameSuffix "-prod"
+        }
+    }
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.3.1"
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    applicationVariants.all {
+        kotlin.sourceSets {
+            getByName(name) {
+                kotlin.srcDir("build/generated/ksp/$name/kotlin")
+            }
+        }
+    }
+}
+
+dependencies {
+
+    //Imported Modules
+    implementation project(path: ':remote')
+    implementation project(path: ':model')
+    implementation project(path: ':local')
+
+    //Support
+    implementation(Dependencies.kotlin)
+    implementation(Dependencies.coreKtx)
+    implementation(Dependencies.appCompat)
+
+    //UI
+    implementation(Dependencies.material)
+    implementation(Dependencies.constraintLayout)
+    implementation(Dependencies.swipeRefreshLayout)
+
+    //DI-Hilt
+    implementation(Dependencies.daggerHilt)
+    implementation(Dependencies.hiltNavigationCompose)
+    kapt(Dependencies.daggerHiltCompiler)
+
+    //Lifecycle
+    implementation(Dependencies.lifecycle_viewmodel)
+    implementation(Dependencies.lifecycle_liveData)
+    implementation(Dependencies.lifecycle_runtime)
+
+    //Json
+    implementation(Dependencies.moshi)
+    implementation(Dependencies.gson)
+    kapt(Dependencies.moshiCodegen)
+
+    //Threading-Coroutines
+    implementation(Dependencies.coroutinesCore)
+    implementation(Dependencies.coroutinesCoreAndroid)
+
+    //Navigation Component
+    implementation Dependencies.navigationComponent
+    implementation Dependencies.navigationComponentFrag
+
+    // network
+    implementation(Dependencies.retrofit)
+    implementation(Dependencies.okHttp)
+
+    // image loader
+    implementation Dependencies.picasso
+
+    //Utils
+    implementation(Dependencies.accompanistSwipeRefresh)
+    implementation Dependencies.animationLib
+    implementation Dependencies.legacy
+    implementation Dependencies.DATE_TIME
+
+    //Unit Testing
+    testImplementation(Dependencies.junit4)
+    testImplementation(Dependencies.junitExtensionsKtx)
+    testImplementation(Dependencies.truth)
+    testImplementation(Dependencies.mockk)
+    testImplementation(Dependencies.robolectric)
+    testImplementation(Dependencies.androidArchCoreTest)
+    testImplementation(Dependencies.coroutinesTest)
+
+    //UI Testing
+    androidTestImplementation(Dependencies.junitExtensions)
+    androidTestImplementation(Dependencies.espressoCore)
+    androidTestImplementation(Dependencies.composeUiTest)
+
+
+    implementation Dependencies.DATE_TIME
+    implementation Dependencies.COMPOSE_UI
+    implementation Dependencies.COMPOSE_UI_UTIL
+    implementation Dependencies.COMPOSE_DESTINATION
+    ksp Dependencies.COMPOSE_DESTINATION_KSP
+    implementation Dependencies.ACTIVITY_COMPOSE
+    implementation Dependencies.COMPOSE_MATERIAL
+    implementation Dependencies.COMPOSE_MATERIAL_ICONS_EXTENDED
+    implementation Dependencies.CONSTRAINT_LAYOUT
+    implementation Dependencies.MATERIAL3
+    implementation Dependencies.COMPOSE_UI_TOOLING
+    implementation Dependencies.COMPOSE_UI_TOOLING_PREVIEW
+    implementation Dependencies.PAGER
+    implementation Dependencies.PAGER_INDICATORS
+    implementation Dependencies.SYSTEM_UI_CONTROLLER
+    implementation Dependencies.CORE
+    implementation Dependencies.COLLECTION
+    implementation Dependencies.ACTIVITY
+    implementation Dependencies.FRAGMENT
+    implementation Dependencies.PALETTE
+    implementation Dependencies.WORKER
+    implementation Dependencies.HILT_WORKER
+    kapt Dependencies.HILT_COMPILER
+    implementation Dependencies.COIL
+    implementation Dependencies.COMPOSE
+    implementation Dependencies.HILT
+    implementation Dependencies.COMPOSE_VIEW_MODEL
+
+
+}
+
+kapt {
+    correctErrorTypes = true
+}
