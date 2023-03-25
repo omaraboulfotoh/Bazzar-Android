@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="white_smoke">#F8F8F8</color>
     <color name="prussian_blue">#000760</color>
+    <color name="deep_sky_blue">#00B7FF</color>
 </resources>

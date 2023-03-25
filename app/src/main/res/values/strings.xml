@@ -8,4 +8,6 @@
     <string name="done">Done</string>
     <string name="unknown">Unknown</string>
     <string name="success">Success</string>
+    <string name="home_screen_featured_bzarz">Featured Bzarz</string>
+    <string name="home_screen_view_all">VIEW ALL</string>
 </resources>
