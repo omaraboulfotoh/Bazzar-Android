@@ -6,22 +6,22 @@ import java.lang.System;
 public final class MovieUseCase {
     private final com.android.network.domain.repos.MovieRepo movieRepo = null;
     
-    @javax.inject.Inject
-    public MovieUseCase(@org.jetbrains.annotations.NotNull
+    @javax.inject.Inject()
+    public MovieUseCase(@org.jetbrains.annotations.NotNull()
     com.android.network.domain.repos.MovieRepo movieRepo) {
         super();
     }
     
-    @org.jetbrains.annotations.Nullable
-    public final java.lang.Object getTrendMovies(@org.jetbrains.annotations.NotNull
-    java.lang.String apiKey, int page, @org.jetbrains.annotations.NotNull
+    @org.jetbrains.annotations.Nullable()
+    public final java.lang.Object getTrendMovies(@org.jetbrains.annotations.NotNull()
+    java.lang.String apiKey, int page, @org.jetbrains.annotations.NotNull()
     kotlin.coroutines.Continuation<? super kotlinx.coroutines.flow.Flow<? extends com.android.network.states.Result<com.android.model.responses.base.MoviesListResponse>>> continuation) {
         return null;
     }
     
-    @org.jetbrains.annotations.Nullable
-    public final java.lang.Object getMovieDetails(@org.jetbrains.annotations.NotNull
-    java.lang.String apiKey, int movieId, @org.jetbrains.annotations.NotNull
+    @org.jetbrains.annotations.Nullable()
+    public final java.lang.Object getMovieDetails(@org.jetbrains.annotations.NotNull()
+    java.lang.String apiKey, int movieId, @org.jetbrains.annotations.NotNull()
     kotlin.coroutines.Continuation<? super kotlinx.coroutines.flow.Flow<? extends com.android.network.states.Result<com.android.model.movie.MovieModel>>> continuation) {
         return null;
     }

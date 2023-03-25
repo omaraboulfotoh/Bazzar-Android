@@ -9,14 +9,14 @@ import java.lang.System;
 @com.squareup.moshi.JsonClass(generateAdapter = true)
 public final class BaseWrapper<T extends java.lang.Object> {
     private final T data = null;
-    @org.jetbrains.annotations.Nullable
+    @org.jetbrains.annotations.Nullable()
     private final java.lang.String message = null;
     
     /**
      * Created by Mohamed Shalan on 6/12/20.
      */
-    @org.jetbrains.annotations.NotNull
-    public final com.android.model.responses.base.BaseWrapper<T> copy(T data, @org.jetbrains.annotations.Nullable
+    @org.jetbrains.annotations.NotNull()
+    public final com.android.model.responses.base.BaseWrapper<T> copy(T data, @org.jetbrains.annotations.Nullable()
     java.lang.String message) {
         return null;
     }
@@ -24,8 +24,8 @@ public final class BaseWrapper<T extends java.lang.Object> {
     /**
      * Created by Mohamed Shalan on 6/12/20.
      */
-    @java.lang.Override
-    public boolean equals(@org.jetbrains.annotations.Nullable
+    @java.lang.Override()
+    public boolean equals(@org.jetbrains.annotations.Nullable()
     java.lang.Object other) {
         return false;
     }
@@ -33,7 +33,7 @@ public final class BaseWrapper<T extends java.lang.Object> {
     /**
      * Created by Mohamed Shalan on 6/12/20.
      */
-    @java.lang.Override
+    @java.lang.Override()
     public int hashCode() {
         return 0;
     }
@@ -41,13 +41,13 @@ public final class BaseWrapper<T extends java.lang.Object> {
     /**
      * Created by Mohamed Shalan on 6/12/20.
      */
-    @org.jetbrains.annotations.NotNull
-    @java.lang.Override
+    @org.jetbrains.annotations.NotNull()
+    @java.lang.Override()
     public java.lang.String toString() {
         return null;
     }
     
-    public BaseWrapper(T data, @org.jetbrains.annotations.Nullable
+    public BaseWrapper(T data, @org.jetbrains.annotations.Nullable()
     java.lang.String message) {
         super();
     }
@@ -60,12 +60,12 @@ public final class BaseWrapper<T extends java.lang.Object> {
         return null;
     }
     
-    @org.jetbrains.annotations.Nullable
+    @org.jetbrains.annotations.Nullable()
     public final java.lang.String component2() {
         return null;
     }
     
-    @org.jetbrains.annotations.Nullable
+    @org.jetbrains.annotations.Nullable()
     public final java.lang.String getMessage() {
         return null;
     }

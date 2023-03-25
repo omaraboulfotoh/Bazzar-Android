@@ -6,24 +6,24 @@ import java.lang.System;
 public final class MovieRemoteDataSourceImp implements com.android.network.datasource.MovieRemoteDataSource {
     private final com.android.network.service.MovieApiServices apiServices = null;
     
-    @javax.inject.Inject
-    public MovieRemoteDataSourceImp(@org.jetbrains.annotations.NotNull
+    @javax.inject.Inject()
+    public MovieRemoteDataSourceImp(@org.jetbrains.annotations.NotNull()
     com.android.network.service.MovieApiServices apiServices) {
         super();
     }
     
-    @org.jetbrains.annotations.Nullable
-    @java.lang.Override
-    public java.lang.Object getTrendMovies(@org.jetbrains.annotations.NotNull
-    java.lang.String apiKey, int page, @org.jetbrains.annotations.NotNull
+    @org.jetbrains.annotations.Nullable()
+    @java.lang.Override()
+    public java.lang.Object getTrendMovies(@org.jetbrains.annotations.NotNull()
+    java.lang.String apiKey, int page, @org.jetbrains.annotations.NotNull()
     kotlin.coroutines.Continuation<? super retrofit2.Response<com.android.model.responses.base.MoviesListResponse>> continuation) {
         return null;
     }
     
-    @org.jetbrains.annotations.Nullable
-    @java.lang.Override
-    public java.lang.Object getMovieDetails(@org.jetbrains.annotations.NotNull
-    java.lang.String apiKey, int movieId, @org.jetbrains.annotations.NotNull
+    @org.jetbrains.annotations.Nullable()
+    @java.lang.Override()
+    public java.lang.Object getMovieDetails(@org.jetbrains.annotations.NotNull()
+    java.lang.String apiKey, int movieId, @org.jetbrains.annotations.NotNull()
     kotlin.coroutines.Continuation<? super retrofit2.Response<com.android.model.movie.MovieModel>> continuation) {
         return null;
     }
