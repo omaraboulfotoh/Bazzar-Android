@@ -1,6 +1,6 @@
 package com.android.network.domain.repos
 
-import com.android.model.movie.MovieModel
+import com.android.model.movie.ProductModel
 import com.android.model.responses.base.MoviesListResponse
 import com.android.network.states.Result
 import kotlinx.coroutines.flow.Flow
@@ -14,5 +14,5 @@ interface MovieRepo {
     suspend fun getMovieDetails(
         apiKey: String,
         movieId: Int,
-    ): Flow<Result<MovieModel>>
+    ): Flow<Result<ProductModel>>
 }

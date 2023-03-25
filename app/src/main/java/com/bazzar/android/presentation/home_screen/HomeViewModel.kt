@@ -1,6 +1,6 @@
 package com.bazzar.android.presentation.home_screen
 
-import com.android.model.movie.MovieModel
+import com.android.model.movie.ProductModel
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,11 +21,11 @@ class HomeViewModel @Inject constructor(globalState: IGlobalState) :
         }
     }
 
-    fun getData(): List<MovieModel> {
+    fun getData(): List<ProductModel> {
         setEffect {
             HomeContract.Effect.Navigation.GoToHome
         }
-        return listOf(MovieModel())
+        return listOf(ProductModel())
     }
 
 }

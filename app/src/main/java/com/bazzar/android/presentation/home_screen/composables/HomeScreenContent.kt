@@ -3,7 +3,9 @@ package com.bazzar.android.presentation.home_screen.composables
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -11,12 +13,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.android.model.movie.ProductModel
 import com.bazzar.android.R
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+
 
 @Preview
 @Composable
@@ -28,9 +35,10 @@ fun HomeScreenContent(/*state: HomeContract.State*/) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        item{
+        item {
             Header()
             BazzarHorizontalList()
+            FeaturedBazzar()
         }
     }
 }
@@ -42,8 +50,7 @@ fun Header() {
             .fillMaxWidth()
             .padding(
                 top = 32.dp, start = 127.dp
-            ),
-        horizontalArrangement = Arrangement.Start
+            ), horizontalArrangement = Arrangement.Start
     ) {
         Image(
             painter = painterResource(R.drawable.bazzars_home_title),
@@ -92,7 +99,7 @@ fun BazzarHorizontalList() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .padding(horizontal=4.dp),
+                    .padding(horizontal = 4.dp),
                 contentDescription = null,
             )
         }
@@ -112,13 +119,34 @@ fun BazzarHorizontalList() {
 }
 
 @Composable
-fun Indicator(selected: Boolean, onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .size(8.dp)
-            .clip(CircleShape)
-            .background(if (selected) colorResource(id = R.color.prussian_blue) else Color.White)
-            .clickable(onClick = onClick)
+fun FeaturedBazzar() {
+
+    HeaderTextWithViewAll(text = stringResource(id = R.string.home_screen_featured_bzarz))
+    val imageList = listOf(
+        R.drawable.first_bazzar,
+        R.drawable.second_bazzar,
+        R.drawable.third_bazzar,
+        R.drawable.third_bazzar,
+        R.drawable.third_bazzar,
     )
-    Spacer(modifier = Modifier.width(2.dp))
+    val textList = listOf(
+        "Bzar Name",
+        "Bzar Name",
+        "Bzar Name"
+    )
+    CustomLazyRow(
+        imageList = imageList,
+        textList = textList,
+        customIV = { image, text ->
+            Column {
+                SemiCircleImageView(
+                    image = image,
+                    text = text
+                )
+            }
+        },
+        topPadding = 16.dp,
+        spaceBetweenItems = 16.dp
+    )
 }
+

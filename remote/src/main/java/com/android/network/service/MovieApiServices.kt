@@ -1,6 +1,6 @@
 package com.android.network.service
 
-import com.android.model.movie.MovieModel
+import com.android.model.movie.ProductModel
 import com.android.model.responses.base.MoviesListResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -21,6 +21,6 @@ interface MovieApiServices {
     suspend fun getMovieDetails(
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String,
-    ): Response<MovieModel>
+    ): Response<ProductModel>
 }
 

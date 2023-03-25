@@ -5,7 +5,7 @@
 
 package com.android.model.responses.base
 
-import com.android.model.movie.MovieModel
+import com.android.model.movie.ProductModel
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter
@@ -29,8 +29,8 @@ public class MoviesListResponseJsonAdapter(
   private val options: JsonReader.Options = JsonReader.Options.of("results", "page", "total_pages",
       "total_results")
 
-  private val listOfMovieModelAdapter: JsonAdapter<List<MovieModel>> =
-      moshi.adapter(Types.newParameterizedType(List::class.java, MovieModel::class.java),
+  private val listOfProductModelAdapter: JsonAdapter<List<ProductModel>> =
+      moshi.adapter(Types.newParameterizedType(List::class.java, ProductModel::class.java),
       emptySet(), "results")
 
   private val intAdapter: JsonAdapter<Int> = moshi.adapter(Int::class.java, emptySet(), "page")
@@ -42,7 +42,7 @@ public class MoviesListResponseJsonAdapter(
       append("GeneratedJsonAdapter(").append("MoviesListResponse").append(')') }
 
   public override fun fromJson(reader: JsonReader): MoviesListResponse {
-    var results: List<MovieModel>? = null
+    var results: List<ProductModel>? = null
     var page: Int? = 0
     var totalPages: Int? = 0
     var totalResults: Int? = 0
@@ -51,8 +51,8 @@ public class MoviesListResponseJsonAdapter(
     while (reader.hasNext()) {
       when (reader.selectName(options)) {
         0 -> {
-          results = listOfMovieModelAdapter.fromJson(reader) ?: throw Util.unexpectedNull("results",
-              "results", reader)
+          results = listOfProductModelAdapter.fromJson(reader) ?:
+              throw Util.unexpectedNull("results", "results", reader)
           // $mask = $mask and (1 shl 0).inv()
           mask0 = mask0 and 0xfffffffe.toInt()
         }
@@ -84,7 +84,7 @@ public class MoviesListResponseJsonAdapter(
     if (mask0 == 0xfffffff0.toInt()) {
       // All parameters with defaults are set, invoke the constructor directly
       return  MoviesListResponse(
-          results = results as List<MovieModel>,
+          results = results as List<ProductModel>,
           page = page as Int,
           totalPages = totalPages as Int,
           totalResults = totalResults as Int
@@ -114,7 +114,7 @@ public class MoviesListResponseJsonAdapter(
     }
     writer.beginObject()
     writer.name("results")
-    listOfMovieModelAdapter.toJson(writer, value_.results)
+    listOfProductModelAdapter.toJson(writer, value_.results)
     writer.name("page")
     intAdapter.toJson(writer, value_.page)
     writer.name("total_pages")

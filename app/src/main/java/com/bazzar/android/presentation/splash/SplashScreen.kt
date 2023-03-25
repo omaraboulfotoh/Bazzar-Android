@@ -26,7 +26,6 @@ fun SplashScreen(
     viewModel.sideEffect { effect ->
         when (effect) {
             SplashContract.Effect.Navigation.GoToHome -> navigator.navigate(HomeScreenDestination)
-            else -> {}
         }
     }
 

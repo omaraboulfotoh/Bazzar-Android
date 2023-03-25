@@ -1,6 +1,6 @@
 package com.android.network.datasource.impl
 
-import com.android.model.movie.MovieModel
+import com.android.model.movie.ProductModel
 import com.android.model.responses.base.MoviesListResponse
 import com.android.network.datasource.MovieRemoteDataSource
 import com.android.network.service.MovieApiServices
@@ -16,6 +16,6 @@ class MovieRemoteDataSourceImp @Inject constructor(private val apiServices: Movi
     ): Response<MoviesListResponse> =
         apiServices.getTrendMovies(apiKey, page)
 
-    override suspend fun getMovieDetails(apiKey: String, movieId: Int): Response<MovieModel> =
+    override suspend fun getMovieDetails(apiKey: String, movieId: Int): Response<ProductModel> =
         apiServices.getMovieDetails(movieId, apiKey)
 }

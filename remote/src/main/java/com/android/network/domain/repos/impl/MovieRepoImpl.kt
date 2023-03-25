@@ -1,7 +1,7 @@
 package com.android.network.domain.repos.impl
 
 import androidx.annotation.WorkerThread
-import com.android.model.movie.MovieModel
+import com.android.model.movie.ProductModel
 import com.android.model.responses.base.MoviesListResponse
 import com.android.network.datasource.MovieRemoteDataSource
 import com.android.network.domain.repos.MovieRepo
@@ -40,7 +40,7 @@ class MovieRepoImpl @Inject constructor(var movieRemoteDataSource: MovieRemoteDa
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
-    override suspend fun getMovieDetails(apiKey: String, movieId: Int): Flow<Result<MovieModel>> =
+    override suspend fun getMovieDetails(apiKey: String, movieId: Int): Flow<Result<ProductModel>> =
         flow {
             try {
                 movieRemoteDataSource.getMovieDetails(apiKey, movieId).let {
@@ -48,14 +48,14 @@ class MovieRepoImpl @Inject constructor(var movieRemoteDataSource: MovieRemoteDa
                         emit(Result.Success(it.body()!!))
                     } else
                         Result.Error(
-                            MovieModel(),
+                            ProductModel(),
                             "error will be handled"
                         )
                 }
             } catch (throwable: Throwable) {
                 emit(
                     Result.Error(
-                        MovieModel(),
+                        ProductModel(),
                         throwable.message
                     )
                 )
