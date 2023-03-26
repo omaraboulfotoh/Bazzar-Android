@@ -5,19 +5,21 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.android.model.movie.ProductModel
 import com.bazzar.android.R
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -39,6 +41,7 @@ fun HomeScreenContent(/*state: HomeContract.State*/) {
             Header()
             BazzarHorizontalList()
             FeaturedBazzar()
+            FeaturedBrands()
             ProductsGroup()
         }
     }
@@ -51,7 +54,8 @@ fun Header() {
             .fillMaxWidth()
             .padding(
                 top = 32.dp, start = 127.dp
-            ), horizontalArrangement = Arrangement.Start
+            ),
+        horizontalArrangement = Arrangement.Start
     ) {
         Image(
             painter = painterResource(R.drawable.bazzars_home_title),
@@ -92,7 +96,7 @@ fun BazzarHorizontalList() {
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            contentPadding = PaddingValues(horizontal = 4.dp)
+            contentPadding = PaddingValues(4.dp)
 
         ) { page ->
             Image(
@@ -152,6 +156,56 @@ fun FeaturedBazzar() {
 }
 
 @Composable
+fun FeaturedBrands(/*brandsList: List<BrandModel>*/) {
+    val productsList = listOf(
+        ProductModel(
+            localPoster = R.drawable.first_bazzar,
+            productTitle = "Product title",
+            brandName = "Brand Name",
+            priceBeforeSale = 000.000
+        ),
+        ProductModel(
+            localPoster = R.drawable.first_bazzar,
+            productTitle = "Product title",
+            brandName = "Brand Name",
+            priceBeforeSale = 000.000
+        ),
+        ProductModel(
+            localPoster = R.drawable.first_bazzar,
+            productTitle = "Product title",
+            brandName = "Brand Name",
+            priceBeforeSale = 000.000
+        ), ProductModel(
+            localPoster = R.drawable.first_bazzar,
+            productTitle = "Product title",
+            brandName = "Brand Name",
+            priceBeforeSale = 000.000
+        )
+    )
+    HeaderTextWithViewAll(text = stringResource(id = R.string.home_screen_featured_brands))
+    LazyRow(
+        modifier = Modifier
+            .padding(top = 16.dp)
+            .wrapContentWidth()
+            .height(120.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 8.dp)
+    ) {
+        items(productsList.size) { index ->
+            val product = productsList[index]
+            Image(
+                painter = painterResource(id = product.localPoster ?: -1),
+                contentDescription = "Brand image",
+                modifier = Modifier
+                    .size(104.dp)
+                    .fillMaxSize(),
+                contentScale = ContentScale.FillBounds
+            )
+        }
+    }
+}
+
+@Composable
 fun ProductsGroup(/*productsList: List<ProductModel>*/) {
     val productsList = listOf(
         ProductModel(
@@ -183,36 +237,92 @@ fun ProductsGroup(/*productsList: List<ProductModel>*/) {
         modifier = Modifier
             .padding(top = 16.dp)
             .wrapContentWidth()
-            .background(Color.White),
+            .height(322.dp),
         horizontalArrangement = Arrangement.spacedBy(7.dp),
-        contentPadding = PaddingValues(7.dp)
+        contentPadding = PaddingValues(horizontal = 7.dp),
     ) {
         items(productsList.size) { index ->
             val product = productsList[index]
-            Column {
+            Box(
+                modifier = Modifier
+                    .width(168.dp)
+                    .clip(RoundedCornerShape(size = 20.dp))
+            ) {
+                Column(
+                    modifier = Modifier
+                        .background(Color.White)
+                        .width(168.dp)
+                        .align(Alignment.TopCenter),
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.heart_ic),
+                        contentDescription = "favourite image",
+                        modifier = Modifier
+                            .offset(y = 16.dp)
+                            .padding(start = 140.dp)
+                            .padding(end = 12.dp)
+                    )
+                    Image(
+                        painter = painterResource(id = product.localPoster ?: -1),
+                        contentDescription = "Product image",
+                        modifier = Modifier
+                            .size(152.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .padding(top = 40.dp)
+                            .padding(horizontal = 8.dp),
+                        contentScale = ContentScale.FillBounds
+
+                    )
+                    Text(
+                        text = product?.productTitle ?: "",
+                        modifier = Modifier
+                            .padding(top = 16.dp)
+                            .padding(start = 8.dp),
+                        style = MaterialTheme.typography.subtitle2.copy(
+                            fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                            color = colorResource(id = R.color.black)
+                        )
+                    )
+                    Text(
+                        text = product.brandName ?: "",
+                        modifier = Modifier
+                            .padding(top = 4.dp)
+                            .padding(start = 8.dp),
+                        style = MaterialTheme.typography.subtitle2.copy(
+                            fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                            color = colorResource(id = R.color.black)
+                        )
+                    )
+                    Text(
+                        text = stringResource(
+                            id = R.string.home_screen_product_price,
+                            product.priceBeforeSale.toString() ?: ""
+                        ),
+                        modifier = Modifier
+                            .paddingFromBaseline(top = 24.dp)
+                            .padding(start = 8.dp)
+                            .padding(bottom = 32.dp),
+                        style = MaterialTheme.typography.subtitle2.copy(
+                            fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                            color = colorResource(id = R.color.black)
+                        )
+                    )
+                }
                 Image(
-                    painter = painterResource(id = product.localPoster ?: -1),
-                    contentDescription = "Product image",
+                    painter = painterResource(R.drawable.new_icon),
+                    contentDescription = "new_icon",
                     modifier = Modifier
-                        .width(120.dp)
-                        .height(120.dp)
-                        .clip(RoundedCornerShape(8.dp))
+                        .align(Alignment.BottomEnd)
+                        .offset(y = (-122).dp)
                 )
-                Text(
-                    text = product?.productTitle ?: "",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp,
+                Image(
+                    painter = painterResource(R.drawable.ic_cart),
+                    contentDescription = "cart_icon",
                     modifier = Modifier
-                        .paddingFromBaseline(top = 8.dp)
-                        .padding(horizontal = 4.dp)
-                )
-                Text(
-                    text = product.brandName ?: "",
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 12.sp,
-                    modifier = Modifier
-                        .paddingFromBaseline(top = 8.dp)
-                        .padding(horizontal = 4.dp)
+                        .align(Alignment.BottomEnd)
+                        .offset(y = (-30).dp)
+                        .padding(end = 8.dp)
                 )
             }
         }

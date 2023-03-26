@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
@@ -70,7 +71,6 @@ fun SemiCircleImageView(image: Int, text: String) {
                     .height(126.dp)
                     .clip(CircleShape)
             )
-
         }
         Text(
             text = text,
@@ -128,7 +128,7 @@ fun CustomLazyRow(
             .padding(topPadding)
             .wrapContentWidth(),
         horizontalArrangement = Arrangement.spacedBy(spaceBetweenItems),
-        contentPadding = PaddingValues(spaceBetweenItems)
+        contentPadding = PaddingValues(horizontal=spaceBetweenItems)
     ) {
         val dataList = imageList.zip(textList)
         items(dataList) { (image, text) ->

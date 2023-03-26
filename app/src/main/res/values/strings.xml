@@ -11,4 +11,6 @@
     <string name="home_screen_featured_bzarz">Featured Bzarz</string>
     <string name="home_screen_view_all">VIEW ALL</string>
     <string name="home_screen_products_group">Products group</string>
+    <string name="home_screen_product_price">%S KD</string>
+    <string name="home_screen_featured_brands">Featured Brands</string>
 </resources>
