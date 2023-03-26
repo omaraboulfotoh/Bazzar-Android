@@ -39,6 +39,7 @@ fun HomeScreenContent(/*state: HomeContract.State*/) {
             Header()
             BazzarHorizontalList()
             FeaturedBazzar()
+            ProductsGroup()
         }
     }
 }
@@ -150,3 +151,70 @@ fun FeaturedBazzar() {
     )
 }
 
+@Composable
+fun ProductsGroup(/*productsList: List<ProductModel>*/) {
+    val productsList = listOf(
+        ProductModel(
+            localPoster = R.drawable.first_bazzar,
+            productTitle = "Product title",
+            brandName = "Brand Name",
+            priceBeforeSale = 000.000
+        ),
+        ProductModel(
+            localPoster = R.drawable.first_bazzar,
+            productTitle = "Product title",
+            brandName = "Brand Name",
+            priceBeforeSale = 000.000
+        ),
+        ProductModel(
+            localPoster = R.drawable.first_bazzar,
+            productTitle = "Product title",
+            brandName = "Brand Name",
+            priceBeforeSale = 000.000
+        ), ProductModel(
+            localPoster = R.drawable.first_bazzar,
+            productTitle = "Product title",
+            brandName = "Brand Name",
+            priceBeforeSale = 000.000
+        )
+    )
+    HeaderTextWithViewAll(text = stringResource(id = R.string.home_screen_products_group))
+    LazyRow(
+        modifier = Modifier
+            .padding(top = 16.dp)
+            .wrapContentWidth()
+            .background(Color.White),
+        horizontalArrangement = Arrangement.spacedBy(7.dp),
+        contentPadding = PaddingValues(7.dp)
+    ) {
+        items(productsList.size) { index ->
+            val product = productsList[index]
+            Column {
+                Image(
+                    painter = painterResource(id = product.localPoster ?: -1),
+                    contentDescription = "Product image",
+                    modifier = Modifier
+                        .width(120.dp)
+                        .height(120.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                )
+                Text(
+                    text = product?.productTitle ?: "",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    modifier = Modifier
+                        .paddingFromBaseline(top = 8.dp)
+                        .padding(horizontal = 4.dp)
+                )
+                Text(
+                    text = product.brandName ?: "",
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 12.sp,
+                    modifier = Modifier
+                        .paddingFromBaseline(top = 8.dp)
+                        .padding(horizontal = 4.dp)
+                )
+            }
+        }
+    }
+}
