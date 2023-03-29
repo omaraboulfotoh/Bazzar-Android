@@ -247,13 +247,14 @@ fun ProductsGroup(/*productsList: List<ProductModel>*/) {
                 modifier = Modifier
                     .width(168.dp)
                     .clip(RoundedCornerShape(size = 20.dp))
+                    .background(Color.White)
             ) {
                 Column(
                     modifier = Modifier
                         .background(Color.White)
                         .width(168.dp)
-                        .align(Alignment.TopCenter),
-                    verticalArrangement = Arrangement.Center,
+                        .align(Alignment.Center),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.heart_ic),
@@ -268,17 +269,17 @@ fun ProductsGroup(/*productsList: List<ProductModel>*/) {
                         contentDescription = "Product image",
                         modifier = Modifier
                             .size(152.dp)
-                            .clip(RoundedCornerShape(8.dp))
+//                            .clip(RoundedCornerShape(8.dp))
                             .padding(top = 40.dp)
-                            .padding(horizontal = 8.dp),
-                        contentScale = ContentScale.FillBounds
+                        /*,contentScale = ContentScale.FillBounds*//*, alignment = Alignment.Center*/
 
                     )
                     Text(
                         text = product?.productTitle ?: "",
                         modifier = Modifier
                             .padding(top = 16.dp)
-                            .padding(start = 8.dp),
+                            .padding(start = 8.dp)
+                            .align(Alignment.Start),
                         style = MaterialTheme.typography.subtitle2.copy(
                             fontFamily = FontFamily(Font(R.font.montserrat_bold)),
                             color = colorResource(id = R.color.black)
@@ -288,7 +289,8 @@ fun ProductsGroup(/*productsList: List<ProductModel>*/) {
                         text = product.brandName ?: "",
                         modifier = Modifier
                             .padding(top = 4.dp)
-                            .padding(start = 8.dp),
+                            .padding(start = 8.dp)
+                            .align(Alignment.Start),
                         style = MaterialTheme.typography.subtitle2.copy(
                             fontFamily = FontFamily(Font(R.font.montserrat_regular)),
                             color = colorResource(id = R.color.black)
