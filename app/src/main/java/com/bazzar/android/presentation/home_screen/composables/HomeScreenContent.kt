@@ -273,7 +273,7 @@ fun ProductsGroup(/*productsList: List<ProductModel>*/) {
                         contentDescription = "Product image",
                         modifier = Modifier
                             .size(152.dp)
-                            .padding(top = 40.dp)
+                            .padding(top =40.dp)
                     )
                     Text(
                         text = product?.productTitle ?: "",
