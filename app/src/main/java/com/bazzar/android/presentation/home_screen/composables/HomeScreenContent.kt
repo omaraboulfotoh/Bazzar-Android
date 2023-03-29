@@ -273,10 +273,7 @@ fun ProductsGroup(/*productsList: List<ProductModel>*/) {
                         contentDescription = "Product image",
                         modifier = Modifier
                             .size(152.dp)
-//                            .clip(RoundedCornerShape(8.dp))
                             .padding(top = 40.dp)
-                        /*,contentScale = ContentScale.FillBounds*//*, alignment = Alignment.Center*/
-
                     )
                     Text(
                         text = product?.productTitle ?: "",
@@ -333,23 +330,6 @@ fun ProductsGroup(/*productsList: List<ProductModel>*/) {
                             color = colorResource(id = R.color.black)
                         )
                     )
-/*
-                    Text(
-                        text = stringResource(
-                            id = R.string.home_screen_product_price,
-                            product.priceBeforeSale.toString() ?: ""
-                        ),
-                        modifier = Modifier
-                            .paddingFromBaseline(top = 24.dp)
-                            .padding(start = 8.dp)
-                            .padding(bottom = 32.dp)
-                            .align(Alignment.Start),
-                        style = MaterialTheme.typography.subtitle2.copy(
-                            fontFamily = FontFamily(Font(R.font.montserrat_bold)),
-                            color = colorResource(id = R.color.black)
-                        )
-                    )
-*/
                 }
                 Image(
                     painter = painterResource(R.drawable.new_icon),
