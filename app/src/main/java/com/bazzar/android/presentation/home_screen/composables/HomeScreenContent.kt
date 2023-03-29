@@ -16,10 +16,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.android.model.movie.ProductModel
 import com.bazzar.android.R
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -297,6 +301,40 @@ fun ProductsGroup(/*productsList: List<ProductModel>*/) {
                         )
                     )
                     Text(
+                        modifier = Modifier
+                            .paddingFromBaseline(top = 24.dp)
+                            .padding(start = 8.dp)
+                            .padding(bottom = 32.dp)
+                            .align(Alignment.Start),
+                        text =
+                        buildAnnotatedString {
+                            withStyle(
+                                style = SpanStyle(
+                                    fontFamily =
+                                    FontFamily(Font(R.font.montserrat_bold))
+                                )
+                            ) {
+                                append(product.priceBeforeSale.toString() ?: "")
+                            }
+                            withStyle(
+                                style = SpanStyle(
+                                    fontFamily =
+                                    FontFamily(Font(R.font.montserrat_regular))
+                                )
+                            ) {
+                                append(
+                                    stringResource(
+                                        id = R.string.home_screen_product_price
+                                    )
+                                )
+                            }
+                        },
+                        style = MaterialTheme.typography.subtitle2.copy(
+                            color = colorResource(id = R.color.black)
+                        )
+                    )
+/*
+                    Text(
                         text = stringResource(
                             id = R.string.home_screen_product_price,
                             product.priceBeforeSale.toString() ?: ""
@@ -304,12 +342,14 @@ fun ProductsGroup(/*productsList: List<ProductModel>*/) {
                         modifier = Modifier
                             .paddingFromBaseline(top = 24.dp)
                             .padding(start = 8.dp)
-                            .padding(bottom = 32.dp),
+                            .padding(bottom = 32.dp)
+                            .align(Alignment.Start),
                         style = MaterialTheme.typography.subtitle2.copy(
                             fontFamily = FontFamily(Font(R.font.montserrat_bold)),
                             color = colorResource(id = R.color.black)
                         )
                     )
+*/
                 }
                 Image(
                     painter = painterResource(R.drawable.new_icon),
