@@ -1,12 +1,11 @@
 package com.bazzar.android.presentation.home_screen.composables
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
@@ -133,6 +133,69 @@ fun CustomLazyRow(
         val dataList = imageList.zip(textList)
         items(dataList) { (image, text) ->
             customIV(image, text)
+        }
+    }
+}
+
+
+@Composable
+fun FooterTabBar() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(115.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .height(86.dp)
+                .background(Color.White)
+                .align(Alignment.BottomCenter)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 47.dp)
+                    .height(86.dp)
+                    .align(Alignment.BottomCenter),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = stringResource(id = R.string.footer_home),
+                    style = MaterialTheme.typography.caption.copy(
+                        color = colorResource(id = R.color.black).copy(
+                            alpha = 0.85f
+                        )
+                    )
+                )
+                Icon(painterResource(id = R.drawable.ic_category), contentDescription = "category")
+                Icon(painterResource(id = R.drawable.ic_bazzar), contentDescription = "bazzar")
+                Icon(painterResource(id = R.drawable.ic_cart), contentDescription = "cart")
+                Icon(
+                    painterResource(id = R.drawable.ic_profile),
+                    contentDescription = "profile",
+                    modifier = Modifier.padding(end = 40.dp)
+                )
+            }
+
+        }
+
+        Box(
+            modifier = Modifier
+                .offset(40.dp)
+                .align(Alignment.TopStart)
+                .size(52.dp)
+                .clip(RoundedCornerShape(26.dp))
+                .background(colorResource(id = R.color.prussian_blue))
+            ,
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                painterResource(id = R.drawable.ic_home),
+                contentDescription = "home",
+                tint = colorResource(id = R.color.deep_sky_blue),
+
+                )
         }
     }
 }

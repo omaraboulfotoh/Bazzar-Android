@@ -13,4 +13,5 @@
     <string name="home_screen_products_group">Products group</string>
     <string name="home_screen_product_price"> KD</string>
     <string name="home_screen_featured_brands">Featured Brands</string>
+    <string name="footer_home">Home</string>
 </resources>
