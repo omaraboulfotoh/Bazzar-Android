@@ -14,4 +14,8 @@
     <string name="home_screen_product_price"> KD</string>
     <string name="home_screen_featured_brands">Featured Brands</string>
     <string name="footer_home">Home</string>
+    <string name="category_category_toggle_title">Categories</string>
+    <string name="category_category_title">Categories</string>
+    <string name="category_brands_toggle_title">Brands</string>
+    <string name="category_brands_title">BZAR Brands</string>
 </resources>
