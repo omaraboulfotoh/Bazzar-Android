@@ -1,6 +1,5 @@
 package com.bazzar.android.presentation.category_screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -36,7 +35,7 @@ fun CategoryScreen() {
     ) {
         item {
             BrandCategoryHeader(isCategory)
-            ToggleBrandCategory({ isCategory=!isCategory }, isCategory)
+            ToggleBrandCategory({ isCategory = !isCategory }, isCategory)
 
         }
     }
@@ -88,7 +87,7 @@ fun ToggleBrandCategory(onToggle: (Boolean) -> Unit, isCategory: Boolean) {
                     style = MaterialTheme.typography.caption.copy(
                         fontFamily = FontFamily(Font(R.font.montserrat_bold)),
                         color = colorResource(id = R.color.prussian_blue),
-                        )
+                    )
                 )
             }
         }
@@ -99,11 +98,11 @@ fun ToggleBrandCategory(onToggle: (Boolean) -> Unit, isCategory: Boolean) {
 fun BrandCategoryHeader(isCategory: Boolean) {
     Row(
         Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .padding(
                 top = 32.dp, start = 143.dp
             ),
-        horizontalArrangement = Arrangement.Center
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = stringResource(
@@ -114,15 +113,14 @@ fun BrandCategoryHeader(isCategory: Boolean) {
                 color = colorResource(id = R.color.prussian_blue),
             )
         )
-        Spacer(modifier = Modifier.width(85.dp))
         IconButton(
             onClick = { /* TODO */ },
-            modifier = Modifier.padding(end = 24.dp)
+            modifier = Modifier.padding(start = 100.dp)
         ) {
             if (isCategory) {
                 Icon(
                     painter = painterResource(R.drawable.search_icon),
-                    contentDescription = "Search",
+                    contentDescription = "Search"
                 )
 
             }
