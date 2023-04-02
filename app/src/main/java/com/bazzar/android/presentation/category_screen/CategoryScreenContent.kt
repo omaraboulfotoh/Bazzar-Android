@@ -4,16 +4,16 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -27,9 +27,19 @@ import com.bazzar.android.presentation.home_screen.composables.FooterTabBar
 
 @Preview
 @Composable
-fun CategoryScreen() {
-    var isCategory by remember { mutableStateOf(true) }
-
+fun CategoryScreenContent() {
+    var isCategory by remember { mutableStateOf(false) }
+    var searchClicked by remember { mutableStateOf(true) }
+    val productsList = mutableListOf<ProductModel>()
+    for (i in 1..17) {
+        val product = ProductModel(
+            localPoster = R.drawable.first_bazzar,
+            productTitle = "Product title",
+            brandName = "Brand Name",
+            priceBeforeSale = 000.000
+        )
+        productsList.add(product)
+    }
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -39,7 +49,11 @@ fun CategoryScreen() {
         item {
             BrandCategoryHeader(isCategory)
             ToggleBrandCategory({ isCategory = !isCategory }, isCategory)
-            CategoryList(isCategory)
+            Search(isCategory = isCategory, searchClicked = searchClicked) {
+                searchClicked = !searchClicked
+            }
+            CategoryList(isCategory, productsList)
+            BrandGrid(isCategory = isCategory, productsList)
             FooterTabBar()
         }
     }
@@ -148,8 +162,8 @@ fun BrandCategoryHeader(isCategory: Boolean) {
 }
 
 @Composable
-fun CategoryList(isCategory: Boolean) {
-    if(isCategory){
+fun CategoryList(isCategory: Boolean, productList: List<ProductModel>) {
+    if (isCategory) {
         LazyColumn(
             modifier = Modifier
                 .padding(top = 20.dp)
@@ -158,49 +172,8 @@ fun CategoryList(isCategory: Boolean) {
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(horizontal = 16.dp),
         ) {
-            val productsList = listOf(
-                ProductModel(
-                    localPoster = R.drawable.first_bazzar,
-                    productTitle = "Product title",
-                    brandName = "Brand Name",
-                    priceBeforeSale = 000.000
-                ),
-                ProductModel(
-                    localPoster = R.drawable.first_bazzar,
-                    productTitle = "Product title",
-                    brandName = "Brand Name",
-                    priceBeforeSale = 000.000
-                ),
-                ProductModel(
-                    localPoster = R.drawable.first_bazzar,
-                    productTitle = "Product title",
-                    brandName = "Brand Name",
-                    priceBeforeSale = 000.000
-                ), ProductModel(
-                    localPoster = R.drawable.first_bazzar,
-                    productTitle = "Product title",
-                    brandName = "Brand Name",
-                    priceBeforeSale = 000.000
-                ), ProductModel(
-                    localPoster = R.drawable.first_bazzar,
-                    productTitle = "Product title",
-                    brandName = "Brand Name",
-                    priceBeforeSale = 000.000
-                ), ProductModel(
-                    localPoster = R.drawable.first_bazzar,
-                    productTitle = "Product title",
-                    brandName = "Brand Name",
-                    priceBeforeSale = 000.000
-                ), ProductModel(
-                    localPoster = R.drawable.first_bazzar,
-                    productTitle = "Product title",
-                    brandName = "Brand Name",
-                    priceBeforeSale = 000.000
-                )
-            )
-
-            items(productsList.size) { index ->
-                val product = productsList[index]
+            items(productList.size) { index ->
+                val product = productList[index]
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -249,5 +222,125 @@ fun CategoryList(isCategory: Boolean) {
             }
         }
 
+    }
+}
+
+@Composable
+fun BrandGrid(isCategory: Boolean, brandList: List<ProductModel>) {
+    if (!isCategory) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .height(800.dp)
+        ) {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(3),
+                contentPadding = PaddingValues(16.dp),
+            ) {
+                items(brandList.size) { index ->
+                    val image = brandList[index]
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Image(
+                            painter = painterResource(image?.localPoster ?: -1),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .size(90.dp)
+                                .clip(RoundedCornerShape(10.dp))
+                        )
+                        Text(
+                            text = image?.brandName ?: "",
+                            style = MaterialTheme.typography.overline.copy(
+                                fontFamily = FontFamily(Font(R.font.montserrat_medium)),
+                                color = colorResource(id = R.color.black),
+                            ),
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun Search(isCategory: Boolean, searchClicked: Boolean, onSearchClick: (Boolean) -> Unit) {
+    if (!isCategory) {
+        Box(
+            modifier = Modifier
+                .width(343.dp)
+                .height(35.dp)
+                .clip(RoundedCornerShape(20.dp))
+                .background(colorResource(id =if(searchClicked) R.color.white_smoke else R.color.white))
+        ) {
+            IconButton(
+                onClick = { onSearchClick(searchClicked) },
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        Modifier
+                            .fillMaxSize()
+                            .weight(1f),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        if (!searchClicked) {
+                            Icon(
+                                modifier = Modifier
+                                    .align(Alignment.CenterStart)
+                                    .padding(start = 104.dp),
+                                painter = painterResource(id = R.drawable.search_icon),
+                                contentDescription = null,
+                                tint = colorResource(id = R.color.prussian_blue)
+                            )
+                            Text(
+                                modifier = Modifier
+                                    .align(Alignment.CenterStart)
+                                    .padding(start = 128.dp),
+                                text = stringResource(id = R.string.brand_search_title),
+                                style = MaterialTheme.typography.overline.copy(
+                                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                                    color = colorResource(id = R.color.prussian_blue).copy(alpha = 0.4f),
+                                ),
+                            )
+                        } else {
+                            var searchText by remember { mutableStateOf("") }
+                            TextField(
+                                modifier = Modifier
+                                    .align(Alignment.CenterStart)
+                                    .width(284.dp)
+                                    .height(50.dp)
+                                    .padding(start=33.dp),
+                                value = searchText,
+                                onValueChange = { inputText -> searchText = inputText },
+                                colors = TextFieldDefaults.textFieldColors(
+                                    backgroundColor = colorResource(id = R.color.white)
+                                ),
+                                textStyle = MaterialTheme.typography.overline.copy(
+                                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                                    color = colorResource(id = R.color.deep_sky_blue),
+                                )
+                            )
+                            Text(
+                                modifier = Modifier
+                                    .align(Alignment.CenterStart)
+                                    .padding(start = 284.dp),
+                                text = stringResource(id = R.string.brand_search_cancel),
+                                style = MaterialTheme.typography.overline.copy(
+                                    fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                                    color = colorResource(id = R.color.deep_sky_blue),
+                                ),
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 }

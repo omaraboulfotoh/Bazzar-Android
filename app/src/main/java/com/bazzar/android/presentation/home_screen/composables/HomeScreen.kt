@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
+import com.bazzar.android.presentation.category_screen.CategoryScreenContent
 import com.bazzar.android.presentation.home_screen.HomeContract
 import com.bazzar.android.presentation.home_screen.HomeViewModel
 import com.ramcosta.composedestinations.annotation.Destination

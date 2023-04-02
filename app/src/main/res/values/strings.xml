@@ -18,4 +18,6 @@
     <string name="category_category_title">Categories</string>
     <string name="category_brands_toggle_title">Brands</string>
     <string name="category_brands_title">BZAR Brands</string>
+    <string name="brand_search_title">Search by brand name.</string>
+    <string name="brand_search_cancel">Cancel</string>
 </resources>
