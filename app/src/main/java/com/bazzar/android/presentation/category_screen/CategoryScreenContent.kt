@@ -2,6 +2,7 @@ package com.bazzar.android.presentation.category_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.android.model.movie.ProductModel
 import com.bazzar.android.R
 import com.bazzar.android.presentation.home_screen.composables.FooterTabBar
+import com.bazzar.android.presentation.home_screen.composables.MenuBarItem
 
 @Preview
 @Composable
@@ -54,7 +56,7 @@ fun CategoryScreenContent() {
             }
             CategoryList(isCategory, productsList)
             BrandGrid(isCategory = isCategory, productsList)
-            FooterTabBar()
+            FooterTabBar(selectedMenu = MenuBarItem.Category)
         }
     }
 }
@@ -69,7 +71,7 @@ fun ToggleBrandCategory(onToggle: (Boolean) -> Unit, isCategory: Boolean) {
     ) {
         Box(
             Modifier
-                .width(if (isCategory) 104.dp else 84.dp)
+                .width(if (!isCategory) 104.dp else 84.dp)
                 .height(28.dp)
                 .clip(RoundedCornerShape(14.dp))
                 .background(colorResource(id = R.color.titan_white)),
@@ -78,14 +80,14 @@ fun ToggleBrandCategory(onToggle: (Boolean) -> Unit, isCategory: Boolean) {
             Icon(
                 painter = painterResource(id = R.drawable.toggle_circle),
                 contentDescription = null, tint = colorResource(id = R.color.deep_sky_blue),
-                modifier = if (isCategory) Modifier
+                modifier = if (!isCategory) Modifier
                     .align(Alignment.CenterStart)
                     .padding(2.dp) else Modifier
                     .align(Alignment.CenterEnd)
                     .padding(2.dp)
             )
             Box(
-                modifier = if (isCategory) {
+                modifier = if (!isCategory) {
                     Modifier
                         .size(120.dp)
                         .align(Alignment.Center)
@@ -96,11 +98,11 @@ fun ToggleBrandCategory(onToggle: (Boolean) -> Unit, isCategory: Boolean) {
                         .align(Alignment.Center)
                         .padding(start = 5.dp)
                 },
-                contentAlignment = if (isCategory) Alignment.CenterEnd else Alignment.CenterStart
+                contentAlignment = if (!isCategory) Alignment.CenterEnd else Alignment.CenterStart
             ) {
                 Text(
                     text = stringResource(
-                        id = if (isCategory) R.string.category_category_toggle_title else R.string.category_brands_toggle_title
+                        id = if (!isCategory) R.string.category_category_toggle_title else R.string.category_brands_toggle_title
                     ),
                     style = MaterialTheme.typography.caption.copy(
                         fontFamily = FontFamily(Font(R.font.montserrat_bold)),
@@ -138,7 +140,7 @@ fun BrandCategoryHeader(isCategory: Boolean) {
         ) {
             Text(
                 text = stringResource(
-                    id = if (!isCategory) R.string.category_category_title else R.string.category_brands_title
+                    id = if (isCategory) R.string.category_category_title else R.string.category_brands_title
                 ),
                 style = MaterialTheme.typography.subtitle1.copy(
                     fontFamily = FontFamily(Font(R.font.montserrat_bold)),
@@ -275,7 +277,12 @@ fun Search(isCategory: Boolean, searchClicked: Boolean, onSearchClick: (Boolean)
                 .width(343.dp)
                 .height(35.dp)
                 .clip(RoundedCornerShape(20.dp))
-                .background(colorResource(id =if(searchClicked) R.color.white_smoke else R.color.white))
+                .background(colorResource(id = if (searchClicked) R.color.white_smoke else R.color.white))
+                .border(
+                    1.dp,
+                    colorResource(id = if (searchClicked) R.color.prussian_blue else R.color.white_smoke),
+                    shape = RoundedCornerShape(20.dp)
+                )
         ) {
             IconButton(
                 onClick = { onSearchClick(searchClicked) },
@@ -314,13 +321,13 @@ fun Search(isCategory: Boolean, searchClicked: Boolean, onSearchClick: (Boolean)
                             TextField(
                                 modifier = Modifier
                                     .align(Alignment.CenterStart)
-                                    .width(284.dp)
+                                    .width(280.dp)
                                     .height(50.dp)
-                                    .padding(start=33.dp),
+                                    .padding(start = 33.dp),
                                 value = searchText,
                                 onValueChange = { inputText -> searchText = inputText },
                                 colors = TextFieldDefaults.textFieldColors(
-                                    backgroundColor = colorResource(id = R.color.white)
+                                    backgroundColor = colorResource(id = if (!searchClicked) R.color.white else R.color.white_smoke)
                                 ),
                                 textStyle = MaterialTheme.typography.overline.copy(
                                     fontFamily = FontFamily(Font(R.font.montserrat_bold)),

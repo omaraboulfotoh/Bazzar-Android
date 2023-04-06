@@ -1,6 +1,8 @@
 package com.bazzar.android.presentation.home_screen.composables
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -11,8 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
@@ -128,7 +130,7 @@ fun CustomLazyRow(
             .padding(topPadding)
             .wrapContentWidth(),
         horizontalArrangement = Arrangement.spacedBy(spaceBetweenItems),
-        contentPadding = PaddingValues(horizontal=spaceBetweenItems)
+        contentPadding = PaddingValues(horizontal = spaceBetweenItems)
     ) {
         val dataList = imageList.zip(textList)
         items(dataList) { (image, text) ->
@@ -137,9 +139,9 @@ fun CustomLazyRow(
     }
 }
 
-
+@Preview
 @Composable
-fun FooterTabBar() {
+fun FooterTabBar(selectedMenu: MenuBarItem = MenuBarItem.Profile) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -154,48 +156,120 @@ fun FooterTabBar() {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 47.dp)
+                    .padding(horizontal = 40.dp)
                     .height(86.dp)
-                    .align(Alignment.BottomCenter),
+                    .align(Alignment.Center),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
-                    text = stringResource(id = R.string.footer_home),
+                if (selectedMenu != MenuBarItem.Home)
+                    Icon(painterResource(id = R.drawable.ic_home_menu), contentDescription = "home")
+                else Text(
+                    text = stringResource(id = R.string.footer_home), modifier = Modifier,
                     style = MaterialTheme.typography.caption.copy(
+                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
                         color = colorResource(id = R.color.black).copy(
-                            alpha = 0.85f
+                            alpha = 0.15f,
                         )
                     )
                 )
-                Icon(painterResource(id = R.drawable.ic_category), contentDescription = "category")
-                Icon(painterResource(id = R.drawable.ic_bazzar), contentDescription = "bazzar")
-                Icon(painterResource(id = R.drawable.ic_cart), contentDescription = "cart")
-                Icon(
-                    painterResource(id = R.drawable.ic_profile),
-                    contentDescription = "profile",
-                    modifier = Modifier.padding(end = 40.dp)
+
+                if (selectedMenu != MenuBarItem.Category)
+                    Icon(
+                        painterResource(id = R.drawable.ic_category),
+                        contentDescription = "category"
+                    )
+                else Text(
+                    text = stringResource(id = R.string.category_category_title),
+                    modifier = Modifier,
+                    style = MaterialTheme.typography.caption.copy(
+                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        color = colorResource(id = R.color.black).copy(
+                            alpha = 0.15f,
+                        )
+                    )
                 )
+                if (selectedMenu != MenuBarItem.Bazar)
+                    Icon(painterResource(id = R.drawable.ic_bazzar), contentDescription = "bazzar")
+                else Text(
+                    text = stringResource(id = R.string.footer_menu_bazzar), modifier = Modifier,
+                    style = MaterialTheme.typography.caption.copy(
+                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        color = colorResource(id = R.color.black).copy(
+                            alpha = 0.15f,
+                        )
+                    )
+                )
+                if (selectedMenu != MenuBarItem.Cart)
+                    Icon(painterResource(id = R.drawable.ic_cart), contentDescription = "cart")
+                else Text(
+                    text = stringResource(id = R.string.footer_menu_cart), modifier = Modifier,
+                    style = MaterialTheme.typography.caption.copy(
+                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        color = colorResource(id = R.color.black).copy(
+                            alpha = 0.15f,
+                        )
+                    )
+                )
+                if (selectedMenu != MenuBarItem.Profile)
+                    Icon(
+                        painterResource(id = R.drawable.ic_profile),
+                        contentDescription = "profile",
+//                        modifier = Modifier.padding(end = 40.dp)
+                    )
+                else Text(
+                    text = stringResource(id = R.string.footer_menu_profile), modifier = Modifier,
+                    style = MaterialTheme.typography.caption.copy(
+                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        color = colorResource(id = R.color.black).copy(
+                            alpha = 0.15f,
+                        )
+                    )
+                )
+
             }
 
+        }
+        // Update the offset of the selected icon's Box to align with the corresponding text
+        val selectedOffset = when (selectedMenu) {
+            MenuBarItem.Home -> 0.dp
+            MenuBarItem.Category -> 1.dp
+            MenuBarItem.Bazar -> 2.dp
+            MenuBarItem.Cart -> 3.dp
+            MenuBarItem.Profile -> 4.dp
         }
 
         Box(
             modifier = Modifier
-                .offset(40.dp)
+                .offset(x = selectedOffset.times(80))
                 .align(Alignment.TopStart)
                 .size(52.dp)
                 .clip(RoundedCornerShape(26.dp))
-                .background(colorResource(id = R.color.prussian_blue))
-            ,
+                .background(colorResource(id = R.color.prussian_blue)),
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                painterResource(id = R.drawable.ic_home),
-                contentDescription = "home",
+                painterResource(
+                    id = when (selectedMenu) {
+                        MenuBarItem.Home -> R.drawable.ic_home
+                        MenuBarItem.Category -> R.drawable.ic_category
+                        MenuBarItem.Profile -> R.drawable.ic_profile
+                        MenuBarItem.Cart -> R.drawable.ic_cart
+                        MenuBarItem.Bazar -> R.drawable.ic_bazzar
+                    }
+                ),
+                contentDescription = "menus",
                 tint = colorResource(id = R.color.deep_sky_blue),
 
                 )
         }
     }
+}
+
+enum class MenuBarItem {
+    Home,
+    Category,
+    Cart,
+    Profile,
+    Bazar,
 }

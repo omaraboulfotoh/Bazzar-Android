@@ -20,4 +20,7 @@
     <string name="category_brands_title">BZAR Brands</string>
     <string name="brand_search_title">Search by brand name.</string>
     <string name="brand_search_cancel">Cancel</string>
+    <string name="footer_menu_profile">Profile</string>
+    <string name="footer_menu_cart">Cart</string>
+    <string name="footer_menu_bazzar">Bazzar</string>
 </resources>

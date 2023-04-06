@@ -24,5 +24,5 @@ fun HomeScreen(
             HomeContract.Effect.Navigation.GoToHome -> {}
         }
     }
-    HomeScreenContent()
+    CategoryScreenContent()
 }
