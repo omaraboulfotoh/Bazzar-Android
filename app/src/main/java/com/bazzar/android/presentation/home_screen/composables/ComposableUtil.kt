@@ -127,7 +127,7 @@ fun CustomLazyRow(
 ) {
     androidx.compose.foundation.lazy.LazyRow(
         modifier = Modifier
-            .padding(topPadding)
+            .padding(top=topPadding)
             .wrapContentWidth(),
         horizontalArrangement = Arrangement.spacedBy(spaceBetweenItems),
         contentPadding = PaddingValues(horizontal = spaceBetweenItems)

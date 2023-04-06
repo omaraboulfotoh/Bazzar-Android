@@ -48,7 +48,7 @@ fun HomeScreenContent(/*state: HomeContract.State*/) {
             FeaturedBazzar()
             FeaturedBrands()
             ProductsGroup()
-            FooterTabBar()
+            FooterTabBar(MenuBarItem.Home)
         }
     }
 }
