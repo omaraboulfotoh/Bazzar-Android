@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.category_screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -30,7 +31,7 @@ import com.bazzar.android.presentation.home_screen.composables.MenuBarItem
 @Preview
 @Composable
 fun CategoryScreenContent() {
-    var isCategory by remember { mutableStateOf(false) }
+    var isCategory by remember { mutableStateOf(true) }
     var searchClicked by remember { mutableStateOf(true) }
     val productsList = mutableListOf<ProductModel>()
     for (i in 1..17) {
@@ -41,6 +42,16 @@ fun CategoryScreenContent() {
             priceBeforeSale = 000.000
         )
         productsList.add(product)
+    }
+    val subCategoryList = mutableListOf<ProductModel>()
+    for (i in 1..17) {
+        val product = ProductModel(
+            localPoster = R.drawable.first_bazzar,
+            productTitle = "Product title",
+            brandName = "Brand Name",
+            priceBeforeSale = 000.000
+        )
+        subCategoryList.add(product)
     }
     LazyColumn(
         modifier = Modifier
@@ -54,7 +65,7 @@ fun CategoryScreenContent() {
             Search(isCategory = isCategory, searchClicked = searchClicked) {
                 searchClicked = !searchClicked
             }
-            CategoryList(isCategory, productsList)
+            CategoryList(isCategory, productsList,subCategoryList)
             BrandGrid(isCategory = isCategory, productsList)
             FooterTabBar(selectedMenu = MenuBarItem.Category)
         }
@@ -64,11 +75,9 @@ fun CategoryScreenContent() {
 
 @Composable
 fun ToggleBrandCategory(onToggle: (Boolean) -> Unit, isCategory: Boolean) {
-    IconButton(
-        onClick = {
-            onToggle(isCategory)
-        }
-    ) {
+    IconButton(onClick = {
+        onToggle(isCategory)
+    }) {
         Box(
             Modifier
                 .width(if (!isCategory) 104.dp else 84.dp)
@@ -79,7 +88,8 @@ fun ToggleBrandCategory(onToggle: (Boolean) -> Unit, isCategory: Boolean) {
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.toggle_circle),
-                contentDescription = null, tint = colorResource(id = R.color.deep_sky_blue),
+                contentDescription = null,
+                tint = colorResource(id = R.color.deep_sky_blue),
                 modifier = if (!isCategory) Modifier
                     .align(Alignment.CenterStart)
                     .padding(2.dp) else Modifier
@@ -103,8 +113,7 @@ fun ToggleBrandCategory(onToggle: (Boolean) -> Unit, isCategory: Boolean) {
                 Text(
                     text = stringResource(
                         id = if (!isCategory) R.string.category_category_toggle_title else R.string.category_brands_toggle_title
-                    ),
-                    style = MaterialTheme.typography.caption.copy(
+                    ), style = MaterialTheme.typography.caption.copy(
                         fontFamily = FontFamily(Font(R.font.montserrat_bold)),
                         color = colorResource(id = R.color.prussian_blue),
                     )
@@ -123,13 +132,11 @@ fun BrandCategoryHeader(isCategory: Boolean) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         IconButton(
-            onClick = { /* TODO */ },
-            modifier = Modifier.padding(start = 16.dp)
+            onClick = { /* TODO */ }, modifier = Modifier.padding(start = 16.dp)
         ) {
             if (!isCategory) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_back),
-                    contentDescription = "back"
+                    painter = painterResource(R.drawable.ic_back), contentDescription = "back"
                 )
             }
         }
@@ -141,30 +148,31 @@ fun BrandCategoryHeader(isCategory: Boolean) {
             Text(
                 text = stringResource(
                     id = if (isCategory) R.string.category_category_title else R.string.category_brands_title
-                ),
-                style = MaterialTheme.typography.subtitle1.copy(
+                ), style = MaterialTheme.typography.subtitle1.copy(
                     fontFamily = FontFamily(Font(R.font.montserrat_bold)),
                     color = colorResource(id = R.color.prussian_blue),
-                ),
-                modifier = Modifier.align(Alignment.Center)
+                ), modifier = Modifier.align(Alignment.Center)
             )
         }
         IconButton(
-            onClick = { /* TODO */ },
-            modifier = Modifier.padding(start = 16.dp)
+            onClick = { /* TODO */ }, modifier = Modifier.padding(start = 16.dp)
         ) {
             if (isCategory) {
                 Icon(
-                    painter = painterResource(R.drawable.search_icon),
-                    contentDescription = "Search"
+                    painter = painterResource(R.drawable.search_icon), contentDescription = "Search"
                 )
             }
         }
     }
 }
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
-fun CategoryList(isCategory: Boolean, productList: List<ProductModel>) {
+fun CategoryList(
+    isCategory: Boolean,
+    productList: List<ProductModel>,
+    subCategoryList:List<ProductModel>
+) {
     if (isCategory) {
         LazyColumn(
             modifier = Modifier
@@ -176,47 +184,122 @@ fun CategoryList(isCategory: Boolean, productList: List<ProductModel>) {
         ) {
             items(productList.size) { index ->
                 val product = productList[index]
+                val isSubCategorySec = mutableStateOf(false)
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .width(343.dp)
-                            .height(115.dp)
-                            .align(Alignment.Center)
-                            .clip(RoundedCornerShape(20.dp))
-                            .background(Color.White),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Image(
-                            painter = painterResource(id = product.localPoster ?: -1),
-                            contentDescription = "Product image",
+                    IconButton(onClick = { isSubCategorySec.value = !isSubCategorySec.value }) {
+                        Box(
                             modifier = Modifier
-                                .width(160.dp)
-                                .height(100.dp)
-                                .align(Alignment.CenterVertically)
-                                .padding(start = 8.dp)
-                        )
-                        androidx.compose.material3.Text(
-                            text = product?.productTitle ?: "",
-                            modifier = Modifier
-                                .padding(start = 8.dp)
-                                .align(Alignment.CenterVertically),
-                            style = MaterialTheme.typography.subtitle2.copy(
-                                fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
-                                color = colorResource(id = R.color.prussian_blue)
-                            )
-                        )
-                        IconButton(
-                            onClick = { /* TODO */ },
-                            modifier = Modifier.padding(start = 15.dp)
+                                .width(343.dp)
+                                .height(if (isSubCategorySec.value) 508.dp else 115.dp)
+                                .align(Alignment.Center)
+                                .clip(RoundedCornerShape(20.dp))
+                                .background(if (isSubCategorySec.value) colorResource(id = R.color.prussian_blue) else Color.White)
                         ) {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_down_arrow),
-                                contentDescription = null,
-                                tint = colorResource(id = R.color.prussian_blue)
-                            )
+                            if (!isSubCategorySec.value) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    if (!isSubCategorySec.value) {
+                                        Image(
+                                            painter = painterResource(
+                                                id = product.localPoster ?: -1
+                                            ),
+                                            contentDescription = "Product image",
+                                            modifier = Modifier
+                                                .width(160.dp)
+                                                .height(100.dp)
+                                                .align(Alignment.CenterVertically)
+                                                .padding(start = 8.dp)
+                                        )
+                                        androidx.compose.material3.Text(
+                                            text = product.productTitle ?: "",
+                                            modifier = Modifier
+                                                .padding(start = 8.dp)
+                                                .align(Alignment.CenterVertically),
+                                            style = MaterialTheme.typography.subtitle2.copy(
+                                                fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                                                color = colorResource(id = R.color.prussian_blue)
+                                            )
+                                        )
+                                        IconButton(
+                                            onClick = { /* TODO */ },
+                                            modifier = Modifier.padding(start = 15.dp)
+                                        ) {
+                                            Icon(
+                                                painter = painterResource(R.drawable.ic_down_arrow),
+                                                contentDescription = null,
+                                                tint = colorResource(id = R.color.prussian_blue)
+                                            )
+                                        }
+
+                                    }
+                                }
+                            } else {
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    modifier=Modifier.fillMaxSize()
+                                ) {
+                                    Image(
+                                        painter = painterResource(
+                                            id = product.localPoster ?: -1
+                                        ),
+                                        contentDescription = "Product image",
+                                        modifier = Modifier
+                                            .width(120.dp)
+                                            .height(75.dp)
+                                            .align(Alignment.CenterHorizontally)
+                                            .padding(start = 8.dp)
+                                            .clip(RoundedCornerShape(30.dp))
+                                    )
+                                    androidx.compose.material3.Text(
+                                        text = product.productTitle ?: "",
+                                        modifier = Modifier
+                                            .padding(start = 8.dp)
+                                            .align(Alignment.CenterHorizontally),
+                                        style = MaterialTheme.typography.subtitle2.copy(
+                                            fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                                            color = colorResource(id = R.color.white)
+                                        )
+                                    )
+                                    LazyVerticalGrid(
+                                        columns = GridCells.Fixed(2),
+                                        contentPadding = PaddingValues(16.dp),
+                                        modifier = Modifier.padding(top=16.dp)
+                                    ) {
+                                        items(subCategoryList.size) { index ->
+                                            val image = subCategoryList[index]
+                                            Column(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(8.dp),
+                                                horizontalAlignment = Alignment.CenterHorizontally
+                                            ) {
+                                                Image(
+                                                    painter = painterResource(image.localPoster ?: -1),
+                                                    contentDescription = null,
+                                                    contentScale = ContentScale.Crop,
+                                                    modifier = Modifier
+                                                        .width(160.dp)
+                                                        .height(100.dp)
+                                                        .clip(RoundedCornerShape(15.dp))
+                                                )
+                                                Text(
+                                                    text = image?.brandName ?: "",
+                                                    style = MaterialTheme.typography.overline.copy(
+                                                        fontFamily = FontFamily(Font(R.font.montserrat_medium)),
+                                                        color = colorResource(id = R.color.white),
+                                                    ),
+                                                    modifier=Modifier.padding(top=8.dp)
+                                                )
+                                            }
+                                        }
+                                    }
+
+
+                                }
+                            }
                         }
 
                     }
@@ -294,8 +377,7 @@ fun Search(isCategory: Boolean, searchClicked: Boolean, onSearchClick: (Boolean)
                     Box(
                         Modifier
                             .fillMaxSize()
-                            .weight(1f),
-                        contentAlignment = Alignment.Center
+                            .weight(1f), contentAlignment = Alignment.Center
                     ) {
                         if (!searchClicked) {
                             Icon(
@@ -320,10 +402,10 @@ fun Search(isCategory: Boolean, searchClicked: Boolean, onSearchClick: (Boolean)
                             var searchText by remember { mutableStateOf("") }
                             TextField(
                                 modifier = Modifier
-                                    .align(Alignment.CenterStart)
+                                    .align(Alignment.Center)
                                     .width(280.dp)
                                     .height(50.dp)
-                                    .padding(start = 33.dp),
+                                /* .padding(start = 33.dp)*/,
                                 value = searchText,
                                 onValueChange = { inputText -> searchText = inputText },
                                 colors = TextFieldDefaults.textFieldColors(
