@@ -23,4 +23,5 @@
     <string name="footer_menu_profile">Profile</string>
     <string name="footer_menu_cart">Cart</string>
     <string name="footer_menu_bazzar">Bazzar</string>
+    <string name="home_featured_category">Featured Categories</string>
 </resources>

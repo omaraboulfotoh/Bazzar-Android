@@ -4,10 +4,12 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,6 +37,16 @@ import com.google.accompanist.pager.rememberPagerState
 @Preview
 @Composable
 fun HomeScreenContent(/*state: HomeContract.State*/) {
+    val categoryList = mutableListOf<ProductModel>()
+    for (i in 1..4) {
+        val product = ProductModel(
+            localPoster = R.drawable.first_bazzar,
+            productTitle = "Product title",
+            brandName = "Brand Name",
+            priceBeforeSale = 000.000
+        )
+        categoryList.add(product)
+    }
     LazyColumn(
         modifier = Modifier
             .background(colorResource(id = R.color.white_smoke))
@@ -48,6 +60,7 @@ fun HomeScreenContent(/*state: HomeContract.State*/) {
             FeaturedBazzar()
             FeaturedBrands()
             ProductsGroup()
+            CategoryGroup(categoryList)
             FooterTabBar(MenuBarItem.Home)
         }
     }
@@ -348,6 +361,58 @@ fun ProductsGroup(/*productsList: List<ProductModel>*/) {
                         .offset(y = (-30).dp)
                         .padding(end = 8.dp)
                 )
+            }
+        }
+    }
+}
+
+@Composable
+fun CategoryGroup(categoryList:List<ProductModel>) {
+    HeaderTextWithViewAll(text = stringResource(id = R.string.home_featured_category))
+    Box(Modifier.fillMaxWidth().height(500.dp)) {
+        LazyVerticalGrid(
+            GridCells.Fixed(2), contentPadding = PaddingValues(16.dp),
+        ) {
+            items(categoryList.size) { index ->
+                val category = categoryList[index]
+                Box(
+                    Modifier
+                        .padding(top = 16.dp)
+                        .height(216.dp)
+                        .wrapContentWidth()
+                ) {
+                    Card(
+                        modifier = Modifier
+                            .size(168.dp)
+                            .align(Alignment.BottomCenter),
+                        shape = RoundedCornerShape(20.dp),
+                        colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.white)),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 20.dp),
+                        content = {}
+                    )
+                    Image(
+                        painter = painterResource(category.localPoster?:-1),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .size(120.dp)
+                            .fillMaxSize()
+                            .background(Color.Red),
+                        contentScale = ContentScale.Crop
+                    )
+                    Text(
+                        text = category.productTitle ?: "",
+                        modifier = Modifier
+                            .padding(bottom = 46.dp)
+                            .align(Alignment.BottomCenter),
+                        style = MaterialTheme.typography.subtitle2.copy(
+                            fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                            color = colorResource(id = R.color.black)
+                        )
+                    )
+
+                }
+
             }
         }
     }
