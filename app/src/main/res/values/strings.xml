@@ -24,4 +24,8 @@
     <string name="footer_menu_cart">Cart</string>
     <string name="footer_menu_bazzar">Bazzar</string>
     <string name="home_featured_category">Featured Categories</string>
+    <string name="product_search_title">Search by product , brand, category.</string>
+    <string name="product_brands_title">BZAR Name</string>
+    <string name="product_items_counter">item</string>
+
 </resources>
