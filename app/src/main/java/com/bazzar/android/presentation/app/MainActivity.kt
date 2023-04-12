@@ -5,7 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.compose.rememberNavController
 import com.bazzar.android.presentation.NavGraphs
-import com.bazzar.android.presentation.theme.AbsComposeTheme
+import com.bazzar.android.presentation.theme.BazzarComposeTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AbsComposeTheme {
+            BazzarComposeTheme {
                 val navController = rememberNavController()
                 App(globalState)
                 DestinationsNavHost(

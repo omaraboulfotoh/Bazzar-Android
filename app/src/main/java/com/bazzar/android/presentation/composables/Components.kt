@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.bazzar.android.BuildConfig
-import com.bazzar.android.presentation.theme.MovieTheme
+import com.bazzar.android.presentation.theme.BazzarTheme
 import com.bazzar.android.presentation.theme.Shapes
 
 @Composable
@@ -42,7 +42,7 @@ fun RemoteImage(
 @Composable
 fun DashLine(
     modifier: Modifier = Modifier,
-    height: Dp = MovieTheme.spacing.xs,
+    height: Dp = BazzarTheme.spacing.xs,
     width: Dp = 112.dp,
     background: Color = Color.Black,
 ) {

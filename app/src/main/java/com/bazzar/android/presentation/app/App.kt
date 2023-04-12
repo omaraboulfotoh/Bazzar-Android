@@ -6,16 +6,15 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.ConfirmationMessageDialog
 import com.bazzar.android.presentation.composables.DefaultMessageDialog
-import com.bazzar.android.presentation.theme.AbsComposeTheme
+import com.bazzar.android.presentation.theme.BazzarComposeTheme
 import com.bazzar.android.presentation.common.Progress
 
 @Composable
 fun App(globalState: IGlobalState) {
-    AbsComposeTheme {
+    BazzarComposeTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background

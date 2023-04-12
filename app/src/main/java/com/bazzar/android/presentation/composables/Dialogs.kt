@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.bazzar.android.presentation.theme.MovieTheme
+import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
 fun DefaultMessageDialog(
@@ -29,7 +29,7 @@ fun DefaultMessageDialog(
     dismissOnBackPress: Boolean = true,
     dismissOnClickOutside: Boolean = true,
     bodyColor: Color = Color.White,
-    backgroundColor: Color = MovieTheme.colors.background
+    backgroundColor: Color = BazzarTheme.colors.background
 ) {
     Dialog(
         onDismissRequest = onNegative,
@@ -41,7 +41,7 @@ fun DefaultMessageDialog(
         ) {
 
             Column(
-                modifier = Modifier.padding(MovieTheme.spacing.primaryPadding),
+                modifier = Modifier.padding(BazzarTheme.spacing.primaryPadding),
                 horizontalAlignment = Alignment.End
             ) {
                 Box(modifier = Modifier.fillMaxWidth()) {
@@ -50,7 +50,7 @@ fun DefaultMessageDialog(
                         text = title,
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
-                        color = MovieTheme.colors.gold
+                        color = BazzarTheme.colors.gold
                     )
 
                     Image(
@@ -63,7 +63,7 @@ fun DefaultMessageDialog(
                     )
                 }
 
-                Spacer(modifier = Modifier.padding(MovieTheme.spacing.l))
+                Spacer(modifier = Modifier.padding(BazzarTheme.spacing.l))
 
                 MessageBody(
                     text = body,
@@ -72,7 +72,7 @@ fun DefaultMessageDialog(
                     color = bodyColor
                 )
 
-                Spacer(modifier = Modifier.padding(MovieTheme.spacing.xl))
+                Spacer(modifier = Modifier.padding(BazzarTheme.spacing.xl))
 
                 PrimaryButton(text = buttonText, onClick = onPositive)
             }
@@ -101,7 +101,7 @@ fun TwoButtonsMessageDialog(
     dismissOnBackPress: Boolean = true,
     dismissOnClickOutside: Boolean = true,
     bodyColor: Color = Color.White,
-    backgroundColor: Color = MovieTheme.colors.background,
+    backgroundColor: Color = BazzarTheme.colors.background,
     negativeButtonText: String
 ) {
     Dialog(
@@ -114,7 +114,7 @@ fun TwoButtonsMessageDialog(
         ) {
 
             Column(
-                modifier = Modifier.padding(MovieTheme.spacing.primaryPadding),
+                modifier = Modifier.padding(BazzarTheme.spacing.primaryPadding),
                 horizontalAlignment = Alignment.End
             ) {
                 Box(modifier = Modifier.fillMaxWidth()) {
@@ -123,7 +123,7 @@ fun TwoButtonsMessageDialog(
                         text = title,
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
-                        color = MovieTheme.colors.gold
+                        color = BazzarTheme.colors.gold
                     )
 
                     Image(
@@ -136,7 +136,7 @@ fun TwoButtonsMessageDialog(
                     )
                 }
 
-                Spacer(modifier = Modifier.padding(MovieTheme.spacing.l))
+                Spacer(modifier = Modifier.padding(BazzarTheme.spacing.l))
 
                 MessageBody(
                     text = body,
@@ -145,7 +145,7 @@ fun TwoButtonsMessageDialog(
                     color = bodyColor
                 )
 
-                Spacer(modifier = Modifier.padding(MovieTheme.spacing.l))
+                Spacer(modifier = Modifier.padding(BazzarTheme.spacing.l))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -155,9 +155,9 @@ fun TwoButtonsMessageDialog(
                         modifier = Modifier.weight(0.5f),
                         text = negativeButtonText,
                         onClick = onNegative,
-                        background = MovieTheme.colors.greyBtn
+                        background = BazzarTheme.colors.greyBtn
                     )
-                    Spacer(modifier = Modifier.width(MovieTheme.spacing.s))
+                    Spacer(modifier = Modifier.width(BazzarTheme.spacing.s))
                     PrimaryButton(
                         modifier = Modifier.weight(0.5f),
                         text = buttonText,
@@ -179,7 +179,7 @@ fun PatrolStepsMessageDialog(
     dismissOnBackPress: Boolean = true,
     dismissOnClickOutside: Boolean = true,
     bodyColor: Color = Color.White,
-    backgroundColor: Color = MovieTheme.colors.background,
+    backgroundColor: Color = BazzarTheme.colors.background,
     negativeButtonText: String
 ) {
     Dialog(
@@ -192,7 +192,7 @@ fun PatrolStepsMessageDialog(
         ) {
 
             Column(
-                modifier = Modifier.padding(MovieTheme.spacing.primaryPadding),
+                modifier = Modifier.padding(BazzarTheme.spacing.primaryPadding),
                 horizontalAlignment = Alignment.End
             ) {
                 Box(modifier = Modifier.fillMaxWidth()) {
@@ -201,7 +201,7 @@ fun PatrolStepsMessageDialog(
                         text = title,
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
-                        color = MovieTheme.colors.gold
+                        color = BazzarTheme.colors.gold
                     )
 
                     Image(
@@ -214,7 +214,7 @@ fun PatrolStepsMessageDialog(
                     )
                 }
 
-                Spacer(modifier = Modifier.padding(MovieTheme.spacing.l))
+                Spacer(modifier = Modifier.padding(BazzarTheme.spacing.l))
 
                 MessageBody(
                     text = body,
@@ -223,7 +223,7 @@ fun PatrolStepsMessageDialog(
                     color = bodyColor
                 )
 
-                Spacer(modifier = Modifier.padding(MovieTheme.spacing.l))
+                Spacer(modifier = Modifier.padding(BazzarTheme.spacing.l))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -233,9 +233,9 @@ fun PatrolStepsMessageDialog(
                         modifier = Modifier.weight(0.5f),
                         text = negativeButtonText,
                         onClick = onNegative,
-                        background = MovieTheme.colors.greyBtn
+                        background = BazzarTheme.colors.greyBtn
                     )
-                    Spacer(modifier = Modifier.width(MovieTheme.spacing.s))
+                    Spacer(modifier = Modifier.width(BazzarTheme.spacing.s))
                     PrimaryButton(
                         modifier = Modifier.weight(0.5f),
                         text = buttonText,
@@ -265,7 +265,7 @@ fun ConfirmationMessageDialog(
         ) {
 
             Column(
-                modifier = Modifier.padding(MovieTheme.spacing.primaryPadding),
+                modifier = Modifier.padding(BazzarTheme.spacing.primaryPadding),
                 horizontalAlignment = Alignment.End
             ) {
                 Image(
@@ -279,14 +279,14 @@ fun ConfirmationMessageDialog(
                     modifier = Modifier.fillMaxWidth(),
                 )
 
-                Spacer(modifier = Modifier.padding(MovieTheme.spacing.l))
+                Spacer(modifier = Modifier.padding(BazzarTheme.spacing.l))
 
                 MessageBody(
                     text = body,
                     modifier = Modifier.fillMaxWidth(),
                 )
 
-                Spacer(modifier = Modifier.padding(MovieTheme.spacing.xl))
+                Spacer(modifier = Modifier.padding(BazzarTheme.spacing.xl))
 
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -301,7 +301,7 @@ fun ConfirmationMessageDialog(
                             .fillMaxWidth()
                     ) {
                         PrimaryButton(
-                            background = MovieTheme.colors.greyBtn,
+                            background = BazzarTheme.colors.greyBtn,
                             text = negativeButtonText,
                             onClick = onNegative
                         )

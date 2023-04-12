@@ -21,7 +21,7 @@ val BorderStroke = Color(0XFF929292)
 val Brown = Color(0XFF633D22)
 val GHOST_WHITE = Color(0XFFF9F9F9)
 val TAUPE_GRAY = Color(0XFF888888)
-val DARK_CHARCOAL = Color(0XFF31302C)
+val DARK_CHARCOAL = Color(0X00000029)
 val WHITE = Color(0XFFFFFFFF)
 val BLACK = Color(0XFF000000)
 val BLACK50 = Color(0XFF000000)
@@ -58,6 +58,7 @@ val ColorPalette =
 @Immutable
 data class AbsColors(
     val bottomNavBarBackground: Color = DARK_CHARCOAL,
+    val bottomNavBarSelected: Color = Color(0Xff00B7FF),
     val background: Color = RAISIN_BLACK,
     val backgroundColor: Color = LIGHT_SILVER,
     val primaryButtonColor: Color = DANDELION,
@@ -71,7 +72,7 @@ data class AbsColors(
     val gold: Color = DANDELION,
     val stroke: Color = GRAY300,
     val black: Color = Black,
-    val indicatorGrey:Color = StrokeGrey,
+    val indicatorGrey: Color = StrokeGrey,
     val white: Color = Color(0XFFFFFFFF),
     val whiteAlpha30: Color = Color(0x4DFFFFFF),
     val transparent: Color = Color(0x00FFFFFF),

@@ -27,8 +27,10 @@ import com.android.model.movie.ProductModel
 import com.bazzar.android.R
 import com.bazzar.android.presentation.home_screen.composables.FooterTabBar
 import com.bazzar.android.presentation.home_screen.composables.MenuBarItem
+import com.ramcosta.composedestinations.annotation.Destination
 
 @Preview
+@Destination
 @Composable
 fun CategoryScreenContent() {
     var isCategory by remember { mutableStateOf(true) }
@@ -65,7 +67,7 @@ fun CategoryScreenContent() {
             Search(isCategory = isCategory, searchClicked = searchClicked) {
                 searchClicked = !searchClicked
             }
-            CategoryList(isCategory, productsList,subCategoryList)
+            CategoryList(isCategory, productsList, subCategoryList)
             BrandGrid(isCategory = isCategory, productsList)
             FooterTabBar(selectedMenu = MenuBarItem.Category)
         }
@@ -171,7 +173,7 @@ fun BrandCategoryHeader(isCategory: Boolean) {
 fun CategoryList(
     isCategory: Boolean,
     productList: List<ProductModel>,
-    subCategoryList:List<ProductModel>
+    subCategoryList: List<ProductModel>,
 ) {
     if (isCategory) {
         LazyColumn(
@@ -239,7 +241,7 @@ fun CategoryList(
                             } else {
                                 Column(
                                     horizontalAlignment = Alignment.CenterHorizontally,
-                                    modifier=Modifier.fillMaxSize()
+                                    modifier = Modifier.fillMaxSize()
                                 ) {
                                     Image(
                                         painter = painterResource(
@@ -266,7 +268,7 @@ fun CategoryList(
                                     LazyVerticalGrid(
                                         columns = GridCells.Fixed(2),
                                         contentPadding = PaddingValues(16.dp),
-                                        modifier = Modifier.padding(top=16.dp)
+                                        modifier = Modifier.padding(top = 16.dp)
                                     ) {
                                         items(subCategoryList.size) { index ->
                                             val image = subCategoryList[index]
@@ -277,7 +279,9 @@ fun CategoryList(
                                                 horizontalAlignment = Alignment.CenterHorizontally
                                             ) {
                                                 Image(
-                                                    painter = painterResource(image.localPoster ?: -1),
+                                                    painter = painterResource(
+                                                        image.localPoster ?: -1
+                                                    ),
                                                     contentDescription = null,
                                                     contentScale = ContentScale.Crop,
                                                     modifier = Modifier
@@ -291,7 +295,7 @@ fun CategoryList(
                                                         fontFamily = FontFamily(Font(R.font.montserrat_medium)),
                                                         color = colorResource(id = R.color.white),
                                                     ),
-                                                    modifier=Modifier.padding(top=8.dp)
+                                                    modifier = Modifier.padding(top = 8.dp)
                                                 )
                                             }
                                         }

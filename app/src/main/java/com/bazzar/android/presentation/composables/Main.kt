@@ -16,14 +16,14 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.common.noRippleClickable
-import com.bazzar.android.presentation.theme.MovieTheme
+import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
 fun MbcAppBar(
     title: String = String(),
     modifier: Modifier = Modifier,
     navigationIcon: ImageVector? = Icons.Filled.ArrowBackIos,
-    navigationIconTint: Color = MovieTheme.colors.smokeyBlack,
+    navigationIconTint: Color = BazzarTheme.colors.smokeyBlack,
     actions: @Composable RowScope.() -> Unit = {},
     backgroundColor: Color = Color.Transparent,
     onNavigationClick: () -> Unit = {},
@@ -31,7 +31,7 @@ fun MbcAppBar(
     Row(
         modifier
             .background(backgroundColor)
-            .padding(MovieTheme.spacing.primaryPadding)
+            .padding(BazzarTheme.spacing.primaryPadding)
     ) {
 
         navigationIcon?.let {
@@ -51,7 +51,7 @@ fun MbcAppBar(
 
         }
 
-        Title(text = title, color = MovieTheme.colors.smokeyBlack)
+        Title(text = title, color = BazzarTheme.colors.smokeyBlack)
 
         Row(content = actions)
     }
@@ -63,14 +63,14 @@ fun MbcAppBarWithClose(
     modifier: Modifier = Modifier,
     navigationIcon: ImageVector? = Icons.Filled.ArrowBackIos,
     navigationIconTint: Color = Color.White,
-    gradient: Brush = MovieTheme.colors.primaryGradient,
+    gradient: Brush = BazzarTheme.colors.primaryGradient,
     onNavigationClick: () -> Unit = {},
     onCloseClick: () -> Unit = {},
 ) {
     Row(
         modifier
             .background(gradient)
-            .padding(MovieTheme.spacing.l)
+            .padding(BazzarTheme.spacing.l)
     ) {
 
         navigationIcon?.let {
@@ -83,7 +83,7 @@ fun MbcAppBarWithClose(
         }
 
         Title(
-            text = title, color = MovieTheme.colors.white,
+            text = title, color = BazzarTheme.colors.white,
             modifier = Modifier.weight(1f)
         )
 

@@ -10,14 +10,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.presentation.splash.SplashContract
-import com.bazzar.android.presentation.theme.MovieTheme
+import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
 fun SplashScreenContent(state: SplashContract.State) {
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(MovieTheme.colors.backgroundColor),
+        .background(BazzarTheme.colors.backgroundColor),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         Spacer(modifier = Modifier

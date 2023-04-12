@@ -25,7 +25,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import com.bazzar.android.R
-import com.bazzar.android.presentation.theme.MovieTheme
+import com.bazzar.android.presentation.theme.BazzarTheme
 import com.bazzar.android.presentation.theme.Shapes_MediumX
 
 @Composable
@@ -38,11 +38,11 @@ fun TextInputField(
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Done,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    textColor: Color = MovieTheme.colors.secondaryText,
+    textColor: Color = BazzarTheme.colors.secondaryText,
     disabledTextColor: Color = textColor.copy(ContentAlpha.disabled),
     backgroundColor: Color = Color.Transparent,
-    strokeColor: Color = MovieTheme.colors.borderColor,
-    placeholderColor: Color = MovieTheme.colors.placeholder,
+    strokeColor: Color = BazzarTheme.colors.borderColor,
+    placeholderColor: Color = BazzarTheme.colors.placeholder,
     labelColor: Color = textColor,
     cursorColor: Color = textColor,
     trailingIcon: @Composable (() -> Unit)? = null,
@@ -55,14 +55,14 @@ fun TextInputField(
     Column {
         DescriptionBody(text = label, color = labelColor)
 
-        Spacer(modifier = Modifier.height(MovieTheme.spacing.xs))
+        Spacer(modifier = Modifier.height(BazzarTheme.spacing.xs))
 
         OutlinedTextField(
             value = text,
             placeholder = {
                 MessageBody(
                     placeholder,
-                    style = MovieTheme.typography.subtitle1,
+                    style = BazzarTheme.typography.subtitle1,
                     color = placeholderColor
                 )
             },
@@ -98,7 +98,7 @@ fun PickerTextField(
     placeholder: String,
     onPick: () -> Unit,
     trailingIcon: ImageVector = Icons.Filled.ArrowDropDown,
-    trailingIconTint: Color = MovieTheme.colors.gold,
+    trailingIconTint: Color = BazzarTheme.colors.gold,
 ) {
     TextInputField(
         text = text,
@@ -106,7 +106,7 @@ fun PickerTextField(
         onValueChange = {},
         placeholder = placeholder,
         isReadOnly = true,
-        disabledTextColor = MovieTheme.colors.secondaryText,
+        disabledTextColor = BazzarTheme.colors.secondaryText,
         isEnabled = false,
         trailingIcon = {
             Icon(imageVector = trailingIcon, contentDescription = "Pick", tint = trailingIconTint)
@@ -126,7 +126,7 @@ fun <T> PickerTextInputField(
     previewItem: @Composable RowScope.(item: T) -> Unit,
     pickerItem: @Composable ColumnScope.(item: T, onClick: () -> Unit) -> Unit,
     onItemSelection: (item: T) -> Unit,
-    itemSpacer: Dp = MovieTheme.spacing.xxs,
+    itemSpacer: Dp = BazzarTheme.spacing.xxs,
     modifier: Modifier = Modifier.fillMaxWidth(),
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Done,
@@ -134,7 +134,7 @@ fun <T> PickerTextInputField(
     textColor: Color = Color.White,
     backgroundColor: Color = Color.Black,
     strokeColor: Color = Color.Black,
-    placeholderColor: Color = MovieTheme.colors.placeholder,
+    placeholderColor: Color = BazzarTheme.colors.placeholder,
     labelColor: Color = textColor,
     cursorColor: Color = textColor,
     isError: Boolean = false,
@@ -150,13 +150,13 @@ fun <T> PickerTextInputField(
     Column(modifier = modifier) {
         DescriptionBody(text = label, color = labelColor)
 
-        Spacer(modifier = Modifier.height(MovieTheme.spacing.xs))
+        Spacer(modifier = Modifier.height(BazzarTheme.spacing.xs))
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(backgroundColor, shape = Shapes_MediumX)
-                .padding(horizontal = MovieTheme.spacing.s),
+                .padding(horizontal = BazzarTheme.spacing.s),
             verticalAlignment = Alignment.CenterVertically
         ) {
 
@@ -166,7 +166,7 @@ fun <T> PickerTextInputField(
             ) {
                 previewItem(selectedItem)
 
-                Spacer(modifier = Modifier.width(MovieTheme.spacing.xs))
+                Spacer(modifier = Modifier.width(BazzarTheme.spacing.xs))
 
                 Image(
                     imageVector = if (isDropdownExpanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
@@ -177,7 +177,7 @@ fun <T> PickerTextInputField(
 
             DropdownMenu(
                 modifier = Modifier
-                    .padding(horizontal = MovieTheme.spacing.xs)
+                    .padding(horizontal = BazzarTheme.spacing.xs)
                     .wrapContentWidth(),
                 expanded = isDropdownExpanded,
                 onDismissRequest = { collapse() },
@@ -194,7 +194,7 @@ fun <T> PickerTextInputField(
                 placeholder = {
                     MessageBody(
                         placeholder,
-                        style = MovieTheme.typography.body1,
+                        style = BazzarTheme.typography.body1,
                         color = placeholderColor
                     )
                 },
@@ -231,8 +231,8 @@ fun SearchTextInput(
     textColor: Color = Color.Black,
     onValueChange: (String) -> Unit,
     hint: String = stringResource(id = R.string.search),
-    fontSize: TextUnit = MovieTheme.typography.subtitle1.fontSize,
-    backgroundColor: Color = MovieTheme.colors.black,
+    fontSize: TextUnit = BazzarTheme.typography.subtitle1.fontSize,
+    backgroundColor: Color = BazzarTheme.colors.black,
 ) {
     BasicTextField(
         modifier = modifier

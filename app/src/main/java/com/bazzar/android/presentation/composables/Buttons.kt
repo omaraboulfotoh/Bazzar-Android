@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.bazzar.android.presentation.theme.MovieTheme
+import com.bazzar.android.presentation.theme.BazzarTheme
 import com.bazzar.android.presentation.theme.Shapes
 
 @Composable
@@ -22,10 +22,10 @@ fun PrimaryButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier.fillMaxWidth(),
-    background: Color = MovieTheme.colors.primaryButtonColor,
-    disabledBackground: Color = MovieTheme.colors.primaryButtonDisableColor,
-    textColor: Color = MovieTheme.colors.primaryButtonTextColor,
-    textColorDisabled: Color = MovieTheme.colors.primaryButtonTextColorDisabled,
+    background: Color = BazzarTheme.colors.primaryButtonColor,
+    disabledBackground: Color = BazzarTheme.colors.primaryButtonDisableColor,
+    textColor: Color = BazzarTheme.colors.primaryButtonTextColor,
+    textColorDisabled: Color = BazzarTheme.colors.primaryButtonTextColorDisabled,
     enabled: Boolean = true,
 ) {
     Button(
@@ -45,7 +45,7 @@ fun PrimaryButton(
         MessageBodyBold(
             text = text.uppercase(),
             color = if (enabled)textColor else textColorDisabled ,
-            style = MovieTheme.typography.body1Bold
+            style = BazzarTheme.typography.body1Bold
         )
     }
 }
@@ -56,7 +56,7 @@ fun PrimaryOutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier.fillMaxWidth(),
     enabled: Boolean = true,
-    stroke: Color = MovieTheme.colors.stroke,
+    stroke: Color = BazzarTheme.colors.stroke,
     icon: ImageVector? = null,
 ) {
 
@@ -75,13 +75,13 @@ fun PrimaryOutlinedButton(
 
         icon?.let {
             Image(imageVector = icon, contentDescription = "")
-            Spacer(modifier = Modifier.width(MovieTheme.spacing.spacerMini))
+            Spacer(modifier = Modifier.width(BazzarTheme.spacing.spacerMini))
         }
 
         MessageBody(
             text = text,
-            style = MovieTheme.typography.subtitle1SemiBold,
-            color = MovieTheme.colors.black
+            style = BazzarTheme.typography.subtitle1SemiBold,
+            color = BazzarTheme.colors.black
         )
     }
 }

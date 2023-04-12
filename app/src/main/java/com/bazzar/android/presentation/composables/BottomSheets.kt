@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.bazzar.android.common.trigger
 import com.bazzar.android.presentation.composables.wheel.WheelPicker
 import com.bazzar.android.presentation.composables.wheel.rememberFWheelPickerState
-import com.bazzar.android.presentation.theme.MovieTheme
+import com.bazzar.android.presentation.theme.BazzarTheme
 import com.bazzar.android.R
 import kotlinx.coroutines.launch
 
@@ -56,11 +56,11 @@ fun BottomSheet(
 fun PickerBottomSheet(
     bottomSheetScaffoldState: BottomSheetScaffoldState,
     modifier: Modifier = Modifier.fillMaxSize(),
-    backgroundColor: Color = MovieTheme.colors.backgroundColor,
-    sheetContentBackgroundColor: Color = MovieTheme.colors.backgroundColor,
-    sheetHeaderBackgroundColor: Color = MovieTheme.colors.stroke,
-    doneTextColor: Color = MovieTheme.colors.secondaryText,
-    optionTextColor: Color = MovieTheme.colors.secondaryText,
+    backgroundColor: Color = BazzarTheme.colors.backgroundColor,
+    sheetContentBackgroundColor: Color = BazzarTheme.colors.backgroundColor,
+    sheetHeaderBackgroundColor: Color = BazzarTheme.colors.stroke,
+    doneTextColor: Color = BazzarTheme.colors.secondaryText,
+    optionTextColor: Color = BazzarTheme.colors.secondaryText,
     sheetGesturesEnabled: Boolean = false,
     sheetShape: Shape = RectangleShape,
     sheetElevation: Dp = BottomSheetScaffoldDefaults.SheetElevation,
@@ -92,7 +92,7 @@ fun PickerBottomSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(sheetHeaderBackgroundColor)
-                .padding(MovieTheme.spacing.s),
+                .padding(BazzarTheme.spacing.s),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.End
         ) {
@@ -113,7 +113,7 @@ fun PickerBottomSheet(
         WheelPicker(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = MovieTheme.spacing.primaryPadding),
+                .padding(vertical = BazzarTheme.spacing.primaryPadding),
             count = items.size,
             state = wheelState,
             content = {
@@ -123,17 +123,17 @@ fun PickerBottomSheet(
                     maxLines = 1,
                     textAlign = TextAlign.Center,
                     color = optionTextColor,
-                    style = MovieTheme.typography.h5
+                    style = BazzarTheme.typography.h5
                 )
             },
             onIndexChanged = { selection = it },
             unfocusedCount = 3
         )
 
-        Spacer(modifier = Modifier.height(MovieTheme.spacing.spacerMini))
+        Spacer(modifier = Modifier.height(BazzarTheme.spacing.spacerMini))
 
         DashLine(modifier = Modifier.align(Alignment.CenterHorizontally))
 
-        Spacer(modifier = Modifier.height(MovieTheme.spacing.spacerMini))
+        Spacer(modifier = Modifier.height(BazzarTheme.spacing.spacerMini))
     }
 }

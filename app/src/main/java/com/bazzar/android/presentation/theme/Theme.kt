@@ -11,7 +11,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 /**
  * will behave as our theme source
  */
-object MovieTheme {
+object BazzarTheme {
     val colors
         @Composable
         @ReadOnlyComposable
@@ -34,7 +34,7 @@ object MovieTheme {
 }
 
 @Composable
-fun AbsComposeTheme(
+fun BazzarComposeTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {

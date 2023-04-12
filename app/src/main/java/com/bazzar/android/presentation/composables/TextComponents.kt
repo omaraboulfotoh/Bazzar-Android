@@ -12,7 +12,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
-import com.bazzar.android.presentation.theme.MovieTheme
+import com.bazzar.android.presentation.theme.BazzarTheme
 import com.bazzar.android.presentation.theme.OpenSans
 
 @Composable
@@ -21,9 +21,9 @@ fun Title(
     modifier: Modifier = Modifier.fillMaxWidth(),
     maxLines: Int = Int.MAX_VALUE,
     textAlign: TextAlign = TextAlign.Center,
-    color: Color = MovieTheme.colors.primaryText,
+    color: Color = BazzarTheme.colors.primaryText,
     isUpperCase: Boolean = true,
-    style: TextStyle = MovieTheme.typography.h7Bold,
+    style: TextStyle = BazzarTheme.typography.h7Bold,
 ) {
     Text(
         text = if (isUpperCase) text.uppercase() else text,
@@ -42,8 +42,8 @@ fun SectionTitle(
     modifier: Modifier = Modifier.fillMaxWidth(),
     maxLines: Int = Int.MAX_VALUE,
     textAlign: TextAlign = TextAlign.Center,
-    color: Color = MovieTheme.colors.primaryText,
-    style: TextStyle = MovieTheme.typography.h7Bold,
+    color: Color = BazzarTheme.colors.primaryText,
+    style: TextStyle = BazzarTheme.typography.h7Bold,
 ) =
     Title(
         text,
@@ -87,8 +87,8 @@ fun MessageBody(
     modifier: Modifier = Modifier,
     maxLines: Int = Int.MAX_VALUE,
     textAlign: TextAlign = TextAlign.Center,
-    color: Color = MovieTheme.colors.secondaryText,
-    style: TextStyle = MovieTheme.typography.body2,
+    color: Color = BazzarTheme.colors.secondaryText,
+    style: TextStyle = BazzarTheme.typography.body2,
 ) {
     Text(
         text = text,
@@ -107,8 +107,8 @@ fun Subtitle(
     modifier: Modifier = Modifier,
     maxLines: Int = Int.MAX_VALUE,
     textAlign: TextAlign = TextAlign.Center,
-    color: Color = MovieTheme.colors.secondaryText,
-    style: TextStyle = MovieTheme.typography.subtitle1,
+    color: Color = BazzarTheme.colors.secondaryText,
+    style: TextStyle = BazzarTheme.typography.subtitle1,
 ) {
     Text(
         text = text,
@@ -127,8 +127,8 @@ fun MessageBodyBold(
     modifier: Modifier = Modifier,
     maxLines: Int = Int.MAX_VALUE,
     textAlign: TextAlign = TextAlign.Center,
-    color: Color = MovieTheme.colors.primaryText,
-    style: TextStyle = MovieTheme.typography.body1Bold,
+    color: Color = BazzarTheme.colors.primaryText,
+    style: TextStyle = BazzarTheme.typography.body1Bold,
 ) = MessageBody(text, modifier, maxLines, textAlign, color, style)
 
 @Composable
@@ -137,8 +137,8 @@ fun DescriptionBody(
     modifier: Modifier = Modifier,
     maxLines: Int = Int.MAX_VALUE,
     textAlign: TextAlign = TextAlign.Center,
-    color: Color = MovieTheme.colors.primaryText,
-    style: TextStyle = MovieTheme.typography.body2,
+    color: Color = BazzarTheme.colors.primaryText,
+    style: TextStyle = BazzarTheme.typography.body2,
 ) = MessageBody(text, modifier, maxLines, textAlign, color, style)
 
 @Composable
@@ -147,8 +147,8 @@ fun DescriptionBody(
     modifier: Modifier = Modifier,
     maxLines: Int = Int.MAX_VALUE,
     textAlign: TextAlign = TextAlign.Center,
-    color: Color = MovieTheme.colors.primaryText,
-    style: TextStyle = MovieTheme.typography.body2,
+    color: Color = BazzarTheme.colors.primaryText,
+    style: TextStyle = BazzarTheme.typography.body2,
 ) = Text(
     text = text,
     modifier = modifier,
@@ -165,8 +165,8 @@ fun OverLine(
     modifier: Modifier = Modifier,
     maxLines: Int = Int.MAX_VALUE,
     textAlign: TextAlign = TextAlign.Center,
-    color: Color = MovieTheme.colors.primaryText,
-    style: TextStyle = MovieTheme.typography.overline,
+    color: Color = BazzarTheme.colors.primaryText,
+    style: TextStyle = BazzarTheme.typography.overline,
 ) = Text(
     text = text,
     modifier = modifier,
@@ -183,8 +183,8 @@ fun OverLineBold(
     modifier: Modifier = Modifier,
     maxLines: Int = Int.MAX_VALUE,
     textAlign: TextAlign = TextAlign.Center,
-    color: Color = MovieTheme.colors.primaryText,
-    style: TextStyle = MovieTheme.typography.overlineBold,
+    color: Color = BazzarTheme.colors.primaryText,
+    style: TextStyle = BazzarTheme.typography.overlineBold,
 ) = OverLine(text, modifier, maxLines, textAlign, color, style)
 
 @Composable
@@ -192,8 +192,8 @@ fun ClickableText(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    color: Color = MovieTheme.colors.white,
-    style: TextStyle = MovieTheme.typography.h7Bold.copy(textDecoration = TextDecoration.Underline),
+    color: Color = BazzarTheme.colors.white,
+    style: TextStyle = BazzarTheme.typography.h7Bold.copy(textDecoration = TextDecoration.Underline),
     textAlign: TextAlign = TextAlign.Start,
     isEnabled: Boolean = true,
 ) {
@@ -213,7 +213,7 @@ fun Header4Bold(
     modifier: Modifier = Modifier,
     maxLines: Int = Int.MAX_VALUE,
     textAlign: TextAlign = TextAlign.Center,
-    color: Color = MovieTheme.colors.primaryText,
+    color: Color = BazzarTheme.colors.primaryText,
 ) =
     Text(
         text = text,
@@ -221,7 +221,7 @@ fun Header4Bold(
         maxLines = maxLines,
         textAlign = textAlign,
         color = color,
-        style = MovieTheme.typography.h4Bold,
+        style = BazzarTheme.typography.h4Bold,
         overflow = TextOverflow.Ellipsis
     )
 
@@ -231,7 +231,7 @@ fun Caption(
     modifier: Modifier = Modifier,
     maxLines: Int = Int.MAX_VALUE,
     textAlign: TextAlign = TextAlign.Center,
-    color: Color = MovieTheme.colors.primaryText,
+    color: Color = BazzarTheme.colors.primaryText,
     isBold: Boolean = false,
 ) {
     Text(
@@ -240,7 +240,7 @@ fun Caption(
         maxLines = maxLines,
         textAlign = textAlign,
         color = color,
-        style = if (isBold) MovieTheme.typography.captionBold else MovieTheme.typography.caption,
+        style = if (isBold) BazzarTheme.typography.captionBold else BazzarTheme.typography.caption,
         overflow = TextOverflow.Ellipsis
     )
 }

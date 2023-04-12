@@ -27,5 +27,8 @@
     <string name="product_search_title">Search by product , brand, category.</string>
     <string name="product_brands_title">BZAR Name</string>
     <string name="product_items_counter">item</string>
-
+    <string name="home">Home</string>
+    <string name="categories">Categories</string>
+    <string name="cart">Cart</string>
+    <string name="profile">Profile</string>
 </resources>
