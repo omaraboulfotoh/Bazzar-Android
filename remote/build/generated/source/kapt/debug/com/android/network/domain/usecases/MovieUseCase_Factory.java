@@ -1,6 +1,6 @@
 package com.android.network.domain.usecases;
 
-import com.android.network.domain.repos.MovieRepo;
+import com.android.network.domain.repos.HomeRepo;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import dagger.internal.QualifierMetadata;
@@ -19,23 +19,23 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes"
 })
-public final class MovieUseCase_Factory implements Factory<MovieUseCase> {
-  private final Provider<MovieRepo> movieRepoProvider;
+public final class MovieUseCase_Factory implements Factory<HomeUseCase> {
+  private final Provider<HomeRepo> movieRepoProvider;
 
-  public MovieUseCase_Factory(Provider<MovieRepo> movieRepoProvider) {
+  public MovieUseCase_Factory(Provider<HomeRepo> movieRepoProvider) {
     this.movieRepoProvider = movieRepoProvider;
   }
 
   @Override
-  public MovieUseCase get() {
+  public HomeUseCase get() {
     return newInstance(movieRepoProvider.get());
   }
 
-  public static MovieUseCase_Factory create(Provider<MovieRepo> movieRepoProvider) {
+  public static MovieUseCase_Factory create(Provider<HomeRepo> movieRepoProvider) {
     return new MovieUseCase_Factory(movieRepoProvider);
   }
 
-  public static MovieUseCase newInstance(MovieRepo movieRepo) {
-    return new MovieUseCase(movieRepo);
+  public static HomeUseCase newInstance(HomeRepo movieRepo) {
+    return new HomeUseCase(movieRepo);
   }
 }

@@ -1,7 +1,7 @@
 package com.bazzar.android.di
 
-import com.android.network.domain.repos.MovieRepo
-import com.android.network.domain.usecases.MovieUseCase
+import com.android.network.domain.repos.HomeRepo
+import com.android.network.domain.usecases.HomeUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,6 +16,6 @@ object UseCaseModule {
      * All UseCases
      */
     @Provides
-    fun provideMovieUseCase(userRepo: MovieRepo) = MovieUseCase(userRepo)
+    fun provideHomeUseCase(userRepo: HomeRepo) = HomeUseCase(userRepo)
 
 }

@@ -10,9 +10,9 @@ import com.bazzar.android.common.event.CompDispatcher
 import com.bazzar.android.common.event.IODispatcher
 import com.bazzar.android.common.event.MainDispatcher
 import com.bazzar.android.utils.AppCoroutineDispatchers
-import com.android.network.datasource.MovieRemoteDataSource
-import com.android.network.datasource.impl.MovieRemoteDataSourceImp
-import com.android.network.service.MovieApiServices
+import com.android.network.datasource.HomeRemoteDataSource
+import com.android.network.datasource.impl.HomeRemoteDataSourceImpl
+import com.android.network.service.HomeApiServices
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,13 +30,13 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideMovieApiServices(retrofit: Retrofit): MovieApiServices =
-        retrofit.create(MovieApiServices::class.java)
+    fun provideHomeApiServices(retrofit: Retrofit): HomeApiServices =
+        retrofit.create(HomeApiServices::class.java)
 
     @Singleton
     @Provides
-    fun provideMovieRemoteDataSource(remoteApiServices: MovieApiServices): MovieRemoteDataSource =
-        MovieRemoteDataSourceImp(remoteApiServices)
+    fun provideHomeRemoteDataSource(remoteApiServices: HomeApiServices): HomeRemoteDataSource =
+        HomeRemoteDataSourceImpl(remoteApiServices)
 
     @Singleton
     @Provides

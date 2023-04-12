@@ -1,8 +1,8 @@
 package com.bazzar.android.di
 
-import com.android.network.datasource.MovieRemoteDataSource
-import com.android.network.domain.repos.MovieRepo
-import com.android.network.domain.repos.impl.MovieRepoImpl
+import com.android.network.datasource.HomeRemoteDataSource
+import com.android.network.domain.repos.HomeRepo
+import com.android.network.domain.repos.impl.HomeRepoImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +15,7 @@ object RepositoriesModule {
 
     @Singleton
     @Provides
-    fun provideMovieRepo(remoteDataSource: MovieRemoteDataSource): MovieRepo =
-        MovieRepoImpl(remoteDataSource)
+    fun provideHomeRepo(remoteDataSource: HomeRemoteDataSource): HomeRepo =
+        HomeRepoImpl(remoteDataSource)
 
 }

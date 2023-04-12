@@ -1,11 +1,10 @@
-package com.bazzar.android.presentation.home_screen.composables
+package com.bazzar.android.presentation.home_screen
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
-import com.bazzar.android.presentation.home_screen.HomeContract
-import com.bazzar.android.presentation.home_screen.HomeViewModel
+import com.bazzar.android.presentation.home_screen.composables.HomeScreenContent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -16,12 +15,16 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigator: DestinationsNavigator,
 ) {
+
+    // get state
     val state = viewModel.viewState()
-    viewModel.setEvent(HomeContract.Event.StartScreen)
     viewModel.sideEffect { effect ->
         when (effect) {
             HomeContract.Effect.Navigation.GoToHome -> {}
         }
     }
-    HomeScreenContent(state) { viewModel.setEvent(it) }
+    // init logic
+    viewModel.init()
+
+    HomeScreenContent(state = state) { viewModel.setEvent(it) }
 }

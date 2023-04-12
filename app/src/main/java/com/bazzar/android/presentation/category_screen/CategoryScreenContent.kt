@@ -23,7 +23,6 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.android.model.movie.ProductModel
 import com.bazzar.android.R
 import com.bazzar.android.presentation.home_screen.composables.FooterTabBar
 import com.bazzar.android.presentation.home_screen.composables.MenuBarItem

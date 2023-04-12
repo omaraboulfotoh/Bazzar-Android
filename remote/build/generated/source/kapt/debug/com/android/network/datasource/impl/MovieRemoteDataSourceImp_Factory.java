@@ -1,6 +1,6 @@
 package com.android.network.datasource.impl;
 
-import com.android.network.service.MovieApiServices;
+import com.android.network.service.HomeApiServices;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import dagger.internal.QualifierMetadata;
@@ -19,24 +19,24 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes"
 })
-public final class MovieRemoteDataSourceImp_Factory implements Factory<MovieRemoteDataSourceImp> {
-  private final Provider<MovieApiServices> apiServicesProvider;
+public final class MovieRemoteDataSourceImp_Factory implements Factory<HomeRemoteDataSourceImpl> {
+  private final Provider<HomeApiServices> apiServicesProvider;
 
-  public MovieRemoteDataSourceImp_Factory(Provider<MovieApiServices> apiServicesProvider) {
+  public MovieRemoteDataSourceImp_Factory(Provider<HomeApiServices> apiServicesProvider) {
     this.apiServicesProvider = apiServicesProvider;
   }
 
   @Override
-  public MovieRemoteDataSourceImp get() {
+  public HomeRemoteDataSourceImpl get() {
     return newInstance(apiServicesProvider.get());
   }
 
   public static MovieRemoteDataSourceImp_Factory create(
-      Provider<MovieApiServices> apiServicesProvider) {
+      Provider<HomeApiServices> apiServicesProvider) {
     return new MovieRemoteDataSourceImp_Factory(apiServicesProvider);
   }
 
-  public static MovieRemoteDataSourceImp newInstance(MovieApiServices apiServices) {
-    return new MovieRemoteDataSourceImp(apiServices);
+  public static HomeRemoteDataSourceImpl newInstance(HomeApiServices apiServices) {
+    return new HomeRemoteDataSourceImpl(apiServices);
   }
 }

@@ -1,7 +1,6 @@
 package com.android.model.responses.base
 
 import android.os.Parcelable
-import com.android.model.movie.ProductModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize

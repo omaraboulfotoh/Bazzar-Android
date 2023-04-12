@@ -1,6 +1,6 @@
 package com.android.network.domain.repos.impl;
 
-import com.android.network.datasource.MovieRemoteDataSource;
+import com.android.network.datasource.HomeRemoteDataSource;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import dagger.internal.QualifierMetadata;
@@ -19,24 +19,24 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes"
 })
-public final class MovieRepoImpl_Factory implements Factory<MovieRepoImpl> {
-  private final Provider<MovieRemoteDataSource> movieRemoteDataSourceProvider;
+public final class MovieRepoImpl_Factory implements Factory<HomeRepoImpl> {
+  private final Provider<HomeRemoteDataSource> movieRemoteDataSourceProvider;
 
-  public MovieRepoImpl_Factory(Provider<MovieRemoteDataSource> movieRemoteDataSourceProvider) {
+  public MovieRepoImpl_Factory(Provider<HomeRemoteDataSource> movieRemoteDataSourceProvider) {
     this.movieRemoteDataSourceProvider = movieRemoteDataSourceProvider;
   }
 
   @Override
-  public MovieRepoImpl get() {
+  public HomeRepoImpl get() {
     return newInstance(movieRemoteDataSourceProvider.get());
   }
 
   public static MovieRepoImpl_Factory create(
-      Provider<MovieRemoteDataSource> movieRemoteDataSourceProvider) {
+      Provider<HomeRemoteDataSource> movieRemoteDataSourceProvider) {
     return new MovieRepoImpl_Factory(movieRemoteDataSourceProvider);
   }
 
-  public static MovieRepoImpl newInstance(MovieRemoteDataSource movieRemoteDataSource) {
-    return new MovieRepoImpl(movieRemoteDataSource);
+  public static HomeRepoImpl newInstance(HomeRemoteDataSource movieRemoteDataSource) {
+    return new HomeRepoImpl(movieRemoteDataSource);
   }
 }

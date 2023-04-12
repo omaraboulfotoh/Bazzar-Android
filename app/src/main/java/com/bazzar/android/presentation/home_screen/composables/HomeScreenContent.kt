@@ -27,16 +27,15 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.android.model.movie.ProductModel
 import com.bazzar.android.R
+import com.bazzar.android.presentation.home_screen.HomeContract
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 
 
-@Preview
 @Composable
-fun HomeScreenContent(/*state: HomeContract.State*/) {
+fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Event) -> Unit) {
     val categoryList = mutableListOf<ProductModel>()
     for (i in 1..4) {
         val product = ProductModel(
@@ -50,7 +49,8 @@ fun HomeScreenContent(/*state: HomeContract.State*/) {
     LazyColumn(
         modifier = Modifier
             .background(colorResource(id = R.color.white_smoke))
-            .fillMaxSize(),
+            .fillMaxSize()
+            .clickable { onSendEvent(HomeContract.Event.OnSliderClicked(2)) },
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -76,11 +76,17 @@ fun Header() {
             ),
         horizontalArrangement = Arrangement.Start
     ) {
+        Text(text =)
         Image(
+
             painter = painterResource(R.drawable.bazzars_home_title),
             contentDescription = "HomeScreenTitle",
         )
-        Spacer(modifier = Modifier.width(85.dp))
+        Spacer(modifier = Modifier
+            .width(85.dp)
+            .clickable {
+
+            })
         Image(
             painter = painterResource(R.drawable.search_icon),
             contentDescription = "searchIcon",
@@ -367,9 +373,13 @@ fun ProductsGroup(/*productsList: List<ProductModel>*/) {
 }
 
 @Composable
-fun CategoryGroup(categoryList:List<ProductModel>) {
+fun CategoryGroup(categoryList: List<ProductModel>) {
     HeaderTextWithViewAll(text = stringResource(id = R.string.home_featured_category))
-    Box(Modifier.fillMaxWidth().height(500.dp)) {
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .height(500.dp)
+    ) {
         LazyVerticalGrid(
             GridCells.Fixed(2), contentPadding = PaddingValues(16.dp),
         ) {
@@ -391,7 +401,7 @@ fun CategoryGroup(categoryList:List<ProductModel>) {
                         content = {}
                     )
                     Image(
-                        painter = painterResource(category.localPoster?:-1),
+                        painter = painterResource(category.localPoster ?: -1),
                         contentDescription = null,
                         modifier = Modifier
                             .align(Alignment.TopCenter)
@@ -418,3 +428,11 @@ fun CategoryGroup(categoryList:List<ProductModel>) {
     }
 }
 
+
+@Preview
+@Composable
+fun PreviewHomeScreenContent() {
+    HomeScreenContent(state = HomeContract.State(), onSendEvent = {
+
+    })
+}

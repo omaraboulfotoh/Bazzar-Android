@@ -5,7 +5,6 @@
 
 package com.android.model.responses.base
 
-import com.android.model.movie.ProductModel
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter
