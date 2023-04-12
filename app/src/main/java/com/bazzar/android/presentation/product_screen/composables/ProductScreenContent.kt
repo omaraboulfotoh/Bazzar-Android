@@ -209,6 +209,7 @@ fun SortFilterBar(product: ProductModel) {
     Card(modifier = Modifier
         .fillMaxWidth()
         .height(42.dp),
+        shape= RoundedCornerShape(0.dp),
         colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.whisper)),
         elevation = CardDefaults.cardElevation(defaultElevation = 30.dp),
         content = {
@@ -229,7 +230,7 @@ fun SortFilterBar(product: ProductModel) {
                                     fontFamily = FontFamily(Font(R.font.montserrat_semibold))
                                 )
                             ) {
-                                append(product?.priceBeforeSale?.toString() ?: "0000")
+                                append(product.itemCounter?.toString() ?: "0000")
                                 append(
                                     stringResource(id = R.string.product_items_counter)
                                 )
