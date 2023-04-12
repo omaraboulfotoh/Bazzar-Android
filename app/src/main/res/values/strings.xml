@@ -33,4 +33,5 @@
     <string name="profile">Profile</string>
     <string name="sort">Sort</string>
     <string name="filter">Filter</string>
+    <string name="product_bazar_category">BAZAR category</string>
 </resources>
