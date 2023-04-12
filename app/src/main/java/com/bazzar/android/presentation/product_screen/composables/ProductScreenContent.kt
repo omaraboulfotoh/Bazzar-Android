@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -76,6 +77,8 @@ fun ProductScreen() {
                 searchClicked = !searchClicked
             }
             ProductHorizontalList(imageList)
+            Spacer(Modifier.height(10.dp))
+            BazarCategoryList()
             Spacer(Modifier.height(10.dp))
             SortFilterBar(productFilter)
             ProductColumnGroup(productsList)
@@ -209,7 +212,7 @@ fun SortFilterBar(product: ProductModel) {
     Card(modifier = Modifier
         .fillMaxWidth()
         .height(42.dp),
-        shape= RoundedCornerShape(0.dp),
+        shape = RoundedCornerShape(0.dp),
         colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.whisper)),
         elevation = CardDefaults.cardElevation(defaultElevation = 30.dp),
         content = {
@@ -478,6 +481,72 @@ fun ProductHeader() {
         }
     }
 
+}
+
+@Composable
+fun BazarCategoryList() {
+    val productsList = listOf(
+        ProductModel(
+            localPoster = R.drawable.first_bazzar,
+            productTitle = "Product title",
+            brandName = "Brand Name",
+            priceBeforeSale = 000.000
+        ),
+        ProductModel(
+            localPoster = R.drawable.first_bazzar,
+            productTitle = "Product title",
+            brandName = "Brand Name",
+            priceBeforeSale = 000.000
+        ),
+        ProductModel(
+            localPoster = R.drawable.first_bazzar,
+            productTitle = "Product title",
+            brandName = "Brand Name",
+            priceBeforeSale = 000.000
+        ), ProductModel(
+            localPoster = R.drawable.first_bazzar,
+            productTitle = "Product title",
+            brandName = "Brand Name",
+            priceBeforeSale = 000.000
+        )
+    )
+    Box(Modifier.padding(top = 4.dp)) {
+        LazyRow(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .wrapContentWidth()
+                .height(43.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(horizontal = 8.dp)
+        ) {
+            items(productsList.size) { index ->
+                val product = productsList[index]
+                var isCategoryClicked by remember { mutableStateOf(false) }
+                IconButton(
+                    onClick = {isCategoryClicked=!isCategoryClicked},
+                    Modifier
+                        .width(110.dp)
+                        .height(31.dp)
+                        .clip(RoundedCornerShape(5.dp))
+                        .border(
+                            1.dp,
+                            colorResource(id = if (isCategoryClicked) R.color.prussian_blue else R.color.Gray55),
+                            shape = RoundedCornerShape(5.dp)
+                        )
+                        .background(colorResource( id = if (isCategoryClicked) R.color.prussian_blue else R.color.white)),
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.product_bazar_category),
+                        style = MaterialTheme.typography.overline.copy(
+                            fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                            color = if(isCategoryClicked)colorResource(id = R.color.white) else colorResource(id = R.color.Gray55)
+
+                        )
+                    )
+                }
+            }
+        }
+    }
 }
 
 
