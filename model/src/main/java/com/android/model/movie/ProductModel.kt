@@ -23,4 +23,5 @@ data class ProductModel(
     val poster: String? = null,
     @Json(name = "local_poster_path")
     val localPoster: Int? = null,
+    val filterNumSelected: Int? = null,
 ) : Parcelable

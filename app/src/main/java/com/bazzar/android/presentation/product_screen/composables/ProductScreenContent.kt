@@ -41,6 +41,13 @@ import com.google.accompanist.pager.rememberPagerState
 fun ProductScreen() {
     var searchClicked by remember { mutableStateOf(true) }
     val productsList = mutableListOf<ProductModel>()
+    val productFilter = ProductModel(
+        localPoster = R.drawable.first_bazzar,
+        productTitle = "Product title",
+        brandName = "Brand Name",
+        priceBeforeSale = 000.000
+    )
+
     for (i in 1..17) {
         val product = ProductModel(
             localPoster = R.drawable.first_bazzar,
@@ -70,7 +77,7 @@ fun ProductScreen() {
             }
             ProductHorizontalList(imageList)
             Spacer(Modifier.height(10.dp))
-            SortFilterBar()
+            SortFilterBar(productFilter)
             ProductColumnGroup(productsList)
             FooterTabBar(MenuBarItem.Home)
         }
@@ -94,15 +101,13 @@ fun ProductColumnGroup(productsList: List<ProductModel>) {
                         .padding(top = 16.dp)
                         .clip(RoundedCornerShape(size = 20.dp))
                 ) {
-                    Card(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .align(Alignment.Center),
+                    Card(modifier = Modifier
+                        .fillMaxSize()
+                        .align(Alignment.Center),
                         shape = RoundedCornerShape(20.dp),
                         colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.white)),
                         elevation = CardDefaults.cardElevation(defaultElevation = 30.dp),
-                        content = {}
-                    )
+                        content = {})
 
                     Column(
                         modifier = Modifier
@@ -153,21 +158,17 @@ fun ProductColumnGroup(productsList: List<ProductModel>) {
                                 .paddingFromBaseline(top = 24.dp)
                                 .padding(start = 8.dp)
                                 .padding(bottom = 32.dp)
-                                .align(Alignment.Start),
-                            text =
-                            buildAnnotatedString {
+                                .align(Alignment.Start), text = buildAnnotatedString {
                                 withStyle(
                                     style = SpanStyle(
-                                        fontFamily =
-                                        FontFamily(Font(R.font.montserrat_bold))
+                                        fontFamily = FontFamily(Font(R.font.montserrat_bold))
                                     )
                                 ) {
                                     append(product.priceBeforeSale.toString() ?: "")
                                 }
                                 withStyle(
                                     style = SpanStyle(
-                                        fontFamily =
-                                        FontFamily(Font(R.font.montserrat_regular))
+                                        fontFamily = FontFamily(Font(R.font.montserrat_regular))
                                     )
                                 ) {
                                     append(
@@ -176,8 +177,7 @@ fun ProductColumnGroup(productsList: List<ProductModel>) {
                                         )
                                     )
                                 }
-                            },
-                            style = MaterialTheme.typography.subtitle2.copy(
+                            }, style = MaterialTheme.typography.subtitle2.copy(
                                 color = colorResource(id = R.color.black)
                             )
                         )
@@ -205,18 +205,89 @@ fun ProductColumnGroup(productsList: List<ProductModel>) {
 }
 
 @Composable
-fun SortFilterBar() {
-    Box(
-        Modifier
-            .fillMaxWidth()
-            .height(42.dp)
-            .background(colorResource(id = R.color.whisper))
-    ) {
-        Text(
-            text= stringResource(id = R.string.product_items_counter),
+fun SortFilterBar(product: ProductModel) {
+    Card(modifier = Modifier
+        .fillMaxWidth()
+        .height(42.dp),
+        colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.whisper)),
+        elevation = CardDefaults.cardElevation(defaultElevation = 30.dp),
+        content = {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(colorResource(id = R.color.whisper))
+            ) {
+                Row(
+                    modifier = Modifier.align(Alignment.Center),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .padding(start = 16.dp), text = buildAnnotatedString {
+                            withStyle(
+                                style = SpanStyle(
+                                    fontFamily = FontFamily(Font(R.font.montserrat_semibold))
+                                )
+                            ) {
+                                append(product?.priceBeforeSale?.toString() ?: "0000")
+                                append(
+                                    stringResource(id = R.string.product_items_counter)
+                                )
+                            }
+                        }, style = MaterialTheme.typography.overline.copy(
+                            color = colorResource(id = R.color.prussian_blue)
+                        )
+                    )
+                    Spacer(modifier = Modifier.width(152.dp))
+                    Icon(
+                        painterResource(id = R.drawable.ic_sort),
+                        contentDescription = null,
+                        tint = colorResource(id = R.color.prussian_blue)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = stringResource(id = R.string.sort),
+                        style = MaterialTheme.typography.caption.copy(
+                            fontFamily = FontFamily(Font(R.font.montserrat_medium)),
+                            color = colorResource(id = R.color.prussian_blue)
+                        )
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Icon(
+                        painterResource(id = R.drawable.ic_filter),
+                        contentDescription = null,
+                        tint = colorResource(id = R.color.prussian_blue)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = stringResource(id = R.string.filter),
+                        style = MaterialTheme.typography.caption.copy(
+                            fontFamily = FontFamily(Font(R.font.montserrat_medium)),
+                            color = colorResource(id = R.color.prussian_blue)
+                        )
+                    )
+                    Spacer(modifier = Modifier.width(5.dp))
+                    Box(
+                        modifier = Modifier
+                            .size(14.dp)
+                            .clip(RoundedCornerShape(7.dp))
+                            .background(colorResource(id = R.color.prussian_blue))
+                    ) {
+                        Text(
+                            text = product.filterNumSelected?.toString() ?: "2",
+                            modifier = Modifier
+                                .align(Alignment.Center),
+                            style = MaterialTheme.typography.overline.copy(
+                                fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                                color = colorResource(id = R.color.white)
+                            )
+                        )
 
-        )
-    }
+                    }
+                }
+            }
+        })
+
 }
 
 
@@ -286,8 +357,7 @@ fun SearchProduct(searchClicked: Boolean, onSearchClick: (Boolean) -> Unit) {
             onClick = { onSearchClick(searchClicked) },
         ) {
             Row(
-                modifier = Modifier.fillMaxSize(),
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(
                     Modifier
@@ -375,8 +445,7 @@ fun ProductHeader() {
         }
 
         Box(
-            Modifier
-                .weight(1f)
+            Modifier.weight(1f)
 //                .padding(horizontal = 16.dp)
         ) {
             androidx.compose.material.Text(
