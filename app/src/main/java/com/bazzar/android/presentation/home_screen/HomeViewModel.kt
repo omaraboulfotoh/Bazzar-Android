@@ -25,6 +25,7 @@ class HomeViewModel @Inject constructor(
     override fun handleEvents(event: HomeContract.Event) {
         when (event) {
             is HomeContract.Event.OnSliderClicked -> handleSliderAction(event.sliderIndex)
+            else -> {}
         }
     }
 
@@ -47,12 +48,13 @@ class HomeViewModel @Inject constructor(
                 is Result.Success -> setState {
                     copy(
                         slides1 = it.data?.slider1,
-                        slides2 = it.data?.slider1,
+                        slides2 = it.data?.slider2,
                         categoryItems = it.data?.categoryItems,
                         featuredBrands = it.data?.featuredBrands,
                         featuredCategories = it.data?.featuredCategories
                     )
                 }
+                else -> {}
             }
         }
     })

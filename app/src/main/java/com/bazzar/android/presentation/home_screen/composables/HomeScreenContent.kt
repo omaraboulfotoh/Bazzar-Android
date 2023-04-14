@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Card
@@ -27,25 +28,19 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.android.model.home.Brand
+import com.android.model.home.Category
+import com.android.model.home.Product
 import com.bazzar.android.R
+import com.bazzar.android.presentation.composables.FooterTabBar
+import com.bazzar.android.presentation.composables.MenuBarItem
 import com.bazzar.android.presentation.home_screen.HomeContract
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 
 
 @Composable
 fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Event) -> Unit) {
-    val categoryList = mutableListOf<ProductModel>()
-    for (i in 1..4) {
-        val product = ProductModel(
-            localPoster = R.drawable.first_bazzar,
-            productTitle = "Product title",
-            brandName = "Brand Name",
-            priceBeforeSale = 000.000
-        )
-        categoryList.add(product)
-    }
     LazyColumn(
         modifier = Modifier
             .background(colorResource(id = R.color.white_smoke))
@@ -55,384 +50,19 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         item {
-            Header()
-            BazzarHorizontalList()
-            FeaturedBazzar()
-            FeaturedBrands()
-            ProductsGroup()
-            CategoryGroup(categoryList)
+            HomeHeader()
+            BazzarSlider(state.slides1)
+            FeaturedBazzarSlider(state.slides2)
+            FeaturedBrands(state.featuredBrands)
+            ProductsGroup(state.categoryItems)
+            CategoryGroup(state.featuredCategories)
             FooterTabBar(MenuBarItem.Home)
         }
     }
 }
-
-@Composable
-fun Header() {
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .padding(
-                top = 32.dp, start = 127.dp
-            ),
-        horizontalArrangement = Arrangement.Start
-    ) {
-        Text(text =)
-        Image(
-
-            painter = painterResource(R.drawable.bazzars_home_title),
-            contentDescription = "HomeScreenTitle",
-        )
-        Spacer(modifier = Modifier
-            .width(85.dp)
-            .clickable {
-
-            })
-        Image(
-            painter = painterResource(R.drawable.search_icon),
-            contentDescription = "searchIcon",
-        )
-
-    }
-
-}
-
-@OptIn(ExperimentalPagerApi::class)
-@Composable
-fun BazzarHorizontalList() {
-
-    val imageList = listOf(
-        R.drawable.first_bazzar,
-        R.drawable.second_bazzar,
-        R.drawable.third_bazzar,
-    )
-    val pagerState = rememberPagerState(
-        initialPage = 0,
-    )
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(171.dp)
-            .padding(top = 28.dp)
-    ) {
-        HorizontalPager(
-            state = pagerState,
-            count = imageList.size,
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            contentPadding = PaddingValues(4.dp)
-
-        ) { page ->
-            Image(
-                painter = painterResource(id = imageList[page]),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .padding(horizontal = 4.dp),
-                contentDescription = null,
-            )
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(top = 12.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            for (i in imageList.indices) {
-                Indicator(selected = i == pagerState.currentPage) {}
-            }
-        }
-    }
-}
-
-@Composable
-fun FeaturedBazzar() {
-
-    HeaderTextWithViewAll(text = stringResource(id = R.string.home_screen_featured_bzarz))
-    val imageList = listOf(
-        R.drawable.first_bazzar,
-        R.drawable.second_bazzar,
-        R.drawable.third_bazzar,
-        R.drawable.third_bazzar,
-        R.drawable.third_bazzar,
-    )
-    val textList = listOf(
-        "Bzar Name",
-        "Bzar Name",
-        "Bzar Name"
-    )
-    CustomLazyRow(
-        imageList = imageList,
-        textList = textList,
-        customIV = { image, text ->
-            Column {
-                SemiCircleImageView(
-                    image = image,
-                    text = text
-                )
-            }
-        },
-        topPadding = 16.dp,
-        spaceBetweenItems = 16.dp
-    )
-}
-
-@Composable
-fun FeaturedBrands(/*brandsList: List<BrandModel>*/) {
-    val productsList = listOf(
-        ProductModel(
-            localPoster = R.drawable.first_bazzar,
-            productTitle = "Product title",
-            brandName = "Brand Name",
-            priceBeforeSale = 000.000
-        ),
-        ProductModel(
-            localPoster = R.drawable.first_bazzar,
-            productTitle = "Product title",
-            brandName = "Brand Name",
-            priceBeforeSale = 000.000
-        ),
-        ProductModel(
-            localPoster = R.drawable.first_bazzar,
-            productTitle = "Product title",
-            brandName = "Brand Name",
-            priceBeforeSale = 000.000
-        ), ProductModel(
-            localPoster = R.drawable.first_bazzar,
-            productTitle = "Product title",
-            brandName = "Brand Name",
-            priceBeforeSale = 000.000
-        )
-    )
-    HeaderTextWithViewAll(text = stringResource(id = R.string.home_screen_featured_brands))
-    LazyRow(
-        modifier = Modifier
-            .padding(top = 16.dp)
-            .wrapContentWidth()
-            .height(120.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(horizontal = 8.dp)
-    ) {
-        items(productsList.size) { index ->
-            val product = productsList[index]
-            Image(
-                painter = painterResource(id = product.localPoster ?: -1),
-                contentDescription = "Brand image",
-                modifier = Modifier
-                    .size(104.dp)
-                    .fillMaxSize(),
-                contentScale = ContentScale.FillBounds
-            )
-        }
-    }
-}
-
-@Composable
-fun ProductsGroup(/*productsList: List<ProductModel>*/) {
-    val productsList = listOf(
-        ProductModel(
-            localPoster = R.drawable.first_bazzar,
-            productTitle = "Product title",
-            brandName = "Brand Name",
-            priceBeforeSale = 000.000
-        ),
-        ProductModel(
-            localPoster = R.drawable.first_bazzar,
-            productTitle = "Product title",
-            brandName = "Brand Name",
-            priceBeforeSale = 000.000
-        ),
-        ProductModel(
-            localPoster = R.drawable.first_bazzar,
-            productTitle = "Product title",
-            brandName = "Brand Name",
-            priceBeforeSale = 000.000
-        ), ProductModel(
-            localPoster = R.drawable.first_bazzar,
-            productTitle = "Product title",
-            brandName = "Brand Name",
-            priceBeforeSale = 000.000
-        )
-    )
-    HeaderTextWithViewAll(text = stringResource(id = R.string.home_screen_products_group))
-    LazyRow(
-        modifier = Modifier
-            .padding(top = 16.dp)
-            .wrapContentWidth()
-            .height(322.dp),
-        horizontalArrangement = Arrangement.spacedBy(7.dp),
-        contentPadding = PaddingValues(horizontal = 7.dp),
-    ) {
-        items(productsList.size) { index ->
-            val product = productsList[index]
-            Box(
-                modifier = Modifier
-                    .width(168.dp)
-                    .clip(RoundedCornerShape(size = 20.dp))
-                    .background(Color.White)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .background(Color.White)
-                        .width(168.dp)
-                        .align(Alignment.Center),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.heart_ic),
-                        contentDescription = "favourite image",
-                        modifier = Modifier
-                            .offset(y = 16.dp)
-                            .padding(start = 140.dp)
-                            .padding(end = 12.dp)
-                    )
-                    Image(
-                        painter = painterResource(id = product.localPoster ?: -1),
-                        contentDescription = "Product image",
-                        modifier = Modifier
-                            .size(152.dp)
-                            .padding(top = 40.dp)
-                    )
-                    Text(
-                        text = product?.productTitle ?: "",
-                        modifier = Modifier
-                            .padding(top = 16.dp)
-                            .padding(start = 8.dp)
-                            .align(Alignment.Start),
-                        style = MaterialTheme.typography.subtitle2.copy(
-                            fontFamily = FontFamily(Font(R.font.montserrat_bold)),
-                            color = colorResource(id = R.color.black)
-                        )
-                    )
-                    Text(
-                        text = product.brandName ?: "",
-                        modifier = Modifier
-                            .padding(top = 4.dp)
-                            .padding(start = 8.dp)
-                            .align(Alignment.Start),
-                        style = MaterialTheme.typography.subtitle2.copy(
-                            fontFamily = FontFamily(Font(R.font.montserrat_regular)),
-                            color = colorResource(id = R.color.black)
-                        )
-                    )
-                    Text(
-                        modifier = Modifier
-                            .paddingFromBaseline(top = 24.dp)
-                            .padding(start = 8.dp)
-                            .padding(bottom = 32.dp)
-                            .align(Alignment.Start),
-                        text =
-                        buildAnnotatedString {
-                            withStyle(
-                                style = SpanStyle(
-                                    fontFamily =
-                                    FontFamily(Font(R.font.montserrat_bold))
-                                )
-                            ) {
-                                append(product.priceBeforeSale.toString() ?: "")
-                            }
-                            withStyle(
-                                style = SpanStyle(
-                                    fontFamily =
-                                    FontFamily(Font(R.font.montserrat_regular))
-                                )
-                            ) {
-                                append(
-                                    stringResource(
-                                        id = R.string.home_screen_product_price
-                                    )
-                                )
-                            }
-                        },
-                        style = MaterialTheme.typography.subtitle2.copy(
-                            color = colorResource(id = R.color.black)
-                        )
-                    )
-                }
-                Image(
-                    painter = painterResource(R.drawable.new_icon),
-                    contentDescription = "new_icon",
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .offset(y = (-122).dp)
-                )
-                Image(
-                    painter = painterResource(R.drawable.ic_cart),
-                    contentDescription = "cart_icon",
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .offset(y = (-30).dp)
-                        .padding(end = 8.dp)
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun CategoryGroup(categoryList: List<ProductModel>) {
-    HeaderTextWithViewAll(text = stringResource(id = R.string.home_featured_category))
-    Box(
-        Modifier
-            .fillMaxWidth()
-            .height(500.dp)
-    ) {
-        LazyVerticalGrid(
-            GridCells.Fixed(2), contentPadding = PaddingValues(16.dp),
-        ) {
-            items(categoryList.size) { index ->
-                val category = categoryList[index]
-                Box(
-                    Modifier
-                        .padding(top = 16.dp)
-                        .height(216.dp)
-                        .wrapContentWidth()
-                ) {
-                    Card(
-                        modifier = Modifier
-                            .size(168.dp)
-                            .align(Alignment.BottomCenter),
-                        shape = RoundedCornerShape(20.dp),
-                        colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.white)),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 20.dp),
-                        content = {}
-                    )
-                    Image(
-                        painter = painterResource(category.localPoster ?: -1),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .align(Alignment.TopCenter)
-                            .size(120.dp)
-                            .fillMaxSize()
-                            .background(Color.Red),
-                        contentScale = ContentScale.Crop
-                    )
-                    Text(
-                        text = category.productTitle ?: "",
-                        modifier = Modifier
-                            .padding(bottom = 46.dp)
-                            .align(Alignment.BottomCenter),
-                        style = MaterialTheme.typography.subtitle2.copy(
-                            fontFamily = FontFamily(Font(R.font.montserrat_bold)),
-                            color = colorResource(id = R.color.black)
-                        )
-                    )
-
-                }
-
-            }
-        }
-    }
-}
-
-
 @Preview
 @Composable
 fun PreviewHomeScreenContent() {
     HomeScreenContent(state = HomeContract.State(), onSendEvent = {
-
     })
 }

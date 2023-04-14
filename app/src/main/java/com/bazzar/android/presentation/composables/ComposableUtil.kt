@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.home_screen.composables
+package com.bazzar.android.presentation.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -26,7 +25,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.android.model.home.HomeSlider
 import com.bazzar.android.R
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 
 
 @Composable
@@ -41,8 +43,9 @@ fun Indicator(selected: Boolean, onClick: () -> Unit) {
     Spacer(modifier = Modifier.width(2.dp))
 }
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun SemiCircleImageView(image: Int, text: String) {
+fun SemiCircleImageView(imagePath: String, text: String) {
     Box(
         modifier = Modifier
             .width(136.dp)
@@ -65,8 +68,8 @@ fun SemiCircleImageView(image: Int, text: String) {
                 .size(126.dp)
                 .align(Alignment.TopCenter),
         ) {
-            Image(
-                painter = painterResource(id = image),
+            GlideImage(
+                model = imagePath,
                 contentDescription = null,
                 contentScale = ContentScale.Crop, modifier = Modifier
                     .width(126.dp)
@@ -119,9 +122,8 @@ fun HeaderTextWithViewAll(text: String) {
 
 @Composable
 fun CustomLazyRow(
-    imageList: List<Int>,
-    textList: List<String>,
-    customIV: @Composable (image: Int, text: String) -> Unit,
+    imageList: List<HomeSlider>?,
+    customIV: @Composable (image: String, text: String) -> Unit,
     topPadding: Dp,
     spaceBetweenItems: Dp
 ) {
@@ -132,9 +134,8 @@ fun CustomLazyRow(
         horizontalArrangement = Arrangement.spacedBy(spaceBetweenItems),
         contentPadding = PaddingValues(horizontal = spaceBetweenItems)
     ) {
-        val dataList = imageList.zip(textList)
-        items(dataList) { (image, text) ->
-            customIV(image, text)
+        items(imageList!!) {
+            customIV(it.imagePath!!, it.title!!)
         }
     }
 }
