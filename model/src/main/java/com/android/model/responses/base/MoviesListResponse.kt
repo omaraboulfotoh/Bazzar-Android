@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class MoviesListResponse(
-    val results: List<ProductModel> = listOf(),
+//    val results: List<ProductModel> = listOf(),
     val page: Int = 0,
     @Json(name = "total_pages")
     val totalPages: Int = 0,

@@ -1,3 +1,4 @@
+/*
 package com.bazzar.android.presentation.product_screen.composables
 
 import androidx.compose.foundation.Image
@@ -40,23 +41,10 @@ import com.google.accompanist.pager.rememberPagerState
 @Composable
 fun ProductScreen() {
     var searchClicked by remember { mutableStateOf(true) }
-    val productsList = mutableListOf<ProductModel>()
-    val productFilter = ProductModel(
-        localPoster = R.drawable.first_bazzar,
-        productTitle = "Product title",
-        brandName = "Brand Name",
-        priceBeforeSale = 000.000
+    val productsList = mutableListOf<Any>()
+    val productFilter = Any(
     )
 
-    for (i in 1..17) {
-        val product = ProductModel(
-            localPoster = R.drawable.first_bazzar,
-            productTitle = "Product title",
-            brandName = "Brand Name",
-            priceBeforeSale = 000.000
-        )
-        productsList.add(product)
-    }
     val imageList = listOf(
         R.drawable.first_bazzar,
         R.drawable.second_bazzar,
@@ -393,7 +381,9 @@ fun SearchProduct(searchClicked: Boolean, onSearchClick: (Boolean) -> Unit) {
                                 .align(Alignment.Center)
                                 .width(280.dp)
                                 .height(50.dp)
-                            /* .padding(start = 33.dp)*/,
+                            */
+/* .padding(start = 33.dp)*//*
+,
                             value = searchText,
                             onValueChange = { inputText -> searchText = inputText },
                             colors = TextFieldDefaults.textFieldColors(
@@ -431,14 +421,20 @@ fun ProductHeader() {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         IconButton(
-            onClick = { /* TODO */ }, modifier = Modifier.padding(start = 16.dp)
+            onClick = { */
+/* TODO *//*
+ }, modifier = Modifier.padding(start = 16.dp)
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_back), contentDescription = "back"
             )
         }
         IconButton(
-            onClick = { /* TODO */ }, /*modifier = Modifier.padding(start = 16.dp)*/
+            onClick = { */
+/* TODO *//*
+ }, */
+/*modifier = Modifier.padding(start = 16.dp)*//*
+
         ) {
             Image(
                 painter = painterResource(R.drawable.product_icon),
@@ -461,7 +457,11 @@ fun ProductHeader() {
             )
         }
         IconButton(
-            onClick = { /* TODO */ }, /*modifier = Modifier.padding(start = 16.dp)*/
+            onClick = { */
+/* TODO *//*
+ }, */
+/*modifier = Modifier.padding(start = 16.dp)*//*
+
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_heart_blue),
@@ -470,7 +470,9 @@ fun ProductHeader() {
             )
         }
         IconButton(
-            onClick = { /* TODO */ }, modifier = Modifier.padding(start = 16.dp)
+            onClick = { */
+/* TODO *//*
+ }, modifier = Modifier.padding(start = 16.dp)
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_share),
@@ -550,3 +552,4 @@ fun BazarCategoryList() {
 
 
 
+*/

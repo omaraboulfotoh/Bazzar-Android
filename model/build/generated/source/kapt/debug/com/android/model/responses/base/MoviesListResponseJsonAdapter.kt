@@ -9,7 +9,6 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
 import com.squareup.moshi.`internal`.Util
 import java.lang.NullPointerException
 import java.lang.reflect.Constructor
@@ -17,7 +16,6 @@ import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
 import kotlin.Unit
-import kotlin.collections.List
 import kotlin.collections.emptySet
 import kotlin.jvm.Volatile
 import kotlin.text.buildString
@@ -25,12 +23,8 @@ import kotlin.text.buildString
 public class MoviesListResponseJsonAdapter(
   moshi: Moshi
 ) : JsonAdapter<MoviesListResponse>() {
-  private val options: JsonReader.Options = JsonReader.Options.of("results", "page", "total_pages",
+  private val options: JsonReader.Options = JsonReader.Options.of("page", "total_pages",
       "total_results")
-
-  private val listOfProductModelAdapter: JsonAdapter<List<ProductModel>> =
-      moshi.adapter(Types.newParameterizedType(List::class.java, ProductModel::class.java),
-      emptySet(), "results")
 
   private val intAdapter: JsonAdapter<Int> = moshi.adapter(Int::class.java, emptySet(), "page")
 
@@ -41,7 +35,6 @@ public class MoviesListResponseJsonAdapter(
       append("GeneratedJsonAdapter(").append("MoviesListResponse").append(')') }
 
   public override fun fromJson(reader: JsonReader): MoviesListResponse {
-    var results: List<ProductModel>? = null
     var page: Int? = 0
     var totalPages: Int? = 0
     var totalResults: Int? = 0
@@ -50,27 +43,21 @@ public class MoviesListResponseJsonAdapter(
     while (reader.hasNext()) {
       when (reader.selectName(options)) {
         0 -> {
-          results = listOfProductModelAdapter.fromJson(reader) ?:
-              throw Util.unexpectedNull("results", "results", reader)
+          page = intAdapter.fromJson(reader) ?: throw Util.unexpectedNull("page", "page", reader)
           // $mask = $mask and (1 shl 0).inv()
           mask0 = mask0 and 0xfffffffe.toInt()
         }
         1 -> {
-          page = intAdapter.fromJson(reader) ?: throw Util.unexpectedNull("page", "page", reader)
+          totalPages = intAdapter.fromJson(reader) ?: throw Util.unexpectedNull("totalPages",
+              "total_pages", reader)
           // $mask = $mask and (1 shl 1).inv()
           mask0 = mask0 and 0xfffffffd.toInt()
         }
         2 -> {
-          totalPages = intAdapter.fromJson(reader) ?: throw Util.unexpectedNull("totalPages",
-              "total_pages", reader)
-          // $mask = $mask and (1 shl 2).inv()
-          mask0 = mask0 and 0xfffffffb.toInt()
-        }
-        3 -> {
           totalResults = intAdapter.fromJson(reader) ?: throw Util.unexpectedNull("totalResults",
               "total_results", reader)
-          // $mask = $mask and (1 shl 3).inv()
-          mask0 = mask0 and 0xfffffff7.toInt()
+          // $mask = $mask and (1 shl 2).inv()
+          mask0 = mask0 and 0xfffffffb.toInt()
         }
         -1 -> {
           // Unknown name, skip it.
@@ -80,10 +67,9 @@ public class MoviesListResponseJsonAdapter(
       }
     }
     reader.endObject()
-    if (mask0 == 0xfffffff0.toInt()) {
+    if (mask0 == 0xfffffff8.toInt()) {
       // All parameters with defaults are set, invoke the constructor directly
       return  MoviesListResponse(
-          results = results as List<ProductModel>,
           page = page as Int,
           totalPages = totalPages as Int,
           totalResults = totalResults as Int
@@ -92,12 +78,10 @@ public class MoviesListResponseJsonAdapter(
       // Reflectively invoke the synthetic defaults constructor
       @Suppress("UNCHECKED_CAST")
       val localConstructor: Constructor<MoviesListResponse> = this.constructorRef ?:
-          MoviesListResponse::class.java.getDeclaredConstructor(List::class.java,
+          MoviesListResponse::class.java.getDeclaredConstructor(Int::class.javaPrimitiveType,
           Int::class.javaPrimitiveType, Int::class.javaPrimitiveType, Int::class.javaPrimitiveType,
-          Int::class.javaPrimitiveType, Util.DEFAULT_CONSTRUCTOR_MARKER).also {
-          this.constructorRef = it }
+          Util.DEFAULT_CONSTRUCTOR_MARKER).also { this.constructorRef = it }
       return localConstructor.newInstance(
-          results,
           page,
           totalPages,
           totalResults,
@@ -112,8 +96,6 @@ public class MoviesListResponseJsonAdapter(
       throw NullPointerException("value_ was null! Wrap in .nullSafe() to write nullable values.")
     }
     writer.beginObject()
-    writer.name("results")
-    listOfProductModelAdapter.toJson(writer, value_.results)
     writer.name("page")
     intAdapter.toJson(writer, value_.page)
     writer.name("total_pages")

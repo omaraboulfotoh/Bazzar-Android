@@ -8,5 +8,5 @@
 -keepnames class kotlin.jvm.internal.DefaultConstructorMarker
 -if class com.android.model.responses.base.BaseWrapper
 -keepclassmembers class com.android.model.responses.base.BaseWrapper {
-    public synthetic <init>(java.lang.Object,java.lang.String,int,kotlin.jvm.internal.DefaultConstructorMarker);
+    public synthetic <init>(java.lang.Object,java.lang.String,int,int,kotlin.jvm.internal.DefaultConstructorMarker);
 }

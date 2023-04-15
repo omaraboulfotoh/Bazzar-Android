@@ -1,7 +1,6 @@
 package com.bazzar.android.presentation.category_screen
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -21,39 +20,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.android.model.home.Brand
+import com.android.model.home.Category
 import com.bazzar.android.R
-import com.bazzar.android.presentation.home_screen.composables.FooterTabBar
-import com.bazzar.android.presentation.home_screen.composables.MenuBarItem
-import com.ramcosta.composedestinations.annotation.Destination
+import com.bazzar.android.presentation.composables.RemoteImage
 
-@Preview
-@Destination
 @Composable
-fun CategoryScreenContent() {
-    var isCategory by remember { mutableStateOf(true) }
+fun CategoryScreenContent(
+    state: CategoryContract.State,
+    onSendEvent: (CategoryContract.Event) -> Unit
+) {
+    var isCategory = state.showCategories
     var searchClicked by remember { mutableStateOf(true) }
-    val productsList = mutableListOf<ProductModel>()
-    for (i in 1..17) {
-        val product = ProductModel(
-            localPoster = R.drawable.first_bazzar,
-            productTitle = "Product title",
-            brandName = "Brand Name",
-            priceBeforeSale = 000.000
-        )
-        productsList.add(product)
-    }
-    val subCategoryList = mutableListOf<ProductModel>()
-    for (i in 1..17) {
-        val product = ProductModel(
-            localPoster = R.drawable.first_bazzar,
-            productTitle = "Product title",
-            brandName = "Brand Name",
-            priceBeforeSale = 000.000
-        )
-        subCategoryList.add(product)
-    }
+    val categoryList = state.categoryList
+    val brandList = state.brandList
+    val subCategoryList = state.subCategoriesList
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -62,13 +44,25 @@ fun CategoryScreenContent() {
     ) {
         item {
             BrandCategoryHeader(isCategory)
-            ToggleBrandCategory({ isCategory = !isCategory }, isCategory)
-            Search(isCategory = isCategory, searchClicked = searchClicked) {
-                searchClicked = !searchClicked
-            }
-            CategoryList(isCategory, productsList, subCategoryList)
-            BrandGrid(isCategory = isCategory, productsList)
-            FooterTabBar(selectedMenu = MenuBarItem.Category)
+        }
+        item {
+            ToggleBrandCategory({ onSendEvent(CategoryContract.Event.OnToggleClicked) }, isCategory)
+        }
+        item {
+            Search(isCategory = isCategory, searchClicked = searchClicked, onSearchClick = {
+                onSendEvent(CategoryContract.Event.OnSearchClicked)
+            })
+        }
+        item {
+            CategoryList(isCategory, categoryList, subCategoryList, onCategoryItemClicked = {
+                onSendEvent(CategoryContract.Event.OnCategoryItemClicked(it))
+            }) { onSendEvent(CategoryContract.Event.OnSubCategoryItemClicked(it)) }
+        }
+        item {
+            BrandGrid(
+                isCategory = isCategory,
+                brandList,
+                onBrandClicked = { onSendEvent(CategoryContract.Event.OnBrandItemClicked(it)) })
         }
     }
 }
@@ -133,7 +127,9 @@ fun BrandCategoryHeader(isCategory: Boolean) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         IconButton(
-            onClick = { /* TODO */ }, modifier = Modifier.padding(start = 16.dp)
+            onClick = {
+
+            }, modifier = Modifier.padding(start = 16.dp)
         ) {
             if (!isCategory) {
                 Icon(
@@ -156,7 +152,9 @@ fun BrandCategoryHeader(isCategory: Boolean) {
             )
         }
         IconButton(
-            onClick = { /* TODO */ }, modifier = Modifier.padding(start = 16.dp)
+            onClick = {
+
+            }, modifier = Modifier.padding(start = 16.dp)
         ) {
             if (isCategory) {
                 Icon(
@@ -171,8 +169,10 @@ fun BrandCategoryHeader(isCategory: Boolean) {
 @Composable
 fun CategoryList(
     isCategory: Boolean,
-    productList: List<ProductModel>,
-    subCategoryList: List<ProductModel>,
+    categoryList: List<Category>?,
+    subCategoryList: List<Category>?,
+    onCategoryItemClicked: (Int) -> Unit,
+    onSubCategoryItemClicked: (Int) -> Unit,
 ) {
     if (isCategory) {
         LazyColumn(
@@ -183,138 +183,131 @@ fun CategoryList(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(horizontal = 16.dp),
         ) {
-            items(productList.size) { index ->
-                val product = productList[index]
-                val isSubCategorySec = mutableStateOf(false)
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    IconButton(onClick = { isSubCategorySec.value = !isSubCategorySec.value }) {
-                        Box(
-                            modifier = Modifier
-                                .width(343.dp)
-                                .height(if (isSubCategorySec.value) 508.dp else 115.dp)
-                                .align(Alignment.Center)
-                                .clip(RoundedCornerShape(20.dp))
-                                .background(if (isSubCategorySec.value) colorResource(id = R.color.prussian_blue) else Color.White)
-                        ) {
-                            if (!isSubCategorySec.value) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) {
-                                    if (!isSubCategorySec.value) {
-                                        Image(
-                                            painter = painterResource(
-                                                id = product.localPoster ?: -1
-                                            ),
-                                            contentDescription = "Product image",
+            categoryList?.let {
+                items(it.size) { index ->
+                    val category = categoryList[index]
+                    val isSubCategorySec = mutableStateOf(false)
+                    Box(
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        IconButton(onClick = { onCategoryItemClicked(index) }) {
+                            Box(
+                                modifier = Modifier
+                                    .width(343.dp)
+                                    .height(if (isSubCategorySec.value) 508.dp else 115.dp)
+                                    .align(Alignment.Center)
+                                    .clip(RoundedCornerShape(20.dp))
+                                    .background(if (isSubCategorySec.value) colorResource(id = R.color.prussian_blue) else Color.White)
+                            ) {
+                                if (!isSubCategorySec.value) {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                    ) {
+                                        if (!isSubCategorySec.value) {
+                                            RemoteImage(
+                                                imageUrl = category.imagePath,
+                                                modifier = Modifier
+                                                    .width(160.dp)
+                                                    .height(100.dp)
+                                                    .align(Alignment.CenterVertically)
+                                                    .padding(start = 8.dp)
+                                            )
+                                            androidx.compose.material3.Text(
+                                                text = category.title ?: "",
+                                                modifier = Modifier
+                                                    .padding(start = 8.dp)
+                                                    .align(Alignment.CenterVertically),
+                                                style = MaterialTheme.typography.subtitle2.copy(
+                                                    fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                                                    color = colorResource(id = R.color.prussian_blue)
+                                                )
+                                            )
+                                            IconButton(
+                                                onClick = {
+                                                    /*TODO*/
+                                                },
+                                                modifier = Modifier.padding(start = 15.dp)
+                                            ) {
+                                                Icon(
+                                                    painter = painterResource(R.drawable.ic_down_arrow),
+                                                    contentDescription = null,
+                                                    tint = colorResource(id = R.color.prussian_blue)
+                                                )
+                                            }
+
+                                        }
+                                    }
+                                } else {
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        modifier = Modifier.fillMaxSize()
+                                    ) {
+                                        RemoteImage(
+                                            imageUrl = category.imagePath,
                                             modifier = Modifier
-                                                .width(160.dp)
-                                                .height(100.dp)
-                                                .align(Alignment.CenterVertically)
+                                                .width(120.dp)
+                                                .height(75.dp)
+                                                .align(Alignment.CenterHorizontally)
                                                 .padding(start = 8.dp)
+                                                .clip(RoundedCornerShape(30.dp))
                                         )
                                         androidx.compose.material3.Text(
-                                            text = product.productTitle ?: "",
+                                            text = category.title ?: "",
                                             modifier = Modifier
                                                 .padding(start = 8.dp)
-                                                .align(Alignment.CenterVertically),
+                                                .align(Alignment.CenterHorizontally),
                                             style = MaterialTheme.typography.subtitle2.copy(
                                                 fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
-                                                color = colorResource(id = R.color.prussian_blue)
+                                                color = colorResource(id = R.color.white)
                                             )
                                         )
-                                        IconButton(
-                                            onClick = { /* TODO */ },
-                                            modifier = Modifier.padding(start = 15.dp)
+                                        LazyVerticalGrid(
+                                            columns = GridCells.Fixed(2),
+                                            contentPadding = PaddingValues(16.dp),
+                                            modifier = Modifier.padding(top = 16.dp)
                                         ) {
-                                            Icon(
-                                                painter = painterResource(R.drawable.ic_down_arrow),
-                                                contentDescription = null,
-                                                tint = colorResource(id = R.color.prussian_blue)
-                                            )
-                                        }
-
-                                    }
-                                }
-                            } else {
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    modifier = Modifier.fillMaxSize()
-                                ) {
-                                    Image(
-                                        painter = painterResource(
-                                            id = product.localPoster ?: -1
-                                        ),
-                                        contentDescription = "Product image",
-                                        modifier = Modifier
-                                            .width(120.dp)
-                                            .height(75.dp)
-                                            .align(Alignment.CenterHorizontally)
-                                            .padding(start = 8.dp)
-                                            .clip(RoundedCornerShape(30.dp))
-                                    )
-                                    androidx.compose.material3.Text(
-                                        text = product.productTitle ?: "",
-                                        modifier = Modifier
-                                            .padding(start = 8.dp)
-                                            .align(Alignment.CenterHorizontally),
-                                        style = MaterialTheme.typography.subtitle2.copy(
-                                            fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
-                                            color = colorResource(id = R.color.white)
-                                        )
-                                    )
-                                    LazyVerticalGrid(
-                                        columns = GridCells.Fixed(2),
-                                        contentPadding = PaddingValues(16.dp),
-                                        modifier = Modifier.padding(top = 16.dp)
-                                    ) {
-                                        items(subCategoryList.size) { index ->
-                                            val image = subCategoryList[index]
-                                            Column(
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .padding(8.dp),
-                                                horizontalAlignment = Alignment.CenterHorizontally
-                                            ) {
-                                                Image(
-                                                    painter = painterResource(
-                                                        image.localPoster ?: -1
-                                                    ),
-                                                    contentDescription = null,
-                                                    contentScale = ContentScale.Crop,
+                                            items(
+                                                subCategoryList?.size ?: return@LazyVerticalGrid
+                                            ) { index ->
+                                                val image = subCategoryList[index]
+                                                Column(
                                                     modifier = Modifier
-                                                        .width(160.dp)
-                                                        .height(100.dp)
-                                                        .clip(RoundedCornerShape(15.dp))
-                                                )
-                                                Text(
-                                                    text = image?.brandName ?: "",
-                                                    style = MaterialTheme.typography.overline.copy(
-                                                        fontFamily = FontFamily(Font(R.font.montserrat_medium)),
-                                                        color = colorResource(id = R.color.white),
-                                                    ),
-                                                    modifier = Modifier.padding(top = 8.dp)
-                                                )
+                                                        .fillMaxWidth()
+                                                        .padding(8.dp),
+                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                ) {
+                                                    RemoteImage(
+                                                        imageUrl = image.imagePath,
+                                                        contentScale = ContentScale.Crop,
+                                                        modifier = Modifier
+                                                            .width(160.dp)
+                                                            .height(100.dp)
+                                                            .clip(RoundedCornerShape(15.dp))
+                                                    )
+                                                    Text(
+                                                        text = image.title ?: "",
+                                                        style = MaterialTheme.typography.overline.copy(
+                                                            fontFamily = FontFamily(Font(R.font.montserrat_medium)),
+                                                            color = colorResource(id = R.color.white),
+                                                        ),
+                                                        modifier = Modifier.padding(top = 8.dp)
+                                                    )
+                                                }
                                             }
                                         }
                                     }
-
-
                                 }
                             }
                         }
-
                     }
                 }
             }
         }
-
     }
 }
 
 @Composable
-fun BrandGrid(isCategory: Boolean, brandList: List<ProductModel>) {
+fun BrandGrid(isCategory: Boolean, brandList: List<Brand>?, onBrandClicked: (Int) -> Unit) {
     if (!isCategory) {
         Box(
             modifier = Modifier
@@ -325,7 +318,7 @@ fun BrandGrid(isCategory: Boolean, brandList: List<ProductModel>) {
                 columns = GridCells.Fixed(3),
                 contentPadding = PaddingValues(16.dp),
             ) {
-                items(brandList.size) { index ->
+                items(brandList?.size ?: return@LazyVerticalGrid) { index ->
                     val image = brandList[index]
                     Column(
                         modifier = Modifier
@@ -333,16 +326,15 @@ fun BrandGrid(isCategory: Boolean, brandList: List<ProductModel>) {
                             .padding(8.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Image(
-                            painter = painterResource(image?.localPoster ?: -1),
-                            contentDescription = null,
+                        RemoteImage(
+                            imageUrl = image.imagePath,
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
                                 .size(90.dp)
                                 .clip(RoundedCornerShape(10.dp))
                         )
                         Text(
-                            text = image?.brandName ?: "",
+                            text = image.title ?: "",
                             style = MaterialTheme.typography.overline.copy(
                                 fontFamily = FontFamily(Font(R.font.montserrat_medium)),
                                 color = colorResource(id = R.color.black),
@@ -408,7 +400,7 @@ fun Search(isCategory: Boolean, searchClicked: Boolean, onSearchClick: (Boolean)
                                     .align(Alignment.Center)
                                     .width(280.dp)
                                     .height(50.dp)
-                                /* .padding(start = 33.dp)*/,
+                                    .padding(start = 33.dp),
                                 value = searchText,
                                 onValueChange = { inputText -> searchText = inputText },
                                 colors = TextFieldDefaults.textFieldColors(

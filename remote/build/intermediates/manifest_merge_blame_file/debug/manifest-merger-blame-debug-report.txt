@@ -4,8 +4,8 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="24"
-6-->/Users/omarabouelfotoh/Documents/Projects/BazzarAndroid/remote/src/main/AndroidManifest.xml
+6-->C:\Users\Ahmed\StudioProjects\Bazzar-Android\remote\src\main\AndroidManifest.xml
 7        android:targetSdkVersion="33" />
-7-->/Users/omarabouelfotoh/Documents/Projects/BazzarAndroid/remote/src/main/AndroidManifest.xml
+7-->C:\Users\Ahmed\StudioProjects\Bazzar-Android\remote\src\main\AndroidManifest.xml
 8
 9</manifest>

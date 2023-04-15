@@ -8,5 +8,5 @@
 -keepnames class kotlin.jvm.internal.DefaultConstructorMarker
 -if class com.android.model.responses.base.MoviesListResponse
 -keepclassmembers class com.android.model.responses.base.MoviesListResponse {
-    public synthetic <init>(java.util.List,int,int,int,int,kotlin.jvm.internal.DefaultConstructorMarker);
+    public synthetic <init>(int,int,int,int,kotlin.jvm.internal.DefaultConstructorMarker);
 }

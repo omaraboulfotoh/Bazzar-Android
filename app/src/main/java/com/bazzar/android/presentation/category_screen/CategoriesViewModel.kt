@@ -21,10 +21,10 @@ class CategoriesViewModel @Inject constructor(
 
     override fun handleEvents(event: Event) {
         when (event) {
-            is Event.OnBrandItemClicked -> {}
+            is Event.OnBrandItemClicked -> goToBrandCategory(event.brandItemIndex)
             is Event.OnCategoryItemClicked -> getSubCategories(event.categoryItemIndex)
             Event.OnSearchClicked -> {}
-            is Event.OnSubCategoryItemClicked -> {}
+            is Event.OnSubCategoryItemClicked -> goToProductCategory(event.subCategoryItemIndex)
             Event.OnToggleClicked -> setState { copy(showCategories = currentState.showCategories.not()) }
         }
     }
@@ -36,8 +36,24 @@ class CategoriesViewModel @Inject constructor(
         // get the sub-category from the all list
         setState {
             copy(
-                subCategoriesList = currentState.categoryList.orEmpty()
+                subCategoriesList = currentState.subCategoriesList.orEmpty()
                     .filter { it.parentId == selectedCategory.id })
+        }
+    }
+    private fun goToProductCategory(categoryItemIndex: Int) {
+        // get the current selected category
+        val selectedCategory = currentState.subCategoriesList?.get(categoryItemIndex) ?: return
+        // navigate to product based on category
+        setEffect {
+            CategoryContract.Effect.Navigation.GoToProductCategoryList(selectedCategory)
+        }
+    }
+    private fun goToBrandCategory(brandItemIndex: Int) {
+        // get the current selected category
+        val selectedBrand = currentState.brandList?.get(brandItemIndex) ?: return
+        // navigate to product based on category
+        setEffect {
+            CategoryContract.Effect.Navigation.GoToProductBrandList(selectedBrand)
         }
     }
 
