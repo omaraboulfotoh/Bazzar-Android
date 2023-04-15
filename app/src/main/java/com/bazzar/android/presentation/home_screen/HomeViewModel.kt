@@ -24,13 +24,16 @@ class HomeViewModel @Inject constructor(
 
     override fun handleEvents(event: HomeContract.Event) {
         when (event) {
-            is HomeContract.Event.OnSliderClicked -> handleSliderAction(event.sliderIndex)
+            is HomeContract.Event.OnSliderClicked -> handleSliderAction(event.sliderIndex,event.sliderItemIndex)
             else -> {}
         }
     }
 
-    private fun handleSliderAction(sliderIndex: Int) {
-        // TODO: will handle the slider action
+    private fun handleSliderAction(sliderIndex: Int, sliderItemIndex: Int) {
+        val sliderList =
+            (if (sliderIndex == 0) currentState.slides1 else currentState.slides2) ?: return
+        val selectedItem = sliderList[sliderItemIndex]
+        setEffect { HomeContract.Effect.Navigation.GoToSliderPage(selectedItem) }
     }
 
     fun init() {

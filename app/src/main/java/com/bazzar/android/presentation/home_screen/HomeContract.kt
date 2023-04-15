@@ -19,12 +19,13 @@ class HomeContract {
     ) : ViewState
 
     sealed class Event : ViewEvent {
-        data class OnSliderClicked(val sliderIndex: Int) : Event()
+        data class OnSliderClicked(val sliderIndex: Int, val sliderItemIndex: Int) : Event()
     }
 
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
             object GoToHome : Navigation()
+            data class GoToSliderPage(val slider: HomeSlider) : Navigation()
         }
     }
 }

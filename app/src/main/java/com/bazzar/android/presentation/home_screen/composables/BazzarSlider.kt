@@ -1,11 +1,14 @@
 package com.bazzar.android.presentation.home_screen.composables
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.android.model.home.HomeSlider
 import com.bazzar.android.presentation.composables.Indicator
+import com.bazzar.android.presentation.composables.RemoteImage
+import com.bazzar.android.presentation.home_screen.HomeContract
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -14,11 +17,9 @@ import com.google.accompanist.pager.rememberPagerState
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalGlideComposeApi::class)
 @Composable
-fun BazzarSlider(homeSliderList: List<HomeSlider>?) {
+fun BazzarSlider(homeSliderList: List<HomeSlider>?, onSliderClicked: (Int) -> Unit) {
 
-    val pagerState = rememberPagerState(
-        initialPage = 0,
-    )
+    val pagerState = rememberPagerState()
 
     Column(
         modifier = Modifier
@@ -35,13 +36,13 @@ fun BazzarSlider(homeSliderList: List<HomeSlider>?) {
             contentPadding = PaddingValues(4.dp)
 
         ) { page ->
-            GlideImage(
-                model = (homeSliderList?.get(page)?.imagePath),
+            RemoteImage(
+                imageUrl = (homeSliderList?.get(page)?.imagePath),
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .padding(horizontal = 4.dp),
-                contentDescription = null,
+                    .padding(horizontal = 4.dp)
+                    .clickable { onSliderClicked(page) },
             )
         }
         Row(
