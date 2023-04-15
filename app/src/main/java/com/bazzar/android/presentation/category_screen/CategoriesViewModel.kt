@@ -25,7 +25,7 @@ class CategoriesViewModel @Inject constructor(
             is Event.OnCategoryItemClicked -> getSubCategories(event.categoryItemIndex)
             Event.OnSearchClicked -> {}
             is Event.OnSubCategoryItemClicked -> {}
-            Event.OnToggleClicked -> {}
+            Event.OnToggleClicked -> setState { copy(showCategories = currentState.showCategories.not()) }
         }
     }
 
