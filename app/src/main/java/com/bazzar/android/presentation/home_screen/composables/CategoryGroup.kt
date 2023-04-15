@@ -58,12 +58,10 @@ fun CategoryGroup(categoryList: List<Category>?) {
                         GlideImage(
                             model = category.imagePath,
                             contentDescription = null,
+                            contentScale = ContentScale.Crop,
                             modifier = Modifier
                                 .align(Alignment.TopCenter)
                                 .size(120.dp)
-                                .fillMaxSize()
-                                .background(Color.Red),
-                            contentScale = ContentScale.Crop
                         )
                         Text(
                             text = category.title ?: "",

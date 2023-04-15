@@ -1,16 +1,7 @@
 package com.bazzar.android.presentation.category_screen.composables
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -28,9 +19,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import com.android.model.home.Brand
 import com.bazzar.android.R
-import com.bazzar.android.presentation.composables.RemoteImage
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun BrandGrid(
     brandList: List<Brand>,
@@ -40,7 +33,7 @@ fun BrandGrid(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .wrapContentHeight()
+            .height(800.dp)
     ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
@@ -54,12 +47,13 @@ fun BrandGrid(
                         .clickable { onBrandClicked(index) },
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    RemoteImage(
-                        imageUrl = item.imagePath,
+                    GlideImage(
+                        model = item.imagePath,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .size(90.dp)
-                            .clip(RoundedCornerShape(10.dp))
+                            .clip(RoundedCornerShape(10.dp)),
+                        contentDescription = null,
                     )
                     Text(
                         text = item.title ?: "",

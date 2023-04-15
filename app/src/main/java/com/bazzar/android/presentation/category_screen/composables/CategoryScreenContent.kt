@@ -11,6 +11,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bazzar.android.R
 import com.bazzar.android.presentation.category_screen.CategoryContract
+import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
@@ -22,39 +23,40 @@ fun CategoryScreenContent(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.white_smoke)),
+            .background(colorResource(id = R.color.white_smoke))
+            .padding(bottom = BottomNavigationHeight),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
             BrandCategoryHeader(state.showCategories.not())
         }
-        item {
+     item {
             ToggleBrandCategory(
                 onToggle = { onSendEvent(CategoryContract.Event.OnToggleClicked) },
                 isCategory = state.showCategories
             )
         }
-        if (state.showCategories) {
-            CategoryList(
-                state.mainCategorisesList.orEmpty(),
-                state.mainCategorisesList.orEmpty(),
-                onCategoryItemClicked = {
-                    onSendEvent(CategoryContract.Event.OnCategoryItemClicked(it))
-                },
-                onSubCategoryItemClicked = {
-                    onSendEvent(
-                        CategoryContract.Event.OnSubCategoryItemClicked(it)
-                    )
-                })
-        } else {
-            item {
-                BrandGrid(
-                    modifier = Modifier.padding(all = BazzarTheme.spacing.m),
-                    brandList = state.brandList.orEmpty(),
-                    onBrandClicked = { onSendEvent(CategoryContract.Event.OnBrandItemClicked(it)) }
-                )
-            }
-        }
+               if (state.showCategories) {
+                   CategoryList(
+                       state.mainCategorisesList.orEmpty(),
+                       state.mainCategorisesList.orEmpty(),
+                       onCategoryItemClicked = {
+                           onSendEvent(CategoryContract.Event.OnCategoryItemClicked(it))
+                       },
+                       onSubCategoryItemClicked = {
+                           onSendEvent(
+                               CategoryContract.Event.OnSubCategoryItemClicked(it)
+                           )
+                       })
+               } else {
+                   item {
+                       BrandGrid(
+                           modifier = Modifier.padding(all = BazzarTheme.spacing.m),
+                           brandList = state.brandList.orEmpty(),
+                           onBrandClicked = { onSendEvent(CategoryContract.Event.OnBrandItemClicked(it)) }
+                       )
+                   }
+               }
     }
 }
 

@@ -23,8 +23,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import com.android.model.home.Category
 import com.bazzar.android.R
-import com.bazzar.android.presentation.composables.RemoteImage
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @SuppressLint("UnrememberedMutableState")
 fun LazyListScope.CategoryList(
     categoryList: List<Category>,
@@ -51,13 +53,14 @@ fun LazyListScope.CategoryList(
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        RemoteImage(
-                            imageUrl = category.imagePath,
+                        GlideImage(
+                            model = category.imagePath,
                             modifier = Modifier
                                 .width(160.dp)
                                 .height(100.dp)
                                 .align(Alignment.CenterVertically)
-                                .padding(start = 8.dp)
+                                .padding(start = 8.dp),
+                            contentDescription = null
                         )
                         androidx.compose.material3.Text(
                             text = category.title ?: "",
@@ -84,14 +87,15 @@ fun LazyListScope.CategoryList(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        RemoteImage(
-                            imageUrl = category.imagePath,
+                        GlideImage(
+                            model = category.imagePath,
                             modifier = Modifier
                                 .width(120.dp)
                                 .height(75.dp)
                                 .align(Alignment.CenterHorizontally)
                                 .padding(start = 8.dp)
-                                .clip(RoundedCornerShape(30.dp))
+                                .clip(RoundedCornerShape(30.dp)),
+                            contentDescription = null,
                         )
                         androidx.compose.material3.Text(
                             text = category.title ?: "",
@@ -118,13 +122,14 @@ fun LazyListScope.CategoryList(
                                         .padding(8.dp),
                                     horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
-                                    RemoteImage(
-                                        imageUrl = image.imagePath,
+                                    GlideImage(
+                                        model = image.imagePath,
                                         contentScale = ContentScale.Crop,
                                         modifier = Modifier
                                             .width(160.dp)
                                             .height(100.dp)
-                                            .clip(RoundedCornerShape(15.dp))
+                                            .clip(RoundedCornerShape(15.dp)),
+                                        contentDescription = null,
                                     )
                                     Text(
                                         text = image.title ?: "",

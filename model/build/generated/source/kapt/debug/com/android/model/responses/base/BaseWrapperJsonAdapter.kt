@@ -15,6 +15,7 @@ import java.lang.reflect.Constructor
 import java.lang.reflect.Type
 import kotlin.Any
 import kotlin.Array
+import kotlin.Boolean
 import kotlin.Int
 import kotlin.String
 import kotlin.Suppress
@@ -33,14 +34,19 @@ public class BaseWrapperJsonAdapter<T>(
     }
   }
 
-  private val options: JsonReader.Options = JsonReader.Options.of("data", "message", "code")
+  private val options: JsonReader.Options = JsonReader.Options.of("data", "message", "hasMoreData",
+      "code")
 
   private val tNullableAnyAdapter: JsonAdapter<T> = moshi.adapter(types[0], emptySet(), "data")
 
   private val nullableStringAdapter: JsonAdapter<String?> = moshi.adapter(String::class.java,
       emptySet(), "message")
 
-  private val intAdapter: JsonAdapter<Int> = moshi.adapter(Int::class.java, emptySet(), "code")
+  private val nullableBooleanAdapter: JsonAdapter<Boolean?> =
+      moshi.adapter(Boolean::class.javaObjectType, emptySet(), "hasMoreData")
+
+  private val nullableIntAdapter: JsonAdapter<Int?> = moshi.adapter(Int::class.javaObjectType,
+      emptySet(), "code")
 
   @Volatile
   private var constructorRef: Constructor<BaseWrapper<T>>? = null
@@ -51,6 +57,7 @@ public class BaseWrapperJsonAdapter<T>(
   public override fun fromJson(reader: JsonReader): BaseWrapper<T> {
     var data_: T? = null
     var message: String? = null
+    var hasMoreData: Boolean? = null
     var code: Int? = null
     var mask0 = -1
     reader.beginObject()
@@ -63,7 +70,16 @@ public class BaseWrapperJsonAdapter<T>(
           // $mask = $mask and (1 shl 1).inv()
           mask0 = mask0 and 0xfffffffd.toInt()
         }
-        2 -> code = intAdapter.fromJson(reader) ?: throw Util.unexpectedNull("code", "code", reader)
+        2 -> {
+          hasMoreData = nullableBooleanAdapter.fromJson(reader)
+          // $mask = $mask and (1 shl 2).inv()
+          mask0 = mask0 and 0xfffffffb.toInt()
+        }
+        3 -> {
+          code = nullableIntAdapter.fromJson(reader)
+          // $mask = $mask and (1 shl 3).inv()
+          mask0 = mask0 and 0xfffffff7.toInt()
+        }
         -1 -> {
           // Unknown name, skip it.
           reader.skipName()
@@ -72,25 +88,27 @@ public class BaseWrapperJsonAdapter<T>(
       }
     }
     reader.endObject()
-    if (mask0 == 0xfffffffd.toInt()) {
+    if (mask0 == 0xfffffff1.toInt()) {
       // All parameters with defaults are set, invoke the constructor directly
       return  BaseWrapper<T>(
           `data` = data_ ?: throw Util.missingProperty("data_", "data", reader),
           message = message,
-          code = code ?: throw Util.missingProperty("code", "code", reader)
+          hasMoreData = hasMoreData,
+          code = code
       )
     } else {
       // Reflectively invoke the synthetic defaults constructor
       @Suppress("UNCHECKED_CAST")
       val localConstructor: Constructor<BaseWrapper<T>> = this.constructorRef ?:
           (BaseWrapper::class.java.getDeclaredConstructor(Any::class.java, String::class.java,
-          Int::class.javaPrimitiveType, Int::class.javaPrimitiveType,
+          Boolean::class.javaObjectType, Int::class.javaObjectType, Int::class.javaPrimitiveType,
           Util.DEFAULT_CONSTRUCTOR_MARKER) as Constructor<BaseWrapper<T>>).also {
           this.constructorRef = it }
       return localConstructor.newInstance(
           data_ ?: throw Util.missingProperty("data_", "data", reader),
           message,
-          code ?: throw Util.missingProperty("code", "code", reader),
+          hasMoreData,
+          code,
           mask0,
           /* DefaultConstructorMarker */ null
       )
@@ -106,8 +124,10 @@ public class BaseWrapperJsonAdapter<T>(
     tNullableAnyAdapter.toJson(writer, value_.`data`)
     writer.name("message")
     nullableStringAdapter.toJson(writer, value_.message)
+    writer.name("hasMoreData")
+    nullableBooleanAdapter.toJson(writer, value_.hasMoreData)
     writer.name("code")
-    intAdapter.toJson(writer, value_.code)
+    nullableIntAdapter.toJson(writer, value_.code)
     writer.endObject()
   }
 }

@@ -3,8 +3,10 @@ package com.bazzar.android.presentation.home_screen.composables
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -31,11 +33,11 @@ fun FeaturedBrands(brandsList: List<Brand>?) {
                 GlideImage(
                     model = product.imagePath,
                     contentDescription = "Product image",
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .size(104.dp)
-                        .fillMaxSize(),
-                    contentScale = ContentScale.FillBounds
-                )
+                        .clip(RoundedCornerShape(10.dp)),
+                    )
             }
         }
     }

@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -65,6 +66,7 @@ fun ProductsGroup(productsList: List<Product>?) {
                         )
                         GlideImage(
                             model = product.imagePath,
+                            contentScale = ContentScale.Crop,
                             contentDescription = "Product image",
                             modifier = Modifier
                                 .size(152.dp)
