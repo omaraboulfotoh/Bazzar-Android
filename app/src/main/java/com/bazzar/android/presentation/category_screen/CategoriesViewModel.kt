@@ -4,7 +4,9 @@ import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
-import com.bazzar.android.presentation.category_screen.CategoryContract.*
+import com.bazzar.android.presentation.category_screen.CategoryContract.Effect
+import com.bazzar.android.presentation.category_screen.CategoryContract.Event
+import com.bazzar.android.presentation.category_screen.CategoryContract.State
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -31,15 +33,21 @@ class CategoriesViewModel @Inject constructor(
 
     private fun getSubCategories(categoryItemIndex: Int) {
         // get the current selected category
-        val selectedCategory = currentState.mainCategorisesList?.get(categoryItemIndex) ?: return
+        val updatedMainCategories =
+            currentState.mainCategorisesList.orEmpty().mapIndexed { index, category ->
+                category.copy(isSelected = index == categoryItemIndex)
+            }
+        val selectedCategory = updatedMainCategories[categoryItemIndex]
 
         // get the sub-category from the all list
         setState {
             copy(
+                mainCategorisesList = updatedMainCategories,
                 subCategoriesList = currentState.subCategoriesList.orEmpty()
                     .filter { it.parentId == selectedCategory.id })
         }
     }
+
     private fun goToProductCategory(categoryItemIndex: Int) {
         // get the current selected category
         val selectedCategory = currentState.subCategoriesList?.get(categoryItemIndex) ?: return
@@ -48,6 +56,7 @@ class CategoriesViewModel @Inject constructor(
             CategoryContract.Effect.Navigation.GoToProductCategoryList(selectedCategory)
         }
     }
+
     private fun goToBrandCategory(brandItemIndex: Int) {
         // get the current selected category
         val selectedBrand = currentState.brandList?.get(brandItemIndex) ?: return
@@ -86,10 +95,12 @@ class CategoriesViewModel @Inject constructor(
                                     )
                                 }
                             }
+
                             else -> {}
                         }
                     }
                 }
+
                 else -> {}
             }
         }

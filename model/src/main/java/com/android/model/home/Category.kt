@@ -16,4 +16,5 @@ data class Category(
     val parentId: Int? = null,
     @Json(name = "imagePath")
     val imagePath: String? = null,
+    val isSelected: Boolean = false,
 ) : Parcelable
