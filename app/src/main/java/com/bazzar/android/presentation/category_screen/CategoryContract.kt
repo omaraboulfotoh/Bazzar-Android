@@ -2,7 +2,6 @@ package com.bazzar.android.presentation.category_screen
 
 import com.android.model.home.Brand
 import com.android.model.home.Category
-import com.android.model.home.Product
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
 import com.bazzar.android.presentation.base.ViewState
@@ -11,16 +10,18 @@ class CategoryContract {
 
     data class State(
         val categoryList: List<Category>? = emptyList(),
+        val mainCategorisesList: List<Category>? = emptyList(),
+        val subCategoriesList: List<Category>? = emptyList(),
+        val showCategories: Boolean = false,
         val brandList: List<Brand>? = emptyList(),
-        val subCategoryList: List<Category>? = emptyList(),
     ) : ViewState
 
     sealed class Event : ViewEvent {
-        data class onToggleClicked(val isCategory: Boolean) : Event()
-        object onSeacrhClicked : Event()
-        data class onCategoryItemClicked(val categoryItemIndex: Int) : Event()
-        data class onSubCategoryItemClicked(val subCategoryItemIndex: Int) : Event()
-        data class onBrandItemClicked(val brandItemIndex: Int) : Event()
+        object OnToggleClicked : Event()
+        object OnSearchClicked : Event()
+        data class OnCategoryItemClicked(val categoryItemIndex: Int) : Event()
+        data class OnSubCategoryItemClicked(val subCategoryItemIndex: Int) : Event()
+        data class OnBrandItemClicked(val brandItemIndex: Int) : Event()
     }
 
     sealed class Effect : ViewSideEffect {

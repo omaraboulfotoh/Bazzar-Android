@@ -7,4 +7,9 @@ import com.squareup.moshi.JsonClass
  */
 
 @JsonClass(generateAdapter = true)
-data class BaseWrapper<T>(val data: T, val message: String? = null, val code: Int)
+data class BaseWrapper<T>(
+    val data: T,
+    val message: String? = null,
+    val hasMoreData: Boolean? = false,
+    val code: Int? = null,
+)
