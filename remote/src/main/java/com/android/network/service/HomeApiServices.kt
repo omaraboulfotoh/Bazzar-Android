@@ -1,14 +1,11 @@
 package com.android.network.service
 
-import com.android.model.home.Brand
-import com.android.model.home.Category
-import com.android.model.home.HomeResponse
+import com.android.model.home.*
 import com.android.model.responses.base.BaseWrapper
-import com.android.model.responses.base.MoviesListResponse
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.POST
 
 
 interface HomeApiServices {
@@ -21,6 +18,9 @@ interface HomeApiServices {
 
     @GET("AllBrands")
     suspend fun getAllBrands(): Response<BaseWrapper<List<Brand>>>
+
+    @POST("SearchProducts")
+    suspend fun getAllProductList(@Body searchProduct: SearchProductRequest): Response<BaseWrapper<List<Product>>>
 
 }
 

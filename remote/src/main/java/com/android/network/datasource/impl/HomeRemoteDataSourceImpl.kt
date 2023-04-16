@@ -16,4 +16,5 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun getHome() = apiServices.getHome()
     override suspend fun getAllCategories() = apiServices.getAllCategories()
     override suspend fun getAllBrands() = apiServices.getAllBrands()
+    override suspend fun getAllProductList() = apiServices.getAllProductList()
 }

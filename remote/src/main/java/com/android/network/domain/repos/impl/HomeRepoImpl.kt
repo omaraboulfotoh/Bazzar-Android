@@ -4,6 +4,7 @@ import androidx.annotation.WorkerThread
 import com.android.model.home.Brand
 import com.android.model.home.Category
 import com.android.model.home.HomeResponse
+import com.android.model.home.Product
 import com.android.network.datasource.HomeRemoteDataSource
 import com.android.network.domain.repos.HomeRepo
 import com.android.network.states.Result
@@ -70,6 +71,26 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             emit(
                 Result.Error(
                     listOf<Brand>(),
+                    throwable.message
+                )
+            )
+        }
+    }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun getAllProductList(): Flow<Result<List<Product>>> = flow {
+        try {
+            homeRemoteDataSource.getAllProductList().let {
+                if (it.isSuccessful) {
+                    emit(Result.Success(it.body()?.data ?: emptyList()))
+                } else
+                    Result.Error(
+                        listOf<Product>(), "error will be handled"
+                    )
+            }
+        } catch (throwable: Throwable) {
+            emit(
+                Result.Error(
+                    listOf<Product>(),
                     throwable.message
                 )
             )

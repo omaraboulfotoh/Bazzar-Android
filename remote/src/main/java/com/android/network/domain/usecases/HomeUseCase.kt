@@ -8,4 +8,5 @@ class HomeUseCase @Inject constructor(private val movieRepo: HomeRepo) {
     suspend fun getHome() = movieRepo.getHome()
     suspend fun getAllCategories() = movieRepo.getAllCategories()
     suspend fun getAllBrands() = movieRepo.getAllBrands()
+    suspend fun getAllProductList() = movieRepo.getAllProductList()
 }
