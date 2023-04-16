@@ -12,9 +12,9 @@ class ProductContract {
         var filteredProductList: List<Product>? = emptyList(),
         val productList: List<Product>? = emptyList(),
         val brand: Brand? = Brand(),
-        val subCategoryList: List<Category>? = emptyList(),
-        val selectedSubCategoryList: List<Category>? = emptyList(),
-        val isSubCategoryClicked: Boolean = false,
+        val subSubCategoryList: List<Category>? = emptyList(),
+        val selectedSubSubCategoryList: List<Category>? = emptyList(),
+        val isSubSubCategoryClicked: Boolean = false,
         val isSearchClicked: Boolean = false,
         val isSortClicked: Boolean = false,
         val ProductScreenTitle: String = "",
@@ -31,13 +31,14 @@ class ProductContract {
     }
 
     sealed class Event : ViewEvent {
-        data class OnFavouriteClicked(val productIndex: Int, val sliderItemIndex: Int) : Event()
+        data class OnFavouriteIconClicked(val productIndex: Int, val sliderItemIndex: Int) : Event()
         data class OnAddToCartClicked(val productIndex: Int, val sliderItemIndex: Int) : Event()
-        data class OnSubCategoryClicked(val categoryIndex: Int) : Event()
-        data class onSortItemSelected(val sortItem:State.SortingValues=State.SortingValues.NO_SORTING) : Event()
-        object OnSortClicked : Event()
-        object OnFilterClicked : Event()
-        object OnBackClicked : Event()
+        data class OnSubSubCategoryClicked(val categoryIndex: Int) : Event()
+        data class OnSortApplied(val sortItem:State.SortingValues=State.SortingValues.NO_SORTING) : Event()
+        object OnSortIconClicked : Event()
+        object OnFilterApplied : Event()
+        object OnFilterIconClicked : Event()
+        object OnBackIconClicked : Event()
         object OnSearchClicked : Event()
     }
 

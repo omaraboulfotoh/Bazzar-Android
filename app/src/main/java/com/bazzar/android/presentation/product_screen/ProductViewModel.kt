@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.product_screen
 
+import androidx.lifecycle.SavedStateHandle
 import com.android.model.home.Brand
 import com.android.model.home.Category
 import com.android.model.home.Product
@@ -9,77 +10,70 @@ import com.android.network.states.Result
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import javax.inject.Inject
-import kotlin.properties.Delegates
 
 class ProductViewModel @Inject constructor(
     globalState: IGlobalState,
-    private val homeUseCase: HomeUseCase,
+    private val homeUseCase: HomeUseCase, private val savedStateHandle: SavedStateHandle
 ) :
     BaseViewModel<ProductContract.Event, ProductContract.State, ProductContract.Effect>(
         globalState
     ) {
-    var categoryId by Delegates.notNull<Int>()
 
-    private var _brand = Brand()
-    var brand
-        get() = _brand
-        set(value) {
-            if (_brand != value) {
-                setState { copy(brand = value) }
-            }
-            _brand = value
-        }
+    companion object {
+        private const val MAIN_CATEGORY_LIST_KEY = "main_category_list_key"
+        private const val SUB_CATEGORY_ID_KEY = "sub_category_id_key"
+        private const val BRAND_KEY = "brand_key"
+    }
 
-    private var _categoryList: List<Category> = emptyList()
-    var categoryList
-        get() = _categoryList
-        set(value) {
-            if (_categoryList != value) {
-                setState { copy(subCategoryList = value) }
-            }
-            _categoryList = value
+
+    private val mainCategoryList: List<Category> =
+        savedStateHandle.get<List<Category>>(MAIN_CATEGORY_LIST_KEY) ?: emptyList()
+
+    private val subCategoryId: Int = savedStateHandle.get<Int>(SUB_CATEGORY_ID_KEY) ?: 0
+    private val selectedBrand: Brand = savedStateHandle.get<Brand>(BRAND_KEY) ?: Brand()
+
+    init {
+        setState {
+            copy(
+                subSubCategoryList = mainCategoryList.filter { it.id == subCategoryId },
+                brand = selectedBrand
+            )
         }
+    }
 
     private var isInitialized = false
     override fun setInitialState() = ProductContract.State()
 
     override fun handleEvents(event: ProductContract.Event) {
         when (event) {
-            is ProductContract.Event.OnSubCategoryClicked -> onSubCategorySelected(event.categoryIndex)
-
+            is ProductContract.Event.OnSubSubCategoryClicked -> onSubCategorySelected(event.categoryIndex)
             is ProductContract.Event.OnAddToCartClicked -> TODO()
-            ProductContract.Event.OnBackClicked -> ProductContract.Effect.Navigation.back
-            is ProductContract.Event.OnFavouriteClicked -> TODO()
-            is ProductContract.Event.OnFilterClicked -> filterProductList()
-            ProductContract.Event.OnSearchClicked -> {
-                setState { copy(isSearchClicked = isSearchClicked.not()) }
-            }
-            is ProductContract.Event.OnSortClicked -> setState { copy(isSortClicked = isSortClicked.not()) }
-            is ProductContract.Event.onSortItemSelected -> sortProductList(event.sortItem)
+            ProductContract.Event.OnBackIconClicked -> ProductContract.Effect.Navigation.back
+            is ProductContract.Event.OnFavouriteIconClicked -> TODO()
+            is ProductContract.Event.OnFilterApplied -> filterProductList()
+            ProductContract.Event.OnSearchClicked -> {setState {copy(isSearchClicked = isSearchClicked.not()) }}
+            is ProductContract.Event.OnSortIconClicked -> TODO()
+            is ProductContract.Event.OnSortApplied -> sortProductList(event.sortItem)
+            ProductContract.Event.OnFilterIconClicked -> TODO()
         }
     }
 
-    private fun onSubCategorySelected(subCategoryIndex: Int) {
+    private fun onSubCategorySelected(subSubCategoryIndex: Int) {
         //flip state
-        setState { copy(isSubCategoryClicked = isSubCategoryClicked.not()) }
-        if (currentState.isSubCategoryClicked) {
-            //add subCategory to subCategory List
-            setState {
-                copy(
-                    selectedSubCategoryList = currentState.subCategoryList.orEmpty().filter {
-                        it.id == currentState.subCategoryList?.get(subCategoryIndex)?.id
-                    }
-                )
-            }
+        setState { copy(isSubSubCategoryClicked = isSubSubCategoryClicked.not()) }
+        if (currentState.isSubSubCategoryClicked) {
+            // get subSubCategory products and show them
+            loadProductData(currentState.subSubCategoryList?.get(subSubCategoryIndex)?.id ?: return)
         }
-        //remove subCategory from selectedSubCategoryList
+        //remove subSubCategory product from product shown
         else {
             setState {
                 copy(
-                    selectedSubCategoryList = currentState.selectedSubCategoryList.orEmpty()
-                        .filterNot {
-                            it.id == currentState.selectedSubCategoryList?.get(subCategoryIndex)?.id
-                        }
+                    productList = productList?.filterNot {
+                        it.id == (subSubCategoryList?.get(
+                            subSubCategoryIndex
+                        )?.id)
+                    }
                 )
             }
 
@@ -87,7 +81,7 @@ class ProductViewModel @Inject constructor(
     }
 
     private fun filterProductList() {
-        val categoryIds = currentState.subCategoryList?.map { it.id }?.toHashSet() ?: return
+/*
         setState {
             copy(
                 filteredProductList = productList?.filter { product: Product ->
@@ -95,6 +89,7 @@ class ProductViewModel @Inject constructor(
                 }
             )
         }
+*/
     }
 
     private fun sortProductList(sortItem: ProductContract.State.SortingValues) {
@@ -120,12 +115,12 @@ class ProductViewModel @Inject constructor(
 
     fun init() {
         if (isInitialized.not()) {
-            loadProductData()
+            loadProductData(subCategoryId)
             isInitialized = true
         }
     }
 
-    private fun loadProductData() = executeCatching({
+    private fun loadProductData(categoryId: Int) = executeCatching({
         homeUseCase.getAllProductList(SearchProductRequest(categoryId = categoryId))
             .collect { productResponse ->
                 when (productResponse) {
@@ -133,12 +128,12 @@ class ProductViewModel @Inject constructor(
                     is Result.Loading -> {}
                     is Result.Success -> setState {
                         copy(
-                            productList = productResponse.data
+                            productList = currentState.productList?.plus(productResponse.data) as List<Product>
                         )
                     }
                     else -> {}
                 }
             }
     })
-
 }
+

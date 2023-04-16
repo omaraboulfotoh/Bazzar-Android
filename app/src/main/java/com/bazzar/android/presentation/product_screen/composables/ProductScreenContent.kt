@@ -43,19 +43,20 @@ fun ProductScreenContent(
         }
         item {
             SubCategorySlider(
-                state.subCategoryList,
-                state.isSubCategoryClicked,
+                state.subSubCategoryList,
+                state.isSubSubCategoryClicked,
                 onClickSubCategory = { categoryIndex ->
                     onSendEvent(
-                        ProductContract.Event.OnSubCategoryClicked(categoryIndex)
+                        ProductContract.Event.OnSubSubCategoryClicked(categoryIndex)
                     )
                 }, modifier = Modifier.padding(top = 29.dp)
             )
         }
+/*
         item {
             SortFilterBar(
                 numberFilteredProducts = state.filteredProductList?.size,
-                numberSelectedCategory = state.selectedSubCategoryList?.size ?: 0,
+                numberSelectedCategory = ,
                 Modifier.height(10.dp),
                 onFilterClicked = {
                     onSendEvent(
@@ -68,6 +69,7 @@ fun ProductScreenContent(
                 }
             )
         }
+*/
         item {
             ProductGridGroup(state.filteredProductList, modifier = Modifier.padding(top = 16.dp))
         }
