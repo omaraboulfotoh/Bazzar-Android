@@ -1,9 +1,6 @@
 package com.android.network.domain.repos
 
-import com.android.model.home.Brand
-import com.android.model.home.Category
-import com.android.model.home.HomeResponse
-import com.android.model.home.Product
+import com.android.model.home.*
 import com.android.model.responses.base.BaseWrapper
 import com.android.model.responses.base.MoviesListResponse
 import com.android.network.states.Result
@@ -14,5 +11,5 @@ interface HomeRepo {
     suspend fun getHome(): Flow<Result<HomeResponse>>
     suspend fun getAllCategories(): Flow<Result<List<Category>>>
     suspend fun getAllBrands(): Flow<Result<List<Brand>>>
-    suspend fun getAllProductList(): Flow<Result<List<Product>>>
+    suspend fun getAllProductList(searchProduct:SearchProductRequest): Flow<Result<List<Product>>>
 }

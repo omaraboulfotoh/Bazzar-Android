@@ -3,6 +3,7 @@ package com.android.network.datasource.impl
 import com.android.model.home.Brand
 import com.android.model.home.Category
 import com.android.model.home.HomeResponse
+import com.android.model.home.SearchProductRequest
 import com.android.model.responses.base.BaseWrapper
 import com.android.model.responses.base.MoviesListResponse
 import com.android.network.datasource.HomeRemoteDataSource
@@ -16,5 +17,5 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun getHome() = apiServices.getHome()
     override suspend fun getAllCategories() = apiServices.getAllCategories()
     override suspend fun getAllBrands() = apiServices.getAllBrands()
-    override suspend fun getAllProductList() = apiServices.getAllProductList()
+    override suspend fun getAllProductList(searchProduct: SearchProductRequest) = apiServices.getAllProductList(searchProduct)
 }

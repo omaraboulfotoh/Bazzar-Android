@@ -1,10 +1,7 @@
 package com.android.network.domain.repos.impl
 
 import androidx.annotation.WorkerThread
-import com.android.model.home.Brand
-import com.android.model.home.Category
-import com.android.model.home.HomeResponse
-import com.android.model.home.Product
+import com.android.model.home.*
 import com.android.network.datasource.HomeRemoteDataSource
 import com.android.network.domain.repos.HomeRepo
 import com.android.network.states.Result
@@ -77,9 +74,9 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
-    override suspend fun getAllProductList(): Flow<Result<List<Product>>> = flow {
+    override suspend fun getAllProductList(searchProduct: SearchProductRequest): Flow<Result<List<Product>>> = flow {
         try {
-            homeRemoteDataSource.getAllProductList().let {
+            homeRemoteDataSource.getAllProductList(searchProduct).let {
                 if (it.isSuccessful) {
                     emit(Result.Success(it.body()?.data ?: emptyList()))
                 } else
