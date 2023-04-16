@@ -7,23 +7,21 @@ import com.android.model.home.Product
 import com.android.model.home.SearchProductRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
+import com.bazzar.android.presentation.Constants.BRAND_KEY
+import com.bazzar.android.presentation.Constants.MAIN_CATEGORY_LIST_KEY
+import com.bazzar.android.presentation.Constants.SUB_CATEGORY_ID_KEY
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import javax.inject.Inject
 
 class ProductViewModel @Inject constructor(
     globalState: IGlobalState,
-    private val homeUseCase: HomeUseCase, private val savedStateHandle: SavedStateHandle
+    private val homeUseCase: HomeUseCase, val savedStateHandle: SavedStateHandle
 ) :
     BaseViewModel<ProductContract.Event, ProductContract.State, ProductContract.Effect>(
         globalState
     ) {
 
-    companion object {
-        private const val MAIN_CATEGORY_LIST_KEY = "main_category_list_key"
-        private const val SUB_CATEGORY_ID_KEY = "sub_category_id_key"
-        private const val BRAND_KEY = "brand_key"
-    }
 
 
     private val mainCategoryList: List<Category> =
@@ -31,15 +29,6 @@ class ProductViewModel @Inject constructor(
 
     private val subCategoryId: Int = savedStateHandle.get<Int>(SUB_CATEGORY_ID_KEY) ?: 0
     private val selectedBrand: Brand = savedStateHandle.get<Brand>(BRAND_KEY) ?: Brand()
-
-    init {
-        setState {
-            copy(
-                subSubCategoryList = mainCategoryList.filter { it.id == subCategoryId },
-                brand = selectedBrand
-            )
-        }
-    }
 
     private var isInitialized = false
     override fun setInitialState() = ProductContract.State()
@@ -115,6 +104,12 @@ class ProductViewModel @Inject constructor(
 
     fun init() {
         if (isInitialized.not()) {
+            setState {
+                copy(
+                    subSubCategoryList = mainCategoryList.filter { it.id == subCategoryId },
+                    brand = selectedBrand
+                )
+            }
             loadProductData(subCategoryId)
             isInitialized = true
         }

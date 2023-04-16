@@ -18,6 +18,7 @@ class ProductContract {
         val isSearchClicked: Boolean = false,
         val isSortClicked: Boolean = false,
         val ProductScreenTitle: String = "",
+        val filteringValues: FilteringValues = FilteringValues.NO_FILTER,
         val sortedValues: SortingValues = SortingValues.NO_SORTING
     ) : ViewState {
         enum class SortingValues {
@@ -28,13 +29,20 @@ class ProductContract {
             NEW_ARRIVAL,
             BAZAAAR_PICKS
         }
+
+        enum class FilteringValues {
+            NO_FILTER,
+        }
+
     }
 
     sealed class Event : ViewEvent {
         data class OnFavouriteIconClicked(val productIndex: Int, val sliderItemIndex: Int) : Event()
         data class OnAddToCartClicked(val productIndex: Int, val sliderItemIndex: Int) : Event()
         data class OnSubSubCategoryClicked(val categoryIndex: Int) : Event()
-        data class OnSortApplied(val sortItem:State.SortingValues=State.SortingValues.NO_SORTING) : Event()
+        data class OnSortApplied(val sortItem: State.SortingValues = State.SortingValues.NO_SORTING) :
+            Event()
+
         object OnSortIconClicked : Event()
         object OnFilterApplied : Event()
         object OnFilterIconClicked : Event()
