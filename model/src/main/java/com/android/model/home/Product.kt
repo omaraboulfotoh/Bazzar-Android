@@ -27,7 +27,7 @@ data class Product(
     @Json(name = "categoryTitle")
     val categoryTitle: String? = null,
     @Json(name = "isNew")
-    val isNew: Boolean? = null,
+    val isNew: Boolean = false,
     @Json(name = "isExclusive")
     val isExclusive: Boolean? = null,
     @Json(name = "price")

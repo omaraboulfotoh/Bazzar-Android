@@ -54,7 +54,7 @@ fun ProductScreenContent(
         }
         item {
             SortFilterBar(
-                numberFilteredProducts = state.productList?.size,
+                numberFilteredProducts = state.filteredProductList?.size,
                 numberSelectedCategory = state.selectedSubCategoryList?.size ?: 0,
                 Modifier.height(10.dp),
                 onFilterClicked = {
@@ -69,7 +69,7 @@ fun ProductScreenContent(
             )
         }
         item {
-            ProductGridGroup(state.productList, modifier = Modifier.padding(top = 16.dp))
+            ProductGridGroup(state.filteredProductList, modifier = Modifier.padding(top = 16.dp))
         }
     }
 
