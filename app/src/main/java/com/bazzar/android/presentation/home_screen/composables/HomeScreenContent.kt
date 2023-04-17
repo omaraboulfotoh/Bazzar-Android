@@ -1,19 +1,18 @@
 package com.bazzar.android.presentation.home_screen.composables
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.home_screen.HomeContract
-import com.bazzar.android.presentation.theme.BazzarTheme
 
 
 @Composable
@@ -30,9 +29,17 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
             HomeHeader()
         }
         item {
-            BazzarSlider(state.slides1, onSliderClicked = {
-                onSendEvent(HomeContract.Event.OnSliderClicked(0, it))
-            })
+            IndicatorImageSlider(
+                imagePathList = state.slides1?.map { it.imagePath ?: "" },
+                columnModifier = Modifier
+                    .height(171.dp)
+                    .padding(top = 28.dp),
+                imageCardModifier = Modifier
+                    .width(343.dp)
+                    .height(147.dp),
+                onSliderClicked = {
+                    onSendEvent(HomeContract.Event.OnSliderClicked(0, it))
+                })
         }
 /*
         item {
@@ -40,15 +47,25 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
         }
 */
         item {
-            ProductsGroup(state.categoryItems)
+            ProductsGroup(
+                productsList = state.categoryItems,
+                headerTitle = stringResource(id = R.string.home_screen_products_group)
+            )
         }
         item {
             CategoryGroup(state.featuredCategories)
         }
         item {
-            BazzarSlider(state.slides2, onSliderClicked = {
-                onSendEvent(HomeContract.Event.OnSliderClicked(1, it))
-            })
+            IndicatorImageSlider(state.slides2?.map { it.imagePath ?: "" },
+                columnModifier = Modifier
+                    .height(171.dp)
+                    .padding(top = 28.dp),
+                imageCardModifier = Modifier
+                    .width(343.dp)
+                    .height(147.dp),
+                onSliderClicked = {
+                    onSendEvent(HomeContract.Event.OnSliderClicked(1, it))
+                })
         }
         item {
 

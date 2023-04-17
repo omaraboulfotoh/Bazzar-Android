@@ -14,8 +14,8 @@ import com.bazzar.android.presentation.composables.ProductItem
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 
 @Composable
-fun ProductsGroup(productsList: List<Product>?) {
-    HeaderTextWithViewAll(text = stringResource(id = R.string.home_screen_products_group))
+fun ProductsGroup(headerTitle:String,productsList: List<Product>?) {
+    HeaderTextWithViewAll(text = headerTitle )
     LazyRow(
         modifier = Modifier
             .padding(top = 16.dp)

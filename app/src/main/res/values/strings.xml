@@ -34,4 +34,9 @@
     <string name="sort">Sort</string>
     <string name="filter">Filter</string>
     <string name="product_bazar_category">BAZAR category</string>
+    <string name="see_more">See More</string>
+    <string name="related_product">Related Product</string>
+    <string name="give_rate">Give Rate</string>
+    <string name="sold_by">Sold By:</string>
+    <string name="product_description">Product Description</string>
 </resources>
