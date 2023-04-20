@@ -23,6 +23,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bazzar.android.R
+import com.bazzar.android.presentation.composables.CustomButton
 
 @Composable
 fun OtpInteraction(modifier: Modifier) {
@@ -92,24 +93,9 @@ fun OtpInteraction(modifier: Modifier) {
                 .padding(top = 370.dp)
                 .width(40.dp)
         )
-
-        Box(
-            modifier = Modifier
-                .padding(top = 472.dp)
-                .width(343.dp)
-                .height(65.dp)
-                .clip(RoundedCornerShape(62.5.dp))
-                .background(colorResource(id = R.color.prussian_blue)),
+        CustomButton(
+            text = stringResource(id = R.string.confirm),
+            modifier = Modifier.padding(top = 472.dp)
         )
-        {
-            Text(
-                text = stringResource(id = R.string.confirm),
-                style = MaterialTheme.typography.subtitle2.copy(
-                    color = Color.White, fontFamily = FontFamily(Font(R.font.montserrat_bold)),
-                ), modifier = Modifier.align(Alignment.Center)
-            )
-
-
-        }
     }
 }

@@ -113,7 +113,7 @@ fun LazyListScope.CategoryList(
                             modifier = Modifier.padding(top = 16.dp)
                         ) {
                             items(
-                                subCategoryList.size ?: return@LazyVerticalGrid
+                                subCategoryList.size
                             ) { index ->
                                 val image = subCategoryList[index]
                                 Column(

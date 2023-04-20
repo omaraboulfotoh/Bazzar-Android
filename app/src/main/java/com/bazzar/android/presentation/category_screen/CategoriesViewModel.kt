@@ -4,9 +4,7 @@ import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
-import com.bazzar.android.presentation.category_screen.CategoryContract.Effect
-import com.bazzar.android.presentation.category_screen.CategoryContract.Event
-import com.bazzar.android.presentation.category_screen.CategoryContract.State
+import com.bazzar.android.presentation.category_screen.CategoryContract.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -53,7 +51,7 @@ class CategoriesViewModel @Inject constructor(
         val selectedCategory = currentState.subCategoriesList?.get(categoryItemIndex) ?: return
         // navigate to product based on category
         setEffect {
-            CategoryContract.Effect.Navigation.GoToProductCategoryList(selectedCategory)
+            Effect.Navigation.GoToProductCategoryList(selectedCategory)
         }
     }
 
@@ -62,7 +60,7 @@ class CategoriesViewModel @Inject constructor(
         val selectedBrand = currentState.brandList?.get(brandItemIndex) ?: return
         // navigate to product based on category
         setEffect {
-            CategoryContract.Effect.Navigation.GoToProductBrandList(selectedBrand)
+            Effect.Navigation.GoToProductBrandList(selectedBrand)
         }
     }
 

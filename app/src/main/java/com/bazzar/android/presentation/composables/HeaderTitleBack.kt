@@ -12,16 +12,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
-import com.ramcosta.composedestinations.annotation.Destination
 
 @Composable
-fun OtpHeader(modifier:Modifier) {
+fun HeaderTitleBack(modifier:Modifier, title:String) {
 
     Box(
         modifier = modifier
@@ -34,7 +31,7 @@ fun OtpHeader(modifier:Modifier) {
             modifier = Modifier.padding(start = 16.dp)
         )
         Text(
-            text = stringResource(id = R.string.mobile_confirm),
+            text = title,
             style = MaterialTheme.typography.subtitle2.copy(
                 color = colorResource(id = R.color.prussian_blue),
                 fontFamily = FontFamily(Font(R.font.montserrat_bold)),

@@ -30,33 +30,33 @@ fun CategoryScreenContent(
         item {
             BrandCategoryHeader(state.showCategories.not())
         }
-     item {
+        item {
             ToggleBrandCategory(
                 onToggle = { onSendEvent(CategoryContract.Event.OnToggleClicked) },
                 isCategory = state.showCategories
             )
         }
-               if (state.showCategories) {
-                   CategoryList(
-                       state.mainCategorisesList.orEmpty(),
-                       state.mainCategorisesList.orEmpty(),
-                       onCategoryItemClicked = {
-                           onSendEvent(CategoryContract.Event.OnCategoryItemClicked(it))
-                       },
-                       onSubCategoryItemClicked = {
-                           onSendEvent(
-                               CategoryContract.Event.OnSubCategoryItemClicked(it)
-                           )
-                       })
-               } else {
-                   item {
-                       BrandGrid(
-                           modifier = Modifier.padding(all = BazzarTheme.spacing.m),
-                           brandList = state.brandList.orEmpty(),
-                           onBrandClicked = { onSendEvent(CategoryContract.Event.OnBrandItemClicked(it)) }
-                       )
-                   }
-               }
+        if (state.showCategories) {
+            CategoryList(
+                state.mainCategorisesList.orEmpty(),
+                state.mainCategorisesList.orEmpty(),
+                onCategoryItemClicked = {
+                    onSendEvent(CategoryContract.Event.OnCategoryItemClicked(it))
+                },
+                onSubCategoryItemClicked = {
+                    onSendEvent(
+                        CategoryContract.Event.OnSubCategoryItemClicked(it)
+                    )
+                })
+        } else {
+            item {
+                BrandGrid(
+                    modifier = Modifier.padding(all = BazzarTheme.spacing.m),
+                    brandList = state.brandList.orEmpty(),
+                    onBrandClicked = { onSendEvent(CategoryContract.Event.OnBrandItemClicked(it)) }
+                )
+            }
+        }
     }
 }
 
