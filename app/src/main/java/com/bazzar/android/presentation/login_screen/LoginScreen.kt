@@ -5,6 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.Constants
+import com.bazzar.android.presentation.login_screen.composables.LoginScreenContent
 import com.bazzar.android.presentation.product_screen.composables.LoginScreenContent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator

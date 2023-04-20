@@ -39,4 +39,27 @@
     <string name="give_rate">Give Rate</string>
     <string name="sold_by">Sold By:</string>
     <string name="product_description">Product Description</string>
+    <string name="terms_and_condition">BZAAARZ Terms Condition &amp; Privacy Policy</string>
+    <string name="bazzar">Bazzar</string>
+    <string name="login">Login</string>
+    <string name="Create_new_account">Create new account</string>
+    <string name="Continue_as_a_guest">Continue as a guest</string>
+    <string name="enter_mobile_number">Enter your mobile number</string>
+    <string name="or">OR</string>
+    <string name="create_account">Create Account</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="well_will_send">we will send </string>
+    <string name="whatsApp">WhatsApp</string>
+    <string name="otp_message">message contains OTP number.</string>
+    <string name="birth_date">Birth Date</string>
+    <string name="select_your_gender">Select your gender</string>
+    <string name="agree_terms_conditions">Agree on BZAAARZ Terms &amp; Condition</string>
+    <string name="type_name">Type your full name</string>
+    <string name="user_name">User Name</string>
+    <string name="type_email">Enter your email</string>
+    <string name="type_number">Enter your whatsapp number</string>
+    <string name="type_birthdate">Enter your Birthdate</string>
+    <string name="type_gender">Type your gender</string>
+    <string name="create_account">Create Account</string>
 </resources>

@@ -10,7 +10,9 @@
     <color name="white_smoke">#F8F8F8</color>
     <color name="prussian_blue">#000760</color>
     <color name="deep_sky_blue">#00B7FF</color>
-    <color name="titan_white">#EBEDFF </color>
-    <color name="whisper">#E4E4E4 </color>
+    <color name="titan_white">#EBEDFF</color>
+    <color name="whisper">#E4E4E4</color>
     <color name="Gray55">#8C8C8C</color>
+    <color name="Cruel_Jewel">#E82357</color>
+    <color name="Malachite">#0CBD4D</color>
 </resources>

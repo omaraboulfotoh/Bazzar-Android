@@ -1,19 +1,16 @@
 package com.bazzar.android.presentation.login_screen.composables
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
-import com.bazzar.android.presentation.home_screen.composables.IndicatorImageSlider
-import com.bazzar.android.presentation.home_screen.composables.ProductsGroup
 import com.bazzar.android.presentation.login_screen.LoginContract
-import com.bazzar.android.presentation.product_screen.ProductDetailContract
 
 @Composable
 fun LoginScreenContent(
@@ -26,47 +23,28 @@ fun LoginScreenContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
-            IndicatorImageSlider(
-                imagePathList = state.product.imagePath,
-                columnModifier = Modifier
-                    .width(375.dp)
-                    .height(300.dp),
-                imageCardModifier = Modifier.size(280.dp),
-                onSliderClicked = {
-                    onSendEvent(
-                        ProductDetailContract.Event.OnSliderClicked(0, it)
-                    )
-                }
-            )
+            LoginHeader(modifier = Modifier.padding(top = 16.dp))
         }
         item {
-            BrandSection(
-                productTitle = state.product.title ?: "",
-                brandName = state.product.brandTitle ?: "",
-                brandImagePath = state.brand.imagePath ?: "",
-                newPrice = state.product.price.toString(),
-                oldPrice = state.product.oldPrice.toString(),
-                modifier = Modifier
-                    .padding(start = 16.dp)
-                    .padding(top = 8.dp)
-            )
+            InputMobileNumber(modifier = Modifier.padding(top = 80.dp))
         }
         item {
-
+            InputPassword(modifier = Modifier.padding(top = 80.dp))
         }
         item {
-            RatingRow(
-                rating = state.rating,
-                updateRating = { index -> ProductDetailContract.Event.OnRatingClicked(index) })
+            LoginButton(modifier = Modifier.padding(top = 40.dp))
         }
         item {
-            ProductDescription()
+            ORBar(modifier = Modifier.padding(top = 48.dp))
         }
         item {
-            ProductsGroup(
-                productsList = state.relatedProductList,
-                headerTitle = stringResource(id = R.string.related_product)
-            )
+            CreateNewAccount(modifier = Modifier.padding(top = 16.dp))
+        }
+        item {
+            ContinueAsGuest(modifier = Modifier.padding(top = 24.dp))
+        }
+        item {
+            TermsAndConditions(modifier = Modifier.padding(top = 78.dp))
         }
     }
 }

@@ -173,6 +173,7 @@ dependencies {
     implementation Dependencies.HILT
     implementation Dependencies.COMPOSE_VIEW_MODEL
 
+    implementation 'com.github.KevinSchildhorn:OTPView:0.2.5'
 
 }
 
