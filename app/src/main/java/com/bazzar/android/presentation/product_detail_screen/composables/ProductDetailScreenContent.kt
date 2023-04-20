@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.product_screen.composables
+package com.bazzar.android.presentation.product_detail_screen.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -29,7 +29,7 @@ fun ProductDetailScreenContent(
     ) {
         item {
             IndicatorImageSlider(
-                imagePathList = state.product.imagePath,
+                imagePathList = state.product.imagePath as List<String>,
                 columnModifier = Modifier
                     .width(375.dp)
                     .height(300.dp),

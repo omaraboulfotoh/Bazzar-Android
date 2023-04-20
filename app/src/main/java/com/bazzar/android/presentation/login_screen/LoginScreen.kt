@@ -6,7 +6,6 @@ import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.Constants
 import com.bazzar.android.presentation.login_screen.composables.LoginScreenContent
-import com.bazzar.android.presentation.product_screen.composables.LoginScreenContent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -17,9 +16,9 @@ fun LoginScreen(
     navigator: DestinationsNavigator,
 ) {
     // receive data from previous Screen
-    val args = navBackStackEntry.arguments
 
     //send data to viewModel
+    val product = null
     viewModel.savedStateHandle.set(Constants.PRODUCT_KEY, product)
 
     // get state

@@ -33,7 +33,7 @@ fun RegisterScreenContent(
             RegisterHeader(modifier = Modifier.padding(top = 25.dp))
         }
         item {
-            RegisterDataEntry(modifier = Modifier.padding(top = 14.dp))
+            RegisterDataEntry(modifier = Modifier.padding(top = 14.dp), enteredEmail = "", enteredUserName = "", )
         }
     }
 }

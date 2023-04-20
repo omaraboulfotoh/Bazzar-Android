@@ -6,7 +6,7 @@ import com.bazzar.android.presentation.base.ViewState
 
 class LoginContract {
     data class State(
-        var isValidNumber: Boolean
+        var isValidNumber: Boolean?=false
     ) : ViewState
 
     sealed class Event : ViewEvent {

@@ -15,4 +15,7 @@
     <color name="Gray55">#8C8C8C</color>
     <color name="Cruel_Jewel">#E82357</color>
     <color name="Malachite">#0CBD4D</color>
+    <color name="dark_gray">#5A5A5A</color>
+    <color name="light_gray">#D3D3D3</color>
+    <color name="Gray59">#969696</color>
 </resources>

@@ -22,7 +22,7 @@ fun CategoryScreen(
     viewModel.sideEffect { effect ->
         when (effect) {
             is CategoryContract.Effect.Navigation.GoToProductCategoryList -> {
-                navigator.navigate(CategoryScreenDestination(effect.category.id))
+                navigator.navigate(CategoryScreenDestination(/*effect.category.id*/))
 
             }
             is CategoryContract.Effect.Navigation.GoToProductBrandList -> {}

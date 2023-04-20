@@ -41,7 +41,7 @@ fun ProductDescription(isTextExpanded:Boolean=false,
                 style = MaterialTheme.typography.body2,
                 modifier = Modifier
                     .padding(vertical = 8.dp)
-                    .clickable { isTextExpanded = true }
+                    .clickable { /*isTextExpanded = true*/ }
             )
         } else if (isTextExpanded) {
             Text(
@@ -49,7 +49,7 @@ fun ProductDescription(isTextExpanded:Boolean=false,
                 style = MaterialTheme.typography.body2,
                 modifier = Modifier
                     .padding(vertical = 8.dp)
-                    .clickable { isTextExpanded = false }
+                    .clickable { /*isTextExpanded = false*/ }
             )
         }
     }

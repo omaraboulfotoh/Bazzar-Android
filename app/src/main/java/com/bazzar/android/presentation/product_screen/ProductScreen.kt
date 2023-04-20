@@ -20,12 +20,11 @@ fun ProductScreen(
     navigator: DestinationsNavigator,
 ) {
     // receive data from previous Screen
-    val args = navBackStackEntry.arguments
 
     //send data to viewModel
-    viewModel.savedStateHandle.set(SUB_CATEGORY_ID_KEY, subCategory)
+  /*  viewModel.savedStateHandle.set(SUB_CATEGORY_ID_KEY, subCategory)
     viewModel.savedStateHandle.set(SUB_CATEGORY_ID_KEY, subCategoryId)
-    viewModel.savedStateHandle.set(BRAND_KEY, brand)
+    viewModel.savedStateHandle.set(BRAND_KEY, brand)*/
     // get state
     val state = viewModel.viewState()
     viewModel.sideEffect { effect ->

@@ -1,12 +1,13 @@
-package com.bazzar.android.presentation.product_screen
+package com.bazzar.android.presentation.product_detail_screen
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.android.model.home.Product
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.Constants
-import com.bazzar.android.presentation.product_screen.composables.ProductDetailScreenContent
+import com.bazzar.android.presentation.product_detail_screen.composables.ProductDetailScreenContent
+import com.bazzar.android.presentation.product_screen.ProductDetailContract
+import com.bazzar.android.presentation.product_screen.ProductDetailViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -17,9 +18,9 @@ fun ProductDetailScreen(
     navigator: DestinationsNavigator,
 ) {
     // receive data from previous Screen
-    val args = navBackStackEntry.arguments
 
     //send data to viewModel
+    val product = null
     viewModel.savedStateHandle.set(Constants.PRODUCT_KEY, product)
 
     // get state

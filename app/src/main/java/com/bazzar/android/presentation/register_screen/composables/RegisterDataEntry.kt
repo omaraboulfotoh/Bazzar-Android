@@ -22,7 +22,7 @@ import com.bazzar.android.R
 
 @Composable
 fun RegisterDataEntry(
-    isTermsChecked: Boolean,
+    isTermsChecked: Boolean=false,
     enteredEmail: String,
     enteredUserName: String,
     modifier: Modifier

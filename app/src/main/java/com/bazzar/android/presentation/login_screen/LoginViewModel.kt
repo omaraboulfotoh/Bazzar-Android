@@ -39,7 +39,6 @@ class LoginViewModel @Inject constructor(
         if (isInitialized.not()) {
             setState {
                 copy(
-                    product = argumentProduct,
 //                    relatedProductList =product.
                 )
             }

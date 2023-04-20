@@ -61,5 +61,10 @@
     <string name="type_number">Enter your whatsapp number</string>
     <string name="type_birthdate">Enter your Birthdate</string>
     <string name="type_gender">Type your gender</string>
-    <string name="create_account">Create Account</string>
+    <string name="mobile_confirm">Mobile Confirmation</string>
+    <string name="otp_enter_digits_guide">Enter 4 digits number that you received on your WhatsApp mobile number.</string>
+    <string name="otp_send_again_guide">If you haven\'t received the code click</string>
+    <string name="otp_send_again">Send again</string>
+    <string name="confirm">Confirm</string>
+    <string name="account_confirmed">Your account has been confirmed successfully.</string>
 </resources>
