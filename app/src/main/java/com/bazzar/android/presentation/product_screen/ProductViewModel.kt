@@ -23,7 +23,6 @@ class ProductViewModel @Inject constructor(
     ) {
 
 
-
     private val mainCategoryList: List<Category> =
         savedStateHandle.get<List<Category>>(MAIN_CATEGORY_LIST_KEY) ?: emptyList()
 
@@ -40,7 +39,10 @@ class ProductViewModel @Inject constructor(
             ProductContract.Event.OnBackIconClicked -> ProductContract.Effect.Navigation.back
             is ProductContract.Event.OnFavouriteIconClicked -> TODO()
             is ProductContract.Event.OnFilterApplied -> filterProductList()
-            ProductContract.Event.OnSearchClicked -> {setState {copy(isSearchClicked = isSearchClicked.not()) }}
+            ProductContract.Event.OnSearchClicked -> {
+                setState { copy(isSearchClicked = isSearchClicked.not()) }
+            }
+
             is ProductContract.Event.OnSortIconClicked -> TODO()
             is ProductContract.Event.OnSortApplied -> sortProductList(event.sortItem)
             ProductContract.Event.OnFilterIconClicked -> TODO()
@@ -70,15 +72,15 @@ class ProductViewModel @Inject constructor(
     }
 
     private fun filterProductList() {
-/*
-        setState {
-            copy(
-                filteredProductList = productList?.filter { product: Product ->
-                    categoryIds.contains(product.categoryId)
+        /*
+                setState {
+                    copy(
+                        filteredProductList = productList?.filter { product: Product ->
+                            categoryIds.contains(product.categoryId)
+                        }
+                    )
                 }
-            )
-        }
-*/
+        */
     }
 
     private fun sortProductList(sortItem: ProductContract.State.SortingValues) {
@@ -92,17 +94,20 @@ class ProductViewModel @Inject constructor(
                 copy(
                     filteredProductList = filteredProductList?.sortedByDescending { it.price })
             }
+
             ProductContract.State.SortingValues.PRICE_LOW_TO_HEIGH -> setState {
                 copy(
                     filteredProductList = filteredProductList?.sortedBy { it.price })
             }
+
             ProductContract.State.SortingValues.DISCOUNT_ONLY -> setState { copy(filteredProductList = filteredProductList?.filter { it.price != it.oldPrice }) }
             ProductContract.State.SortingValues.NEW_ARRIVAL -> setState { copy(filteredProductList = filteredProductList?.filter { it.isNew }) }
             ProductContract.State.SortingValues.BAZAAAR_PICKS -> TODO()
         }
     }
 
-    fun init() {
+    fun init(brandId: Int?, categoryId: Int?) {
+      
         if (isInitialized.not()) {
             setState {
                 copy(
@@ -126,6 +131,7 @@ class ProductViewModel @Inject constructor(
                             productList = currentState.productList?.plus(productResponse.data) as List<Product>
                         )
                     }
+
                     else -> {}
                 }
             }

@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.category_screen.composables
+package com.bazzar.android.presentation.categoryScreen.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

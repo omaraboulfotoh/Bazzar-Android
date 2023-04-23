@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.home_screen.composables
+package com.bazzar.android.presentation.composables
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

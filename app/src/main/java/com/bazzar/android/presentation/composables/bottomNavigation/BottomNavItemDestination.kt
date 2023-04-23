@@ -3,7 +3,6 @@ package com.bazzar.android.presentation.composables.bottomNavigation
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.bazzar.android.R
-import com.bazzar.android.presentation.category_screen.CategoryScreen
 import com.bazzar.android.presentation.destinations.*
 import com.bazzar.android.presentation.main.MainContract
 

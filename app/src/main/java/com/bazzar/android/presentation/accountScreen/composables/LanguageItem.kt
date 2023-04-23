@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.account_screen.composables
+package com.bazzar.android.presentation.accountScreen.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

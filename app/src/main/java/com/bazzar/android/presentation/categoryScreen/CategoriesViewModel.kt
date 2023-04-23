@@ -1,10 +1,10 @@
-package com.bazzar.android.presentation.category_screen
+package com.bazzar.android.presentation.categoryScreen
 
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
-import com.bazzar.android.presentation.category_screen.CategoryContract.*
+import com.bazzar.android.presentation.categoryScreen.CategoryContract.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

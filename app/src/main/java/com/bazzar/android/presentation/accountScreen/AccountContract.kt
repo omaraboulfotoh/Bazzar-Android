@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.account_screen
+package com.bazzar.android.presentation.accountScreen
 
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect

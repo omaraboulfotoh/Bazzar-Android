@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.category_screen.composables
+package com.bazzar.android.presentation.categoryScreen.composables
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background

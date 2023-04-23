@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.category_screen.composables
+package com.bazzar.android.presentation.categoryScreen.composables
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

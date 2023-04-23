@@ -1,24 +1,23 @@
 package com.bazzar.android.presentation.login_screen
 
-import androidx.lifecycle.SavedStateHandle
-import com.android.model.home.Product
 import com.android.model.home.SearchProductRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
-import com.bazzar.android.presentation.Constants.PRODUCT_KEY
+import com.bazzar.android.R
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.utils.IResourceProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+@HiltViewModel
 class LoginViewModel @Inject constructor(
     globalState: IGlobalState,
-    private val homeUseCase: HomeUseCase, val savedStateHandle: SavedStateHandle
-) :
-    BaseViewModel<LoginContract.Event, LoginContract.State, LoginContract.Effect>(
-        globalState
-    ) {
-    private val argumentProduct: Product =
-        savedStateHandle.get<Product>(PRODUCT_KEY) ?: Product()
+    private val homeUseCase: HomeUseCase,
+    private val resoundProvider: IResourceProvider,
+) : BaseViewModel<LoginContract.Event, LoginContract.State, LoginContract.Effect>(
+    globalState
+) {
 
     private var isInitialized = false
     override fun setInitialState() = LoginContract.State()
@@ -26,13 +25,17 @@ class LoginViewModel @Inject constructor(
     override fun handleEvents(event: LoginContract.Event) {
         when (event) {
             is LoginContract.Event.OnLogin -> logIn(event.phoneNumber)
-            is LoginContract.Event.OnContinueAsAGuest -> setEffect { LoginContract.Effect.Navigation.goToHomeAsGuest }
-            is LoginContract.Event.OnCreateNewAccount -> setEffect { LoginContract.Effect.Navigation.goToRegisterScreen }
+            is LoginContract.Event.OnContinueAsAGuest -> setEffect { LoginContract.Effect.Navigation.GoToHomeAsGuest }
+            is LoginContract.Event.OnCreateNewAccount -> setEffect { LoginContract.Effect.Navigation.GoToRegisterScreen }
         }
     }
 
     private fun logIn(phoneNumber: String) {
-        TODO("Not yet implemented")
+
+        // todo will handle the validation
+//        if (phoneNumber.notMatdch) {
+//            setState { copy(phoneNumberError = resoundProvider.getString(R.string.success)) }
+//        }
     }
 
     fun init() {
@@ -47,6 +50,10 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    fun isPhoneValid() {
+
+    }
+
     private fun loadProductData(categoryId: Int) = executeCatching({
         homeUseCase.getAllProductList(SearchProductRequest(categoryId = categoryId))
             .collect { productResponse ->
@@ -57,6 +64,7 @@ class LoginViewModel @Inject constructor(
                         copy(
                         )
                     }
+
                     else -> {}
                 }
             }

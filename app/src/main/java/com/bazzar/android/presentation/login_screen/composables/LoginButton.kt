@@ -17,16 +17,26 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
+import com.bazzar.android.presentation.composables.PrimaryButton
 
 @Composable
-fun LoginButton(modifier:Modifier) {
+fun LoginButton(
+    modifier: Modifier,
+    isEnabled: Boolean = false,
+    onSubmit: () -> Unit
+) {
+
+    // todo replace wirth buttons
+    //    PrimaryButton(text =, onClick = { /*TODO*/ })
+
     Button(
         modifier = modifier
             .width(343.dp)
             .height(65.dp)
             .clip(RoundedCornerShape(32.5.dp))
             .background(colorResource(id = R.color.prussian_blue)),
-        onClick = { /*TODO*/ }) {
+        enabled = isEnabled,
+        onClick = { onSubmit() }) {
         Text(
             text = stringResource(id = R.string.login),
             style = MaterialTheme.typography.subtitle2.copy(

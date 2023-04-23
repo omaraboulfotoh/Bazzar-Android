@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.category_screen
+package com.bazzar.android.presentation.categoryScreen
 
 import com.android.model.home.Brand
 import com.android.model.home.Category

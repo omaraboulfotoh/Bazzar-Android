@@ -2,8 +2,6 @@ package com.bazzar.android.presentation.product_screen
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.android.model.home.Brand
-import com.android.model.home.Category
 import com.android.model.home.Product
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
@@ -18,6 +16,8 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun ProductScreen(
     viewModel: ProductViewModel = hiltViewModel(),
     navigator: DestinationsNavigator,
+    brandId: Int? = null,
+    categoryId: Int? = null,
 ) {
     // receive data from previous Screen
 
@@ -37,7 +37,7 @@ fun ProductScreen(
         }
     }
     // init logic
-    viewModel.init()
+    viewModel.init(brandId, categoryId)
 //    viewModel.categoryId=ProductScreenDestination.arguments.get()
 
     ProductScreenContent(state = state) { viewModel.setEvent(it) }

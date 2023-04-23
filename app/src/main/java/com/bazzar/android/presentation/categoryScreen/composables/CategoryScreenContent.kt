@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.category_screen.composables
+package com.bazzar.android.presentation.categoryScreen.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bazzar.android.R
-import com.bazzar.android.presentation.category_screen.CategoryContract
+import com.bazzar.android.presentation.categoryScreen.CategoryContract
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.theme.BazzarTheme
 

@@ -32,7 +32,7 @@ fun SmsCodeView(
     smsCodeLength: Int,
     textFieldColors: TextFieldColors,
     textStyle: TextStyle,
-    lineColor : Color,
+    lineColor: Color,
     smsFulled: (String) -> Unit,
 ) {
     val focusRequesters: List<FocusRequester> = remember {
@@ -96,9 +96,11 @@ fun SmsCodeView(
                                         smsFulled.invoke(enteredNumbers.joinToString(separator = ""))
                                         focusRequesters.getOrNull(index + 1)?.requestFocus()
                                     }
+
                                     2 -> {
                                         focusRequesters.getOrNull(index + 1)?.requestFocus()
                                     }
+
                                     else -> {
                                         return@OutlinedTextField
                                     }

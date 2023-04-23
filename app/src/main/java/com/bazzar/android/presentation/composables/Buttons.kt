@@ -44,7 +44,7 @@ fun PrimaryButton(
     ) {
         MessageBodyBold(
             text = text.uppercase(),
-            color = if (enabled)textColor else textColorDisabled ,
+            color = if (enabled) textColor else textColorDisabled,
             style = BazzarTheme.typography.body1Bold
         )
     }
