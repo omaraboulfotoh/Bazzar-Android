@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.android.model.home.Product
 import com.bazzar.android.R
+import com.bazzar.android.presentation.cartScreen.CartContract
 import com.bazzar.android.presentation.home_screen.composables.ProductsGroup
 import com.bazzar.android.presentation.theme.BazzarTheme
 
@@ -37,28 +38,34 @@ val productList = listOf<Product>(
     ),
 )
 
-@Preview
 @Composable
 fun CartScreenContent(
-    /*
-        state: CartContract.State,
-    */
-    /*onSendEvent: (CartContract.Event) -> Unit*/
+    state: CartContract.State, onSendEvent: (CartContract.Event) -> Unit
 ) {
-    LazyColumn(
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.white_smoke)),
+            .background(BazzarTheme.colors.backgroundColor),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.l)
+        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
     ) {
-        item {
-            CartSummary()
+        // header item
+        CartSummary()
+
+        // rest of floating design
+        Box(
+            modifier = Modifier
+                .weight(1f)
+        )
+        LazyColumn(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            itemsIndexed(/*state.productCartList*/productList) { index, product ->
+                ProductCartItem(/*state?.productCartList*/product)
+            }
         }
 
-        itemsIndexed(/*state.productCartList*/productList) { index, product ->
-            ProductCartItem(/*state?.productCartList*/product)
-        }
+        // todo adding here the checkout button
     }
 }
 
