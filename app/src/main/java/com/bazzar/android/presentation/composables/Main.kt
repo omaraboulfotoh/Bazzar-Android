@@ -19,7 +19,7 @@ import com.bazzar.android.common.noRippleClickable
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
-fun MbcAppBar(
+fun BazzarAppBar(
     title: String = String(),
     modifier: Modifier = Modifier,
     navigationIcon: ImageVector? = Icons.Filled.ArrowBackIos,
@@ -99,7 +99,7 @@ fun MbcAppBarWithClose(
 
 @Composable
 fun EmptyMbcAppBar(title: String = String()) =
-    MbcAppBar(title = title, navigationIcon = null)
+    BazzarAppBar(title = title, navigationIcon = null)
 
 @Composable
 fun RowScope.MbcAppBarCloseAction(

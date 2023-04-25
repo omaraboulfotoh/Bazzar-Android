@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
-import com.bazzar.android.presentation.composables.MbcAppBar
+import com.bazzar.android.presentation.composables.BazzarAppBar
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -28,7 +28,7 @@ fun WebViewScreen(
     Scaffold(
         topBar = {
             title?.let {
-                MbcAppBar(
+                BazzarAppBar(
                     title = it
                 ) { backDispatcher?.onBackPressed() }
             }
