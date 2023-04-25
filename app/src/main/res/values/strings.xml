@@ -81,4 +81,6 @@
     <string name="add_from_your_wish_list">Add from your Wishlist</string>
     <string name="total_your_cart">Total Your Cart</string>
     <string name="number_in_cart">You have %d items in your cart</string>
+    <string name="remove">Remove</string>
+    <string name="check_out">Check out</string>
 </resources>

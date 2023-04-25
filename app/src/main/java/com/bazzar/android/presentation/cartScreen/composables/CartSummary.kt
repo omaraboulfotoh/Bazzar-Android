@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.bazzar.android.R
 
 @Composable
-fun CartSummary() {
+fun CartSummary(cartCounter: Int? = 0) {
     Box(
         Modifier
             .padding(top = 20.dp)
@@ -50,8 +50,7 @@ fun CartSummary() {
                 .padding(start = 68.dp)
                 .padding(top = 16.dp),
             text = stringResource(
-                id = R.string.number_in_cart,/*state.productCartList.size*/
-                50
+                id = R.string.number_in_cart, cartCounter.toString()
             ),
             style = MaterialTheme.typography.subtitle2.copy(
                 fontFamily = FontFamily(Font(R.font.montserrat_regular)),
