@@ -19,6 +19,7 @@ class CategoryContract {
     sealed class Event : ViewEvent {
         object OnToggleClicked : Event()
         object OnSearchClicked : Event()
+        object OnDismissClicked : Event()
         data class OnCategoryItemClicked(val categoryItemIndex: Int) : Event()
         data class OnSubCategoryItemClicked(val subCategoryItemIndex: Int) : Event()
         data class OnBrandItemClicked(val brandItemIndex: Int) : Event()

@@ -51,6 +51,10 @@ fun CategoryScreenContent(
                     onSendEvent(
                         CategoryContract.Event.OnSubCategoryItemClicked(it)
                     )
+                }, onDismissClicked = {
+                    onSendEvent(
+                        CategoryContract.Event.OnDismissClicked
+                    )
                 })
         } else {
             BrandGrid(

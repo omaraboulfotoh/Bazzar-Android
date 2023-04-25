@@ -56,7 +56,7 @@ fun LazyListScope.CategoryGroup(
                         .align(Alignment.BottomCenter),
                     shape = RoundedCornerShape(20.dp),
                     colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.white)),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 20.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
                     content = {}
                 )
                 RemoteImage(

@@ -26,6 +26,20 @@ class CategoriesViewModel @Inject constructor(
             Event.OnSearchClicked -> {}
             is Event.OnSubCategoryItemClicked -> goToProductCategory(event.subCategoryItemIndex)
             Event.OnToggleClicked -> setState { copy(showCategories = currentState.showCategories.not()) }
+            Event.OnDismissClicked -> handleDismissAction()
+        }
+    }
+
+    private fun handleDismissAction() {
+        val updatedMainCategories =
+            currentState.mainCategorisesList.orEmpty().mapIndexed { index, category ->
+                category.copy(isSelected = false)
+            }
+        setState {
+            copy(
+                mainCategorisesList = updatedMainCategories,
+                subCategoriesList = emptyList()
+            )
         }
     }
 
@@ -41,7 +55,7 @@ class CategoriesViewModel @Inject constructor(
         setState {
             copy(
                 mainCategorisesList = updatedMainCategories,
-                subCategoriesList = currentState.subCategoriesList.orEmpty()
+                subCategoriesList = currentState.categoryList.orEmpty()
                     .filter { it.parentId == selectedCategory.id })
         }
     }
