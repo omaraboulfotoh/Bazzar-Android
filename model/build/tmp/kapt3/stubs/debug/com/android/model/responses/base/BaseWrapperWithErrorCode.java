@@ -9,13 +9,13 @@ import java.lang.System;
 @com.squareup.moshi.JsonClass(generateAdapter = true)
 public final class BaseWrapperWithErrorCode<T extends java.lang.Object> {
     private final T data = null;
-    @org.jetbrains.annotations.Nullable
+    @org.jetbrains.annotations.Nullable()
     private final java.lang.String message = null;
-    @org.jetbrains.annotations.Nullable
+    @org.jetbrains.annotations.Nullable()
     private final java.lang.Long errorCode = null;
     
-    public BaseWrapperWithErrorCode(T data, @org.jetbrains.annotations.Nullable
-    java.lang.String message, @org.jetbrains.annotations.Nullable
+    public BaseWrapperWithErrorCode(T data, @org.jetbrains.annotations.Nullable()
+    java.lang.String message, @org.jetbrains.annotations.Nullable()
     @com.squareup.moshi.Json(name = "error_code")
     java.lang.Long errorCode) {
         super();
@@ -25,12 +25,12 @@ public final class BaseWrapperWithErrorCode<T extends java.lang.Object> {
         return null;
     }
     
-    @org.jetbrains.annotations.Nullable
+    @org.jetbrains.annotations.Nullable()
     public final java.lang.String getMessage() {
         return null;
     }
     
-    @org.jetbrains.annotations.Nullable
+    @org.jetbrains.annotations.Nullable()
     public final java.lang.Long getErrorCode() {
         return null;
     }

@@ -10,11 +10,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
-import com.bazzar.android.presentation.home_screen.composables.IndicatorImageSlider
+import com.bazzar.android.presentation.composables.IndicatorImageSlider
 import com.bazzar.android.presentation.home_screen.composables.ProductsGroup
-import com.bazzar.android.presentation.product_detail_screen.composables.BrandSection
-import com.bazzar.android.presentation.product_detail_screen.composables.ProductDescription
-import com.bazzar.android.presentation.product_detail_screen.composables.RatingRow
 import com.bazzar.android.presentation.product_screen.ProductDetailContract
 
 @Composable
