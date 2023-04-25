@@ -172,6 +172,7 @@ dependencies {
     implementation Dependencies.COMPOSE
     implementation Dependencies.HILT
     implementation Dependencies.COMPOSE_VIEW_MODEL
+    implementation Dependencies.lottieCompose
 }
 
 kapt {

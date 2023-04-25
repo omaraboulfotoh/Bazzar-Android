@@ -12,7 +12,7 @@ class CategoryContract {
         val categoryList: List<Category>? = emptyList(),
         val mainCategorisesList: List<Category>? = emptyList(),
         val subCategoriesList: List<Category>? = emptyList(),
-        val showCategories: Boolean = false,
+        val showCategories: Boolean = true,
         val brandList: List<Brand>? = emptyList(),
     ) : ViewState
 

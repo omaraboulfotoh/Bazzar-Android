@@ -22,7 +22,7 @@ object Versions {
     const val retrofitGson = "2.9.0"
     const val gsonVersion = "2.8.9"
     const val mpAndroidChartVersion = "3.1.0"
-    const val lottieVersion = "4.2.0"
+    const val lottieVersion = "5.2.0"
     const val truthVersion = "1.1.3"
     const val mockkVersion = "1.12.0"
     const val robolectricVersion = "4.6.1"

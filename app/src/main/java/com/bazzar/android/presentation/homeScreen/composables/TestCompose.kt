@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.home_screen.composables
+package com.bazzar.android.presentation.homeScreen.composables
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image

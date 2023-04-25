@@ -1,6 +1,5 @@
-package com.bazzar.android.presentation.home_screen
+package com.bazzar.android.presentation.homeScreen
 
-import com.android.network.domain.repos.HomeRepo
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.presentation.app.IGlobalState
@@ -24,9 +23,24 @@ class HomeViewModel @Inject constructor(
 
     override fun handleEvents(event: HomeContract.Event) {
         when (event) {
-            is HomeContract.Event.OnSliderClicked -> handleSliderAction(event.sliderIndex,event.sliderItemIndex)
-            else -> {}
+            is HomeContract.Event.OnSliderClicked -> handleSliderAction(
+                event.sliderIndex,
+                event.sliderItemIndex
+            )
+
+            is HomeContract.Event.OnBrandClicked -> handleBrandClicked(event.index)
+            is HomeContract.Event.OnCategoryClicked -> TODO()
         }
+    }
+
+    private fun handleBrandClicked(index: Int) {
+        val brand = currentState.featuredBrands?.get(index) ?: return
+        setEffect { HomeContract.Effect.Navigation.GoToBrandProductsList(brand) }
+    }
+
+    private fun handleCategoryClicked(index: Int) {
+        val category = currentState.featuredCategories?.get(index) ?: return
+        setEffect { HomeContract.Effect.Navigation.GoToCategoryProductsList(category) }
     }
 
     private fun handleSliderAction(sliderIndex: Int, sliderItemIndex: Int) {
@@ -57,6 +71,7 @@ class HomeViewModel @Inject constructor(
                         featuredCategories = it.data?.featuredCategories
                     )
                 }
+
                 else -> {}
             }
         }

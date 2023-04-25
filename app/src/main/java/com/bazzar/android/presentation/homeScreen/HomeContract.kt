@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.home_screen
+package com.bazzar.android.presentation.homeScreen
 
 import com.android.model.home.Brand
 import com.android.model.home.Category
@@ -20,12 +20,16 @@ class HomeContract {
 
     sealed class Event : ViewEvent {
         data class OnSliderClicked(val sliderIndex: Int, val sliderItemIndex: Int) : Event()
+        data class OnBrandClicked(val index: Int) : Event()
+        data class OnCategoryClicked(val index: Int) : Event()
     }
 
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
             object GoToHome : Navigation()
             data class GoToSliderPage(val slider: HomeSlider) : Navigation()
+            data class GoToBrandProductsList(val brand: Brand) : Navigation()
+            data class GoToCategoryProductsList(val category: Category) : Navigation()
         }
     }
 }

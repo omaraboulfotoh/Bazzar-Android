@@ -106,7 +106,7 @@ class ProductViewModel @Inject constructor(
         }
     }
 
-    fun init(brandId: Int?, categoryId: Int?) {
+    fun init(brandId: Brand?, categoryId: Category?) {
       
         if (isInitialized.not()) {
             setState {

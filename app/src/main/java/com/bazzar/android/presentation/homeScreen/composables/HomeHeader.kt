@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.home_screen.composables
+package com.bazzar.android.presentation.homeScreen.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.presentation.theme.BazzarTheme
 

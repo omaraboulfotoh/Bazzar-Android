@@ -27,7 +27,7 @@ fun CategoryScreen(
             }
 
             is CategoryContract.Effect.Navigation.GoToProductBrandList -> {
-                navigator.navigate(ProductScreenDestination(categoryId = 12))
+//                navigator.navigate(ProductScreenDestination(categoryId = 12))
             }
         }
     }

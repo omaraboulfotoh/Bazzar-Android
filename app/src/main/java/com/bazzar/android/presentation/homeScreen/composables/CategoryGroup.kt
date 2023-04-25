@@ -1,5 +1,6 @@
-package com.bazzar.android.presentation.home_screen.composables
+package com.bazzar.android.presentation.homeScreen.composables
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
@@ -26,7 +27,10 @@ import com.bazzar.android.presentation.common.gridItems
 import com.bazzar.android.presentation.composables.HeaderTextWithViewAll
 import com.bazzar.android.presentation.composables.RemoteImage
 
-fun LazyListScope.CategoryGroup(categoryList: List<Category>) {
+fun LazyListScope.CategoryGroup(
+    categoryList: List<Category>,
+    onCategoryClicked: (Int) -> Unit
+) {
 
     item {
         HeaderTextWithViewAll(text = stringResource(id = R.string.home_featured_category))
@@ -42,6 +46,9 @@ fun LazyListScope.CategoryGroup(categoryList: List<Category>) {
                     .padding(top = 16.dp)
                     .height(216.dp)
                     .wrapContentWidth()
+                    .clickable {
+                        onCategoryClicked(it)
+                    }
             ) {
                 Card(
                     modifier = Modifier
@@ -55,7 +62,7 @@ fun LazyListScope.CategoryGroup(categoryList: List<Category>) {
                 RemoteImage(
                     imageUrl = category.imagePath,
                     contentScale = ContentScale.Crop,
-                    withShimmer = true,
+                    withShimmer = false,
                     modifier = Modifier
                         .align(Alignment.TopCenter)
                         .size(120.dp)

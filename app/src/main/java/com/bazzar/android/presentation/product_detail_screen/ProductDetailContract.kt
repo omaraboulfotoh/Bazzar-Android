@@ -1,12 +1,10 @@
 package com.bazzar.android.presentation.product_screen
 
 import com.android.model.home.Brand
-import com.android.model.home.HomeSlider
 import com.android.model.home.Product
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
 import com.bazzar.android.presentation.base.ViewState
-import com.bazzar.android.presentation.home_screen.HomeContract
 
 class ProductDetailContract {
     data class State(

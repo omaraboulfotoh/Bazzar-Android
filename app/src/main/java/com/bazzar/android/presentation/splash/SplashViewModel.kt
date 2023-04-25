@@ -4,9 +4,7 @@ import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.presentation.splash.SplashContract.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import javax.inject.Inject
-import kotlin.time.Duration.Companion.seconds
 
 
 @HiltViewModel
@@ -17,13 +15,14 @@ class SplashViewModel @Inject constructor(
     override fun setInitialState() = State
     override fun handleEvents(event: Event) {
         when (event) {
-            Event.StartScreen -> navigateToHome()
+            is Event.SendAnimationProgress -> handleAnimationDone(event.progress)
         }
     }
 
-    private fun navigateToHome() = executeCatching({
-        delay(2.seconds)
-        setEffect { Effect.Navigation.GoToHome }
-    })
+    private fun handleAnimationDone(progress: Float) {
+        if (progress == 1f) navigateToHome()
+    }
+
+    private fun navigateToHome() = setEffect { Effect.Navigation.GoToHome }
 
 }

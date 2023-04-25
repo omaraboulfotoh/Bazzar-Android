@@ -22,7 +22,7 @@ import com.google.accompanist.pager.rememberPagerState
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun IndicatorImageSlider(
-    imagePathList: List<String>?,
+    imagePathList: List<String>,
     modifier: Modifier = Modifier,
     onSliderClicked: (Int) -> Unit
 ) {
@@ -65,14 +65,15 @@ fun IndicatorImageSlider(
                 }
             )
         }
-        HorizontalPagerIndicator(
-            pagerState = pagerState,
-            modifier = Modifier
-                .wrapContentSize(),
-            activeColor = BazzarTheme.colors.indicatorActiveColor,
-            inactiveColor = BazzarTheme.colors.indicatorInActiveColor,
-            indicatorWidth = BazzarTheme.spacing.xs,
-            indicatorHeight = BazzarTheme.spacing.xs,
-        )
+        if (imagePathList.size > 1)
+            HorizontalPagerIndicator(
+                pagerState = pagerState,
+                modifier = Modifier
+                    .wrapContentSize(),
+                activeColor = BazzarTheme.colors.indicatorActiveColor,
+                inactiveColor = BazzarTheme.colors.indicatorInActiveColor,
+                indicatorWidth = BazzarTheme.spacing.xs,
+                indicatorHeight = BazzarTheme.spacing.xs,
+            )
     }
 }

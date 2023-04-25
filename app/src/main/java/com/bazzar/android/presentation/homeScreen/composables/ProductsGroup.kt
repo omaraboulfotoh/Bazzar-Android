@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.home_screen.composables
+package com.bazzar.android.presentation.homeScreen.composables
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow

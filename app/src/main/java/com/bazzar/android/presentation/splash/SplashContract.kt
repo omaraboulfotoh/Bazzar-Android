@@ -9,7 +9,7 @@ class SplashContract {
     object State : ViewState
 
     sealed class Event : ViewEvent {
-        object StartScreen : Event()
+        data class SendAnimationProgress(val progress: Float) : Event()
     }
 
     sealed class Effect : ViewSideEffect {

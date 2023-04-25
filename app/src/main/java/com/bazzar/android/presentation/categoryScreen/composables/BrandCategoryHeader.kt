@@ -23,7 +23,6 @@ fun BrandCategoryHeader(showBack: Boolean) {
         Modifier
             .fillMaxWidth()
             .height(64.dp)
-            .padding(horizontal = BazzarTheme.spacing.m),
     ) {
 
         // show back button
