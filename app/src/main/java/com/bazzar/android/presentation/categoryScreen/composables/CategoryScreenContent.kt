@@ -2,7 +2,9 @@ package com.bazzar.android.presentation.categoryScreen.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
@@ -61,6 +63,9 @@ fun CategoryScreenContent(
                 brandList = state.brandList.orEmpty(),
                 onBrandClicked = { onSendEvent(CategoryContract.Event.OnBrandItemClicked(it)) }
             )
+        }
+        item {
+            Spacer(modifier = Modifier.height(BazzarTheme.spacing.s))
         }
     }
 }

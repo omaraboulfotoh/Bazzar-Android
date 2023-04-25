@@ -2,7 +2,7 @@ package com.bazzar.android.presentation.categoryScreen.composables
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
@@ -41,7 +41,6 @@ fun LazyListScope.CategoryList(
     onDismissClicked: () -> Unit,
     onSubCategoryItemClicked: (Int) -> Unit,
 ) {
-
     itemsIndexed(
         items = categoryList
     ) { index, category ->
@@ -116,6 +115,7 @@ fun LazyListScope.CategoryList(
                         RemoteImage(
                             imageUrl = category.imagePath,
                             withShimmer = false,
+                            contentScale = ContentScale.Fit,
                             modifier = Modifier
                                 .width(120.dp)
                                 .height(75.dp)
@@ -139,6 +139,9 @@ fun LazyListScope.CategoryList(
                             color = colorResource(id = R.color.white),
                         )
                     )
+                    // space
+                    Spacer(modifier = Modifier.height(BazzarTheme.spacing.xxs))
+                    // sub list
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(2), modifier = Modifier.wrapContentHeight()
                     ) {
@@ -149,14 +152,15 @@ fun LazyListScope.CategoryList(
                                     .clickable { onSubCategoryItemClicked(index) },
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                GlideImage(
-                                    model = item.imagePath,
+                                RemoteImage(
+                                    imageUrl = item.imagePath,
+                                    withShimmer = true,
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
                                         .width(160.dp)
                                         .height(100.dp)
-                                        .clip(RoundedCornerShape(15.dp)),
-                                    contentDescription = null,
+                                        .clip(RoundedCornerShape(15.dp))
+                                        .border(width = 1.dp, color = BazzarTheme.colors.white),
                                 )
                                 Text(
                                     text = item.title ?: "",
@@ -169,6 +173,7 @@ fun LazyListScope.CategoryList(
                             }
                         }
                     }
+                    Spacer(modifier = Modifier.height(BazzarTheme.spacing.xxs))
                 }
             }
         }
