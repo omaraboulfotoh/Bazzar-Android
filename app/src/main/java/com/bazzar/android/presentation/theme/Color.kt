@@ -7,95 +7,61 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
 
-val AMERICAN_Gold = Color(0xFFD5B050)
-val RAISIN_BLACK = Color(0xFF22201F)
-val DANDELION = Color(0xFF002C47)
-val DARK_KHAKI = Color(0xFFD5CCC7)
-val DARK_TEXT_KHAKI = Color(0xFFA19B97)
-val GRAY300 = Color(0xFFEAE6E4)
-val TransCharcoalGrey = Color(0x88212121)
-val StrokeGrey = Color(0xFF767676)
-val Black = Color(0xFF010101)
-val PlaceholderGrey = Color(0XFF484848)
-val BorderStroke = Color(0XFF929292)
-val Brown = Color(0XFF633D22)
-val GHOST_WHITE = Color(0XFFF9F9F9)
-val TAUPE_GRAY = Color(0XFF888888)
-val DARK_CHARCOAL = Color(0X00000029)
-val WHITE = Color(0XFFFFFFFF)
-val BLACK = Color(0XFF000000)
-val BLACK50 = Color(0XFF000000)
-val BLACK0 = Color(0x0000000)
-val CHARCOAL = Color(0XFF344054)
-val QUICK_SILVER = Color(0XFFA7A6A5)
-val SMOKY_BLACK = Color(0XFF222222)
-val SONIC_SILVER = Color(0XFF777777)
-val LIGHT_SILVER = Color(0XFFf9f7f7)
-val DARK_LIVER = Color(0XFF505050)
-val DIVIDER_COLOR = Color(0xFFBEBEBE)
-val PHILIPPINE_GRAY = Color(0xFF8F8F8E)
-val GREY_BTN = Color(0xFFDADADA)
-val LIGHT_BLACK = Color(0XFF4E4D4C)
-val LIGHT_BLACK_GOSPEL = Color(0XFF2A2928)
-
+val COLOR_NAVY: Color = Color(0xff000760)
+val COLOR_BLUE: Color = Color(0Xff00B7FF)
+val COLOR_RED: Color = Color(0XffE82357)
+val COLOR_BLACK: Color = Color(0Xff0F1015)
+val COLOR_WHITE: Color = Color(0Xffffffff)
+val COLOR_LIGHT_SILVER: Color = Color(0XffF8F8F8)
+val COLOR_LIGHT_GREY: Color = Color(0XffD1D1D1)
+val COLOR_DARK_SILVER: Color = Color(0XffEAEAEA)
+val COLOR_DARK_GREY: Color = Color(0Xff8C8C8C)
 val PrimaryGradient =
-    Brush.verticalGradient(listOf(BLACK50, BLACK0), tileMode = TileMode.Decal)
+    Brush.verticalGradient(listOf(COLOR_BLACK, COLOR_DARK_GREY), tileMode = TileMode.Decal)
+
 
 val ColorPalette =
     lightColors(
-        primary = RAISIN_BLACK,
-        primaryVariant = RAISIN_BLACK,
-        secondary = AMERICAN_Gold,
-        secondaryVariant = DANDELION,
-        background = RAISIN_BLACK,
-        surface = WHITE,
-        onPrimary = WHITE,
-        onSecondary = BLACK,
-        onBackground = WHITE,
-        onSurface = BLACK
+        primary = COLOR_NAVY,
+        primaryVariant = COLOR_BLUE,
+        secondary = COLOR_RED,
+        secondaryVariant = COLOR_BLACK,
+        background = COLOR_LIGHT_SILVER,
+        surface = COLOR_WHITE,
+        onPrimary = COLOR_WHITE,
+        onSecondary = COLOR_BLACK,
+        onBackground = COLOR_WHITE,
+        onSurface = COLOR_BLACK
     )
 
 @Immutable
 data class AbsColors(
-    val bottomNavBarBackground: Color = DARK_CHARCOAL,
-    val bottomNavBarSelected: Color = Color(0Xff00B7FF),
-    val background: Color = RAISIN_BLACK,
-    val backgroundColor: Color = LIGHT_SILVER,
-    val primaryButtonColor: Color = DANDELION,
-    val primaryButtonDisableColor: Color = DARK_KHAKI,
-    val primaryButtonTextColor: Color = AMERICAN_Gold,
-    val primaryButtonTextColorDisabled: Color = DARK_TEXT_KHAKI,
-    val primaryDisabledColor: Color = TransCharcoalGrey,
-    val primaryText: Color = DANDELION,
-    val secondaryText: Color = SMOKY_BLACK,
-    val LightBlackGospel: Color = LIGHT_BLACK_GOSPEL,
-    val gold: Color = DANDELION,
-    val stroke: Color = GRAY300,
-    val black: Color = Black,
-    val indicatorGrey: Color = StrokeGrey,
-    val white: Color = Color(0XFFFFFFFF),
-    val whiteAlpha30: Color = Color(0x4DFFFFFF),
-    val transparent: Color = Color(0x00FFFFFF),
-    val placeholder: Color = PlaceholderGrey,
-    val borderColor: Color = BorderStroke,
-    val brown: Color = Brown,
-    val pickerHeader: Color = BLACK,
-    val pickerContent: Color = BLACK,
-    val pickerOption: Color = WHITE,
+    val bottomNavBarBackground: Color = COLOR_BLUE,
+    val bottomNavBarSelected: Color = COLOR_NAVY,
+    val backgroundColor: Color = COLOR_LIGHT_SILVER,
+    val primaryButtonColor: Color = COLOR_NAVY,
+    val primaryButtonDisableColor: Color = COLOR_DARK_GREY,
+    val primaryButtonTextColor: Color = COLOR_WHITE,
+    val primaryButtonTextColorDisabled: Color = COLOR_DARK_SILVER,
+    val primaryText: Color = COLOR_WHITE,
+    val secondaryText: Color = COLOR_BLACK,
+    val stroke: Color = COLOR_LIGHT_GREY,
+    val black: Color = COLOR_BLACK,
+    val white: Color = COLOR_WHITE,
+    val indicatorGrey: Color = COLOR_DARK_GREY,
+    val placeholder: Color = COLOR_DARK_GREY,
+    val borderColor: Color = COLOR_DARK_GREY,
+    val pickerHeader: Color = COLOR_BLACK,
+    val pickerContent: Color = COLOR_BLACK,
+    val pickerOption: Color = COLOR_WHITE,
     val primaryGradient: Brush = PrimaryGradient,
-    val textSecondary: Color = CHARCOAL,
-    val textGray: Color = PHILIPPINE_GRAY,
-    val textHint: Color = QUICK_SILVER,
-    val smokeyBlack: Color = SMOKY_BLACK,
-    val indicatorActiveColor: Color = Color.White,
-    val indicatorInActiveColor: Color = background,
-    val spacer: Color = SONIC_SILVER,
-    val unselectedColor: Color = LIGHT_SILVER,
-    val progressBg: Color = DARK_LIVER,
-    val dividerColor: Color = DIVIDER_COLOR,
-    val greyBtn: Color = GREY_BTN,
-    val unSelectedCard: Color = DARK_LIVER,
-    val lightBlack: Color = LIGHT_BLACK,
+    val textGray: Color = COLOR_DARK_GREY,
+    val textHint: Color = COLOR_DARK_GREY,
+    val indicatorActiveColor: Color = COLOR_NAVY,
+    val indicatorInActiveColor: Color = COLOR_WHITE,
+    val spacer: Color = COLOR_LIGHT_SILVER,
+    val progressBg: Color = COLOR_NAVY,
+    val dividerColor: Color = COLOR_DARK_GREY,
 )
 
 val LocalAbsColor = staticCompositionLocalOf { AbsColors() }

@@ -98,7 +98,7 @@ fun PickerTextField(
     placeholder: String,
     onPick: () -> Unit,
     trailingIcon: ImageVector = Icons.Filled.ArrowDropDown,
-    trailingIconTint: Color = BazzarTheme.colors.gold,
+    trailingIconTint: Color = BazzarTheme.colors.primaryButtonColor,
 ) {
     TextInputField(
         text = text,

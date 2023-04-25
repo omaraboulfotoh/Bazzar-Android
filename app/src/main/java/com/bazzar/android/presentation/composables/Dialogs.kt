@@ -29,7 +29,7 @@ fun DefaultMessageDialog(
     dismissOnBackPress: Boolean = true,
     dismissOnClickOutside: Boolean = true,
     bodyColor: Color = Color.White,
-    backgroundColor: Color = BazzarTheme.colors.background
+    backgroundColor: Color = BazzarTheme.colors.backgroundColor
 ) {
     Dialog(
         onDismissRequest = onNegative,
@@ -50,7 +50,7 @@ fun DefaultMessageDialog(
                         text = title,
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
-                        color = BazzarTheme.colors.gold
+                        color = BazzarTheme.colors.primaryButtonColor
                     )
 
                     Image(
@@ -101,7 +101,7 @@ fun TwoButtonsMessageDialog(
     dismissOnBackPress: Boolean = true,
     dismissOnClickOutside: Boolean = true,
     bodyColor: Color = Color.White,
-    backgroundColor: Color = BazzarTheme.colors.background,
+    backgroundColor: Color = BazzarTheme.colors.backgroundColor,
     negativeButtonText: String
 ) {
     Dialog(
@@ -123,7 +123,7 @@ fun TwoButtonsMessageDialog(
                         text = title,
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
-                        color = BazzarTheme.colors.gold
+                        color = BazzarTheme.colors.primaryButtonColor
                     )
 
                     Image(
@@ -155,7 +155,7 @@ fun TwoButtonsMessageDialog(
                         modifier = Modifier.weight(0.5f),
                         text = negativeButtonText,
                         onClick = onNegative,
-                        background = BazzarTheme.colors.greyBtn
+                        background = BazzarTheme.colors.primaryButtonColor
                     )
                     Spacer(modifier = Modifier.width(BazzarTheme.spacing.s))
                     PrimaryButton(
@@ -179,7 +179,7 @@ fun PatrolStepsMessageDialog(
     dismissOnBackPress: Boolean = true,
     dismissOnClickOutside: Boolean = true,
     bodyColor: Color = Color.White,
-    backgroundColor: Color = BazzarTheme.colors.background,
+    backgroundColor: Color = BazzarTheme.colors.backgroundColor,
     negativeButtonText: String
 ) {
     Dialog(
@@ -201,7 +201,7 @@ fun PatrolStepsMessageDialog(
                         text = title,
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
-                        color = BazzarTheme.colors.gold
+                        color = BazzarTheme.colors.primaryButtonColor
                     )
 
                     Image(
@@ -233,7 +233,7 @@ fun PatrolStepsMessageDialog(
                         modifier = Modifier.weight(0.5f),
                         text = negativeButtonText,
                         onClick = onNegative,
-                        background = BazzarTheme.colors.greyBtn
+                        background = BazzarTheme.colors.primaryButtonColor
                     )
                     Spacer(modifier = Modifier.width(BazzarTheme.spacing.s))
                     PrimaryButton(
@@ -301,7 +301,7 @@ fun ConfirmationMessageDialog(
                             .fillMaxWidth()
                     ) {
                         PrimaryButton(
-                            background = BazzarTheme.colors.greyBtn,
+                            background = BazzarTheme.colors.primaryButtonColor,
                             text = negativeButtonText,
                             onClick = onNegative
                         )

@@ -10,11 +10,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
-import com.bazzar.android.presentation.home_screen.composables.IndicatorImageSlider
+import com.bazzar.android.presentation.composables.IndicatorImageSlider
 import com.bazzar.android.presentation.home_screen.composables.ProductsGroup
-import com.bazzar.android.presentation.product_detail_screen.composables.BrandSection
-import com.bazzar.android.presentation.product_detail_screen.composables.ProductDescription
-import com.bazzar.android.presentation.product_detail_screen.composables.RatingRow
 import com.bazzar.android.presentation.product_screen.ProductDetailContract
 
 @Composable
@@ -29,11 +26,8 @@ fun ProductDetailScreenContent(
     ) {
         item {
             IndicatorImageSlider(
-                imagePathList = state.product.imagePath as List<String>,
-                columnModifier = Modifier
-                    .width(375.dp)
-                    .height(300.dp),
-                imageCardModifier = Modifier.size(280.dp),
+                imagePathList = listOf(state.product.imagePath.orEmpty()),
+                modifier = Modifier.wrapContentHeight(),
                 onSliderClicked = {
                     onSendEvent(
                         ProductDetailContract.Event.OnSliderClicked(0, it)

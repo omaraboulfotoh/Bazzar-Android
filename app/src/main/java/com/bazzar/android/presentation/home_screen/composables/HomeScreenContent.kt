@@ -11,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
+import com.bazzar.android.presentation.composables.IndicatorImageSlider
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.home_screen.HomeContract
 
@@ -31,21 +32,11 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
         item {
             IndicatorImageSlider(
                 imagePathList = state.slides1?.map { it.imagePath ?: "" },
-                columnModifier = Modifier
-                    .height(171.dp)
-                    .padding(top = 28.dp),
-                imageCardModifier = Modifier
-                    .width(343.dp)
-                    .height(147.dp),
+                modifier = Modifier.wrapContentHeight(),
                 onSliderClicked = {
                     onSendEvent(HomeContract.Event.OnSliderClicked(0, it))
                 })
         }
-/*
-        item {
-            FeaturedBazzarSlider(state.slides2)
-        }
-*/
         item {
             ProductsGroup(
                 productsList = state.categoryItems,
@@ -57,12 +48,7 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
         }
         item {
             IndicatorImageSlider(state.slides2?.map { it.imagePath ?: "" },
-                columnModifier = Modifier
-                    .height(171.dp)
-                    .padding(top = 28.dp),
-                imageCardModifier = Modifier
-                    .width(343.dp)
-                    .height(147.dp),
+                modifier = Modifier.wrapContentHeight(),
                 onSliderClicked = {
                     onSendEvent(HomeContract.Event.OnSliderClicked(1, it))
                 })

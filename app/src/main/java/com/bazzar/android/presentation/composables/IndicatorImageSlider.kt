@@ -6,32 +6,34 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
-import com.bazzar.android.presentation.composables.Indicator
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
+import com.bazzar.android.presentation.theme.BazzarTheme
+import com.bazzar.android.presentation.theme.Shapes_MediumX
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalGlideComposeApi::class)
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun IndicatorImageSlider(
     imagePathList: List<String>?,
-    columnModifier: Modifier,
-    imageCardModifier: Modifier,
+    modifier: Modifier = Modifier,
     onSliderClicked: (Int) -> Unit
 ) {
 
     val pagerState = rememberPagerState()
 
     Column(
-        modifier = columnModifier
-            .fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.s)
 
     ) {
         HorizontalPager(
@@ -39,41 +41,37 @@ fun IndicatorImageSlider(
             count = imagePathList?.size ?: 0,
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f),
+                .height(160.dp),
             contentPadding = PaddingValues(4.dp)
 
         ) { page ->
             Card(
-                modifier = imageCardModifier,
-                shape = RoundedCornerShape(20.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(BazzarTheme.spacing.xs)
+                    .clickable { onSliderClicked(page) },
+                shape = RoundedCornerShape(16.dp),
                 colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.white)),
-                elevation = CardDefaults.cardElevation(defaultElevation = 20.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = BazzarTheme.spacing.xs),
                 content = {
-                    GlideImage(
-                        model = (imagePathList?.get(page)),
-                        contentScale = ContentScale.Crop,
+                    RemoteImage(
+                        imageUrl = (imagePathList?.get(page)),
+                        contentScale = ContentScale.FillWidth,
+                        withShimmer = true,
                         modifier = Modifier
-                            .size(147.dp)
-//                            .height(147.dp)
-                            .padding(horizontal = 4.dp)
-                            .clickable { onSliderClicked(page) },
-                        contentDescription = null
+                            .fillMaxSize()
+                            .clip(RoundedCornerShape(16.dp))
+                            .padding(BazzarTheme.spacing.xxs)
                     )
                 }
             )
         }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(top = 12.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            imagePathList?.let {
-                for (i in it.indices) {
-                    Indicator(selected = i == pagerState.currentPage) {}
-                }
-            }
-        }
+        if (imagePathList.orEmpty().size > 1)
+            HorizontalPagerIndicator(
+                pagerState = pagerState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+            )
     }
 }

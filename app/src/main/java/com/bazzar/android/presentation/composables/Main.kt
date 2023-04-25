@@ -23,7 +23,7 @@ fun MbcAppBar(
     title: String = String(),
     modifier: Modifier = Modifier,
     navigationIcon: ImageVector? = Icons.Filled.ArrowBackIos,
-    navigationIconTint: Color = BazzarTheme.colors.smokeyBlack,
+    navigationIconTint: Color = BazzarTheme.colors.primaryButtonColor,
     actions: @Composable RowScope.() -> Unit = {},
     backgroundColor: Color = Color.Transparent,
     onNavigationClick: () -> Unit = {},
@@ -51,7 +51,7 @@ fun MbcAppBar(
 
         }
 
-        Title(text = title, color = BazzarTheme.colors.smokeyBlack)
+        Title(text = title, color = BazzarTheme.colors.primaryButtonColor)
 
         Row(content = actions)
     }
@@ -83,7 +83,7 @@ fun MbcAppBarWithClose(
         }
 
         Title(
-            text = title, color = BazzarTheme.colors.white,
+            text = title, color = BazzarTheme.colors.primaryButtonColor,
             modifier = Modifier.weight(1f)
         )
 
