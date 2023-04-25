@@ -9,22 +9,22 @@ import java.lang.System;
 public final class SerializationServiceImp implements com.android.network.services.SerializationService {
     private final com.squareup.moshi.Moshi moshi = null;
     
-    public SerializationServiceImp(@org.jetbrains.annotations.NotNull()
+    public SerializationServiceImp(@org.jetbrains.annotations.NotNull
     com.squareup.moshi.Moshi moshi) {
         super();
     }
     
-    @org.jetbrains.annotations.NotNull()
-    @java.lang.Override()
-    public <T extends java.lang.Object>java.lang.String serialize(T value, @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
+    @java.lang.Override
+    public <T extends java.lang.Object>java.lang.String serialize(T value, @org.jetbrains.annotations.NotNull
     java.lang.Class<T> clazz) {
         return null;
     }
     
-    @org.jetbrains.annotations.Nullable()
-    @java.lang.Override()
-    public <T extends java.lang.Object>T deserialize(@org.jetbrains.annotations.NotNull()
-    java.lang.String value, @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.Nullable
+    @java.lang.Override
+    public <T extends java.lang.Object>T deserialize(@org.jetbrains.annotations.NotNull
+    java.lang.String value, @org.jetbrains.annotations.NotNull
     java.lang.Class<T> clazz) {
         return null;
     }

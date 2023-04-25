@@ -40,35 +40,25 @@ val productList = listOf<Product>(
 @Preview
 @Composable
 fun CartScreenContent(
-/*
-    state: CartContract.State,
-*/
+    /*
+        state: CartContract.State,
+    */
     /*onSendEvent: (CartContract.Event) -> Unit*/
 ) {
-    val scrollState = rememberScrollState()
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(scrollState)
             .background(colorResource(id = R.color.white_smoke)),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.l)
     ) {
-        CartSummary()
-        LazyColumn(
-            modifier = Modifier
-                .height(525.dp)
-                .width(343.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.l)
-        ) {
-
-            itemsIndexed(/*state.productCartList*/productList) { index, product ->
-                ProductCartItem(/*state?.productCartList*/product)
-            }
+        item {
+            CartSummary()
         }
-        WishListTitle()
-        ProductsGroup(null, /*state?.productWishList*/productList)
+
+        itemsIndexed(/*state.productCartList*/productList) { index, product ->
+            ProductCartItem(/*state?.productCartList*/product)
+        }
     }
 }
 

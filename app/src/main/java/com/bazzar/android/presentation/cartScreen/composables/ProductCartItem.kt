@@ -3,6 +3,7 @@ package com.bazzar.android.presentation.cartScreen.composables
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -32,150 +33,150 @@ import com.bazzar.android.presentation.composables.RemoteImage
 @Preview
 @Composable
 fun ProductCartItem(product: Product? = null) {
-    Box(
+    Card(
         modifier = Modifier
-            .width(343.dp)
-            .height(175.dp)
-            .clip(RoundedCornerShape(25.dp))
+            .fillMaxWidth()
+            .height(180.dp)
+            .clip(RoundedCornerShape(20.dp))
             .background(Color.White),
-        contentAlignment = Alignment.TopStart
     ) {
-        RemoteImage(
-            imageUrl = product?.imagePath,
-            modifier = Modifier
-                .padding(start = 16.dp, top = 12.dp)
-                .size(88.dp)
-        )
-    }
-    Column(
-        modifier = Modifier
-            .padding(start = 112.dp, top = 12.dp)
-    ) {
-        Text(
-            text = product?.brandTitle ?: "Brand Name",
-            style = MaterialTheme.typography.subtitle2.copy(
-                fontFamily = FontFamily(Font(R.font.montserrat_bold))
+        Row() {
+            RemoteImage(
+                imageUrl = product?.imagePath,
+                modifier = Modifier
+                    .padding(start = 16.dp, top = 12.dp)
+                    .size(88.dp),
+                withShimmer = true
             )
-        )
-
-        Text(
-            text = product?.title ?: "Product title",
-            style = MaterialTheme.typography.subtitle2.copy(
-                fontFamily = FontFamily(Font(R.font.montserrat_regular))
-            ),
-            modifier = Modifier.padding(top = 4.dp)
-        )
-
-
-        Text(
-            text = buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
-                        fontSize = 10.sp
+            Column(
+                modifier = Modifier.padding(start = 112.dp, top = 12.dp)
+            ) {
+                Text(
+                    text = product?.brandTitle ?: "Brand Name",
+                    style = MaterialTheme.typography.subtitle2.copy(
+                        fontFamily = FontFamily(Font(R.font.montserrat_bold))
                     )
-                ) {
-                    append(stringResource(R.string.color))
-                }
-                withStyle(
-                    style = SpanStyle(
-                        fontFamily = FontFamily(Font(R.font.montserrat_regular)),
-                        fontSize = 14.sp
-                    )
-                ) {
-                    append(product?.title ?: "Item Color")
-                }
-            }, modifier = Modifier.padding(top = 16.dp)
-        )
-        Text(
-            text = buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
-                        fontSize = 10.sp
-                    )
-                ) {
-                    append(stringResource(R.string.size))
-                }
-                withStyle(
-                    style = SpanStyle(
-                        fontFamily = FontFamily(Font(R.font.montserrat_regular)),
-                        fontSize = 14.sp
-                    )
-                ) {
-                    append(product?.title ?: "Item Size")
-                }
-            }, style = MaterialTheme.typography.subtitle2.copy(
+                )
 
-            ), modifier = Modifier.padding(top = 16.dp)
-        )
+                Text(
+                    text = product?.title ?: "Product title",
+                    style = MaterialTheme.typography.subtitle2.copy(
+                        fontFamily = FontFamily(Font(R.font.montserrat_regular))
+                    ),
+                    modifier = Modifier.padding(top = 4.dp)
+                )
 
+
+                Text(
+                    text = buildAnnotatedString {
+                        withStyle(
+                            style = SpanStyle(
+                                fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                                fontSize = 10.sp
+                            )
+                        ) {
+                            append(stringResource(R.string.color))
+                        }
+                        withStyle(
+                            style = SpanStyle(
+                                fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                                fontSize = 14.sp
+                            )
+                        ) {
+                            append(product?.title ?: "Item Color")
+                        }
+                    }, modifier = Modifier.padding(top = 16.dp)
+                )
+                Text(
+                    text = buildAnnotatedString {
+                        withStyle(
+                            style = SpanStyle(
+                                fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                                fontSize = 10.sp
+                            )
+                        ) {
+                            append(stringResource(R.string.size))
+                        }
+                        withStyle(
+                            style = SpanStyle(
+                                fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                                fontSize = 14.sp
+                            )
+                        ) {
+                            append(product?.title ?: "Item Size")
+                        }
+                    }, style = MaterialTheme.typography.subtitle2.copy(
+
+                    ), modifier = Modifier.padding(top = 16.dp)
+                )
+
+            }
+            Text(
+                text = buildAnnotatedString {
+                    withStyle(
+                        style = SpanStyle(
+                            fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        )
+                    ) {
+                        append(stringResource(id = R.string.sold_by))
+                    }
+                    withStyle(
+                        style = SpanStyle(
+                            fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                        )
+                    ) {
+                        product?.brandTitle?.let { append(it) }
+                    }
+                }, style = MaterialTheme.typography.subtitle2.copy(
+
+                ), modifier = Modifier.padding(top = 146.dp, start = 16.dp)
+            )
+            Text(
+                text = buildAnnotatedString {
+                    withStyle(
+                        style = SpanStyle(
+                            fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        )
+                    ) {
+                        append(
+                            product?.price.toString().nullIfEmpty()
+                                ?: stringResource(R.string.zero_price)
+                        )
+                    }
+                    withStyle(
+                        style = SpanStyle(
+                            fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                        )
+                    ) {
+                        append(stringResource(R.string.home_screen_product_price))
+                    }
+                }, style = MaterialTheme.typography.subtitle2.copy(
+
+                ), modifier = Modifier.padding(top = 114.dp, start = 243.dp)
+            )
+            Icon(
+                imageVector = ImageVector.vectorResource(R.drawable.heart_ic),
+                modifier = Modifier.padding(start = 267.dp, top = 152.dp),
+                contentDescription = null
+            )
+            Icon(
+                imageVector = ImageVector.vectorResource(R.drawable.ic_trash),
+                modifier = Modifier.padding(start = 316.dp, top = 152.dp),
+                contentDescription = null
+            )
+            Icon(
+                imageVector = ImageVector.vectorResource(R.drawable.ic_minus),
+                modifier = Modifier.padding(start = 24.dp, top = 110.dp),
+                contentDescription = null
+            )
+            Icon(
+                painter = painterResource(R.drawable.ic_plus),
+                modifier = Modifier
+                    .padding(top = 110.dp)
+                    .padding(start = 79.dp)
+                    .size(18.dp),
+                contentDescription = null
+            )
+        }
     }
-    Text(
-        text = buildAnnotatedString {
-            withStyle(
-                style = SpanStyle(
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
-                )
-            ) {
-                append(stringResource(id = R.string.sold_by))
-            }
-            withStyle(
-                style = SpanStyle(
-                    fontFamily = FontFamily(Font(R.font.montserrat_regular)),
-                )
-            ) {
-                product?.brandTitle?.let { append(it) }
-            }
-        }, style = MaterialTheme.typography.subtitle2.copy(
-
-        ), modifier = Modifier
-            .padding(top = 146.dp, start = 16.dp)
-    )
-    Text(
-        text = buildAnnotatedString {
-            withStyle(
-                style = SpanStyle(
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
-                )
-            ) {
-                append(
-                    product?.price.toString().nullIfEmpty() ?: stringResource(R.string.zero_price)
-                )
-            }
-            withStyle(
-                style = SpanStyle(
-                    fontFamily = FontFamily(Font(R.font.montserrat_regular)),
-                )
-            ) {
-                append(stringResource(R.string.home_screen_product_price))
-            }
-        }, style = MaterialTheme.typography.subtitle2.copy(
-
-        ), modifier = Modifier
-            .padding(top = 114.dp, start = 243.dp)
-    )
-    Icon(
-        imageVector = ImageVector.vectorResource(R.drawable.heart_ic),
-        modifier = Modifier.padding(start = 267.dp, top = 152.dp),
-        contentDescription = null
-    )
-    Icon(
-        imageVector = ImageVector.vectorResource(R.drawable.ic_trash),
-        modifier = Modifier.padding(start = 316.dp, top = 152.dp),
-        contentDescription = null
-    )
-    Icon(
-        imageVector = ImageVector.vectorResource(R.drawable.ic_minus),
-        modifier = Modifier.padding(start = 24.dp, top = 110.dp),
-        contentDescription = null
-    )
-    Icon(
-        painter = painterResource(R.drawable.ic_plus),
-        modifier = Modifier
-            .padding(top = 110.dp)
-            .padding(start = 79.dp)
-            .size(18.dp),
-        contentDescription = null
-    )
 }
