@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.addressScreen.composables
+package com.bazzar.android.presentation.addAddressScreen.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -12,7 +12,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
-import com.bazzar.android.presentation.addressScreen.AddressContract
+import com.bazzar.android.presentation.addAddressScreen.AddressContract
 import com.bazzar.android.presentation.composables.PrimaryButton
 import com.bazzar.android.presentation.theme.BazzarTheme
 

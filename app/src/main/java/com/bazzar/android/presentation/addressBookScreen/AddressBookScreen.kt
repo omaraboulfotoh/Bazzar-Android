@@ -1,17 +1,17 @@
-package com.bazzar.android.presentation.addressScreen
+package com.bazzar.android.presentation.addressBookScreen
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
-import com.bazzar.android.presentation.addressScreen.composables.AddressScreenContent
+import com.bazzar.android.presentation.addressBookScreen.composable.AddressBookScreenContent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination
 @Composable
-fun AddressScreen(
-    viewModel: AddressViewModel = hiltViewModel(),
+fun AddressBookScreen(
+    viewModel: AddressBookViewModel = hiltViewModel(),
     navigator: DestinationsNavigator,
 ) {
 
@@ -25,5 +25,5 @@ fun AddressScreen(
     }
     // init logic
     viewModel.init()
-    AddressScreenContent(state = state) { viewModel.setEvent(it) }
+    AddressBookScreenContent(state = state) { viewModel.setEvent(it) }
 }

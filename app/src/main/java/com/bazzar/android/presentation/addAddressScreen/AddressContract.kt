@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.addressScreen
+package com.bazzar.android.presentation.addAddressScreen
 
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect

@@ -63,7 +63,7 @@ fun AddressItem(address: String, phoneNumber: String, toggleEnabled: Boolean) {
                     fontFamily = FontFamily(Font(R.font.montserrat_bold))
                 )
             )
-            MultipleStylesInText(stringResource(id = R.string.mobileNumber), phoneNumber)
+            MultipleStylesInText(stringResource(id = R.string.mobile_number), phoneNumber)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = stringResource(id = R.string.set_default_address),

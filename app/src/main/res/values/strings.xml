@@ -105,5 +105,6 @@
     <string name="continue_to_pay">Continue to pay</string>
     <string name="default_address">Default Address</string>
     <string name="change_default_address">Change default address</string>
-    <string name="mobileNumber">Mobile number: </string>
+    <string name="mobile_number">Mobile number: </string>
+    <string name="address_book">Address Book</string>
 </resources>

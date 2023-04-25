@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.addressScreen.composables
+package com.bazzar.android.presentation.addAddressScreen.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
