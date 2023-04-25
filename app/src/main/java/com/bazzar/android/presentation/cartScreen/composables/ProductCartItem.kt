@@ -1,14 +1,13 @@
 package com.bazzar.android.presentation.cartScreen.composables
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -118,26 +117,6 @@ fun ProductCartItem(product: Product? = null) {
                             fontFamily = FontFamily(Font(R.font.montserrat_bold)),
                         )
                     ) {
-                        append(stringResource(id = R.string.sold_by))
-                    }
-                    withStyle(
-                        style = SpanStyle(
-                            fontFamily = FontFamily(Font(R.font.montserrat_regular)),
-                        )
-                    ) {
-                        product?.brandTitle?.let { append(it) }
-                    }
-                }, style = MaterialTheme.typography.subtitle2.copy(
-
-                ), modifier = Modifier.padding(top = 146.dp, start = 16.dp)
-            )
-            Text(
-                text = buildAnnotatedString {
-                    withStyle(
-                        style = SpanStyle(
-                            fontFamily = FontFamily(Font(R.font.montserrat_bold)),
-                        )
-                    ) {
                         append(
                             product?.price.toString().nullIfEmpty()
                                 ?: stringResource(R.string.zero_price)
@@ -154,22 +133,25 @@ fun ProductCartItem(product: Product? = null) {
 
                 ), modifier = Modifier.padding(top = 114.dp, start = 243.dp)
             )
-            Icon(
+
+        }
+        Row(modifier = Modifier.padding(start = 24.dp, top = 110.dp)) {
+            Image(
                 imageVector = ImageVector.vectorResource(R.drawable.heart_ic),
                 modifier = Modifier.padding(start = 267.dp, top = 152.dp),
                 contentDescription = null
             )
-            Icon(
+            Image(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_trash),
-                modifier = Modifier.padding(start = 316.dp, top = 152.dp),
+                modifier = Modifier.padding(start = 316.dp, top = 16.dp),
                 contentDescription = null
             )
-            Icon(
+            Image(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_minus),
                 modifier = Modifier.padding(start = 24.dp, top = 110.dp),
                 contentDescription = null
             )
-            Icon(
+            Image(
                 painter = painterResource(R.drawable.ic_plus),
                 modifier = Modifier
                     .padding(top = 110.dp)
