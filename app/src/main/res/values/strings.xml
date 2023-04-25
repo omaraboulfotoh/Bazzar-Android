@@ -82,5 +82,23 @@
     <string name="total_your_cart">Total Your Cart</string>
     <string name="number_in_cart">You have %d items in your cart</string>
     <string name="remove">Remove</string>
-    <string name="check_out">Check out</string>
+    <string name="governorate">Governorate</string>
+    <string name="area">Area</string>
+    <string name="block">Block</string>
+    <string name="street">Street</string>
+    <string name="house_number">House Number</string>
+    <string name="jaddah">Jaddah</string>
+    <string name="flat_number">Flat Number</string>
+    <string name="floor_number">Floor Number</string>
+    <string name="notes">Notes</string>
+    <string name="set_default_address">Set as a default address</string>
+    <string name="save_address">Save Address</string>
+    <string name="select_your_area">Select your area</string>
+    <string name="select_your_block">Select your block</string>
+    <string name="select_your_governorate">Select your governorate</string>
+    <string name="select_your_street_name">Select your street name</string>
+    <string name="optional">optional</string>
+    <string name="optional_data">Optional Data</string>
+    <string name="check_out">Check Out</string>
+    <string name="add_new_address">Add New Address</string>
 </resources>
