@@ -9,26 +9,26 @@ import java.lang.System;
 @com.squareup.moshi.JsonClass(generateAdapter = true)
 public final class PageMeta {
     private final int currentPage = 0;
-    @org.jetbrains.annotations.Nullable
+    @org.jetbrains.annotations.Nullable()
     private final java.lang.Integer from = null;
     private final int lastPage = 0;
-    @org.jetbrains.annotations.NotNull
+    @org.jetbrains.annotations.NotNull()
     private final java.lang.String path = null;
     private final int perPage = 0;
-    @org.jetbrains.annotations.Nullable
+    @org.jetbrains.annotations.Nullable()
     private final java.lang.Integer to = null;
     private final int total = 0;
     
     /**
      * Created by Mohamed Shalan on 6/3/20.
      */
-    @org.jetbrains.annotations.NotNull
+    @org.jetbrains.annotations.NotNull()
     public final com.android.model.responses.base.pagination.PageMeta copy(@com.squareup.moshi.Json(name = "current_page")
-    int currentPage, @org.jetbrains.annotations.Nullable
+    int currentPage, @org.jetbrains.annotations.Nullable()
     java.lang.Integer from, @com.squareup.moshi.Json(name = "last_page")
-    int lastPage, @org.jetbrains.annotations.NotNull
+    int lastPage, @org.jetbrains.annotations.NotNull()
     java.lang.String path, @com.squareup.moshi.Json(name = "per_page")
-    int perPage, @org.jetbrains.annotations.Nullable
+    int perPage, @org.jetbrains.annotations.Nullable()
     java.lang.Integer to, int total) {
         return null;
     }
@@ -36,8 +36,8 @@ public final class PageMeta {
     /**
      * Created by Mohamed Shalan on 6/3/20.
      */
-    @java.lang.Override
-    public boolean equals(@org.jetbrains.annotations.Nullable
+    @java.lang.Override()
+    public boolean equals(@org.jetbrains.annotations.Nullable()
     java.lang.Object other) {
         return false;
     }
@@ -45,7 +45,7 @@ public final class PageMeta {
     /**
      * Created by Mohamed Shalan on 6/3/20.
      */
-    @java.lang.Override
+    @java.lang.Override()
     public int hashCode() {
         return 0;
     }
@@ -53,18 +53,18 @@ public final class PageMeta {
     /**
      * Created by Mohamed Shalan on 6/3/20.
      */
-    @org.jetbrains.annotations.NotNull
-    @java.lang.Override
+    @org.jetbrains.annotations.NotNull()
+    @java.lang.Override()
     public java.lang.String toString() {
         return null;
     }
     
     public PageMeta(@com.squareup.moshi.Json(name = "current_page")
-    int currentPage, @org.jetbrains.annotations.Nullable
+    int currentPage, @org.jetbrains.annotations.Nullable()
     java.lang.Integer from, @com.squareup.moshi.Json(name = "last_page")
-    int lastPage, @org.jetbrains.annotations.NotNull
+    int lastPage, @org.jetbrains.annotations.NotNull()
     java.lang.String path, @com.squareup.moshi.Json(name = "per_page")
-    int perPage, @org.jetbrains.annotations.Nullable
+    int perPage, @org.jetbrains.annotations.Nullable()
     java.lang.Integer to, int total) {
         super();
     }
@@ -77,12 +77,12 @@ public final class PageMeta {
         return 0;
     }
     
-    @org.jetbrains.annotations.Nullable
+    @org.jetbrains.annotations.Nullable()
     public final java.lang.Integer component2() {
         return null;
     }
     
-    @org.jetbrains.annotations.Nullable
+    @org.jetbrains.annotations.Nullable()
     public final java.lang.Integer getFrom() {
         return null;
     }
@@ -95,12 +95,12 @@ public final class PageMeta {
         return 0;
     }
     
-    @org.jetbrains.annotations.NotNull
+    @org.jetbrains.annotations.NotNull()
     public final java.lang.String component4() {
         return null;
     }
     
-    @org.jetbrains.annotations.NotNull
+    @org.jetbrains.annotations.NotNull()
     public final java.lang.String getPath() {
         return null;
     }
@@ -113,12 +113,12 @@ public final class PageMeta {
         return 0;
     }
     
-    @org.jetbrains.annotations.Nullable
+    @org.jetbrains.annotations.Nullable()
     public final java.lang.Integer component6() {
         return null;
     }
     
-    @org.jetbrains.annotations.Nullable
+    @org.jetbrains.annotations.Nullable()
     public final java.lang.Integer getTo() {
         return null;
     }

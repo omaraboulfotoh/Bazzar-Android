@@ -61,14 +61,16 @@ fun ProductItem(product: Product) {
                     .padding(start = 140.dp)
                     .padding(end = 12.dp)
             )
-            GlideImage(
-                model = product.imagePath,
-                contentScale = ContentScale.Crop,
-                contentDescription = "Product image",
-                modifier = Modifier
-                    .size(152.dp)
-                    .padding(top = 40.dp)
-            )
+            product.imagePath?.let{
+                GlideImage(
+                    model = it,
+                    contentScale = ContentScale.Crop,
+                    contentDescription = "Product image",
+                    modifier = Modifier
+                        .size(152.dp)
+                        .padding(top = 40.dp)
+                )
+            }
             Text(
                 text = product.title ?: "",
                 modifier = Modifier

@@ -75,4 +75,10 @@
     <string name="english" translatable="false">English ca</string>
     <string name="arabic">العربيه</string>
     <string name="my_account">My Account</string>
+    <string name="color">Color:</string>
+    <string name="size">Size:</string>
+    <string name="zero_price">000.000</string>
+    <string name="add_from_your_wish_list">Add from your Wishlist</string>
+    <string name="total_your_cart">Total Your Cart</string>
+    <string name="number_in_cart">You have %d items in your cart</string>
 </resources>
