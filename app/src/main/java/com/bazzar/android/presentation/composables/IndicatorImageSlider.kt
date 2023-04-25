@@ -14,7 +14,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.presentation.theme.BazzarTheme
-import com.bazzar.android.presentation.theme.Shapes_MediumX
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
@@ -66,12 +65,14 @@ fun IndicatorImageSlider(
                 }
             )
         }
-        if (imagePathList.orEmpty().size > 1)
-            HorizontalPagerIndicator(
-                pagerState = pagerState,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-            )
+        HorizontalPagerIndicator(
+            pagerState = pagerState,
+            modifier = Modifier
+                .wrapContentSize(),
+            activeColor = BazzarTheme.colors.indicatorActiveColor,
+            inactiveColor = BazzarTheme.colors.indicatorInActiveColor,
+            indicatorWidth = BazzarTheme.spacing.xs,
+            indicatorHeight = BazzarTheme.spacing.xs,
+        )
     }
 }

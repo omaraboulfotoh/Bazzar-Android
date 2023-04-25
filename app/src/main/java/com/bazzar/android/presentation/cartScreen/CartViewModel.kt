@@ -9,9 +9,7 @@ class CartViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
 ) : BaseViewModel<CartContract.Event, CartContract.State, CartContract.Effect>(globalState) {
-    override fun setInitialState(): CartContract.State {
-        TODO("Not yet implemented")
-    }
+    override fun setInitialState(): CartContract.State = CartContract.State()
 
     override fun handleEvents(event: CartContract.Event) {
         TODO("Not yet implemented")

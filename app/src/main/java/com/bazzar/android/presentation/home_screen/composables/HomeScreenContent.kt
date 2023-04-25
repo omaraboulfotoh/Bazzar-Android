@@ -14,38 +14,39 @@ import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.IndicatorImageSlider
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.home_screen.HomeContract
+import com.bazzar.android.presentation.theme.BazzarTheme
 
 
 @Composable
 fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Event) -> Unit) {
     LazyColumn(
         modifier = Modifier
-            .background(colorResource(id = R.color.white_smoke))
+            .background(BazzarTheme.colors.backgroundColor)
             .fillMaxSize()
             .padding(bottom = BottomNavigationHeight),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
+        horizontalAlignment = Alignment.Start,
     ) {
         item {
-            HomeHeader()
+            HomeHeader(onSearchClicked = {
+
+            })
         }
         item {
-            IndicatorImageSlider(
-                imagePathList = state.slides1?.map { it.imagePath ?: "" },
+            IndicatorImageSlider(imagePathList = state.slides1?.map { it.imagePath ?: "" },
                 modifier = Modifier.wrapContentHeight(),
                 onSliderClicked = {
                     onSendEvent(HomeContract.Event.OnSliderClicked(0, it))
                 })
         }
-        item {
+        if (state.categoryItems.isNullOrEmpty().not()) item {
             ProductsGroup(
                 productsList = state.categoryItems,
                 headerTitle = stringResource(id = R.string.home_screen_products_group)
             )
         }
-        item {
-            CategoryGroup(state.featuredCategories)
-        }
+        if (state.featuredCategories.isNullOrEmpty().not())
+            CategoryGroup(state.featuredCategories.orEmpty())
         item {
             IndicatorImageSlider(state.slides2?.map { it.imagePath ?: "" },
                 modifier = Modifier.wrapContentHeight(),
@@ -53,9 +54,11 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
                     onSendEvent(HomeContract.Event.OnSliderClicked(1, it))
                 })
         }
-        item {
+        if (state.featuredBrands.isNullOrEmpty().not())
+            FeaturedBrands(state.featuredBrands.orEmpty())
 
-            FeaturedBrands(state.featuredBrands)
+        item {
+            Spacer(modifier = Modifier.height(BazzarTheme.spacing.xs))
         }
     }
 }
@@ -63,6 +66,5 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
 @Preview
 @Composable
 fun PreviewHomeScreenContent() {
-    HomeScreenContent(state = HomeContract.State(), onSendEvent = {
-    })
+    HomeScreenContent(state = HomeContract.State(), onSendEvent = {})
 }

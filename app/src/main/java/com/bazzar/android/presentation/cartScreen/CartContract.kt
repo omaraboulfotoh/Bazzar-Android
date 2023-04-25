@@ -8,8 +8,8 @@ import com.bazzar.android.presentation.base.ViewState
 class CartContract {
 
     data class State(
-        val productWishList:List<Product>?,
-        val productCartList:List<Product>?
+        val productWishList: List<Product>? = null,
+        val productCartList: List<Product>? = null
     ) : ViewState
 
     sealed class Event : ViewEvent {

@@ -35,7 +35,7 @@ fun ProductCartItem(product: Product? = null) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(180.dp)
+            .height(155.dp)
             .clip(RoundedCornerShape(20.dp))
             .background(Color.White),
     ) {
@@ -48,7 +48,7 @@ fun ProductCartItem(product: Product? = null) {
                 withShimmer = true
             )
             Column(
-                modifier = Modifier.padding(start = 112.dp, top = 12.dp)
+                modifier = Modifier.padding(top = 12.dp)
             ) {
                 Text(
                     text = product?.brandTitle ?: "Brand Name",
@@ -136,11 +136,6 @@ fun ProductCartItem(product: Product? = null) {
 
         }
         Row(modifier = Modifier.padding(start = 24.dp, top = 110.dp)) {
-            Image(
-                imageVector = ImageVector.vectorResource(R.drawable.heart_ic),
-                modifier = Modifier.padding(start = 267.dp, top = 152.dp),
-                contentDescription = null
-            )
             Image(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_trash),
                 modifier = Modifier.padding(start = 316.dp, top = 16.dp),

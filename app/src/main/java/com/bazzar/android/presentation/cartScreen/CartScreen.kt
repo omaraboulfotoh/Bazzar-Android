@@ -25,5 +25,7 @@ fun CartScreen(
     }
     // init logic
     viewModel.init()
-    CartScreenContent(/*state = state*/) /*{ viewModel.setEvent(it) }*/
+    CartScreenContent(state = state) {
+
+    }
 }

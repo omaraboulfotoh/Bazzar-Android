@@ -36,12 +36,12 @@ fun RemoteImage(
     placeholder: Painter = painterResource(id = R.drawable.bazzars_home_title),
     contentScale: ContentScale = ContentScale.Crop,
     withShimmer: Boolean = false,
-    background: Color = BazzarTheme.colors.backgroundColor,
+    background: Color = BazzarTheme.colors.transparentColor,
     alpha: Float = DefaultAlpha,
 ) {
     val contentScaleState = remember { mutableStateOf(contentScale) }
     val showShimmer = remember { mutableStateOf(true) }
-    Card(modifier = modifier) {
+    Card(modifier = modifier.background(background)) {
         AsyncImage(
             model = imageUrl,
             placeholder = if (withShimmer.not()) placeholder else null,
@@ -52,16 +52,20 @@ fun RemoteImage(
                     .background(
                         shimmerBrush(targetValue = 1300f, showShimmer = showShimmer.value)
                     )
-            } else Modifier.fillMaxSize(),
+            } else Modifier
+                .fillMaxSize()
+                .background(background),
             alignment = alignment,
             contentScale = contentScaleState.value,
             alpha = alpha,
             error = placeholder,
             onSuccess = {
                 showShimmer.value = false
-                contentScaleState.value = ContentScale.Crop
             },
-            onError = { Log.e("RemoteImage", "${it.result.throwable}") },
+            onError = {
+                showShimmer.value = false
+                Log.e("RemoteImage", "${it.result.throwable}")
+            },
         )
     }
 

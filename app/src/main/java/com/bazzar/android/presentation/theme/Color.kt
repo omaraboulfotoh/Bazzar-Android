@@ -12,6 +12,7 @@ val COLOR_BLUE: Color = Color(0Xff00B7FF)
 val COLOR_RED: Color = Color(0XffE82357)
 val COLOR_BLACK: Color = Color(0Xff0F1015)
 val COLOR_WHITE: Color = Color(0Xffffffff)
+val COLOR_TRANSPARENT: Color = Color(0X00ffffff)
 val COLOR_LIGHT_SILVER: Color = Color(0XffF8F8F8)
 val COLOR_LIGHT_GREY: Color = Color(0XffD1D1D1)
 val COLOR_DARK_SILVER: Color = Color(0XffEAEAEA)
@@ -39,6 +40,7 @@ data class AbsColors(
     val bottomNavBarBackground: Color = COLOR_BLUE,
     val bottomNavBarSelected: Color = COLOR_NAVY,
     val backgroundColor: Color = COLOR_LIGHT_SILVER,
+    val transparentColor: Color = COLOR_TRANSPARENT,
     val primaryButtonColor: Color = COLOR_NAVY,
     val primaryButtonDisableColor: Color = COLOR_DARK_GREY,
     val primaryButtonTextColor: Color = COLOR_WHITE,

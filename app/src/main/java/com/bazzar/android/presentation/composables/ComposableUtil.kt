@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.android.model.home.HomeSlider
 import com.bazzar.android.R
+import com.bazzar.android.presentation.theme.BazzarTheme
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 
@@ -94,12 +95,11 @@ fun SemiCircleImageView(imagePath: String, text: String) {
 }
 
 @Composable
-fun HeaderTextWithViewAll(text: String) {
+fun HeaderTextWithViewAll(text: String, showViewAll: Boolean = false) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 32.dp)
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = BazzarTheme.spacing.m),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -110,13 +110,14 @@ fun HeaderTextWithViewAll(text: String) {
                 color = colorResource(id = R.color.prussian_blue),
             )
         )
-        Text(
-            text = stringResource(id = R.string.home_screen_view_all),
-            style = MaterialTheme.typography.caption.copy(
-                fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
-                color = colorResource(id = R.color.deep_sky_blue)
+        if (showViewAll)
+            Text(
+                text = stringResource(id = R.string.home_screen_view_all),
+                style = MaterialTheme.typography.caption.copy(
+                    fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                    color = colorResource(id = R.color.deep_sky_blue)
+                )
             )
-        )
     }
 }
 
@@ -129,7 +130,7 @@ fun CustomLazyRow(
 ) {
     androidx.compose.foundation.lazy.LazyRow(
         modifier = Modifier
-            .padding(top=topPadding)
+            .padding(top = topPadding)
             .wrapContentWidth(),
         horizontalArrangement = Arrangement.spacedBy(spaceBetweenItems),
         contentPadding = PaddingValues(horizontal = spaceBetweenItems)
