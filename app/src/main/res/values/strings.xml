@@ -101,4 +101,9 @@
     <string name="optional_data">Optional Data</string>
     <string name="check_out">Check Out</string>
     <string name="add_new_address">Add New Address</string>
+    <string name="shipping_address">Shipping Address</string>
+    <string name="continue_to_pay">Continue to pay</string>
+    <string name="default_address">Default Address</string>
+    <string name="change_default_address">Change default address</string>
+    <string name="mobileNumber">Mobile number: </string>
 </resources>
