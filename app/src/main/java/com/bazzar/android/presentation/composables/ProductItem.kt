@@ -2,6 +2,7 @@ package com.bazzar.android.presentation.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
@@ -32,12 +33,13 @@ import com.bumptech.glide.integration.compose.GlideImage
 
 @Composable
 @OptIn(ExperimentalGlideComposeApi::class)
-fun ProductItem(product: Product) {
+fun ProductItem(product: Product, onItemClicked: () -> Unit) {
     Box(
         modifier = Modifier
             .width(168.dp)
             .clip(RoundedCornerShape(size = 20.dp))
             .background(Color.White)
+            .clickable { onItemClicked() }
     ) {
         Card(modifier = Modifier
             .fillMaxSize()
@@ -61,7 +63,7 @@ fun ProductItem(product: Product) {
                     .padding(start = 140.dp)
                     .padding(end = 12.dp)
             )
-            product.imagePath?.let{
+            product.imagePath?.let {
                 GlideImage(
                     model = it,
                     contentScale = ContentScale.Crop,

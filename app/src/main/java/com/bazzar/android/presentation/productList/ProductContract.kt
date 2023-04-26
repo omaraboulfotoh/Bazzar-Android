@@ -21,6 +21,7 @@ class ProductContract {
 
     sealed class Event : ViewEvent {
         data class OnSubCategoryClicked(val categoryIndex: Int) : Event()
+        data class OnProductClicked(val itemIndex: Int) : Event()
         object OnBackIconClicked : Event()
         object OnSearchClicked : Event()
     }

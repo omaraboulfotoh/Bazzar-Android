@@ -7,11 +7,9 @@ import com.android.model.home.SearchProductRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.R
-import com.bazzar.android.di.CommonModule_ResourceProviderFactory
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.utils.IResourceProvider
-import com.bazzar.android.utils.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -36,7 +34,15 @@ class ProductViewModel @Inject constructor(
             ProductContract.Event.OnSearchClicked -> {
                 setState { copy(isSearchClicked = isSearchClicked.not()) }
             }
+
+            is ProductContract.Event.OnProductClicked -> navigateToProductDetails(event.itemIndex)
         }
+    }
+
+    private fun navigateToProductDetails(itemIndex: Int) {
+        val item = currentState.productList?.get(itemIndex) ?: return
+        // navigate to details
+        setEffect { ProductContract.Effect.Navigation.GoToProductDetailPage(item) }
     }
 
     private fun onSubCategorySelected(subSubCategoryIndex: Int) {
@@ -75,7 +81,7 @@ class ProductViewModel @Inject constructor(
                 )
             }
 
-                // if screen opened form brands
+            // if screen opened form brands
             brand?.id?.let {
                 request = request.copy(brandList = listOf(it))
             }

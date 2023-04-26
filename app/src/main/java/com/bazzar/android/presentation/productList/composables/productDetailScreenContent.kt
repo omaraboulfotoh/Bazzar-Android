@@ -49,7 +49,12 @@ fun ProductScreenContent(
             )
         }
         item {
-            ProductGridGroup(state.productList, modifier = Modifier.padding(top = 16.dp))
+            ProductGridGroup(
+                state.productList,
+                modifier = Modifier.padding(top = 16.dp),
+                onItemClicked = {
+                    onSendEvent(ProductContract.Event.OnProductClicked(it))
+                })
         }
     }
 
