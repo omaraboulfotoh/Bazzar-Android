@@ -6,8 +6,8 @@ import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.Constants
 import com.bazzar.android.presentation.product_detail_screen.composables.ProductDetailScreenContent
-import com.bazzar.android.presentation.product_screen.ProductDetailContract
-import com.bazzar.android.presentation.product_screen.ProductDetailViewModel
+import com.bazzar.android.presentation.productList.ProductDetailContract
+import com.bazzar.android.presentation.productList.ProductDetailViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 

@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.product_screen.composables
+package com.bazzar.android.presentation.productList.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -25,7 +25,6 @@ import com.bazzar.android.presentation.composables.RemoteImage
 @Composable
 fun SubCategorySlider(
     subCategoryList: List<Category>?,
-    isSubCategoryClicked: Boolean,
     onClickSubCategory: (Int) -> Unit,
     modifier: Modifier
 ) {
@@ -54,10 +53,10 @@ fun SubCategorySlider(
                                 .clip(RoundedCornerShape(26.5.dp))
                                 .border(
                                     1.dp,
-                                    colorResource(id = if (isSubCategoryClicked) R.color.prussian_blue else R.color.Gray55),
+                                    colorResource(id = if (category.isSelected) R.color.prussian_blue else R.color.Gray55),
                                     shape = RoundedCornerShape(5.dp)
                                 )
-                                .background(colorResource(id = if (isSubCategoryClicked) R.color.prussian_blue else R.color.white)),
+                                .background(colorResource(id = if (category.isSelected) R.color.prussian_blue else R.color.white)),
                         ) {
                             RemoteImage(
                                 imageUrl = category.imagePath,
@@ -69,7 +68,7 @@ fun SubCategorySlider(
                             text = category.title ?: "",
                             style = MaterialTheme.typography.overline.copy(
                                 fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
-                                color = if (isSubCategoryClicked) colorResource(id = R.color.black) else colorResource(
+                                color = if (category.isSelected) colorResource(id = R.color.black) else colorResource(
                                     id = R.color.Gray55
                                 )
                             )

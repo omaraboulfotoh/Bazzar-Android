@@ -26,7 +26,11 @@ fun AddressList(addressList: List<UserAddress>) {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         itemsIndexed(addressList) { index: Int, item: UserAddress ->
-            AddressItem(address =item.addressDescription?:"", phoneNumber =item., toggleEnabled =)
+            AddressItem(
+                address = item.addressDescription ?: "",
+                phoneNumber = "",
+                toggleEnabled = true
+            )
         }
 
     }

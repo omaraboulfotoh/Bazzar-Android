@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.product_screen
+package com.bazzar.android.presentation.productList
 
 import com.android.model.home.Brand
 import com.android.model.home.Product

@@ -19,17 +19,17 @@ class SharedPrefersManager @Inject constructor(private val sharedPreferences: Sh
     }
 
     fun setAppLanguage(newLanguage: String) {
-        var prefereEdit = sharedPreferences.edit().apply {
+        var preferEdit = sharedPreferences.edit().apply {
             putString(Constants.sharedPreference_language, newLanguage)
         }
-        prefereEdit.commit()
+        preferEdit.commit()
     }
 
     fun saveToken(token: String?) {
-        var prefereEdit = sharedPreferences.edit().apply {
+        var preferEdit = sharedPreferences.edit().apply {
             putString(Constants.sharedPreference_token, token)
         }
-        prefereEdit.commit()
+        preferEdit.commit()
     }
 
     fun getToken(): String? {
@@ -38,10 +38,10 @@ class SharedPrefersManager @Inject constructor(private val sharedPreferences: Sh
 
 
     fun saveBrandList(brandList: List<Brand>?) {
-        var prefereEdit = sharedPreferences.edit().apply {
+        var preferEdit = sharedPreferences.edit().apply {
             putString(Constants.sharedPreference_brand_list, Gson().toJson(brandList))
         }
-        prefereEdit.commit()
+        preferEdit.commit()
     }
 
     fun getBrandList(): List<Brand>? {
@@ -55,10 +55,10 @@ class SharedPrefersManager @Inject constructor(private val sharedPreferences: Sh
     }
 
     fun saveProductList(productList: List<Product>?) {
-        var prefereEdit = sharedPreferences.edit().apply {
+        var preferEdit = sharedPreferences.edit().apply {
             putString(Constants.sharedPreference_product_list, Gson().toJson(productList))
         }
-        prefereEdit.commit()
+        preferEdit.commit()
     }
 
     fun getProductList(): List<Product>? {
@@ -71,10 +71,10 @@ class SharedPrefersManager @Inject constructor(private val sharedPreferences: Sh
     }
 
     fun saveCategoryList(categoryList: List<Category>?) {
-        var prefereEdit = sharedPreferences.edit().apply {
+        var preferEdit = sharedPreferences.edit().apply {
             putString(Constants.sharedPreference_category_list, Gson().toJson(categoryList))
         }
-        prefereEdit.commit()
+        preferEdit.commit()
     }
 
     fun getCategoryList(): List<Category>? {
@@ -87,10 +87,10 @@ class SharedPrefersManager @Inject constructor(private val sharedPreferences: Sh
     }
 
     fun saveUserData(userData: UserData) {
-        var prefereEdit = sharedPreferences.edit().apply {
+        var preferEdit = sharedPreferences.edit().apply {
             putString(Constants.sharedPreference_user_data, Gson().toJson(userData))
         }
-        prefereEdit.commit()
+        preferEdit.commit()
     }
 
     fun getUserData(): UserData? {

@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.product_screen.composables
+package com.bazzar.android.presentation.productList.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
-import com.bazzar.android.presentation.product_screen.ProductContract
+import com.bazzar.android.presentation.productList.ProductContract
 
 @Composable
 fun ProductScreenContent(
@@ -27,15 +27,13 @@ fun ProductScreenContent(
             ProductHeader(state.ProductScreenTitle, Modifier.padding(top = 32.dp))
         }
         item {
-            SearchProduct(
-                searchClicked = state.isSearchClicked,
+            SearchProduct(searchClicked = state.isSearchClicked,
                 Modifier.height(41.dp),
                 onSearchClicked = {
                     onSendEvent(
                         ProductContract.Event.OnSearchClicked
                     )
-                }
-            )
+                })
         }
 
         item {
@@ -43,35 +41,15 @@ fun ProductScreenContent(
         }
         item {
             SubCategorySlider(
-                state.subSubCategoryList,
-                state.isSubSubCategoryClicked,
-                onClickSubCategory = { categoryIndex ->
+                state.subCategoryList, onClickSubCategory = { categoryIndex ->
                     onSendEvent(
-                        ProductContract.Event.OnSubSubCategoryClicked(categoryIndex)
+                        ProductContract.Event.OnSubCategoryClicked(categoryIndex)
                     )
                 }, modifier = Modifier.padding(top = 29.dp)
             )
         }
-/*
         item {
-            SortFilterBar(
-                numberFilteredProducts = state.filteredProductList?.size,
-                numberSelectedCategory = ,
-                Modifier.height(10.dp),
-                onFilterClicked = {
-                    onSendEvent(
-                        ProductContract.Event.OnFilterClicked
-                    )
-                }, onSortClicked = {
-                    onSendEvent(
-                        ProductContract.Event.OnSortClicked
-                    )
-                }
-            )
-        }
-*/
-        item {
-            ProductGridGroup(state.filteredProductList, modifier = Modifier.padding(top = 16.dp))
+            ProductGridGroup(state.productList, modifier = Modifier.padding(top = 16.dp))
         }
     }
 

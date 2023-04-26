@@ -33,7 +33,7 @@ fun AddressBookScreenContent(
         verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
     ) {
         AddressBookHeader()
-        AddressList()
+        AddressList(listOf())
         PrimaryButton(
             text = stringResource(id = R.string.add_new_address),
             onClick = { /*TODO*/ },

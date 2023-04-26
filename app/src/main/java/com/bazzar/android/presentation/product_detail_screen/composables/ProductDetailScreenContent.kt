@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.IndicatorImageSlider
 import com.bazzar.android.presentation.homeScreen.composables.ProductsGroup
-import com.bazzar.android.presentation.product_screen.ProductDetailContract
+import com.bazzar.android.presentation.productList.ProductDetailContract
 
 @Composable
 fun ProductDetailScreenContent(
