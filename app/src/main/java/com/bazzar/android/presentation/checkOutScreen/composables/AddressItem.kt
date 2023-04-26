@@ -25,7 +25,7 @@ import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.MultipleStylesInText
 
 @Composable
-fun AddressItem(address: String, phoneNumber: String, toggleEnabled: Boolean) {
+fun AddressItem(address: String="", phoneNumber: String="", toggleEnabled: Boolean=false) {
     Box(
         modifier = Modifier
             .padding(top = 16.dp)

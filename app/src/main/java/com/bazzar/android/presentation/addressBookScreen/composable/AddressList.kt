@@ -11,10 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.android.model.home.UserAddress
 import com.bazzar.android.presentation.checkOutScreen.composables.AddressItem
 
 @Composable
-fun AddressList(addressList: List<CustomAddress>) {
+fun AddressList(addressList: List<UserAddress>) {
     val scrollState = rememberScrollState()
     LazyColumn(
         modifier = Modifier
@@ -24,8 +25,8 @@ fun AddressList(addressList: List<CustomAddress>) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        itemsIndexed(addressList) { index: Int, item: CustomAddress ->
-            AddressItem(address =, phoneNumber =, toggleEnabled =)
+        itemsIndexed(addressList) { index: Int, item: UserAddress ->
+            AddressItem(address =item.addressDescription?:"", phoneNumber =item., toggleEnabled =)
         }
 
     }
