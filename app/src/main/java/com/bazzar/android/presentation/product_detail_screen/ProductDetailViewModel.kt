@@ -38,7 +38,7 @@ class ProductDetailViewModel @Inject constructor(
         }
     }
 
-    fun init() {
+    fun init(product: Product) {
         if (isInitialized.not()) {
             setState {
                 copy(
@@ -61,6 +61,7 @@ class ProductDetailViewModel @Inject constructor(
                         copy(
                         )
                     }
+
                     else -> {}
                 }
             }

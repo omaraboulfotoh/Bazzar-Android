@@ -6,6 +6,7 @@ import com.android.model.home.Brand
 import com.android.model.home.Category
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
+import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.bazzar.android.presentation.productList.composables.ProductScreenContent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -23,7 +24,7 @@ fun ProductScreen(
     viewModel.sideEffect { effect ->
         when (effect) {
             is ProductContract.Effect.Navigation.GoToProductDetailPage -> {
-
+                navigator.navigate(ProductDetailScreenDestination(product = effect.product))
             }
             // category, brand
             ProductContract.Effect.Navigation.GoToBack -> navigator.navigateUp()
