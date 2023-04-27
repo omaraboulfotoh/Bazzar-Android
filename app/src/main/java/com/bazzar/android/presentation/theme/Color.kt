@@ -37,8 +37,9 @@ val ColorPalette =
 
 @Immutable
 data class AbsColors(
-    val bottomNavBarBackground: Color = COLOR_BLUE,
-    val bottomNavBarSelected: Color = COLOR_NAVY,
+    val bottomNavBarBackground: Color = COLOR_WHITE,
+    val bottomNavBarSelected: Color = COLOR_BLUE,
+    val bottomNavBarNonSelected: Color = Color(0X00dbdbdb),
     val backgroundColor: Color = COLOR_LIGHT_SILVER,
     val transparentColor: Color = COLOR_TRANSPARENT,
     val primaryButtonColor: Color = COLOR_NAVY,
