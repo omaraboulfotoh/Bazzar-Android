@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -18,7 +18,8 @@ import androidx.compose.ui.unit.dp
 
 @Preview
 @Composable
-fun ProductDescription(isTextExpanded:Boolean=false,
+fun ProductDescription(
+    isTextExpanded: Boolean = false,
     text: String = "This will display the text content with a \"Read More\" link that can be clicked to expand the text and show the full content. When the text is expanded, the \"Read More\" link changes to \"Read Less\", which can be clicked to collapse the text and show only the truncated content again.\n" +
             "\n", maxLines: Int = 2
 ) {

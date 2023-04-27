@@ -37,7 +37,7 @@ fun IndicatorImageSlider(
     ) {
         HorizontalPager(
             state = pagerState,
-            count = imagePathList?.size ?: 0,
+            count = imagePathList.size,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(160.dp),
@@ -54,7 +54,7 @@ fun IndicatorImageSlider(
                 elevation = CardDefaults.cardElevation(defaultElevation = BazzarTheme.spacing.xs),
                 content = {
                     RemoteImage(
-                        imageUrl = (imagePathList?.get(page)),
+                        imageUrl = (imagePathList[page]),
                         contentScale = ContentScale.FillWidth,
                         withShimmer = true,
                         modifier = Modifier

@@ -11,7 +11,11 @@ import com.bazzar.android.presentation.composables.HeaderTextWithViewAll
 import com.bazzar.android.presentation.composables.ProductItem
 
 @Composable
-fun ProductsGroup(headerTitle: String?, productsList: List<Product>?) {
+fun ProductsGroup(
+    headerTitle: String?,
+    productsList: List<Product>?,
+    onProductClicked: (Int) -> Unit
+) {
     headerTitle?.let { HeaderTextWithViewAll(text = it) }
     LazyRow(
         modifier = Modifier
@@ -23,7 +27,7 @@ fun ProductsGroup(headerTitle: String?, productsList: List<Product>?) {
     ) {
         productsList?.let {
             items(it) { product ->
-                ProductItem(product)
+                ProductItem(product, onItemClicked = { itemId -> onProductClicked(itemId) })
             }
         }
     }

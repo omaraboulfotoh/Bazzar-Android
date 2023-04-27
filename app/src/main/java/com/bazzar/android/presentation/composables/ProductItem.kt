@@ -33,13 +33,13 @@ import com.bumptech.glide.integration.compose.GlideImage
 
 @Composable
 @OptIn(ExperimentalGlideComposeApi::class)
-fun ProductItem(product: Product, onItemClicked: () -> Unit) {
+fun ProductItem(product: Product, onItemClicked: (Int) -> Unit) {
     Box(
         modifier = Modifier
             .width(168.dp)
             .clip(RoundedCornerShape(size = 20.dp))
             .background(Color.White)
-            .clickable { onItemClicked() }
+            .clickable { onItemClicked(product.id?:-1) }
     ) {
         Card(modifier = Modifier
             .fillMaxSize()
