@@ -10,4 +10,5 @@ class HomeUseCase @Inject constructor(private val movieRepo: HomeRepo) {
     suspend fun getAllCategories() = movieRepo.getAllCategories()
     suspend fun getAllBrands() = movieRepo.getAllBrands()
     suspend fun getAllProductList(searchProduct: SearchProductRequest) = movieRepo.getAllProductList(searchProduct)
+    suspend fun getAllProductDetails(productId: Int) = movieRepo.getAllProductDetails(productId)
 }

@@ -10,7 +10,8 @@ class ProductDetailContract {
     data class State(
         var productDetail: ProductDetail = ProductDetail(),
         var selectedItemDetailId: Int = -1,
-        var selectedColoredImagesList: List<String> = listOf(),
+        var selectedColorId: Int = -1,
+        var selectedColoredImagesList: List<String>? = listOf(),
         var selectedSizeTitleList: List<String> = listOf(),
         val isBuyNowClicked: Boolean = false,
         val isContinueShoppingClicked: Boolean = false,
@@ -22,13 +23,12 @@ class ProductDetailContract {
 
     sealed class Event : ViewEvent {
         //state
-        data class OnBuyNowClicked(val itemDetailId: Int) : Event()
         object OnContinueShoppingClicked : Event()
         object OnFavouriteIconClicked : Event()
         data class OnSliderClicked(val sliderIndex: Int, val sliderItemIndex: Int) : Event()
         data class OnRatingClicked(val ratingIndex: Int) : Event()
         data class OnColorItemSelected(val colorIndex: Int) : Event()
-        data class OnSizeItemSelected(val colorIndex: Int) : Event()
+        data class OnSizeItemSelected(val sizeIndex: Int) : Event()
 
         //navigation
         object OnVisitYourCartClicked : Event()
@@ -36,7 +36,7 @@ class ProductDetailContract {
         object OnShareClicked : Event()
         object OnSeeMoreClicked : Event()
         data class OnRelatedItemClicked(val itemDetailId: Int) : Event()
-
+        data class OnBuyNowClicked(val itemDetailId: Int) : Event()
     }
 
     sealed class Effect : ViewSideEffect {

@@ -94,5 +94,25 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
+    override suspend fun getAllProductDetails(productId: Int)= flow {
+        try {
+            homeRemoteDataSource.getAllProductDetails(productId).let {
+                if (it.isSuccessful) {
+                    emit(Result.Success(it.body()?.data ?: ProductDetail()))
+                } else
+                    Result.Error(
+                        ProductDetail(), "error will be handled"
+                    )
+            }
+        } catch (throwable: Throwable) {
+            emit(
+                Result.Error(
+                    ProductDetail(),
+                    throwable.message
+                )
+            )
+        }
+    }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
 
 }

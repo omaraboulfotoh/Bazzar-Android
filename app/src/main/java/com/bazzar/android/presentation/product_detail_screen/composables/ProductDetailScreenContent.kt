@@ -29,7 +29,7 @@ fun ProductDetailScreenContent(
             ) {
                 item {
                     IndicatorImageSlider(
-                        imagePathList = state.selectedColoredImagesList,
+                        imagePathList = state.selectedColoredImagesList ?: listOf(),
                         modifier = Modifier.wrapContentHeight(),
                         onSliderClicked = {
                             onSendEvent(
@@ -54,7 +54,7 @@ fun ProductDetailScreenContent(
                     AvailableColorSizeProduct(
                         isColorItemClicked = state.isColorItemClicked,
                         isSizeClicked = state.isSizeClicked,
-                        itemImages = state.selectedColoredImagesList,
+                        itemImages = state.productDetail.itemImages.distinct().map { it.imagePath ?: "" },
                         sizeList = state.selectedSizeTitleList,
                         onColorSelected = { index ->
                             ProductDetailContract.Event.OnColorItemSelected(

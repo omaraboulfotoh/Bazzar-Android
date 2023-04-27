@@ -2,7 +2,6 @@ package com.android.network.datasource
 
 import com.android.model.home.*
 import com.android.model.responses.base.BaseWrapper
-import com.android.model.responses.base.MoviesListResponse
 import retrofit2.Response
 
 interface HomeRemoteDataSource {
@@ -10,4 +9,5 @@ interface HomeRemoteDataSource {
     suspend fun getAllCategories(): Response<BaseWrapper<List<Category>>>
     suspend fun getAllBrands(): Response<BaseWrapper<List<Brand>>>
     suspend fun getAllProductList(searchProduct: SearchProductRequest): Response<BaseWrapper<List<Product>>>
+    suspend fun getAllProductDetails(productId: Int): Response<BaseWrapper<ProductDetail>>
 }
