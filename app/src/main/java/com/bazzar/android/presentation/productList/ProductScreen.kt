@@ -24,7 +24,7 @@ fun ProductScreen(
     viewModel.sideEffect { effect ->
         when (effect) {
             is ProductContract.Effect.Navigation.GoToProductDetailPage -> {
-                navigator.navigate(ProductDetailScreenDestination(product = effect.product))
+                navigator.navigate(ProductDetailScreenDestination( productId= effect.product.id?:-1))
             }
             // category, brand
             ProductContract.Effect.Navigation.GoToBack -> navigator.navigateUp()

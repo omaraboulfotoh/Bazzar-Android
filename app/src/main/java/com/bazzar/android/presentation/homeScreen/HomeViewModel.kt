@@ -30,6 +30,7 @@ class HomeViewModel @Inject constructor(
 
             is HomeContract.Event.OnBrandClicked -> handleBrandClicked(event.index)
             is HomeContract.Event.OnCategoryClicked -> TODO()
+            is HomeContract.Event.OnProductClicked -> TODO()
         }
     }
 

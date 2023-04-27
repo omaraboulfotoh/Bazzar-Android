@@ -12,6 +12,8 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,15 +26,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.android.model.home.Category
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.RemoteImage
 import com.bazzar.android.presentation.theme.BazzarTheme
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @SuppressLint("UnrememberedMutableState")
 fun LazyListScope.CategoryList(
     categoryList: List<Category>,
@@ -66,13 +63,12 @@ fun LazyListScope.CategoryList(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.s)
                 ) {
-                    GlideImage(
-                        model = category.imagePath,
+                    RemoteImage(
+                        imageUrl = category.imagePath,
                         contentScale = ContentScale.FillWidth,
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxHeight(),
-                        contentDescription = null
                     )
                     Row(
                         modifier = Modifier

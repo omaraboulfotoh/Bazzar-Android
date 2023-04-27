@@ -41,7 +41,11 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
         if (state.categoryItems.isNullOrEmpty().not()) item {
             ProductsGroup(
                 productsList = state.categoryItems,
-                headerTitle = stringResource(id = R.string.home_screen_products_group)
+                headerTitle = stringResource(id = R.string.home_screen_products_group),
+                onProductClicked = { itemId ->
+                    HomeContract.Event.OnProductClicked(itemId)
+                }
+
             )
         }
         if (state.featuredCategories.isNullOrEmpty().not())

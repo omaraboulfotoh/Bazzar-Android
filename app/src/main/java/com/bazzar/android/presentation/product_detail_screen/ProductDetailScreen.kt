@@ -13,7 +13,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun ProductDetailScreen(
     viewModel: ProductDetailViewModel = hiltViewModel(),
     navigator: DestinationsNavigator,
-    productId: Int
+    productId: Int?=null
 ) {
 
     // get state

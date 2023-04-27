@@ -28,18 +28,15 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.android.model.home.Product
 import com.bazzar.android.R
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
 
 @Composable
-@OptIn(ExperimentalGlideComposeApi::class)
 fun ProductItem(product: Product, onItemClicked: (Int) -> Unit) {
     Box(
         modifier = Modifier
             .width(168.dp)
             .clip(RoundedCornerShape(size = 20.dp))
             .background(Color.White)
-            .clickable { onItemClicked(product.id?:-1) }
+            .clickable { onItemClicked(product.id ?: -1) }
     ) {
         Card(modifier = Modifier
             .fillMaxSize()
@@ -64,10 +61,9 @@ fun ProductItem(product: Product, onItemClicked: (Int) -> Unit) {
                     .padding(end = 12.dp)
             )
             product.imagePath?.let {
-                GlideImage(
-                    model = it,
+                RemoteImage(
+                    imageUrl = it,
                     contentScale = ContentScale.Crop,
-                    contentDescription = "Product image",
                     modifier = Modifier
                         .size(152.dp)
                         .padding(top = 40.dp)

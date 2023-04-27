@@ -22,6 +22,7 @@ class HomeContract {
         data class OnSliderClicked(val sliderIndex: Int, val sliderItemIndex: Int) : Event()
         data class OnBrandClicked(val index: Int) : Event()
         data class OnCategoryClicked(val index: Int) : Event()
+        data class OnProductClicked(val itemId: Int) : Event()
     }
 
     sealed class Effect : ViewSideEffect {

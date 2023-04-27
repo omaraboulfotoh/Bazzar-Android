@@ -6,6 +6,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 
 interface HomeApiServices {
@@ -22,8 +23,8 @@ interface HomeApiServices {
     @POST("SearchProducts")
     suspend fun getAllProductList(@Body searchProduct: SearchProductRequest): Response<BaseWrapper<List<Product>>>
 
-    @POST("ProductDetails")
-    suspend fun getAllProductDetails(@Body ItemId: Int): Response<BaseWrapper<ProductDetail>>
+    @GET("ProductDetails")
+    suspend fun getAllProductDetails(@Query("ItemId") ItemId: Int): Response<BaseWrapper<ProductDetail>>
 
 }
 

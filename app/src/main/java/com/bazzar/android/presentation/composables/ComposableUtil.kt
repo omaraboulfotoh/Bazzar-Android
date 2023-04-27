@@ -1,6 +1,5 @@
 package com.bazzar.android.presentation.composables
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -28,8 +27,6 @@ import androidx.compose.ui.unit.dp
 import com.android.model.home.HomeSlider
 import com.bazzar.android.R
 import com.bazzar.android.presentation.theme.BazzarTheme
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
 
 
 @Composable
@@ -44,7 +41,6 @@ fun Indicator(selected: Boolean, onClick: () -> Unit) {
     Spacer(modifier = Modifier.width(2.dp))
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun SemiCircleImageView(imagePath: String, text: String) {
     Box(
@@ -69,9 +65,8 @@ fun SemiCircleImageView(imagePath: String, text: String) {
                 .size(126.dp)
                 .align(Alignment.TopCenter),
         ) {
-            GlideImage(
-                model = imagePath,
-                contentDescription = null,
+            RemoteImage(
+                imageUrl = imagePath,
                 contentScale = ContentScale.Crop, modifier = Modifier
                     .width(126.dp)
                     .height(126.dp)
