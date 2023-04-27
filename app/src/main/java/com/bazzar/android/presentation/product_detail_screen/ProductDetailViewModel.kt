@@ -22,18 +22,18 @@ class ProductDetailViewModel @Inject constructor(
     override fun handleEvents(event: ProductDetailContract.Event) {
         when (event) {
             // navigation
-            is ProductDetailContract.Event.OnBackIconClicked -> TODO()
-            is ProductDetailContract.Event.OnShareClicked -> TODO()
-            is ProductDetailContract.Event.OnVisitYourCartClicked -> TODO()
-            is ProductDetailContract.Event.OnSeeMoreClicked -> TODO()
-            is ProductDetailContract.Event.OnRelatedItemClicked -> TODO()
-            is ProductDetailContract.Event.OnBuyNowClicked -> TODO()
+            is ProductDetailContract.Event.OnBackIconClicked -> {}
+            is ProductDetailContract.Event.OnShareClicked -> {}
+            is ProductDetailContract.Event.OnVisitYourCartClicked -> {}
+            is ProductDetailContract.Event.OnSeeMoreClicked -> {}
+            is ProductDetailContract.Event.OnRelatedItemClicked -> {}
+            is ProductDetailContract.Event.OnBuyNowClicked -> {}
 
             // state
-            is ProductDetailContract.Event.OnFavouriteIconClicked -> TODO()
-            is ProductDetailContract.Event.OnContinueShoppingClicked -> TODO()
-            is ProductDetailContract.Event.OnSliderClicked -> TODO()
-            is ProductDetailContract.Event.OnRatingClicked -> TODO()
+            is ProductDetailContract.Event.OnFavouriteIconClicked -> {}
+            is ProductDetailContract.Event.OnContinueShoppingClicked -> {}
+            is ProductDetailContract.Event.OnSliderClicked -> {}
+            is ProductDetailContract.Event.OnRatingClicked -> {}
             is ProductDetailContract.Event.OnColorItemSelected -> updateColor(event.colorIndex)
             is ProductDetailContract.Event.OnSizeItemSelected -> updateSizeAndItemId(event.sizeIndex)
         }
@@ -79,19 +79,21 @@ class ProductDetailViewModel @Inject constructor(
             when (productDetailResponse) {
                 is Result.Error -> globalState.error(productDetailResponse.message.orEmpty())
                 is Result.Loading -> {}
-                is Result.Success -> setState {
+                is Result.Success -> {
                     val productDetail = productDetailResponse.data ?: ProductDetail()
                     val selectedItemDetail = productDetail.itemDetails.first()
-                    copy(
-                        productDetail = productDetail,
-                        selectedItemDetailId = selectedItemDetail.id ?: -1,
-                        selectedColoredImagesList = filterColorImagesWithId(
-                            selectedItemDetail.colorId ?: -1
-                        ).map { it.imagePath ?: "" },
-                        selectedSizeTitleList = filterSizeWithColorIdsList(
-                            selectedItemDetail.colorId ?: -1
+                    setState {
+                        copy(
+                            productDetail = productDetail,
+                            selectedItemDetailId = selectedItemDetail.id ?: -1,
+                            selectedColoredImagesList = filterColorImagesWithId(
+                                selectedItemDetail.colorId ?: -1
+                            ).map { it.imagePath ?: "" },
+                            selectedSizeTitleList = filterSizeWithColorIdsList(
+                                selectedItemDetail.colorId ?: -1
+                            )
                         )
-                    )
+                    }
                 }
                 else -> {}
             }
