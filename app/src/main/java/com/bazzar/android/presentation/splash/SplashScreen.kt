@@ -2,6 +2,7 @@ package com.bazzar.android.presentation.splash
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.bazzar.android.common.navigateAndClearBackStack
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.destinations.MainScreenDestination
@@ -22,7 +23,9 @@ fun SplashScreen(
 
     viewModel.sideEffect { effect ->
         when (effect) {
-            SplashContract.Effect.Navigation.GoToHome -> navigator.navigate(MainScreenDestination())
+            SplashContract.Effect.Navigation.GoToHome -> navigator.navigateAndClearBackStack(
+                MainScreenDestination()
+            )
         }
     }
     SplashScreenContent(state = state, onEventSent = { viewModel.setEvent(it) })

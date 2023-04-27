@@ -1,5 +1,6 @@
 package com.android.network.domain.repos.impl
 
+import android.util.Log
 import androidx.annotation.WorkerThread
 import com.android.model.home.*
 import com.android.network.datasource.HomeRemoteDataSource
@@ -25,6 +26,7 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                     )
             }
         } catch (throwable: Throwable) {
+            Log.e("NetworkError", throwable.localizedMessage)
             emit(
                 Result.Error(
                     HomeResponse(),
@@ -45,6 +47,7 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                     )
             }
         } catch (throwable: Throwable) {
+            Log.e("NetworkError", throwable.localizedMessage)
             emit(
                 Result.Error(
                     listOf<Category>(),
@@ -65,6 +68,7 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                     )
             }
         } catch (throwable: Throwable) {
+            Log.e("NetworkError", throwable.localizedMessage)
             emit(
                 Result.Error(
                     listOf<Brand>(),
@@ -74,27 +78,29 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
-    override suspend fun getAllProductList(searchProduct: SearchProductRequest): Flow<Result<List<Product>>> = flow {
-        try {
-            homeRemoteDataSource.getAllProductList(searchProduct).let {
-                if (it.isSuccessful) {
-                    emit(Result.Success(it.body()?.data ?: emptyList()))
-                } else
+    override suspend fun getAllProductList(searchProduct: SearchProductRequest): Flow<Result<List<Product>>> =
+        flow {
+            try {
+                homeRemoteDataSource.getAllProductList(searchProduct).let {
+                    if (it.isSuccessful) {
+                        emit(Result.Success(it.body()?.data ?: emptyList()))
+                    } else
+                        Result.Error(
+                            listOf<Product>(), "error will be handled"
+                        )
+                }
+            } catch (throwable: Throwable) {
+                Log.e("NetworkError", throwable.localizedMessage)
+                emit(
                     Result.Error(
-                        listOf<Product>(), "error will be handled"
+                        listOf<Product>(),
+                        throwable.message
                     )
-            }
-        } catch (throwable: Throwable) {
-            emit(
-                Result.Error(
-                    listOf<Product>(),
-                    throwable.message
                 )
-            )
-        }
-    }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
-    override suspend fun getAllProductDetails(productId: Int)= flow {
+    override suspend fun getAllProductDetails(productId: Int) = flow {
         try {
             homeRemoteDataSource.getAllProductDetails(productId).let {
                 if (it.isSuccessful) {
@@ -105,6 +111,7 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                     )
             }
         } catch (throwable: Throwable) {
+            Log.e("NetworkError", throwable.localizedMessage)
             emit(
                 Result.Error(
                     ProductDetail(),
