@@ -35,8 +35,8 @@ import com.android.model.home.Product
 import com.bazzar.android.R
 import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
-import com.bazzar.android.presentation.productList.composables.DiscountView
-import com.bazzar.android.presentation.productList.composables.NewBadgeView
+import com.bazzar.android.presentation.productsList.composables.DiscountView
+import com.bazzar.android.presentation.productsList.composables.NewBadgeView
 import com.bazzar.android.presentation.theme.BazzarTheme
 import com.bazzar.android.presentation.theme.Shapes
 
