@@ -16,7 +16,7 @@ class ProductContract {
         val category: Category? = null,
         val subCategoryList: List<Category>? = emptyList(),
         val isSearchClicked: Boolean = false,
-        val ProductScreenTitle: String = "",
+        val productScreenTitle: String = "",
     ) : ViewState
 
     sealed class Event : ViewEvent {

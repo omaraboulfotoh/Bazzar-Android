@@ -14,22 +14,27 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.common.noRippleClickable
 import com.bazzar.android.presentation.theme.BazzarTheme
+import com.bazzar.android.R
 
 @Composable
 fun BazzarAppBar(
     title: String = String(),
     modifier: Modifier = Modifier,
-    navigationIcon: ImageVector? = Icons.Filled.ArrowBackIos,
+    navigationIcon: ImageVector? = ImageVector.vectorResource(id = R.drawable.ic_back),
     navigationIconTint: Color = BazzarTheme.colors.primaryButtonColor,
-    actions: @Composable RowScope.() -> Unit = {},
+    actions: (@Composable () -> Unit)? = null,
     backgroundColor: Color = Color.Transparent,
+    isUpperCase: Boolean = true,
     onNavigationClick: () -> Unit = {},
 ) {
-    Row(
+    Box(
         modifier
+            .fillMaxWidth()
             .background(backgroundColor)
             .padding(top = BazzarTheme.spacing.primaryPadding)
             .padding(horizontal = BazzarTheme.spacing.primaryPadding)
@@ -38,23 +43,35 @@ fun BazzarAppBar(
         navigationIcon?.let {
             Box(
                 modifier = Modifier
+                    .align(Alignment.CenterStart)
                     .defaultMinSize(minWidth = 50.dp, minHeight = 50.dp)
                     .noRippleClickable(onClick = onNavigationClick)
             ) {
                 Image(
                     imageVector = navigationIcon,
-                    alignment = Alignment.CenterStart,
+                    alignment = Alignment.Center,
                     contentDescription = "navigate",
-                    modifier = Modifier,
+                    modifier = Modifier.align(Alignment.CenterStart),
                     colorFilter = ColorFilter.tint(navigationIconTint)
                 )
             }
-
         }
 
-        Title(text = title, color = BazzarTheme.colors.primaryButtonColor)
+        Title(
+            modifier = Modifier.align(Alignment.Center),
+            text = title,
+            isUpperCase = true,
+            color = navigationIconTint,
+            textAlign = TextAlign.Center
+        )
 
-        Row(content = actions)
+        actions?.let { actions ->
+            Box(
+                modifier = Modifier.align(Alignment.CenterEnd)
+            ) {
+                actions.invoke()
+            }
+        }
     }
 }
 
@@ -84,7 +101,8 @@ fun MbcAppBarWithClose(
         }
 
         Title(
-            text = title, color = BazzarTheme.colors.primaryButtonColor,
+            text = title,
+            color = BazzarTheme.colors.primaryButtonColor,
             modifier = Modifier.weight(1f)
         )
 
@@ -99,8 +117,7 @@ fun MbcAppBarWithClose(
 
 
 @Composable
-fun EmptyMbcAppBar(title: String = String()) =
-    BazzarAppBar(title = title, navigationIcon = null)
+fun EmptyMbcAppBar(title: String = String()) = BazzarAppBar(title = title, navigationIcon = null)
 
 @Composable
 fun RowScope.MbcAppBarCloseAction(

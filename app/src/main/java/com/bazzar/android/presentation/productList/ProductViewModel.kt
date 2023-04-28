@@ -91,7 +91,7 @@ class ProductViewModel @Inject constructor(
             }
             setState {
                 copy(
-                    ProductScreenTitle = title,
+                    productScreenTitle = title,
                     searchRequest = request,
                     subCategoryList = subSubCategoriesList,
                     brand = brand,

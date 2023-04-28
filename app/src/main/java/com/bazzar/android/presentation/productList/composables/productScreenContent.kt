@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,6 +23,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
+import com.bazzar.android.common.noRippleClickable
 import com.bazzar.android.presentation.composables.BazzarAppBar
 import com.bazzar.android.presentation.composables.ProductItem
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
@@ -41,20 +43,26 @@ fun ProductScreenContent(
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
     ) {
-        BazzarAppBar(onNavigationClick = {
-
-        }, actions = {
-            Icon(
-                modifier = Modifier
-                    .padding(BazzarTheme.spacing.xs)
-                    .clickable {
-                        onSendEvent(ProductContract.Event.OnSearchClicked)
-                    },
-                painter = painterResource(id = R.drawable.search_icon),
-                contentDescription = null,
-                tint = colorResource(id = R.color.prussian_blue)
-            )
-        })
+        BazzarAppBar(title = state.productScreenTitle,
+            onNavigationClick = {
+                onSendEvent(ProductContract.Event.OnBackIconClicked)
+            },
+            actions = {
+                Box(
+                    modifier = Modifier
+                        .defaultMinSize(minWidth = 50.dp, minHeight = 50.dp)
+                        .clickable {
+                            onSendEvent(ProductContract.Event.OnSearchClicked)
+                        }
+                ) {
+                    Icon(
+                        modifier = Modifier.align(Alignment.CenterEnd),
+                        painter = painterResource(id = R.drawable.search_icon),
+                        contentDescription = null,
+                        tint = colorResource(id = R.color.prussian_blue)
+                    )
+                }
+            })
         // show subCategories
         if (state.subCategoryList.isNullOrEmpty().not()) {
             SubCategorySlider(
