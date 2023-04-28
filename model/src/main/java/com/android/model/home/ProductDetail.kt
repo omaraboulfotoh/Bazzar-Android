@@ -1,11 +1,16 @@
 package com.android.model.home
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
+@JsonClass(generateAdapter = true)
 data class ProductDetail(
-    @Json(name = "itemDetails") var itemDetails: ArrayList<ItemDetail> = arrayListOf(),
-    @Json(name = "itemImages") var itemImages: ArrayList<ItemImages> = arrayListOf(),
-    @Json(name = "relatedItems") var relatedItems: ArrayList<RelatedItems> = arrayListOf(),
+    @Json(name = "itemDetails") var itemDetails: List<ItemDetail> = listOf(),
+    @Json(name = "itemImages") var itemImages: List<ItemImages> = listOf(),
+    @Json(name = "relatedItems") var relatedItems: List<RelatedItems> = listOf(),
     @Json(name = "description") var description: String? = null,
     @Json(name = "id") var id: Int? = null,
     @Json(name = "brandId") var brandId: Int? = null,
@@ -22,9 +27,10 @@ data class ProductDetail(
     @Json(name = "oldPrice") var oldPrice: Double? = null,
     @Json(name = "isNew") var isNew: Boolean? = null,
     @Json(name = "isExclusive") var isExclusive: Boolean? = null,
-)
+) : Parcelable
 
-
+@Parcelize
+@JsonClass(generateAdapter = true)
 data class ItemDetail(
     @Json(name = "id") var id: Int? = null,
     @Json(name = "colorId") var colorId: Int? = null,
@@ -37,13 +43,17 @@ data class ItemDetail(
     @Json(name = "sku") var sku: String? = null,
     @Json(name = "itemBalance") var itemBalance: Int? = null,
     @Json(name = "quantity") var quantity: Int? = null
-)
+) : Parcelable
 
+@Parcelize
+@JsonClass(generateAdapter = true)
 data class ItemImages(
     @Json(name = "colorId") var colorId: Int? = null,
     @Json(name = "imagePath") var imagePath: String? = null
-)
+) : Parcelable
 
+@Parcelize
+@JsonClass(generateAdapter = true)
 data class RelatedItems(
     @Json(name = "id") var id: Int? = null,
     @Json(name = "brandId") var brandId: Int? = null,
@@ -60,4 +70,4 @@ data class RelatedItems(
     @Json(name = "oldPrice") var oldPrice: Double? = null,
     @Json(name = "isNew") var isNew: Boolean? = null,
     @Json(name = "isExclusive") var isExclusive: Boolean? = null
-)
+) : Parcelable

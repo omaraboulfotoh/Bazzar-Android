@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.product_detail_screen.composables
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -22,18 +23,24 @@ fun RatingRow(
     rating: Int,
     activeColor: Color = Color.Yellow,
     inactiveColor: Color = Color.Gray,
-    updateRating:(Int)->Unit
+    updateRating: (Int) -> Unit
 ) {
     Box(
         modifier = Modifier
-            .width(375.dp)
+            .padding(top = 12.dp)
+            .fillMaxWidth()
             .height(47.dp)
+            .background(Color.White)
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
             Text(
                 text = stringResource(id = R.string.give_rate),
                 style = MaterialTheme.typography.overline.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                    color = Color.Black
                 )
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -44,17 +51,21 @@ fun RatingRow(
                         imageVector = icon,
                         contentDescription = null,
                         tint = color,
-                        modifier = Modifier.size(24.dp).clickable {
-                            updateRating(index)
-                        }
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clickable {
+                                updateRating(index)
+                            }
                     )
                 }
             }
 
             Text(
+                modifier = Modifier.padding(start = 105.dp),
                 text = stringResource(id = R.string.sold_by),
                 style = MaterialTheme.typography.overline.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                    color = Color.Black
                 )
             )
 
@@ -62,6 +73,3 @@ fun RatingRow(
     }
 }
 
-@Composable
-fun RatingStars() {
-}

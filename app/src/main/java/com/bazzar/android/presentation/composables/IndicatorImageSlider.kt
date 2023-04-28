@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.presentation.theme.BazzarTheme
@@ -23,7 +24,7 @@ import com.google.accompanist.pager.rememberPagerState
 @Composable
 fun IndicatorImageSlider(
     imagePathList: List<String>,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier, imageHeight: Dp=160.dp,
     onSliderClicked: (Int) -> Unit
 ) {
 
@@ -40,7 +41,7 @@ fun IndicatorImageSlider(
             count = imagePathList.size,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(160.dp),
+                .height(imageHeight),
             contentPadding = PaddingValues(4.dp)
 
         ) { page ->

@@ -42,8 +42,8 @@ class ProductDetailViewModel @Inject constructor(
     private fun updateSizeAndItemId(sizeIndex: Int) {
         setState {
             copy(
-                selectedItemDetailId = currentState.productDetail.itemDetails.find {
-                    it.sizeTitle == selectedSizeTitleList[sizeIndex] && it.colorId == selectedColorId
+                selectedItemDetailId = currentState.productDetail?.itemDetails?.find {
+                    it.sizeTitle == selectedSizeTitleList?.get(sizeIndex) && it.colorId == selectedColorId
                 }?.id
                     ?: -1
             )
@@ -54,13 +54,14 @@ class ProductDetailViewModel @Inject constructor(
         setState {
             copy(
                 // update colorId
-                selectedColorId = currentState.productDetail.itemImages[colorIndex].colorId ?: -1,
+                selectedColorId = currentState.productDetail?.itemImages?.get(colorIndex)?.colorId
+                    ?: -1,
                 // update slider images
-                selectedColoredImagesList = filterColorImagesWithId(selectedColorId).map {
+                selectedColoredImagesList = filterColorImagesWithId(selectedColorId ?: -1)?.map {
                     it.imagePath ?: ""
                 },
                 //  update size with respect to color
-                selectedSizeTitleList = filterSizeWithColorIdsList(selectedColorId),
+                selectedSizeTitleList = filterSizeWithColorIdsList(selectedColorId ?: -1),
             )
         }
     }
@@ -79,19 +80,28 @@ class ProductDetailViewModel @Inject constructor(
             when (productDetailResponse) {
                 is Result.Error -> globalState.error(productDetailResponse.message.orEmpty())
                 is Result.Loading -> {}
-                is Result.Success -> setState {
+                is Result.Success -> {
                     val productDetail = productDetailResponse.data ?: ProductDetail()
                     val selectedItemDetail = productDetail.itemDetails.first()
-                    copy(
-                        productDetail = productDetail,
-                        selectedItemDetailId = selectedItemDetail.id ?: -1,
-                        selectedColoredImagesList = filterColorImagesWithId(
-                            selectedItemDetail.colorId ?: -1
-                        ).map { it.imagePath ?: "" },
-                        selectedSizeTitleList = filterSizeWithColorIdsList(
-                            selectedItemDetail.colorId ?: -1
+                    setState {
+                        copy(
+                            productDetail = productDetail,
                         )
+                    }
+                    val selectedImagedList = filterColorImagesWithId(
+                        selectedItemDetail.colorId ?: -1
+                    )?.map { it.imagePath ?: "" }
+                    val selectedTitleList = filterSizeWithColorIdsList(
+                        selectedItemDetail.colorId ?: -1
                     )
+
+                    setState {
+                        copy(
+                            selectedItemDetailId = selectedItemDetail.id ?: -1,
+                            selectedColoredImagesList = selectedImagedList,
+                            selectedSizeTitleList = selectedTitleList
+                        )
+                    }
                 }
                 else -> {}
             }
@@ -99,10 +109,10 @@ class ProductDetailViewModel @Inject constructor(
     })
 
     private fun filterColorImagesWithId(colorId: Int) =
-        currentState.productDetail.itemImages.filter { it.colorId == colorId }
+        currentState.productDetail?.itemImages?.filter { it.colorId == colorId }
 
     private fun filterSizeWithColorIdsList(colorId: Int) =
-        currentState.productDetail.itemDetails.filter { it.colorId == colorId }
-            .map { it.sizeTitle ?: "" }
+        currentState.productDetail?.itemDetails?.filter { it.colorId == colorId }
+            ?.map { it.sizeTitle ?: "" }
 }
 

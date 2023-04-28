@@ -8,17 +8,17 @@ import com.bazzar.android.presentation.base.ViewState
 
 class ProductDetailContract {
     data class State(
-        var productDetail: ProductDetail = ProductDetail(),
-        var selectedItemDetailId: Int = -1,
-        var selectedColorId: Int = -1,
+        var productDetail: ProductDetail? = ProductDetail(),
+        var selectedItemDetailId: Int? = -1,
+        var selectedColorId: Int? = -1,
         var selectedColoredImagesList: List<String>? = listOf(),
-        var selectedSizeTitleList: List<String> = listOf(),
-        val isBuyNowClicked: Boolean = false,
-        val isContinueShoppingClicked: Boolean = false,
-        val isFavouriteIconClicked: Boolean = false,
-        val rating: Int = 0,
-        val isColorItemClicked:Boolean=false,
-        val isSizeClicked:Boolean=false,
+        var selectedSizeTitleList: List<String>? = listOf(),
+        val isBuyNowClicked: Boolean? = false,
+        val isContinueShoppingClicked: Boolean? = false,
+        val isFavouriteIconClicked: Boolean? = false,
+        val rating: Int? = 0,
+        val isColorItemClicked:Boolean?=false,
+        val isSizeClicked:Boolean?=false,
     ) : ViewState
 
     sealed class Event : ViewEvent {

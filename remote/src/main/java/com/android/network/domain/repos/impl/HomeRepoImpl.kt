@@ -1,5 +1,6 @@
 package com.android.network.domain.repos.impl
 
+import android.util.Log
 import androidx.annotation.WorkerThread
 import com.android.model.home.*
 import com.android.network.datasource.HomeRemoteDataSource
@@ -105,6 +106,7 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                     )
             }
         } catch (throwable: Throwable) {
+            Log.e("ErrorShafie", "getAllProductDetails: ",throwable )
             emit(
                 Result.Error(
                     ProductDetail(),

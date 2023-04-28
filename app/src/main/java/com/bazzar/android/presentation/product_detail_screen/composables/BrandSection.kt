@@ -33,17 +33,19 @@ fun BrandSection(
 ) {
     Box(
         modifier = modifier
+            .height(112.dp)
             .background(color = Color.White)
+            .padding(start = 16.dp)
     ) {
         Column(
             Modifier.padding(top = 18.dp),
             horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.SpaceEvenly
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Row(
                 modifier = Modifier
-
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 RemoteImage(
                     imageUrl = brandImagePath,

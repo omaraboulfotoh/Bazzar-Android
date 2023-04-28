@@ -30,7 +30,7 @@ fun ProductDetailScreenContent(
                 item {
                     IndicatorImageSlider(
                         imagePathList = state.selectedColoredImagesList ?: listOf(),
-                        modifier = Modifier.wrapContentHeight(),
+                        imageHeight = 373.dp,
                         onSliderClicked = {
                             onSendEvent(
                                 ProductDetailContract.Event.OnSliderClicked(0, it)
@@ -40,22 +40,22 @@ fun ProductDetailScreenContent(
                 }
                 item {
                     BrandSection(
-                        productTitle = state.productDetail.title ?: "",
-                        brandName = state.productDetail.brandTitle ?: "",
-                        brandImagePath = state.productDetail.brandImagePath ?: "",
-                        newPrice = state.productDetail.price.toString(),
-                        oldPrice = state.productDetail.oldPrice.toString(),
+                        productTitle = state.productDetail?.title ?: "",
+                        brandName = state.productDetail?.brandTitle ?: "",
+                        brandImagePath = state.productDetail?.brandImagePath ?: "",
+                        newPrice = state.productDetail?.price?.toString() ?: "",
+                        oldPrice = state.productDetail?.oldPrice.toString(),
                         modifier = Modifier
-                            .padding(start = 16.dp)
                             .padding(top = 8.dp)
                     )
                 }
                 item {
                     AvailableColorSizeProduct(
-                        isColorItemClicked = state.isColorItemClicked,
-                        isSizeClicked = state.isSizeClicked,
-                        itemImages = state.productDetail.itemImages.distinct().map { it.imagePath ?: "" },
-                        sizeList = state.selectedSizeTitleList,
+                        isColorItemClicked = state.isColorItemClicked ?: false,
+                        isSizeClicked = state.isSizeClicked ?: false,
+                        itemImages = state.productDetail?.itemImages?.distinctBy { it.colorId }
+                            ?.map { it.imagePath ?: "" } ?: listOf(),
+                        sizeList = state.selectedSizeTitleList ?: listOf(),
                         onColorSelected = { index ->
                             ProductDetailContract.Event.OnColorItemSelected(
                                 index
@@ -68,15 +68,15 @@ fun ProductDetailScreenContent(
                 }
                 item {
                     RatingRow(
-                        rating = state.rating,
+                        rating = state.rating ?: 0,
                         updateRating = { index -> ProductDetailContract.Event.OnRatingClicked(index) })
                 }
                 item {
-                    ProductDescription(text = state.productDetail.description ?: "")
+                    ProductDescription(text = state.productDetail?.description ?: "")
                 }
                 item {
                     ProductsGroup(
-                        productsList = state.productDetail.relatedItems.map { it.toProduct() },
+                        productsList = state.productDetail?.relatedItems?.map { it.toProduct() },
                         headerTitle = stringResource(id = R.string.related_product),
                         onProductClicked = { itemId ->
                             ProductDetailContract.Event.OnRelatedItemClicked(
@@ -90,7 +90,7 @@ fun ProductDetailScreenContent(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(end = 16.dp),
-                itemDetailId = state.selectedItemDetailId,
+                itemDetailId = state.selectedItemDetailId ?: -1,
                 onBuyNowClicked = { itemDetailId ->
                     onSendEvent(
                         ProductDetailContract.Event.OnBuyNowClicked(itemDetailId)
