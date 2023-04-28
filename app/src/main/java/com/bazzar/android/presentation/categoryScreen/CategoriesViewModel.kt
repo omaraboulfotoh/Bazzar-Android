@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.categoryScreen
 
+import com.android.local.SharedPrefersManager
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.presentation.app.IGlobalState
@@ -13,6 +14,7 @@ import javax.inject.Inject
 class CategoriesViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
+    private val sharedPrefersManager: SharedPrefersManager
 ) : BaseViewModel<Event, State, Effect>(globalState) {
 
 
@@ -98,6 +100,8 @@ class CategoriesViewModel @Inject constructor(
                             is Result.Error -> globalState.error(brandsResponse.message.orEmpty())
                             is Result.Loading -> {}
                             is Result.Success -> {
+                                sharedPrefersManager.saveCategoryList(categoriesResponse.data)
+                                sharedPrefersManager.saveBrandList(brandsResponse.data)
                                 setState {
                                     copy(
                                         categoryList = categoriesResponse.data,
