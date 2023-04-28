@@ -11,7 +11,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
-import com.bazzar.android.presentation.login_screen.LoginContract
+import com.bazzar.android.presentation.login.LoginContract
 
 @Composable
 fun OtpScreenContent(

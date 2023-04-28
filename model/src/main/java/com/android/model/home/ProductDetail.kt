@@ -10,7 +10,7 @@ import kotlinx.android.parcel.Parcelize
 data class ProductDetail(
     @Json(name = "itemDetails") var itemDetails: List<ItemDetail> = listOf(),
     @Json(name = "itemImages") var itemImages: List<ItemImages> = listOf(),
-    @Json(name = "relatedItems") var relatedItems: List<RelatedItems> = listOf(),
+    @Json(name = "relatedItems") var relatedItems: List<Product> = listOf(),
     @Json(name = "description") var description: String? = null,
     @Json(name = "id") var id: Int? = null,
     @Json(name = "brandId") var brandId: Int? = null,
