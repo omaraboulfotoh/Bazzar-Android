@@ -70,8 +70,8 @@ class ProductViewModel @Inject constructor(
             var request = SearchProductRequest(categoryId = category?.id)
 
             // if the screen opened from categories get the sub-list and adding first one as all
-            val subSubCategoriesList = category?.let {
-                prefersManager.getCategoryList().orEmpty().filter { it.parentId == it.id }
+            val subSubCategoriesList = category?.let { category ->
+                prefersManager.getCategoryList().orEmpty().filter { it.parentId == category.id }
                     .toMutableList()
             }
             if (subSubCategoriesList.isNullOrEmpty().not() && category != null) {
@@ -80,12 +80,24 @@ class ProductViewModel @Inject constructor(
                     category.copy(title = resourceProvider.getString(R.string.all))
                 )
             }
-
+            val title = when {
+                (category != null) -> category.title.orEmpty()
+                (brand != null) -> brand.title.orEmpty()
+                else -> ""
+            }
             // if screen opened form brands
             brand?.id?.let {
                 request = request.copy(brandList = listOf(it))
             }
-            setState { copy(searchRequest = request, subCategoryList = subSubCategoriesList) }
+            setState {
+                copy(
+                    ProductScreenTitle = title,
+                    searchRequest = request,
+                    subCategoryList = subSubCategoriesList,
+                    brand = brand,
+                    category = category
+                )
+            }
             loadProductData(request)
             isInitialized = true
         }
@@ -96,11 +108,9 @@ class ProductViewModel @Inject constructor(
             .collect { productResponse ->
                 when (productResponse) {
                     is Result.Error -> globalState.error(productResponse.message.orEmpty())
-                    is Result.Loading -> {}
+                    is Result.Loading -> globalState.loading(true)
                     is Result.Success -> setState {
-                        copy(
-                            productList = productResponse.data
-                        )
+                        copy(productList = productResponse.data)
                     }
 
                     else -> {}
