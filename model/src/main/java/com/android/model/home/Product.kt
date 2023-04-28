@@ -27,11 +27,11 @@ data class Product(
     @Json(name = "categoryTitle")
     val categoryTitle: String? = null,
     @Json(name = "isNew")
-    val isNew: Boolean = false,
+    val isNew: Boolean? = false,
     @Json(name = "isExclusive")
     val isExclusive: Boolean? = null,
     @Json(name = "price")
-    val price: Double = 0.0,
+    val price: Double? = 0.0,
     @Json(name = "oldPrice")
     val oldPrice: Double? = null,
     @Json(name = "discountPercentage")

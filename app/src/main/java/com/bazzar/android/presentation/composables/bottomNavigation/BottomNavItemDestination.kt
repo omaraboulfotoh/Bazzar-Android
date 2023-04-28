@@ -27,7 +27,7 @@ sealed class BottomNavItemDestination(
             MainContract.CATEGORIES_TAB,
             R.string.categories,
             R.drawable.ic_category,
-            R.drawable.ic_category,
+            R.drawable.ic_category_selected,
             CategoryScreenDestination
         )
 
@@ -37,7 +37,7 @@ sealed class BottomNavItemDestination(
             R.string.cart,
             R.drawable.ic_cart,
             R.drawable.ic_cart_icon,
-            SplashScreenDestination
+            CartScreenDestination
         )
 
     object Profile :
@@ -45,7 +45,7 @@ sealed class BottomNavItemDestination(
             MainContract.PROFILE_TAB,
             R.string.profile,
             R.drawable.ic_profile,
-            R.drawable.ic_profile,
-            SplashScreenDestination
+            R.drawable.ic_profile_selected,
+            AccountScreenDestination
         )
 }

@@ -10,14 +10,10 @@ class AccountContract {
     ) : ViewState
 
     sealed class Event : ViewEvent {
-
     }
 
     sealed class Effect : ViewSideEffect {
-        sealed class Navigation : Effect() {
-
-        }
-
+        sealed class Navigation : Effect() {}
     }
 
 }
