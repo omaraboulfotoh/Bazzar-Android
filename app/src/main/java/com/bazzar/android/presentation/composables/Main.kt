@@ -31,7 +31,8 @@ fun BazzarAppBar(
     Row(
         modifier
             .background(backgroundColor)
-            .padding(BazzarTheme.spacing.primaryPadding)
+            .padding(top = BazzarTheme.spacing.primaryPadding)
+            .padding(horizontal = BazzarTheme.spacing.primaryPadding)
     ) {
 
         navigationIcon?.let {
