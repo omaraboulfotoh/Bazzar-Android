@@ -48,6 +48,7 @@ data class AbsColors(
     val primaryButtonTextColorDisabled: Color = COLOR_DARK_SILVER,
     val primaryText: Color = COLOR_WHITE,
     val secondaryText: Color = COLOR_BLACK,
+    val discountText: Color = COLOR_RED,
     val stroke: Color = COLOR_LIGHT_GREY,
     val black: Color = COLOR_BLACK,
     val white: Color = COLOR_WHITE,

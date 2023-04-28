@@ -29,9 +29,13 @@ class HomeViewModel @Inject constructor(
             )
 
             is HomeContract.Event.OnBrandClicked -> handleBrandClicked(event.index)
-            is HomeContract.Event.OnCategoryClicked -> TODO()
-            is HomeContract.Event.OnProductClicked -> TODO()
+            is HomeContract.Event.OnCategoryClicked -> handleCategoryClicked(event.index)
+            is HomeContract.Event.OnProductClicked -> onProductClicked(event.index)
         }
+    }
+
+    private fun onProductClicked(index: Int) {
+        
     }
 
     private fun handleBrandClicked(index: Int) {

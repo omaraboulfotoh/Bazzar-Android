@@ -52,9 +52,7 @@ fun RemoteImage(
                     .background(
                         shimmerBrush(targetValue = 1300f, showShimmer = showShimmer.value)
                     )
-            } else Modifier
-                .fillMaxSize()
-                .background(background),
+            } else Modifier.fillMaxSize(),
             alignment = alignment,
             contentScale = contentScaleState.value,
             alpha = alpha,

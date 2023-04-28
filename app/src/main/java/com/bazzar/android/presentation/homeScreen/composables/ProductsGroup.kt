@@ -3,6 +3,7 @@ package com.bazzar.android.presentation.homeScreen.composables
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -26,8 +27,8 @@ fun ProductsGroup(
         contentPadding = PaddingValues(horizontal = 7.dp),
     ) {
         productsList?.let {
-            items(it) { product ->
-                ProductItem(product, onItemClicked = { itemId -> onProductClicked(itemId) })
+            itemsIndexed(it) { index, product ->
+                ProductItem(product, onItemClicked = { onProductClicked(index) })
             }
         }
     }

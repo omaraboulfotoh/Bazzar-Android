@@ -1,11 +1,19 @@
 package com.bazzar.android.presentation.composables
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -14,12 +22,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
@@ -28,117 +33,152 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.android.model.home.Product
 import com.bazzar.android.R
+import com.bazzar.android.common.orFalse
+import com.bazzar.android.common.orZero
+import com.bazzar.android.presentation.productList.composables.DiscountView
+import com.bazzar.android.presentation.productList.composables.NewBadgeView
+import com.bazzar.android.presentation.theme.BazzarTheme
+import com.bazzar.android.presentation.theme.Shapes
 
 @Composable
 fun ProductItem(product: Product, onItemClicked: (Int) -> Unit) {
-    Box(
+    Card(
         modifier = Modifier
-            .width(168.dp)
-            .clip(RoundedCornerShape(size = 20.dp))
-            .background(Color.White)
-            .clickable { onItemClicked(product.id ?: -1) }
+            .height(334.dp)
+            .width(164.dp)
+            .clickable { onItemClicked(product.id.orZero()) },
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.white)),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
-        Card(modifier = Modifier
-            .fillMaxSize()
-            .align(Alignment.Center),
-            shape = RoundedCornerShape(20.dp),
-            colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.white)),
-            elevation = CardDefaults.cardElevation(defaultElevation = 30.dp),
-            content = {})
         Column(
             modifier = Modifier
                 .background(Color.White)
-                .width(168.dp)
-                .align(Alignment.Center),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.s)
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.heart_ic),
-                contentDescription = "favourite image",
+
+            // top image and badges
+            Box(
                 modifier = Modifier
-                    .offset(y = 16.dp)
-                    .padding(start = 140.dp)
-                    .padding(end = 12.dp)
-            )
-            product.imagePath?.let {
+                    .fillMaxWidth()
+                    .weight(1.5f)
+            ) {
                 RemoteImage(
-                    imageUrl = it,
+                    imageUrl = product.imagePath,
                     contentScale = ContentScale.Crop,
+                    background = BazzarTheme.colors.white,
                     modifier = Modifier
-                        .size(152.dp)
-                        .padding(top = 40.dp)
+                        .fillMaxSize()
+                        .align(Alignment.Center)
+                        .clip(Shapes.large)
                 )
+                // new badge
+                if (product.isNew.orFalse())
+                    NewBadgeView(
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .size(28.dp)
+                    )
+
+                // draw the item for discount and exclusive if exist
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                ) {
+
+                    // check for discount
+                    product.discountPercentage?.let {
+                        DiscountView(modifier = Modifier.size(width = 70.dp, height = 24.dp), it)
+                    }
+                    // check for exclusive
+                    if (product.isExclusive.orFalse())
+                        NewBadgeView(modifier = Modifier.size(width = 70.dp, height = 24.dp))
+                }
+                // todo check if sold-out
             }
-            Text(
-                text = product.title ?: "",
+
+            Column(
                 modifier = Modifier
-                    .padding(top = 16.dp)
-                    .padding(start = 8.dp)
-                    .align(Alignment.Start),
-                style = MaterialTheme.typography.subtitle2.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
-                    color = colorResource(id = R.color.black)
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .padding(horizontal = BazzarTheme.spacing.xs),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xxs)
+            ) {
+
+                // title
+                SectionTitle(
+                    text = product.title.orEmpty(),
+                    maxLines = 2,
+                    modifier = Modifier.align(Alignment.Start),
                 )
-            )
-            Text(
-                text = product.brandTitle ?: "",
-                modifier = Modifier
-                    .padding(top = 4.dp)
-                    .padding(start = 8.dp)
-                    .align(Alignment.Start),
-                style = MaterialTheme.typography.subtitle2.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_regular)),
-                    color = colorResource(id = R.color.black)
+                // brand title
+                SectionTitle(
+                    text = product.brandTitle.orEmpty(),
+                    maxLines = 1,
+                    modifier = Modifier
+                        .align(Alignment.Start),
+                    style = BazzarTheme.typography.body2
                 )
-            )
-            Text(
-                modifier = Modifier
-                    .paddingFromBaseline(top = 24.dp)
-                    .padding(start = 8.dp)
-                    .padding(bottom = 32.dp)
-                    .align(Alignment.Start),
-                text =
-                buildAnnotatedString {
-                    withStyle(
-                        style = SpanStyle(
-                            fontFamily =
-                            FontFamily(Font(R.font.montserrat_bold))
-                        )
-                    ) {
-                        append(product.oldPrice.toString())
-                    }
-                    withStyle(
-                        style = SpanStyle(
-                            fontFamily =
-                            FontFamily(Font(R.font.montserrat_regular))
-                        )
-                    ) {
-                        append(
-                            stringResource(
-                                id = R.string.home_screen_product_price
+
+                // the space from title to bottom price
+                Spacer(modifier = Modifier.weight(1f))
+
+
+                // price view
+                Text(
+                    modifier = Modifier.align(Alignment.Start),
+                    text =
+                    buildAnnotatedString {
+                        withStyle(
+                            style = SpanStyle(fontFamily = FontFamily(Font(R.font.montserrat_bold)))
+                        ) {
+                            append(
+                                if (product.discountPercentage.orZero() > 0) {
+                                    product.oldPrice.toString()
+                                } else product.price.toString()
                             )
-                        )
-                    }
-                },
-                style = MaterialTheme.typography.subtitle2.copy(
-                    color = colorResource(id = R.color.black)
+                        }
+                        withStyle(
+                            style = SpanStyle(fontFamily = FontFamily(Font(R.font.montserrat_regular)))
+                        ) {
+                            append(stringResource(id = R.string.home_screen_product_price))
+                        }
+                    },
+                    color = if (product.discountPercentage.orZero() > 0) {
+                        BazzarTheme.colors.stroke
+                    } else {
+                        BazzarTheme.colors.black
+                    },
+                    style = BazzarTheme.typography.body2Bold
                 )
-            )
+
+                // if have discount should show the new price
+                if (product.discountPercentage.orZero() > 0) {
+                    Text(
+                        modifier = Modifier.align(Alignment.Start),
+                        text =
+                        buildAnnotatedString {
+                            withStyle(
+                                style = SpanStyle(fontFamily = FontFamily(Font(R.font.montserrat_bold)))
+                            ) {
+                                append(product.price.toString())
+                            }
+                            withStyle(
+                                style = SpanStyle(fontFamily = FontFamily(Font(R.font.montserrat_regular)))
+                            ) {
+                                append(stringResource(id = R.string.home_screen_product_price))
+                            }
+                        },
+                        color = BazzarTheme.colors.discountText,
+                        style = BazzarTheme.typography.body2Bold
+                    )
+                }
+                // bottom space
+                Spacer(modifier = Modifier.height(BazzarTheme.spacing.s))
+            }
         }
-        Image(
-            imageVector = ImageVector.vectorResource(id = R.drawable.new_icon),
-            contentDescription = "new_icon",
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .offset(y = (-122).dp)
-        )
-        Image(
-            painter = painterResource(R.drawable.ic_cart),
-            contentDescription = "cart_icon",
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .offset(y = (-30).dp)
-                .padding(end = 8.dp)
-        )
     }
 }

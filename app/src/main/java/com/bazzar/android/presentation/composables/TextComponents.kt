@@ -7,13 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.*
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import com.bazzar.android.presentation.theme.BazzarTheme
-import com.bazzar.android.presentation.theme.OpenSans
+import com.bazzar.android.presentation.theme.montserrat
 
 @Composable
 fun Title(
@@ -41,9 +42,9 @@ fun SectionTitle(
     text: String,
     modifier: Modifier = Modifier.fillMaxWidth(),
     maxLines: Int = Int.MAX_VALUE,
-    textAlign: TextAlign = TextAlign.Center,
-    color: Color = BazzarTheme.colors.primaryText,
-    style: TextStyle = BazzarTheme.typography.h7Bold,
+    textAlign: TextAlign = TextAlign.Start,
+    color: Color = BazzarTheme.colors.black,
+    style: TextStyle = BazzarTheme.typography.body2Bold,
 ) =
     Title(
         text,
@@ -62,19 +63,53 @@ fun MultipleStylesInText(
 ) {
     Text(
         buildAnnotatedString {
-            withStyle(style = SpanStyle(
-                fontFamily = OpenSans,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Normal
-            )) {
+            withStyle(
+                style = SpanStyle(
+                    fontFamily = montserrat,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Normal
+                )
+            ) {
                 append(text1)
             }
 
-            withStyle(style = SpanStyle(
-                fontFamily = OpenSans,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
-            )) {
+            withStyle(
+                style = SpanStyle(
+                    fontFamily = montserrat,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            ) {
+                append(text2)
+            }
+        }
+    )
+}
+
+@Composable
+fun DiscountStylesInText(
+    text1: String, text2: String,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        buildAnnotatedString {
+            withStyle(
+                style = SpanStyle(
+                    fontFamily = montserrat,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            ) {
+                append(text1)
+            }
+
+            withStyle(
+                style = SpanStyle(
+                    fontFamily = montserrat,
+                    fontSize = 8.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            ) {
                 append(text2)
             }
         }

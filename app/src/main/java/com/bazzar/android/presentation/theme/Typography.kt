@@ -10,7 +10,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.bazzar.android.R
 
-internal val OpenSans: FontFamily =
+internal val montserrat: FontFamily =
     FontFamily(
         Font(R.font.montserrat_regular),
         Font(R.font.montserrat_medium, FontWeight.Medium),
@@ -20,7 +20,7 @@ internal val OpenSans: FontFamily =
         Font(R.font.montserrat_extrabold, FontWeight.ExtraBold)
     )
 
-val Typography = Typography(defaultFontFamily = OpenSans)
+val Typography = Typography(defaultFontFamily = montserrat)
 
 /**
  * from my perspective TextStyles shouldn't have colors and should be abstract
@@ -31,35 +31,35 @@ val Typography = Typography(defaultFontFamily = OpenSans)
 data class AbsTypography(
     val h1Bold: TextStyle =
         TextStyle(
-            fontFamily = OpenSans,
+            fontFamily = montserrat,
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             lineHeight = 42.sp
         ),
     val h2Bold: TextStyle =
         TextStyle(
-            fontFamily = OpenSans,
+            fontFamily = montserrat,
             fontSize = 56.sp,
             fontWeight = FontWeight.Bold,
             lineHeight = 56.sp
         ),
     val h3Bold: TextStyle =
         TextStyle(
-            fontFamily = OpenSans,
+            fontFamily = montserrat,
             fontSize = 40.sp,
             fontWeight = FontWeight.Bold,
             lineHeight = 48.sp
         ),
     val h4Bold: TextStyle =
         TextStyle(
-            fontFamily = OpenSans,
+            fontFamily = montserrat,
             fontSize = 35.sp,
             fontWeight = FontWeight.Bold,
             lineHeight = 48.sp
         ),
     val h5: TextStyle =
         TextStyle(
-            fontFamily = OpenSans,
+            fontFamily = montserrat,
             fontSize = 24.sp,
             fontWeight = FontWeight.Normal
         ),
@@ -71,7 +71,7 @@ data class AbsTypography(
         h5Bold.copy(fontSize = 20.sp),
     val subtitle1: TextStyle =
         TextStyle(
-            fontFamily = OpenSans,
+            fontFamily = montserrat,
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
             lineHeight = 26.sp
@@ -82,7 +82,7 @@ data class AbsTypography(
         subtitle1.copy(fontWeight = FontWeight.SemiBold),
     val body1Medium: TextStyle =
         TextStyle(
-            fontFamily = OpenSans,
+            fontFamily = montserrat,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             lineHeight = 24.sp
@@ -91,7 +91,7 @@ data class AbsTypography(
     val body1: TextStyle = body1Medium.copy(fontWeight = FontWeight.Normal),
     val body2: TextStyle =
         TextStyle(
-            fontFamily = OpenSans,
+            fontFamily = montserrat,
             fontSize = 15.sp,
             fontWeight = FontWeight.Normal
         ),
@@ -101,13 +101,13 @@ data class AbsTypography(
         body2.copy(fontWeight = FontWeight.Medium),
 
     val bottomSheetTextItemStyle: TextStyle = TextStyle(
-        fontFamily = OpenSans,
+        fontFamily = montserrat,
         fontSize = 23.sp,
         fontWeight = FontWeight.Normal
     ),
     val overline: TextStyle =
         TextStyle(
-            fontFamily = OpenSans,
+            fontFamily = montserrat,
             fontSize = 10.sp,
             fontWeight = FontWeight.Normal,
             lineHeight = 24.sp
@@ -116,7 +116,7 @@ data class AbsTypography(
         overline.copy(fontWeight = FontWeight.Bold),
     val caption: TextStyle =
         TextStyle(
-            fontFamily = OpenSans,
+            fontFamily = montserrat,
             fontSize = 12.sp,
             fontWeight = FontWeight.Normal,
             lineHeight = 18.sp

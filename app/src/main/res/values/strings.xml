@@ -110,4 +110,9 @@
     <string name="buy_now">Buy Now</string>
     <string name="all">All</string>
     <string name="availables">Availables</string>
+    <string name="new_text">New</string>
+    <string name="discount_format">%d %</string>
+    <string name="off_text">Off</string>
+    <string name="exclusive">Exclusive</string>
+    <string name="soldout">Sold out</string>
 </resources>

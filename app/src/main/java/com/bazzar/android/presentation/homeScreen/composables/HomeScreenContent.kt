@@ -45,12 +45,11 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
                 onProductClicked = { itemId ->
                     HomeContract.Event.OnProductClicked(itemId)
                 }
-
             )
         }
         if (state.featuredCategories.isNullOrEmpty().not())
             CategoryGroup(state.featuredCategories.orEmpty(), onCategoryClicked = {
-
+                onSendEvent(HomeContract.Event.OnCategoryClicked(it))
             })
         item {
             IndicatorImageSlider(
@@ -62,7 +61,7 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
         }
         if (state.featuredBrands.isNullOrEmpty().not())
             FeaturedBrands(state.featuredBrands.orEmpty(), onBrandClicked = {
-
+                onSendEvent(HomeContract.Event.OnBrandClicked(it))
             })
 
         item {
