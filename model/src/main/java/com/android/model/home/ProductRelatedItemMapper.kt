@@ -7,12 +7,12 @@ fun RelatedItems.toProduct() =
         title = this.title,
         brandTitle = this.brandTitle,
         oldPrice = this.oldPrice,
-        price = this.price ?: 0.0,
+        price = this.price,
         brandId = this.brandId,
         categoryId = this.categoryId,
         categoryTitle = this.categoryTitle,
         displayOrder = this.displayOrder,
         isExclusive = this.isExclusive,
         isNew = this.isNew ?: false,
-        discountPercentage = this.discountPercentage ?: 0.0
+        discountPercentage = this.discountPercentage
     )
