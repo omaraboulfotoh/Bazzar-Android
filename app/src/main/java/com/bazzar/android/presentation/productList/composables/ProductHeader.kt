@@ -31,15 +31,15 @@ fun ProductHeader(productScreenTitle: String, modifier: Modifier) {
                 .padding(start = 16.dp)
                 .clickable { }
         )
-/*
-        Image(
-            painter = painterResource(R.drawable.product_icon),
-            contentDescription = "Share",
-            modifier = Modifier
-                .padding(start = 16.dp)
-                .clickable { }
-        )
-*/
+        /*
+                Image(
+                    painter = painterResource(R.drawable.product_icon),
+                    contentDescription = "Share",
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                        .clickable { }
+                )
+        */
         Box(
             Modifier.weight(1f)
         ) {
@@ -50,14 +50,6 @@ fun ProductHeader(productScreenTitle: String, modifier: Modifier) {
                 ), modifier = Modifier.align(Alignment.Center)
             )
         }
-        Icon(
-            painter = painterResource(R.drawable.ic_heart_blue),
-            contentDescription = "Favourite",
-            tint = colorResource(id = R.color.prussian_blue),
-            modifier = Modifier
-                .padding(start = 16.dp)
-                .clickable {}
-        )
         Icon(
             painter = painterResource(R.drawable.ic_share),
             contentDescription = "Share",

@@ -4,87 +4,87 @@ import java.lang.System;
 
 @kotlin.Metadata(mv = {1, 7, 1}, k = 1, d1 = {"\u0000\u0014\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0002\n\u0002\u0010\u000e\n\u0002\b\u0017\b\u00c6\u0002\u0018\u00002\u00020\u0001B\u0007\b\u0002\u00a2\u0006\u0002\u0010\u0002R\u001a\u0010\u0003\u001a\u00020\u0004X\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\u0005\u0010\u0006\"\u0004\b\u0007\u0010\bR\u001a\u0010\t\u001a\u00020\u0004X\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\n\u0010\u0006\"\u0004\b\u000b\u0010\bR\u001a\u0010\f\u001a\u00020\u0004X\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\r\u0010\u0006\"\u0004\b\u000e\u0010\bR\u001a\u0010\u000f\u001a\u00020\u0004X\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\u0010\u0010\u0006\"\u0004\b\u0011\u0010\bR\u001a\u0010\u0012\u001a\u00020\u0004X\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\u0013\u0010\u0006\"\u0004\b\u0014\u0010\bR\u001a\u0010\u0015\u001a\u00020\u0004X\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\u0016\u0010\u0006\"\u0004\b\u0017\u0010\bR\u001a\u0010\u0018\u001a\u00020\u0004X\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\u0019\u0010\u0006\"\u0004\b\u001a\u0010\b\u00a8\u0006\u001b"}, d2 = {"Lcom/android/local/Constants;", "", "()V", "sharedPreference_brand_list", "", "getSharedPreference_brand_list", "()Ljava/lang/String;", "setSharedPreference_brand_list", "(Ljava/lang/String;)V", "sharedPreference_category_list", "getSharedPreference_category_list", "setSharedPreference_category_list", "sharedPreference_language", "getSharedPreference_language", "setSharedPreference_language", "sharedPreference_product_list", "getSharedPreference_product_list", "setSharedPreference_product_list", "sharedPreference_token", "getSharedPreference_token", "setSharedPreference_token", "sharedPreference_user_data", "getSharedPreference_user_data", "setSharedPreference_user_data", "sharedPreferencesName", "getSharedPreferencesName", "setSharedPreferencesName", "local_debug"})
 public final class Constants {
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public static final com.android.local.Constants INSTANCE = null;
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     private static java.lang.String sharedPreferencesName = "main_sharedpreference";
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     private static java.lang.String sharedPreference_language = "language";
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     private static java.lang.String sharedPreference_token = "token";
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     private static java.lang.String sharedPreference_brand_list = "brandList";
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     private static java.lang.String sharedPreference_category_list = "categoryList";
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     private static java.lang.String sharedPreference_product_list = "productList";
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     private static java.lang.String sharedPreference_user_data = "userData";
     
     private Constants() {
         super();
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.lang.String getSharedPreferencesName() {
         return null;
     }
     
-    public final void setSharedPreferencesName(@org.jetbrains.annotations.NotNull()
+    public final void setSharedPreferencesName(@org.jetbrains.annotations.NotNull
     java.lang.String p0) {
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.lang.String getSharedPreference_language() {
         return null;
     }
     
-    public final void setSharedPreference_language(@org.jetbrains.annotations.NotNull()
+    public final void setSharedPreference_language(@org.jetbrains.annotations.NotNull
     java.lang.String p0) {
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.lang.String getSharedPreference_token() {
         return null;
     }
     
-    public final void setSharedPreference_token(@org.jetbrains.annotations.NotNull()
+    public final void setSharedPreference_token(@org.jetbrains.annotations.NotNull
     java.lang.String p0) {
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.lang.String getSharedPreference_brand_list() {
         return null;
     }
     
-    public final void setSharedPreference_brand_list(@org.jetbrains.annotations.NotNull()
+    public final void setSharedPreference_brand_list(@org.jetbrains.annotations.NotNull
     java.lang.String p0) {
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.lang.String getSharedPreference_category_list() {
         return null;
     }
     
-    public final void setSharedPreference_category_list(@org.jetbrains.annotations.NotNull()
+    public final void setSharedPreference_category_list(@org.jetbrains.annotations.NotNull
     java.lang.String p0) {
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.lang.String getSharedPreference_product_list() {
         return null;
     }
     
-    public final void setSharedPreference_product_list(@org.jetbrains.annotations.NotNull()
+    public final void setSharedPreference_product_list(@org.jetbrains.annotations.NotNull
     java.lang.String p0) {
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.lang.String getSharedPreference_user_data() {
         return null;
     }
     
-    public final void setSharedPreference_user_data(@org.jetbrains.annotations.NotNull()
+    public final void setSharedPreference_user_data(@org.jetbrains.annotations.NotNull
     java.lang.String p0) {
     }
 }

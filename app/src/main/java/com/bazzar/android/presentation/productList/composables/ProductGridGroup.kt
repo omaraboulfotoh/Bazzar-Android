@@ -23,14 +23,6 @@ fun ProductGridGroup(
         modifier
             .height(800.dp)
     ) {
-        LazyVerticalGrid(GridCells.Fixed(2), contentPadding = PaddingValues(16.dp)) {
-            productsList?.let {
-                itemsIndexed(it) { index, item ->
-                    ProductItem(item) {
-                        onItemClicked(index)
-                    }
-                }
-            }
-        }
+
     }
 }
