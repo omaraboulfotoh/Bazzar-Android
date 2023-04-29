@@ -1,6 +1,7 @@
 package com.bazzar.android.presentation.login
 
-import com.android.model.home.SearchProductRequest
+import com.android.model.home.UserData
+import com.android.model.home.UserLoginRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.presentation.app.IGlobalState
@@ -23,50 +24,46 @@ class LoginViewModel @Inject constructor(
 
     override fun handleEvents(event: LoginContract.Event) {
         when (event) {
-            is LoginContract.Event.OnLogin -> logIn(event.phoneNumber)
+            is LoginContract.Event.OnLogin -> logIn(
+                currentState.mobileNumber,
+                currentState.password
+            )
             is LoginContract.Event.OnContinueAsAGuest -> setEffect { LoginContract.Effect.Navigation.GoToHomeAsGuest }
             is LoginContract.Event.OnCreateNewAccount -> setEffect { LoginContract.Effect.Navigation.GoToRegisterScreen }
         }
     }
 
-    private fun logIn(phoneNumber: String) {
+    private fun logIn(phoneNumber: String?, password: String?) = executeCatching({
 
-        // todo will handle the validation
-//        if (phoneNumber.notMatdch) {
-//            setState { copy(phoneNumberError = resoundProvider.getString(R.string.success)) }
-//        }
-    }
+        if (phoneNumber.isNullOrEmpty().not() && password.isNullOrEmpty().not()) {
+            homeUseCase.login(UserLoginRequest(phone = phoneNumber!!, password = password!!))
+                .collect { loginResponse ->
+                    val data = loginResponse.data!!
+                    when (loginResponse) {
+                        is Result.Error -> globalState.error(loginResponse.message.orEmpty())
+                        is Result.Loading -> {}
+                        is Result.Success -> setEffect {
+                            LoginContract.Effect.Navigation.GoToHome(
+                                token = data.accessToken!!,
+                                userData = UserData(
+                                    id = data.id,
+                                    name = data.name,
+                                    englishName = data.englishName,
+                                    email = data.email,
+                                    phone = data.phone
+                                )
+                            )
+                        }
+                        else -> {}
+                    }
+                }
+        }
+    })
 
     fun init() {
         if (isInitialized.not()) {
-            setState {
-                copy(
-//                    relatedProductList =product.
-                )
-            }
-//            loadProductData()
             isInitialized = true
         }
     }
-
-    fun isPhoneValid() {
-
-    }
-
-    private fun loadProductData(categoryId: Int) = executeCatching({
-        homeUseCase.getAllProductList(SearchProductRequest(categoryId = categoryId))
-            .collect { productResponse ->
-                when (productResponse) {
-                    is Result.Error -> globalState.error(productResponse.message.orEmpty())
-                    is Result.Loading -> {}
-                    is Result.Success -> setState {
-                        copy(
-                        )
-                    }
-
-                    else -> {}
-                }
-            }
-    })
 }
 

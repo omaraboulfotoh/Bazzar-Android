@@ -4,15 +4,10 @@ import com.android.model.home.UserData
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
 import com.bazzar.android.presentation.base.ViewState
-import java.util.*
 
 class RegisterContract {
     data class State(
-        var userId : Int?=-1,
-        var userName: String? = "",
-        var email: String? = "",
-        var phoneNumber: String? = "",
-        var birthDate: String? ="",
+        val userData: UserData = UserData(),
         var isAgreeTermsAndConditions: Boolean = false,
         var selectedGender: Gender? = null
     ) : ViewState
@@ -24,12 +19,12 @@ class RegisterContract {
 
     sealed class Event : ViewEvent {
         data class OnAgreeTermsAndConditions(val isClicked: Boolean) : Event()
-        data class OnCreateAccount(val isClicked: Boolean) : Event()
+        object OnCreateAccount : Event()
     }
 
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
-            data class GoToOtpScreen(val userId: Int) : Navigation()
+            data class GoToOtpScreen(val userData: UserData) : Navigation()
         }
 
     }

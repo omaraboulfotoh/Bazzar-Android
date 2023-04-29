@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 
 @Composable
-fun ContinueAsGuest(modifier: Modifier) {
+fun ContinueAsGuest(modifier: Modifier, onContinueAsGuestClicked: () -> Unit) {
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.height(76.dp)) {
         Button(
             modifier = modifier
@@ -33,7 +33,7 @@ fun ContinueAsGuest(modifier: Modifier) {
                     shape = RoundedCornerShape(32.5.dp)
                 )
                 .align(Alignment.Start),
-            onClick = { /*TODO*/ }) {
+            onClick = { onContinueAsGuestClicked() }) {
             Text(
                 text = stringResource(id = R.string.Create_new_account),
                 style = MaterialTheme.typography.subtitle2.copy(

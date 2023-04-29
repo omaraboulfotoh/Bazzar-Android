@@ -1,6 +1,7 @@
 package com.bazzar.android.presentation.register_screen.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -22,10 +23,12 @@ import com.bazzar.android.R
 
 @Composable
 fun RegisterDataEntry(
-    isTermsChecked: Boolean=false,
+    isTermsChecked: Boolean = false,
     enteredEmail: String,
     enteredUserName: String,
-    modifier: Modifier
+    modifier: Modifier,
+    onCreateAccount: () -> Unit,
+    onTermsAndConditionClicked: (Boolean) -> Unit
 ) {
     var inputEmail = enteredEmail
     var userName = enteredUserName
@@ -209,7 +212,8 @@ fun RegisterDataEntry(
                 checked = checked,
                 onCheckedChange = { checked_ ->
                     checked = checked_
-                }
+                    onTermsAndConditionClicked(checked)
+                },
             )
             Text(
                 modifier = Modifier.padding(start = 2.dp),
@@ -228,6 +232,9 @@ fun RegisterDataEntry(
                     .clip(RoundedCornerShape(32.5.dp))
                     .background(colorResource(id = R.color.prussian_blue))
                     .align(Alignment.Center)
+                    .clickable {
+                        onCreateAccount()
+                    }
             ) {
                 Text(
                     text = stringResource(id = R.string.create_account),
