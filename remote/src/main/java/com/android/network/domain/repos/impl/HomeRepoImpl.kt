@@ -116,5 +116,29 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
+    override suspend fun register(userData: UserData): Flow<Result<Any>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun login(userLoginRequest: UserLoginRequest): Flow<Result<UserLoginResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Flow<Result<Any>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun addUserAddress(userAddress: UserAddress): Flow<Result<Any>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateUserAddress(userAddress: UserAddress): Flow<Result<Any>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun loadCheckout(checkout: Checkout): Flow<Result<Any>> {
+        TODO("Not yet implemented")
+    }
+
 
 }

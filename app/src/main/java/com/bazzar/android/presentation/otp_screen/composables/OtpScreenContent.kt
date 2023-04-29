@@ -11,11 +11,11 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
-import com.bazzar.android.presentation.login.LoginContract
+import com.bazzar.android.presentation.otp_screen.OtpContract
 
 @Composable
 fun OtpScreenContent(
-    state: LoginContract.State, onSendEvent: (LoginContract.Event) -> Unit,
+    state: OtpContract.State, onSendEvent: (OtpContract.Event) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier

@@ -7,16 +7,23 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-data class UserData(
-    @Json(name = "id")
-    val id:Int?=null,
-    @Json(name = "name")
-    val name:String="",
-    @Json(name = "englishName")
-    val englishName:String="",
-    @Json(name = "email")
-    val email:String="",
-    @Json(name = "phone")
-    val phone:String=""
-) : Parcelable
+data class UserLoginResponse(
+    @Json(name = "accessToken")
+    var accessToken: String?,
 
+    @Json(name = "id")
+    val id: Int? = null,
+
+    @Json(name = "name")
+    val name: String,
+
+    @Json(name = "englishName")
+    val englishName: String,
+
+    @Json(name = "email")
+    val email: String,
+
+    @Json(name = "phone")
+    val phone: String
+
+) :Parcelable
