@@ -1,15 +1,16 @@
 package com.bazzar.android.presentation.register_screen
 
 import com.android.model.home.UserData
+import com.android.model.request.UserRegisterRequest
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
 import com.bazzar.android.presentation.base.ViewState
 
 class RegisterContract {
     data class State(
-        val userData: UserData = UserData(),
-        var isAgreeTermsAndConditions: Boolean = false,
-        var selectedGender: Gender? = null
+        val request: UserRegisterRequest? = null,
+        val isAgreeTermsAndConditions: Boolean = false,
+        val selectedGender: Gender? = null
     ) : ViewState
 
     sealed class Gender {

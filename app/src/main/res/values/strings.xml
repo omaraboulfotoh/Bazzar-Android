@@ -115,4 +115,5 @@
     <string name="off_text">Off</string>
     <string name="exclusive">Exclusive</string>
     <string name="soldout">Sold out</string>
+    <string name="terms_and_condition_required">Terms and Condition should be agreed</string>
 </resources>

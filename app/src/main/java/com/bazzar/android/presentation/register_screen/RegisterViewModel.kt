@@ -1,10 +1,14 @@
 package com.bazzar.android.presentation.register_screen
 
 import com.android.model.home.UserData
+import com.android.model.request.UserRegisterRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
+import com.bazzar.android.R
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.utils.IResourceProvider
+import com.bazzar.android.utils.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -12,6 +16,7 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
+    private val resourceProvider: IResourceProvider
 ) :
     BaseViewModel<RegisterContract.Event, RegisterContract.State, RegisterContract.Effect>(
         globalState
@@ -27,18 +32,25 @@ class RegisterViewModel @Inject constructor(
                     isAgreeTermsAndConditions = isAgreeTermsAndConditions.not()
                 )
             }
-            is RegisterContract.Event.OnCreateAccount -> {
-                if (currentState.isAgreeTermsAndConditions) {
-                    register(currentState.userData)
-                }
-            }
+
+            is RegisterContract.Event.OnCreateAccount -> handleRegisterClicked()
         }
     }
 
-    private fun navigateToOtpScreen() {
+    private fun handleRegisterClicked() {
+        if (currentState.isAgreeTermsAndConditions.not()) {
+            globalState.error(resourceProvider.getString(R.string.terms_and_condition_required))
+        } else {
+            val userRegisterRequest = currentState.request ?: return
+            register(userRegisterRequest)
+        }
+    }
+
+    private fun navigateToOtpScreen(data: UserData?) {
         // navigate to otpScreen
-        if (currentState.userData.id!! > 0 && currentState.isAgreeTermsAndConditions)
-            setEffect { RegisterContract.Effect.Navigation.GoToOtpScreen(currentState.userData) }
+        data?.let {
+            setEffect { RegisterContract.Effect.Navigation.GoToOtpScreen(it) }
+        }
     }
 
 
@@ -48,20 +60,16 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    private fun register(userData: UserData) = executeCatching({
-        homeUseCase.register(userData)
+    private fun register(request: UserRegisterRequest) = executeCatching({
+        homeUseCase.register(request)
             .collect { registerResponse ->
                 when (registerResponse) {
                     is Result.Error -> globalState.error(registerResponse.message.orEmpty())
                     is Result.Loading -> globalState.loading(true)
                     is Result.Success -> {
-                        setState {
-                            copy(
-                                userData = registerResponse.data!!
-                            )
-                        }
-                        navigateToOtpScreen()
+                        navigateToOtpScreen(registerResponse.data)
                     }
+
                     else -> {}
                 }
             }

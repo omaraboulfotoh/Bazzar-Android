@@ -3,6 +3,7 @@ package com.android.network.domain.usecases
 import com.android.model.home.*
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
+import com.android.model.request.UserRegisterRequest
 import com.android.model.request.VerifyOtpRequest
 import com.android.network.domain.repos.HomeRepo
 import javax.inject.Inject
@@ -16,7 +17,7 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
         homeRepo.getAllProductList(searchProduct)
 
     suspend fun getAllProductDetails(productId: Int) = homeRepo.getAllProductDetails(productId)
-    suspend fun register(userData: UserData) = homeRepo.register(userData)
+    suspend fun register(request: UserRegisterRequest) = homeRepo.register(request)
     suspend fun login(userLoginRequest: UserLoginRequest) = homeRepo.login(userLoginRequest)
     suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest) = homeRepo.verifyOtp(verifyOtpRequest)
     suspend fun addUserAddress(userAddress: UserAddress) = homeRepo.addUserAddress(userAddress)
