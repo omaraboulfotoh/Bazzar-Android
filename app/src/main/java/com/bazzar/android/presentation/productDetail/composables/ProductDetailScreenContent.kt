@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.android.model.home.toProduct
 import com.bazzar.android.R
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.composables.IndicatorImageSlider

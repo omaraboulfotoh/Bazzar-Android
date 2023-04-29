@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.register_screen.composables
+package com.bazzar.android.presentation.register.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,26 +20,27 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
+import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
+import com.bazzar.android.presentation.register.RegisterContract
 
 @Composable
 fun RegisterDataEntry(
     isTermsChecked: Boolean = false,
-    enteredEmail: String,
-    enteredUserName: String,
+    email: String,
+    fullName: String,
+    phone: String,
     modifier: Modifier,
     onCreateAccount: () -> Unit,
-    onTermsAndConditionClicked: (Boolean) -> Unit
+    onEmailChanged: (String) -> Unit,
+    onPhoneChanged: (String) -> Unit,
+    onNameChanged: (String) -> Unit,
+    onTermsAndConditionClicked: () -> Unit
 ) {
-    var inputEmail = enteredEmail
-    var userName = enteredUserName
-    var checked = isTermsChecked
     Column(
         modifier = modifier
             .background(Color.White)
-            .width(343.dp)
+            .fillMaxWidth()
             .fillMaxHeight()
-            .padding(start = 16.dp)
-            .padding(top = 56.dp)
     ) {
         Text(
             text = stringResource(id = R.string.user_name),
@@ -49,7 +50,8 @@ fun RegisterDataEntry(
             ),
         )
         TextField(
-            value = userName, onValueChange = { newText -> userName = newText },
+            value = fullName,
+            onValueChange = onNameChanged,
             modifier = Modifier
                 .width(320.dp)
                 .height(60.dp)
@@ -75,7 +77,7 @@ fun RegisterDataEntry(
             modifier = Modifier.padding(top = 24.dp)
         )
         TextField(
-            value = inputEmail, onValueChange = { newText -> inputEmail = newText },
+            value = email, onValueChange = onEmailChanged,
             modifier = Modifier
                 .width(320.dp)
                 .height(60.dp)
@@ -101,7 +103,7 @@ fun RegisterDataEntry(
             modifier = Modifier.padding(top = 24.dp)
         )
         TextField(
-            value = inputEmail, onValueChange = { newText -> inputEmail = newText },
+            value = phone, onValueChange = onPhoneChanged,
             modifier = Modifier
                 .width(320.dp)
                 .height(60.dp)
@@ -152,67 +154,18 @@ fun RegisterDataEntry(
                 fontFamily = FontFamily(Font(R.font.montserrat_bold))
             )
         )
-        Text(
-            text = stringResource(id = R.string.birth_date),
-            style = MaterialTheme.typography.subtitle2.copy(
-                color = colorResource(id = R.color.prussian_blue),
-                fontFamily = FontFamily(Font(R.font.montserrat_bold))
-            ),
-            modifier = Modifier.padding(top = 24.dp)
-        )
-        TextField(
-            value = inputEmail, onValueChange = { newText -> inputEmail = newText },
-            modifier = Modifier
-                .width(320.dp)
-                .height(60.dp)
-                .padding(top = 8.dp),
-            placeholder = {
-                Text(
-                    text = stringResource(
-                        id = R.string.type_birthdate
-                    ),
-                    style = MaterialTheme.typography.subtitle1.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_regular)),
-                        color = colorResource(id = R.color.prussian_blue)
-                    ),
-                )
-            },
-        )
-        Text(
-            text = stringResource(id = R.string.select_your_gender),
-            style = MaterialTheme.typography.subtitle2.copy(
-                color = colorResource(id = R.color.prussian_blue),
-                fontFamily = FontFamily(Font(R.font.montserrat_bold))
-            ),
-            modifier = Modifier.padding(top = 24.dp)
-        )
-        TextField(
-            value = inputEmail, onValueChange = { newText -> inputEmail = newText },
-            modifier = Modifier
-                .width(320.dp)
-                .height(60.dp)
-                .padding(top = 8.dp),
-            placeholder = {
-                Text(
-                    text = stringResource(
-                        id = R.string.type_gender
-                    ),
-                    style = MaterialTheme.typography.subtitle1.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_regular)),
-                        color = colorResource(id = R.color.prussian_blue)
-                    ),
-                )
-            },
-        )
+
+        // space to bottom
+        Spacer(modifier = Modifier.weight(1f))
+
+
         Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(top = 16.dp)
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Checkbox(
-                checked = checked,
+                checked = isTermsChecked,
                 onCheckedChange = { checked_ ->
-                    checked = checked_
-                    onTermsAndConditionClicked(checked)
+                    onTermsAndConditionClicked()
                 },
             )
             Text(
@@ -227,7 +180,7 @@ fun RegisterDataEntry(
         Box(Modifier.fillMaxWidth()) {
             Box(
                 modifier = Modifier
-                    .width(343.dp)
+                    .fillMaxWidth()
                     .height(65.dp)
                     .clip(RoundedCornerShape(32.5.dp))
                     .background(colorResource(id = R.color.prussian_blue))

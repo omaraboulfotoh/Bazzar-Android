@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.register_screen
+package com.bazzar.android.presentation.register
 
 import com.android.model.home.UserData
 import com.android.model.request.UserRegisterRequest
@@ -8,7 +8,6 @@ import com.bazzar.android.R
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.utils.IResourceProvider
-import com.bazzar.android.utils.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -34,6 +33,10 @@ class RegisterViewModel @Inject constructor(
             }
 
             is RegisterContract.Event.OnCreateAccount -> handleRegisterClicked()
+            is RegisterContract.Event.OnEmailChanged -> setState { copy(email = event.email) }
+            is RegisterContract.Event.OnNameChanged -> setState { copy(fullName = event.name) }
+            is RegisterContract.Event.OnPhoneChanged -> setState { copy(phoneNumber = event.phone) }
+            RegisterContract.Event.OnBackClicked -> setEffect { RegisterContract.Effect.Navigation.GoBack }
         }
     }
 
@@ -41,7 +44,13 @@ class RegisterViewModel @Inject constructor(
         if (currentState.isAgreeTermsAndConditions.not()) {
             globalState.error(resourceProvider.getString(R.string.terms_and_condition_required))
         } else {
-            val userRegisterRequest = currentState.request ?: return
+            // todo should handle the validation for each field and take care that phone number max digits is 7 without +965
+            val userRegisterRequest = UserRegisterRequest(
+                name = currentState.fullName.orEmpty(),
+                englishName = currentState.fullName.orEmpty(),
+                email = currentState.email.orEmpty(),
+                phone = "+965${currentState.phoneNumber.orEmpty()}"
+            )
             register(userRegisterRequest)
         }
     }

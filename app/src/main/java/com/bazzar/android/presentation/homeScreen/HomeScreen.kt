@@ -16,7 +16,6 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigator: DestinationsNavigator,
-    userData: UserData
 ) {
 
     // get state

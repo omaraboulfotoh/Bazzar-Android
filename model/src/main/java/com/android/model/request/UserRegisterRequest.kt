@@ -8,7 +8,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class UserRegisterRequest(
-    val id: Int? = null,
     @Json(name = "name")
     val name: String = "",
     @Json(name = "englishName")
