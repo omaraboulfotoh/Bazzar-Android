@@ -14,22 +14,19 @@ class SharedPrefersManager @Inject constructor(private val sharedPreferences: Sh
     val LANGUAGE_EN = "en"
 
     fun getAppLanguage(): String {
-        return sharedPreferences.getString(Constants.sharedPreference_language, null)
-            ?: LANGUAGE_AR
+        return sharedPreferences.getString(Constants.sharedPreference_language, null) ?: LANGUAGE_AR
     }
 
     fun setAppLanguage(newLanguage: String) {
-        var preferEdit = sharedPreferences.edit().apply {
+        sharedPreferences.edit().apply {
             putString(Constants.sharedPreference_language, newLanguage)
-        }
-        preferEdit.commit()
+        }.commit()
     }
 
     fun saveToken(token: String?) {
-        var preferEdit = sharedPreferences.edit().apply {
+        sharedPreferences.edit().apply {
             putString(Constants.sharedPreference_token, token)
-        }
-        preferEdit.commit()
+        }.commit()
     }
 
     fun getToken(): String? {
@@ -38,68 +35,67 @@ class SharedPrefersManager @Inject constructor(private val sharedPreferences: Sh
 
 
     fun saveBrandList(brandList: List<Brand>?) {
-        var preferEdit = sharedPreferences.edit().apply {
+        sharedPreferences.edit().apply {
             putString(Constants.sharedPreference_brand_list, Gson().toJson(brandList))
-        }
-        preferEdit.commit()
+        }.commit()
     }
 
     fun getBrandList(): List<Brand>? {
         return Gson().fromJson(
             sharedPreferences.getString(
-                Constants.sharedPreference_brand_list,
-                null
-            ),
-            object : TypeToken<List<Brand>>() {}.type
+                Constants.sharedPreference_brand_list, null
+            ), object : TypeToken<List<Brand>>() {}.type
         )
     }
 
     fun saveProductList(productList: List<Product>?) {
-        var preferEdit = sharedPreferences.edit().apply {
+        sharedPreferences.edit().apply {
             putString(Constants.sharedPreference_product_list, Gson().toJson(productList))
-        }
-        preferEdit.commit()
+        }.commit()
     }
 
     fun getProductList(): List<Product>? {
         return Gson().fromJson(
             sharedPreferences.getString(
-                Constants.sharedPreference_product_list,
-                null
+                Constants.sharedPreference_product_list, null
             ), object : TypeToken<List<Product>>() {}.type
         )
     }
 
     fun saveCategoryList(categoryList: List<Category>?) {
-        var preferEdit = sharedPreferences.edit().apply {
+        sharedPreferences.edit().apply {
             putString(Constants.sharedPreference_category_list, Gson().toJson(categoryList))
-        }
-        preferEdit.commit()
+        }.commit()
     }
 
     fun getCategoryList(): List<Category>? {
         return Gson().fromJson(
             sharedPreferences.getString(
-                Constants.sharedPreference_category_list,
-                null
+                Constants.sharedPreference_category_list, null
             ), object : TypeToken<List<Category>>() {}.type
         )
     }
 
     fun saveUserData(userData: UserData) {
-        var preferEdit = sharedPreferences.edit().apply {
+        sharedPreferences.edit().apply {
             putString(Constants.sharedPreference_user_data, Gson().toJson(userData))
-        }
-        preferEdit.commit()
+        }.commit()
     }
 
     fun getUserData(): UserData? {
         return Gson().fromJson(
             sharedPreferences.getString(
-                Constants.sharedPreference_user_data,
-                null
+                Constants.sharedPreference_user_data, null
             ), object : TypeToken<UserData>() {}.type
         )
+    }
+
+    fun logout() {
+        sharedPreferences.edit().remove(Constants.sharedPreference_user_data).commit()
+    }
+
+    fun isUserLongedIn(): Boolean {
+        return sharedPreferences.contains(Constants.sharedPreference_user_data)
     }
 
 }
