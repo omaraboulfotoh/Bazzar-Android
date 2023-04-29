@@ -1,6 +1,5 @@
 package com.bazzar.android.presentation.login
 
-import com.android.model.home.UserData
 import com.android.model.request.UserLoginRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
@@ -43,15 +42,7 @@ class LoginViewModel @Inject constructor(
                         is Result.Error -> globalState.error(loginResponse.message.orEmpty())
                         is Result.Loading -> {}
                         is Result.Success -> setEffect {
-                            LoginContract.Effect.Navigation.GoToHome(
-                                userData = UserData(
-                                    id = data.id,
-                                    name = data.name!!,
-                                    englishName = data.englishName!!,
-                                    email = data.email!!,
-                                    phone = data.phone!!
-                                )
-                            )
+                            LoginContract.Effect.Navigation.GoToHome(userData = data)
                         }
                         else -> {}
                     }

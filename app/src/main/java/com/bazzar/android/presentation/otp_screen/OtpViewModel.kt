@@ -41,13 +41,7 @@ class OtpViewModel @Inject constructor(
                         val data = otpResponse.data!!
                         setEffect {
                             OtpContract.Effect.Navigation.GoToHomeScreen(
-                                userData = UserData(
-                                    id = data.id,
-                                    name = data.name!!,
-                                    englishName = data.englishName!!,
-                                    email = data.email!!,
-                                    phone = data.phone!!
-                                )
+                                userData = data
                             )
                         }
 
