@@ -1,19 +1,20 @@
 package com.bazzar.android.presentation.login
 
+import com.android.model.home.UserData
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
 import com.bazzar.android.presentation.base.ViewState
 
 class LoginContract {
     data class State(
-        val isValidNumber: Boolean? = null,
+        var mobileNumber: String? = "",
+        var password: String? = "",
         val submitButtonEnabled: Boolean = false
 
     ) : ViewState
 
     sealed class Event : ViewEvent {
-        // update state + navigation
-        data class OnLogin(val phoneNumber: String) : Event()
+        object OnLogin : Event()
 
         //navigation
         object OnCreateNewAccount : Event()
@@ -24,9 +25,8 @@ class LoginContract {
         sealed class Navigation : Effect() {
             object GoToRegisterScreen : Navigation()
             object GoToHomeAsGuest : Navigation()
-            data class GoToHome(val brandId: Int) : Navigation()
+            data class GoToHome(val userData: UserData) : Navigation()
         }
-
     }
 
 }

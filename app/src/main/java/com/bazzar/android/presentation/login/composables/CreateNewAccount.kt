@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 
 @Composable
-fun CreateNewAccount(modifier:Modifier) {
+fun CreateNewAccount(modifier: Modifier, goToRegister: ()->Unit) {
     Button(
         modifier = modifier
             .width(343.dp)
@@ -30,7 +30,7 @@ fun CreateNewAccount(modifier:Modifier) {
                 colorResource(id = R.color.prussian_blue),
                 shape = RoundedCornerShape(32.5.dp)
             ),
-        onClick = { /*TODO*/ }) {
+        onClick = { goToRegister() }) {
         Text(
             text = stringResource(id = R.string.Create_new_account),
             style = MaterialTheme.typography.subtitle2.copy(

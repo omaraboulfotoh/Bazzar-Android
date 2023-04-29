@@ -2,6 +2,7 @@ package com.bazzar.android.presentation.homeScreen
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.android.model.home.UserData
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.destinations.ProductScreenDestination
@@ -15,6 +16,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigator: DestinationsNavigator,
+    userData: UserData
 ) {
 
     // get state

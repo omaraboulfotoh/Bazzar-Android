@@ -107,7 +107,7 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                     )
             }
         } catch (throwable: Throwable) {
-            Log.e("ErrorShafie", "getAllProductDetails: ", throwable)
+            Log.e("Error", "getAllProductDetails: ", throwable)
             emit(
                 Result.Error(
                     Product(),
@@ -117,17 +117,73 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
-    override suspend fun register(userData: UserData): Flow<Result<Any>> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun register(userData: UserData) = flow {
+        try {
+            homeRemoteDataSource.register(userData).let {
+                if (it.isSuccessful) {
+                    emit(Result.Success(it.body()?.data ?: UserData()))
+                } else
+                    Result.Error(
+                        UserData(), "error will be handled"
+                    )
+            }
+        } catch (throwable: Throwable) {
+            Log.e("Error", "RegisterError: ", throwable)
+            emit(
+                Result.Error(
+                    UserData(),
+                    throwable.message
+                )
+            )
+        }
+    }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
-    override suspend fun login(userLoginRequest: UserLoginRequest): Flow<Result<UserLoginResponse>> {
-        TODO("Not yet implemented")
-    }
 
-    override suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Flow<Result<Any>> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun login(userLoginRequest: UserLoginRequest): Flow<Result<UserLoginResponse>> =
+        flow {
+            try {
+                homeRemoteDataSource.login(userLoginRequest).let {
+                    if (it.isSuccessful) {
+                        emit(Result.Success(it.body()?.data ?: UserLoginResponse()))
+                    } else
+                        Result.Error(
+                            UserLoginResponse(), "error will be handled"
+                        )
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "LoginError: ", throwable)
+                emit(
+                    Result.Error(
+                        UserLoginResponse(),
+                        throwable.message
+                    )
+                )
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+
+    override suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Flow<Result<UserLoginResponse>> =
+        flow {
+            try {
+                homeRemoteDataSource.verifyOtp(verifyOtpRequest).let {
+                    if (it.isSuccessful) {
+                        emit(Result.Success(it.body()?.data ?: UserLoginResponse()))
+                    } else
+                        Result.Error(
+                            UserLoginResponse(), "error will be handled"
+                        )
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "verifyOtpError: ", throwable)
+                emit(
+                    Result.Error(
+                        UserLoginResponse(),
+                        throwable.message
+                    )
+                )
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
 
     override suspend fun addUserAddress(userAddress: UserAddress): Flow<Result<Any>> {
         TODO("Not yet implemented")

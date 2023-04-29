@@ -1,6 +1,7 @@
 package com.bazzar.android.presentation.otp_screen.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -26,7 +27,11 @@ import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.CustomButton
 
 @Composable
-fun OtpInteraction(modifier: Modifier) {
+fun OtpInteraction(
+    modifier: Modifier,
+    onConfirmClicked: () -> Unit,
+    onSendAgainClicked: () -> Unit
+) {
     Box(
         modifier = modifier
             .width(343.dp)
@@ -83,6 +88,8 @@ fun OtpInteraction(modifier: Modifier) {
             }
         )
         //Timer
+        CountdownTimer(60)
+/*
         Text(
             text = "",
             style = MaterialTheme.typography.subtitle2.copy(
@@ -93,9 +100,12 @@ fun OtpInteraction(modifier: Modifier) {
                 .padding(top = 370.dp)
                 .width(40.dp)
         )
+*/
         CustomButton(
             text = stringResource(id = R.string.confirm),
-            modifier = Modifier.padding(top = 472.dp)
+            modifier = Modifier
+                .padding(top = 472.dp)
+                .clickable { onConfirmClicked() }
         )
     }
 }

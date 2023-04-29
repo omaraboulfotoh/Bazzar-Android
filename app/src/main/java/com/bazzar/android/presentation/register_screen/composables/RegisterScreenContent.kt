@@ -1,7 +1,8 @@
 package com.bazzar.android.presentation.register_screen.composables
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,7 +26,14 @@ fun RegisterScreenContent(
             RegisterHeader(modifier = Modifier.padding(top = 25.dp))
         }
         item {
-            RegisterDataEntry(modifier = Modifier.padding(top = 14.dp), enteredEmail = "", enteredUserName = "", )
+            RegisterDataEntry(
+                modifier = Modifier.padding(top = 14.dp),
+                enteredEmail = "",
+                enteredUserName = "",
+                onTermsAndConditionClicked = { isClicked: Boolean ->
+                    onSendEvent(RegisterContract.Event.OnAgreeTermsAndConditions(isClicked))
+                },
+                onCreateAccount = { onSendEvent(RegisterContract.Event.OnCreateAccount) })
         }
     }
 }

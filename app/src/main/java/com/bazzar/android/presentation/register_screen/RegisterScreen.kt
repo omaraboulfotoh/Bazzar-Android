@@ -20,7 +20,7 @@ fun RegisterScreen(
     viewModel.sideEffect { effect ->
         when (effect) {
             is RegisterContract.Effect.Navigation.GoToOtpScreen -> navigator.navigate(
-                OtpScreenDestination(effect.userId)
+                OtpScreenDestination(effect.userData)
             )
         }
     }

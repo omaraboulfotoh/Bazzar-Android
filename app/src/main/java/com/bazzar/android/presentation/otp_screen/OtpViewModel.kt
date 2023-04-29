@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.otp_screen
 
+import com.android.model.home.UserData
 import com.android.model.home.VerifyOtpRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
@@ -16,13 +17,16 @@ class OtpViewModel @Inject constructor(
     BaseViewModel<OtpContract.Event, OtpContract.State, OtpContract.Effect>(
         globalState
     ) {
-    private var userId: Int = -1
+    private var userData: UserData = UserData()
     private var isInitialized = false
     override fun setInitialState() = OtpContract.State()
 
     override fun handleEvents(event: OtpContract.Event) {
         when (event) {
-            OtpContract.Event.OnConfirmClicked -> verifyOtp(otp = currentState.otp, id = userId)
+            OtpContract.Event.OnConfirmClicked -> verifyOtp(
+                otpSMS = currentState.otp ?: "",
+                id = userData.id ?: -1
+            )
             OtpContract.Event.OnSendAgainClicked -> TODO()
         }
     }
@@ -34,21 +38,28 @@ class OtpViewModel @Inject constructor(
                     is Result.Error -> globalState.error(otpResponse.message.orEmpty())
                     is Result.Loading -> globalState.loading(true)
                     is Result.Success -> {
-                        navigateToHomeScreen(otpResponse.data)
+                        val data = otpResponse.data!!
+                        setEffect {
+                            OtpContract.Effect.Navigation.GoToHomeScreen(
+                                userData = UserData(
+                                    id = data.id,
+                                    name = data.name!!,
+                                    englishName = data.englishName!!,
+                                    email = data.email!!,
+                                    phone = data.phone!!
+                                )
+                            )
+                        }
+
                     }
                     else -> {}
                 }
             }
     })
 
-    private fun navigateToHomeScreen(userId: Int) {
-        setEffect { OtpContract.Effect.Navigation.GoToHomeScreen(userId) }
-    }
-
-
-    fun init(userId: Int) {
+    fun init(userData: UserData) {
         if (isInitialized.not()) {
-            this.userId = userId
+            this.userData = userData
             isInitialized = true
         }
     }

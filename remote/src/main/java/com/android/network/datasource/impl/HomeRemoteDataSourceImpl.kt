@@ -19,13 +19,13 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun getAllProductDetails(productId: Int) =
         apiServices.getAllProductDetails(productId)
 
-    override suspend fun register(userData: UserData): Response<BaseWrapper<Any>> =
+    override suspend fun register(userData: UserData): Response<BaseWrapper<UserData>> =
         apiServices.register(userData)
 
     override suspend fun login(userLoginRequest: UserLoginRequest): Response<BaseWrapper<UserLoginResponse>> =
         apiServices.login(userLoginRequest)
 
-    override suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Response<BaseWrapper<Any>> =
+    override suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Response<BaseWrapper<UserLoginResponse>> =
         apiServices.verifyOtp(verifyOtpRequest)
 
 

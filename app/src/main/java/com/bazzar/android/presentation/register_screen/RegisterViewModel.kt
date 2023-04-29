@@ -29,23 +29,16 @@ class RegisterViewModel @Inject constructor(
             }
             is RegisterContract.Event.OnCreateAccount -> {
                 if (currentState.isAgreeTermsAndConditions) {
-                    register(
-                        UserData(
-                            name = currentState.userName ?: "",
-                            englishName = currentState.userName ?: "",
-                            email = currentState.email ?: "",
-                            phone = currentState.phoneNumber ?: "",
-                        )
-                    )
+                    register(currentState.userData)
                 }
             }
         }
     }
 
-    private fun navigateToOtpScreen(userId: Int) {
+    private fun navigateToOtpScreen() {
         // navigate to otpScreen
-        if (currentState.userId!! > 0 && currentState.isAgreeTermsAndConditions)
-            setEffect { RegisterContract.Effect.Navigation.GoToOtpScreen(userId) }
+        if (currentState.userData.id!! > 0 && currentState.isAgreeTermsAndConditions)
+            setEffect { RegisterContract.Effect.Navigation.GoToOtpScreen(currentState.userData) }
     }
 
 
@@ -62,7 +55,12 @@ class RegisterViewModel @Inject constructor(
                     is Result.Error -> globalState.error(registerResponse.message.orEmpty())
                     is Result.Loading -> globalState.loading(true)
                     is Result.Success -> {
-                        navigateToOtpScreen(registerResponse.data)
+                        setState {
+                            copy(
+                                userData = registerResponse.data!!
+                            )
+                        }
+                        navigateToOtpScreen()
                     }
                     else -> {}
                 }

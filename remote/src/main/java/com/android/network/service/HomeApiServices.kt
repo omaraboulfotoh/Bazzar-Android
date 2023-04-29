@@ -30,11 +30,11 @@ interface HomeApiServices {
     suspend fun login(@Body userLoginRequest: UserLoginRequest): Response<BaseWrapper<UserLoginResponse>>
 
     @POST("Register")
-    suspend fun register(@Body userData: UserData): Response<BaseWrapper<Any>>
+    suspend fun register(@Body userData: UserData): Response<BaseWrapper<UserData>>
 
     // check lower responses
     @POST("VerifyOtp")
-    suspend fun verifyOtp(@Body verifyOtpRequest: VerifyOtpRequest): Response<BaseWrapper<Any>>
+    suspend fun verifyOtp(@Body verifyOtpRequest: VerifyOtpRequest): Response<BaseWrapper<UserLoginResponse>>
 
     @POST("AddUserAddress")
     suspend fun addUserAddress(@Body userAddress:UserAddress):Response<BaseWrapper<Any>>

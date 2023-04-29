@@ -12,7 +12,7 @@ interface HomeRepo {
     suspend fun getAllProductDetails(productId: Int): Flow<Result<Product>>
     suspend fun register(userData: UserData): Flow<Result<Any>>
     suspend fun login(userLoginRequest: UserLoginRequest): Flow<Result<UserLoginResponse>>
-    suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Flow<Result<Any>>
+    suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Flow<Result<UserLoginResponse>>
     suspend fun addUserAddress(userAddress: UserAddress): Flow<Result<Any>>
     suspend fun updateUserAddress(userAddress: UserAddress): Flow<Result<Any>>
     suspend fun loadCheckout(checkout: Checkout): Flow<Result<Any>>

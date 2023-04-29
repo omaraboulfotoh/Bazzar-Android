@@ -1,12 +1,7 @@
 package com.bazzar.android.presentation.login.composables
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -44,11 +39,12 @@ fun LoginScreenContent(
         LoginButton(
             modifier = Modifier.padding(top = 40.dp),
             isEnabled = state.submitButtonEnabled,
-            onSubmit = {})
+            onSubmit = { onSendEvent(LoginContract.Event.OnLogin) })
         ORBar(modifier = Modifier.padding(top = 48.dp))
-        CreateNewAccount(modifier = Modifier.padding(top = 16.dp))
-        ContinueAsGuest(modifier = Modifier.padding(top = 24.dp))
-        TermsAndConditions(modifier = Modifier.padding(top = 78.dp))
+        CreateNewAccount(modifier = Modifier.padding(top = 16.dp),
+            { onSendEvent(LoginContract.Event.OnCreateNewAccount) })
+        ContinueAsGuest(modifier = Modifier.padding(top = 24.dp),
+            { onSendEvent(LoginContract.Event.OnContinueAsAGuest) })
     }
 }
 
