@@ -1,6 +1,10 @@
 package com.android.network.service
 
 import com.android.model.home.*
+import com.android.model.request.SearchProductRequest
+import com.android.model.request.UserLoginRequest
+import com.android.model.request.UserRegisterRequest
+import com.android.model.request.VerifyOtpRequest
 import com.android.model.responses.base.BaseWrapper
 import retrofit2.Response
 import retrofit2.http.Body
@@ -27,23 +31,22 @@ interface HomeApiServices {
     suspend fun getAllProductDetails(@Query("ItemId") ItemId: Int): Response<BaseWrapper<Product>>
 
     @POST("Login")
-    suspend fun login(@Body userLoginRequest: UserLoginRequest): Response<BaseWrapper<UserLoginResponse>>
+    suspend fun login(@Body userLoginRequest: UserLoginRequest): Response<BaseWrapper<UserData>>
 
     @POST("Register")
-    suspend fun register(@Body userData: UserData): Response<BaseWrapper<UserData>>
+    suspend fun register(@Body request: UserRegisterRequest): Response<BaseWrapper<UserData>>
 
-    // check lower responses
     @POST("VerifyOtp")
-    suspend fun verifyOtp(@Body verifyOtpRequest: VerifyOtpRequest): Response<BaseWrapper<UserLoginResponse>>
+    suspend fun verifyOtp(@Body verifyOtpRequest: VerifyOtpRequest): Response<BaseWrapper<UserData>>
 
     @POST("AddUserAddress")
-    suspend fun addUserAddress(@Body userAddress:UserAddress):Response<BaseWrapper<Any>>
+    suspend fun addUserAddress(@Body userAddress: UserAddress): Response<BaseWrapper<Any>>
 
     @POST("UpdateUserAddress")
-    suspend fun updateUserAddress(@Body userAddress:UserAddress):Response<BaseWrapper<Any>>
+    suspend fun updateUserAddress(@Body userAddress: UserAddress): Response<BaseWrapper<Any>>
 
-     @POST("LoadCheckout")
-    suspend fun loadCheckout(@Body checkout:Checkout):Response<BaseWrapper<Any>>
+    @POST("LoadCheckout")
+    suspend fun loadCheckout(@Body checkout: Checkout): Response<BaseWrapper<Any>>
 
 
 }

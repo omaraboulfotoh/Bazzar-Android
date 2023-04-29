@@ -1,4 +1,4 @@
-package com.android.model.home
+package com.android.model.request
 
 import android.os.Parcelable
 import com.squareup.moshi.Json
@@ -7,23 +7,14 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-data class UserLoginResponse(
-    @Json(name = "accessToken")
-    var accessToken: String?="",
-
-    @Json(name = "id")
+data class UserRegisterRequest(
     val id: Int? = null,
-
     @Json(name = "name")
-    val name: String? = "",
-
+    val name: String = "",
     @Json(name = "englishName")
-    val englishName: String? = "",
-
+    val englishName: String = "",
     @Json(name = "email")
-    val email: String? = "",
-
+    val email: String = "",
     @Json(name = "phone")
-    val phone: String? = "",
-
-    ) : Parcelable
+    val phone: String = ""
+) : Parcelable

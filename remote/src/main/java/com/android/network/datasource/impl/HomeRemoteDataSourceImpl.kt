@@ -1,6 +1,10 @@
 package com.android.network.datasource.impl
 
 import com.android.model.home.*
+import com.android.model.request.SearchProductRequest
+import com.android.model.request.UserLoginRequest
+import com.android.model.request.UserRegisterRequest
+import com.android.model.request.VerifyOtpRequest
 import com.android.model.responses.base.BaseWrapper
 import com.android.network.datasource.HomeRemoteDataSource
 import com.android.network.service.HomeApiServices
@@ -19,13 +23,13 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun getAllProductDetails(productId: Int) =
         apiServices.getAllProductDetails(productId)
 
-    override suspend fun register(userData: UserData): Response<BaseWrapper<UserData>> =
-        apiServices.register(userData)
+    override suspend fun register(request: UserRegisterRequest) =
+        apiServices.register(request)
 
-    override suspend fun login(userLoginRequest: UserLoginRequest): Response<BaseWrapper<UserLoginResponse>> =
+    override suspend fun login(userLoginRequest: UserLoginRequest) =
         apiServices.login(userLoginRequest)
 
-    override suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Response<BaseWrapper<UserLoginResponse>> =
+    override suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest) =
         apiServices.verifyOtp(verifyOtpRequest)
 
 

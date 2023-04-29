@@ -1,7 +1,7 @@
 package com.bazzar.android.presentation.otp_screen
 
 import com.android.model.home.UserData
-import com.android.model.home.VerifyOtpRequest
+import com.android.model.request.VerifyOtpRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.presentation.app.IGlobalState

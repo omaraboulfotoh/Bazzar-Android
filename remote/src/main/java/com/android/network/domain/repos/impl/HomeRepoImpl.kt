@@ -2,7 +2,17 @@ package com.android.network.domain.repos.impl
 
 import android.util.Log
 import androidx.annotation.WorkerThread
-import com.android.model.home.*
+import com.android.model.home.Brand
+import com.android.model.home.Category
+import com.android.model.home.Checkout
+import com.android.model.home.HomeResponse
+import com.android.model.home.Product
+import com.android.model.home.UserAddress
+import com.android.model.home.UserData
+import com.android.model.request.SearchProductRequest
+import com.android.model.request.UserLoginRequest
+import com.android.model.request.UserRegisterRequest
+import com.android.model.request.VerifyOtpRequest
 import com.android.network.datasource.HomeRemoteDataSource
 import com.android.network.domain.repos.HomeRepo
 import com.android.network.states.Result
@@ -117,9 +127,9 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
-    override suspend fun register(userData: UserData) = flow {
+    override suspend fun register(request: UserRegisterRequest) = flow {
         try {
-            homeRemoteDataSource.register(userData).let {
+            homeRemoteDataSource.register(request).let {
                 if (it.isSuccessful) {
                     emit(Result.Success(it.body()?.data ?: UserData()))
                 } else
@@ -139,22 +149,22 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
 
-    override suspend fun login(userLoginRequest: UserLoginRequest): Flow<Result<UserLoginResponse>> =
+    override suspend fun login(userLoginRequest: UserLoginRequest): Flow<Result<UserData>> =
         flow {
             try {
                 homeRemoteDataSource.login(userLoginRequest).let {
                     if (it.isSuccessful) {
-                        emit(Result.Success(it.body()?.data ?: UserLoginResponse()))
+                        emit(Result.Success(it.body()?.data ?: UserData()))
                     } else
                         Result.Error(
-                            UserLoginResponse(), "error will be handled"
+                            UserData(), "error will be handled"
                         )
                 }
             } catch (throwable: Throwable) {
                 Log.e("Error", "LoginError: ", throwable)
                 emit(
                     Result.Error(
-                        UserLoginResponse(),
+                        UserData(),
                         throwable.message
                     )
                 )
@@ -162,22 +172,22 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
 
-    override suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Flow<Result<UserLoginResponse>> =
+    override suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Flow<Result<UserData>> =
         flow {
             try {
                 homeRemoteDataSource.verifyOtp(verifyOtpRequest).let {
                     if (it.isSuccessful) {
-                        emit(Result.Success(it.body()?.data ?: UserLoginResponse()))
+                        emit(Result.Success(it.body()?.data ?: UserData()))
                     } else
                         Result.Error(
-                            UserLoginResponse(), "error will be handled"
+                            UserData(), "error will be handled"
                         )
                 }
             } catch (throwable: Throwable) {
                 Log.e("Error", "verifyOtpError: ", throwable)
                 emit(
                     Result.Error(
-                        UserLoginResponse(),
+                        UserData(),
                         throwable.message
                     )
                 )

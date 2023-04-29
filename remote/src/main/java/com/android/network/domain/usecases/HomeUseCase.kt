@@ -1,6 +1,9 @@
 package com.android.network.domain.usecases
 
 import com.android.model.home.*
+import com.android.model.request.SearchProductRequest
+import com.android.model.request.UserLoginRequest
+import com.android.model.request.VerifyOtpRequest
 import com.android.network.domain.repos.HomeRepo
 import javax.inject.Inject
 

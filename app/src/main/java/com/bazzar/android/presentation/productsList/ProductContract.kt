@@ -3,7 +3,7 @@ package com.bazzar.android.presentation.productsList
 import com.android.model.home.Brand
 import com.android.model.home.Category
 import com.android.model.home.Product
-import com.android.model.home.SearchProductRequest
+import com.android.model.request.SearchProductRequest
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
 import com.bazzar.android.presentation.base.ViewState

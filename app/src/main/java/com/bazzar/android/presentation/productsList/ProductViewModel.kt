@@ -3,7 +3,7 @@ package com.bazzar.android.presentation.productsList
 import com.android.local.SharedPrefersManager
 import com.android.model.home.Brand
 import com.android.model.home.Category
-import com.android.model.home.SearchProductRequest
+import com.android.model.request.SearchProductRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.R

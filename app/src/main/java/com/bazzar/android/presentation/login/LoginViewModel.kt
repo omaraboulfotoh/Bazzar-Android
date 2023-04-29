@@ -1,7 +1,7 @@
 package com.bazzar.android.presentation.login
 
 import com.android.model.home.UserData
-import com.android.model.home.UserLoginRequest
+import com.android.model.request.UserLoginRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.presentation.app.IGlobalState
