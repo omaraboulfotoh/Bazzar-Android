@@ -31,7 +31,6 @@ class OtpViewModel @Inject constructor(
     }
 
     private fun verifyOtp(otpSMS: String) = executeCatching({
-
         // todo add validation on OTP
         val id = currentState.userData?.id ?: return@executeCatching
         homeUseCase.verifyOtp(VerifyOtpRequest(userId = id, otp = otpSMS))

@@ -36,6 +36,7 @@ import com.bazzar.android.R
 import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.productsList.composables.DiscountView
+import com.bazzar.android.presentation.productsList.composables.ExclusiveView
 import com.bazzar.android.presentation.productsList.composables.NewBadgeView
 import com.bazzar.android.presentation.theme.BazzarTheme
 import com.bazzar.android.presentation.theme.Shapes
@@ -94,7 +95,7 @@ fun ProductItem(product: Product, onItemClicked: (Int) -> Unit) {
                     }
                     // check for exclusive
                     if (product.isExclusive.orFalse())
-                        NewBadgeView(modifier = Modifier.size(width = 70.dp, height = 24.dp))
+                        ExclusiveView(modifier = Modifier.size(width = 70.dp, height = 24.dp))
                 }
                 // todo check if sold-out
             }
