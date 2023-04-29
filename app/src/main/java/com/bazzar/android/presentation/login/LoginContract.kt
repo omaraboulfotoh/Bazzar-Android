@@ -7,8 +7,8 @@ import com.bazzar.android.presentation.base.ViewState
 
 class LoginContract {
     data class State(
-        var mobileNumber: String?="",
-        var password: String?="",
+        var mobileNumber: String? = "",
+        var password: String? = "",
         val submitButtonEnabled: Boolean = false
 
     ) : ViewState
@@ -25,7 +25,7 @@ class LoginContract {
         sealed class Navigation : Effect() {
             object GoToRegisterScreen : Navigation()
             object GoToHomeAsGuest : Navigation()
-            data class GoToHome(val token: String, val userData: UserData) : Navigation()
+            data class GoToHome(val userData: UserData) : Navigation()
         }
     }
 

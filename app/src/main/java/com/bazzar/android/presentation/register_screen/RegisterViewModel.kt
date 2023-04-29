@@ -57,7 +57,7 @@ class RegisterViewModel @Inject constructor(
                     is Result.Success -> {
                         setState {
                             copy(
-                                userData.id = registerResponse.data
+                                userData = registerResponse.data!!
                             )
                         }
                         navigateToOtpScreen()

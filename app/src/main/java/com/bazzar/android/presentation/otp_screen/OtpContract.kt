@@ -18,7 +18,7 @@ class OtpContract {
 
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
-            data class GoToHomeScreen(val token: String, val user: UserData) : Effect()
+            data class GoToHomeScreen(val userData: UserData) : Effect()
         }
     }
 }

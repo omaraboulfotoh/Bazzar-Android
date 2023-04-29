@@ -44,13 +44,12 @@ class LoginViewModel @Inject constructor(
                         is Result.Loading -> {}
                         is Result.Success -> setEffect {
                             LoginContract.Effect.Navigation.GoToHome(
-                                token = data.accessToken!!,
                                 userData = UserData(
                                     id = data.id,
-                                    name = data.name,
-                                    englishName = data.englishName,
-                                    email = data.email,
-                                    phone = data.phone
+                                    name = data.name!!,
+                                    englishName = data.englishName!!,
+                                    email = data.email!!,
+                                    phone = data.phone!!
                                 )
                             )
                         }

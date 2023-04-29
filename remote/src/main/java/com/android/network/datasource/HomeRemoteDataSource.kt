@@ -12,9 +12,9 @@ interface HomeRemoteDataSource {
     suspend fun getAllBrands(): Response<BaseWrapper<List<Brand>>>
     suspend fun getAllProductList(searchProduct: SearchProductRequest): Response<BaseWrapper<List<Product>>>
     suspend fun getAllProductDetails(productId: Int): Response<BaseWrapper<ProductDetail>>
-    suspend fun register(userData: UserData): Response<BaseWrapper<Any>>
+    suspend fun register(userData: UserData): Response<BaseWrapper<UserData>>
     suspend fun login(userLoginRequest: UserLoginRequest): Response<BaseWrapper<UserLoginResponse>>
-    suspend fun verifyOtp( verifyOtpRequest: VerifyOtpRequest): Response<BaseWrapper<Any>>
+    suspend fun verifyOtp( verifyOtpRequest: VerifyOtpRequest): Response<BaseWrapper<UserLoginResponse>>
     suspend fun addUserAddress( userAddress:UserAddress):Response<BaseWrapper<Any>>
     suspend fun updateUserAddress( userAddress:UserAddress):Response<BaseWrapper<Any>>
     suspend fun loadCheckout( checkout:Checkout):Response<BaseWrapper<Any>>

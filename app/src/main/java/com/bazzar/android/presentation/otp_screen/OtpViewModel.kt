@@ -38,17 +38,24 @@ class OtpViewModel @Inject constructor(
                     is Result.Error -> globalState.error(otpResponse.message.orEmpty())
                     is Result.Loading -> globalState.loading(true)
                     is Result.Success -> {
-                        navigateToHomeScreen(otpResponse.data, userData)
+                        val data = otpResponse.data!!
+                        setEffect {
+                            OtpContract.Effect.Navigation.GoToHomeScreen(
+                                userData = UserData(
+                                    id = data.id,
+                                    name = data.name!!,
+                                    englishName = data.englishName!!,
+                                    email = data.email!!,
+                                    phone = data.phone!!
+                                )
+                            )
+                        }
+
                     }
                     else -> {}
                 }
             }
     })
-
-    private fun navigateToHomeScreen(token: String, userData: UserData) {
-        setEffect { OtpContract.Effect.Navigation.GoToHomeScreen(token, userData) }
-    }
-
 
     fun init(userData: UserData) {
         if (isInitialized.not()) {
