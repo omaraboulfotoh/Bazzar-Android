@@ -16,20 +16,24 @@ class OtpViewModel @Inject constructor(
 ) : BaseViewModel<OtpContract.Event, OtpContract.State, OtpContract.Effect>(
     globalState
 ) {
-    private var userData: UserData = UserData()
     private var isInitialized = false
     override fun setInitialState() = OtpContract.State()
 
     override fun handleEvents(event: OtpContract.Event) {
         when (event) {
-            OtpContract.Event.OnConfirmClicked -> verifyOtp(
-                otpSMS = currentState.otp ?: "",
-                id = userData.id ?: -1
-            )
+            OtpContract.Event.OnConfirmClicked ->
+                verifyOtp(
+                    otpSMS = currentState.otp ?: ""
+                )
+
+            is OtpContract.Event.OnOtpChanged -> setState { copy(otp = event.otp) }
         }
     }
 
-    private fun verifyOtp(otpSMS: String, id: Int) = executeCatching({
+    private fun verifyOtp(otpSMS: String) = executeCatching({
+
+        // todo add validation on OTP
+        val id = currentState.userData?.id ?: return@executeCatching
         homeUseCase.verifyOtp(VerifyOtpRequest(userId = id, otp = otpSMS))
             .collect { otpResponse ->
                 when (otpResponse) {
@@ -52,7 +56,7 @@ class OtpViewModel @Inject constructor(
 
     fun init(userData: UserData) {
         if (isInitialized.not()) {
-            this.userData = userData
+            setState { copy(userData = userData) }
             isInitialized = true
         }
     }

@@ -7,12 +7,13 @@ import com.bazzar.android.presentation.base.ViewState
 
 class OtpContract {
     data class State(
-        var otp: String? = "",
-        var timer: String? = ""
+        val otp: String? = "",
+        val userData: UserData? = null,
     ) : ViewState
 
     sealed class Event : ViewEvent {
         object OnConfirmClicked : Event()
+        data class OnOtpChanged(val otp: String) : Event()
     }
 
     sealed class Effect : ViewSideEffect {
