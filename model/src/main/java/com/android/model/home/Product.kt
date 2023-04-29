@@ -36,4 +36,52 @@ data class Product(
     val oldPrice: Double? = null,
     @Json(name = "discountPercentage")
     val discountPercentage: Double? = null,
+    @Json(name = "itemDetails")
+    val itemDetails: List<ItemDetail> = listOf(),
+    @Json(name = "itemImages")
+    val itemImages: List<ItemImages> = listOf(),
+    @Json(name = "relatedItems")
+    val relatedItems: List<Product> = listOf(),
+    @Json(name = "categoryImagePath")
+    val categoryImagePath: String? = null,
+    @Json(name = "brandImagePath")
+    val brandImagePath: String? = null,
+) : Parcelable
+
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class ItemDetail(
+    @Json(name = "id")
+    val id: Int? = null,
+    @Json(name = "colorId")
+    val colorId: Int? = null,
+    @Json(name = "colorTitle")
+    val colorTitle: String? = null,
+    @Json(name = "sizeId")
+    val sizeId: Int? = null,
+    @Json(name = "sizeTitle")
+    val sizeTitle: String? = null,
+    @Json(name = "price")
+    val price: Double? = null,
+    @Json(name = "discountPercentage")
+    val discountPercentage: String? = null,
+    @Json(name = "oldPrice")
+    val oldPrice: Double? = null,
+    @Json(name = "sku")
+    val sku: String? = null,
+    @Json(name = "itemBalance")
+    val itemBalance: Int? = null,
+    @Json(name = "quantity")
+    val quantity: Int? = null
+) : Parcelable
+
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class ItemImages(
+    @Json(name = "colorId")
+    val colorId: Int? = null,
+    @Json(name = "imagePath")
+    val imagePath: String? = null
 ) : Parcelable

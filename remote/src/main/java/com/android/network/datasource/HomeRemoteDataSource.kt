@@ -11,7 +11,7 @@ interface HomeRemoteDataSource {
     suspend fun getAllCategories(): Response<BaseWrapper<List<Category>>>
     suspend fun getAllBrands(): Response<BaseWrapper<List<Brand>>>
     suspend fun getAllProductList(searchProduct: SearchProductRequest): Response<BaseWrapper<List<Product>>>
-    suspend fun getAllProductDetails(productId: Int): Response<BaseWrapper<ProductDetail>>
+    suspend fun getAllProductDetails(productId: Int): Response<BaseWrapper<Product>>
     suspend fun register(userData: UserData): Response<BaseWrapper<Any>>
     suspend fun login(userLoginRequest: UserLoginRequest): Response<BaseWrapper<UserLoginResponse>>
     suspend fun verifyOtp( verifyOtpRequest: VerifyOtpRequest): Response<BaseWrapper<Any>>

@@ -9,7 +9,7 @@ interface HomeRepo {
     suspend fun getAllCategories(): Flow<Result<List<Category>>>
     suspend fun getAllBrands(): Flow<Result<List<Brand>>>
     suspend fun getAllProductList(searchProduct: SearchProductRequest): Flow<Result<List<Product>>>
-    suspend fun getAllProductDetails(productId: Int): Flow<Result<ProductDetail>>
+    suspend fun getAllProductDetails(productId: Int): Flow<Result<Product>>
     suspend fun register(userData: UserData): Flow<Result<Any>>
     suspend fun login(userLoginRequest: UserLoginRequest): Flow<Result<UserLoginResponse>>
     suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Flow<Result<Any>>

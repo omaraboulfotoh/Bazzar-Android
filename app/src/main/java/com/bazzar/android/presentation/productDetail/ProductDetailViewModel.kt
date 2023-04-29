@@ -2,7 +2,6 @@ package com.bazzar.android.presentation.productDetail
 
 import com.android.model.home.Brand
 import com.android.model.home.Product
-import com.android.model.home.ProductDetail
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.common.orZero
@@ -75,8 +74,8 @@ class ProductDetailViewModel @Inject constructor(
         setState {
             copy(
                 selectedItemDetailId = currentState.productDetail?.itemDetails?.find {
-                    it.sizeTitle == selectedSizeTitleList?.get(sizeIndex) && it.colorId == selectedColorId
-                }?.id ?: -1
+                    it.sizeTitle == selectedSizeTitleList[sizeIndex] && it.colorId == selectedColorId
+                }?.id.orZero()
             )
         }
     }
@@ -85,16 +84,12 @@ class ProductDetailViewModel @Inject constructor(
         setState {
             copy(
                 // update colorId
-                selectedColorId = currentState.productDetail?.itemImages?.get(colorIndex)?.colorId
-                    ?: -1,
+                selectedColorId = currentState.productDetail?.itemImages?.get(colorIndex)?.colorId.orZero(),
                 // update slider images
-                selectedColoredImagesList = filterColorImagesWithId(
-                    selectedColorId ?: -1
-                )?.mapNotNull {
-                    it.imagePath ?: ""
-                }.orEmpty(),
+                selectedColoredImagesList = filterColorImagesWithId(selectedColorId.orZero()).orEmpty()
+                    .map { it.imagePath ?: "" },
                 //  update size with respect to color
-                selectedSizeTitleList = filterSizeWithColorIdsList(selectedColorId ?: -1).orEmpty(),
+                selectedSizeTitleList = filterSizeWithColorIdsList(selectedColorId.orZero()).orEmpty(),
             )
         }
     }
@@ -112,23 +107,23 @@ class ProductDetailViewModel @Inject constructor(
                 is Result.Error -> globalState.error(productDetailResponse.message.orEmpty())
                 is Result.Loading -> {}
                 is Result.Success -> {
-                    val productDetail = productDetailResponse.data ?: ProductDetail()
-                    val selectedItemDetail = productDetail.itemDetails.first()
+                    val productDetail = productDetailResponse.data
+                    val selectedItemDetail = productDetail?.itemDetails?.first()
                     setState {
                         copy(
                             productDetail = productDetail,
                         )
                     }
                     val selectedImagedList = filterColorImagesWithId(
-                        selectedItemDetail.colorId ?: -1
-                    )?.map { it.imagePath ?: "" }
+                        selectedItemDetail?.colorId.orZero()
+                    )?.map { it.imagePath.orEmpty() }
                     val selectedTitleList = filterSizeWithColorIdsList(
-                        selectedItemDetail.colorId ?: -1
+                        selectedItemDetail?.colorId.orZero()
                     )
 
                     setState {
                         copy(
-                            selectedItemDetailId = selectedItemDetail.id ?: -1,
+                            selectedItemDetailId = selectedItemDetail?.id.orZero(),
                             selectedColoredImagesList = selectedImagedList.orEmpty(),
                             selectedSizeTitleList = selectedTitleList.orEmpty()
                         )
@@ -145,6 +140,6 @@ class ProductDetailViewModel @Inject constructor(
 
     private fun filterSizeWithColorIdsList(colorId: Int) =
         currentState.productDetail?.itemDetails?.filter { it.colorId == colorId }
-            ?.map { it.sizeTitle ?: "" }
+            ?.map { it.sizeTitle.orEmpty() }
 }
 

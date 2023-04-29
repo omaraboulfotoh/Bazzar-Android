@@ -24,7 +24,7 @@ interface HomeApiServices {
     suspend fun getAllProductList(@Body searchProduct: SearchProductRequest): Response<BaseWrapper<List<Product>>>
 
     @GET("ProductDetails")
-    suspend fun getAllProductDetails(@Query("ItemId") ItemId: Int): Response<BaseWrapper<ProductDetail>>
+    suspend fun getAllProductDetails(@Query("ItemId") ItemId: Int): Response<BaseWrapper<Product>>
 
     @POST("Login")
     suspend fun login(@Body userLoginRequest: UserLoginRequest): Response<BaseWrapper<UserLoginResponse>>

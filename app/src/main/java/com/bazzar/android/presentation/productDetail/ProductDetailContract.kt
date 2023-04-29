@@ -2,14 +2,13 @@ package com.bazzar.android.presentation.productDetail
 
 import com.android.model.home.Brand
 import com.android.model.home.Product
-import com.android.model.home.ProductDetail
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
 import com.bazzar.android.presentation.base.ViewState
 
 class ProductDetailContract {
     data class State(
-        val productDetail: ProductDetail? = ProductDetail(),
+        val productDetail: Product? = null,
         val selectedItemDetailId: Int? = null,
         val selectedColorId: Int? = null,
         val selectedColoredImagesList: List<String> = listOf(),
@@ -33,7 +32,7 @@ class ProductDetailContract {
     }
 
     sealed class Effect : ViewSideEffect {
-        data class ShareProduct(val product: ProductDetail) : Effect()
+        data class ShareProduct(val product: Product) : Effect()
         sealed class Navigation : Effect() {
             object GoToCart : Navigation()
             object GoToBack : Navigation()

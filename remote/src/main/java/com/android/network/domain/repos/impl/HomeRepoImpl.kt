@@ -75,41 +75,42 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
-    override suspend fun getAllProductList(searchProduct: SearchProductRequest): Flow<Result<List<Product>>> = flow {
-        try {
-            homeRemoteDataSource.getAllProductList(searchProduct).let {
-                if (it.isSuccessful) {
-                    emit(Result.Success(it.body()?.data ?: emptyList()))
-                } else
+    override suspend fun getAllProductList(searchProduct: SearchProductRequest): Flow<Result<List<Product>>> =
+        flow {
+            try {
+                homeRemoteDataSource.getAllProductList(searchProduct).let {
+                    if (it.isSuccessful) {
+                        emit(Result.Success(it.body()?.data ?: emptyList()))
+                    } else
+                        Result.Error(
+                            listOf<Product>(), "error will be handled"
+                        )
+                }
+            } catch (throwable: Throwable) {
+                emit(
                     Result.Error(
-                        listOf<Product>(), "error will be handled"
+                        listOf<Product>(),
+                        throwable.message
                     )
-            }
-        } catch (throwable: Throwable) {
-            emit(
-                Result.Error(
-                    listOf<Product>(),
-                    throwable.message
                 )
-            )
-        }
-    }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
-    override suspend fun getAllProductDetails(productId: Int)= flow {
+    override suspend fun getAllProductDetails(productId: Int) = flow {
         try {
             homeRemoteDataSource.getAllProductDetails(productId).let {
                 if (it.isSuccessful) {
-                    emit(Result.Success(it.body()?.data ?: ProductDetail()))
+                    emit(Result.Success(it.body()?.data ?: Product()))
                 } else
                     Result.Error(
-                        ProductDetail(), "error will be handled"
+                        Product(), "error will be handled"
                     )
             }
         } catch (throwable: Throwable) {
-            Log.e("ErrorShafie", "getAllProductDetails: ",throwable )
+            Log.e("ErrorShafie", "getAllProductDetails: ", throwable)
             emit(
                 Result.Error(
-                    ProductDetail(),
+                    Product(),
                     throwable.message
                 )
             )
