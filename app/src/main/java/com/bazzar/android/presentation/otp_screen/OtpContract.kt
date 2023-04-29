@@ -13,7 +13,6 @@ class OtpContract {
 
     sealed class Event : ViewEvent {
         object OnConfirmClicked : Event()
-        object OnSendAgainClicked : Event()
     }
 
     sealed class Effect : ViewSideEffect {

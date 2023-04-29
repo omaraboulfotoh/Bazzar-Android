@@ -13,10 +13,9 @@ import javax.inject.Inject
 class OtpViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
-) :
-    BaseViewModel<OtpContract.Event, OtpContract.State, OtpContract.Effect>(
-        globalState
-    ) {
+) : BaseViewModel<OtpContract.Event, OtpContract.State, OtpContract.Effect>(
+    globalState
+) {
     private var userData: UserData = UserData()
     private var isInitialized = false
     override fun setInitialState() = OtpContract.State()
@@ -27,7 +26,6 @@ class OtpViewModel @Inject constructor(
                 otpSMS = currentState.otp ?: "",
                 id = userData.id ?: -1
             )
-            OtpContract.Event.OnSendAgainClicked -> TODO()
         }
     }
 
@@ -46,6 +44,7 @@ class OtpViewModel @Inject constructor(
                         }
 
                     }
+
                     else -> {}
                 }
             }

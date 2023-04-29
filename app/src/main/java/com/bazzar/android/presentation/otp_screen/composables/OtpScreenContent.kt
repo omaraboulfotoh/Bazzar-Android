@@ -32,7 +32,7 @@ fun OtpScreenContent(
         item {
             OtpInteraction(modifier = Modifier.padding(start = 16.dp), onConfirmClicked = {
                 onSendEvent(OtpContract.Event.OnConfirmClicked)
-            }, onSendAgainClicked = { onSendEvent(OtpContract.Event.OnSendAgainClicked) }
+            }, onSendAgainClicked = { }
             )
         }
     }
