@@ -10,28 +10,42 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
+import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.composables.IndicatorImageSlider
+import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.homeScreen.composables.ProductsGroup
 import com.bazzar.android.presentation.productDetail.ProductDetailContract
+import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
 fun ProductDetailScreenContent(
-    state: ProductDetailContract.State, onSendEvent: (ProductDetailContract.Event) -> Unit,
+    state: ProductDetailContract.State,
+    onSendEvent: (ProductDetailContract.Event) -> Unit,
 ) {
     Column {
         Box {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(bottom = BottomNavigationHeight)
                     .background(colorResource(id = R.color.white_smoke)),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs)
             ) {
                 item {
                     IndicatorImageSlider(
-                        imagePathList = state.selectedColoredImagesList ?: listOf(),
-                        imageHeight = 373.dp,
-                        onSliderClicked = {}
+                        imagePathList = state.selectedColoredImagesList,
+                        showNewBadge = state.productDetail?.isNew.orFalse(),
+                        showExclusiveBadge = state.productDetail?.isExclusive.orFalse(),
+                        showDiscountBadge = state.productDetail?.discountPercentage != null,
+                        discount = state.productDetail?.discountPercentage,
+                        onBackClicked = {
+                            onSendEvent(ProductDetailContract.Event.OnBackIconClicked)
+                        },
+                        onShareClicked = {
+                            onSendEvent(ProductDetailContract.Event.OnShareClicked)
+                        }
                     )
                 }
                 item {

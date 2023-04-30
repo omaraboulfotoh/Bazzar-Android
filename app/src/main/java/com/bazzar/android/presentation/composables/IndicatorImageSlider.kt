@@ -2,19 +2,22 @@ package com.bazzar.android.presentation.composables
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
+import com.bazzar.android.common.orZero
+import com.bazzar.android.presentation.productsList.composables.DiscountView
+import com.bazzar.android.presentation.productsList.composables.ExclusiveView
+import com.bazzar.android.presentation.productsList.composables.NewBadgeView
 import com.bazzar.android.presentation.theme.BazzarTheme
+import com.bazzar.android.presentation.theme.Shapes
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
@@ -24,57 +27,102 @@ import com.google.accompanist.pager.rememberPagerState
 @Composable
 fun IndicatorImageSlider(
     imagePathList: List<String>,
-    modifier: Modifier = Modifier, imageHeight: Dp=160.dp,
-    onSliderClicked: (Int) -> Unit
+    showNewBadge: Boolean,
+    showExclusiveBadge: Boolean,
+    showDiscountBadge: Boolean = false,
+    discount: Double? = 0.0,
+    onBackClicked: () -> Unit,
+    onShareClicked: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-
     val pagerState = rememberPagerState()
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(375.dp)
+            .padding(bottom = BazzarTheme.spacing.m),
+        shape = Shapes.large,
+        backgroundColor = BazzarTheme.colors.white,
 
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.s)
+        ) {
+        Column(
+            modifier = modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.s)
 
-    ) {
-        HorizontalPager(
-            state = pagerState,
-            count = imagePathList.size,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(imageHeight),
-            contentPadding = PaddingValues(4.dp)
-
-        ) { page ->
-            Card(
+        ) {
+            BazzarAppBar(onNavigationClick = { onBackClicked() }, actions = {
+                Box(
+                    modifier = Modifier
+                        .defaultMinSize(minWidth = 50.dp, minHeight = 50.dp)
+                        .clickable { onShareClicked() }
+                ) {
+                    Icon(
+                        modifier = Modifier.align(Alignment.CenterEnd),
+                        painter = painterResource(id = R.drawable.ic_share),
+                        contentDescription = null,
+                        tint = colorResource(id = R.color.prussian_blue)
+                    )
+                }
+            })
+            Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(BazzarTheme.spacing.xs)
-                    .clickable { onSliderClicked(page) },
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.white)),
-                elevation = CardDefaults.cardElevation(defaultElevation = BazzarTheme.spacing.xs),
-                content = {
+                    .fillMaxWidth()
+                    .weight(1f)
+            ) {
+                HorizontalPager(
+                    state = pagerState,
+                    count = imagePathList.size,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = BazzarTheme.spacing.m)
+
+                ) { page ->
                     RemoteImage(
                         imageUrl = (imagePathList[page]),
-                        contentScale = ContentScale.FillWidth,
+                        contentScale = ContentScale.Inside,
+                        background = BazzarTheme.colors.white,
                         withShimmer = true,
                         modifier = Modifier
                             .fillMaxSize()
-                            .clip(RoundedCornerShape(16.dp))
-                            .padding(BazzarTheme.spacing.xxs)
                     )
                 }
-            )
+
+
+                // badges
+                Column(
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .align(Alignment.CenterEnd),
+                    verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
+                    horizontalAlignment = Alignment.End
+                ) {
+                    if (showDiscountBadge) {
+                        DiscountView(
+                            modifier = Modifier.size(width = 70.dp, height = 24.dp),
+                            discount.orZero()
+                        )
+                    }
+                    if (showExclusiveBadge) {
+                        ExclusiveView(modifier = Modifier.size(width = 70.dp, height = 24.dp))
+                    }
+                    if (showNewBadge) {
+                        NewBadgeView(
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
+                }
+
+            }
+            if (imagePathList.size > 1)
+                HorizontalPagerIndicator(
+                    pagerState = pagerState,
+                    modifier = Modifier.wrapContentSize(),
+                    activeColor = BazzarTheme.colors.indicatorActiveColor,
+                    inactiveColor = BazzarTheme.colors.indicatorInActiveColor,
+                    indicatorWidth = BazzarTheme.spacing.xs,
+                    indicatorHeight = BazzarTheme.spacing.xs,
+                )
         }
-        if (imagePathList.size > 1)
-            HorizontalPagerIndicator(
-                pagerState = pagerState,
-                modifier = Modifier
-                    .wrapContentSize(),
-                activeColor = BazzarTheme.colors.indicatorActiveColor,
-                inactiveColor = BazzarTheme.colors.indicatorInActiveColor,
-                indicatorWidth = BazzarTheme.spacing.xs,
-                indicatorHeight = BazzarTheme.spacing.xs,
-            )
     }
 }
