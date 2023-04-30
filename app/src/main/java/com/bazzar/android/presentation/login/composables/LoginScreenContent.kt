@@ -38,7 +38,6 @@ fun LoginScreenContent(
         InputPassword(modifier = Modifier.padding(top = 80.dp))
         LoginButton(
             modifier = Modifier.padding(top = 40.dp),
-            isEnabled = state.submitButtonEnabled,
             onSubmit = { onSendEvent(LoginContract.Event.OnLogin) })
         ORBar(modifier = Modifier.padding(top = 48.dp))
         CreateNewAccount(modifier = Modifier.padding(top = 16.dp),

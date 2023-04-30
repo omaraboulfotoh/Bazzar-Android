@@ -8,12 +8,10 @@ class LoginContract {
     data class State(
         var mobileNumber: String? = "",
         var password: String? = "",
-        val submitButtonEnabled: Boolean = false
-
     ) : ViewState
-
     sealed class Event : ViewEvent {
         object OnLogin : Event()
+
 
         //navigation
         object OnCreateNewAccount : Event()

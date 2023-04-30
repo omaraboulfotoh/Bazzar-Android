@@ -21,7 +21,6 @@ import com.bazzar.android.R
 @Composable
 fun LoginButton(
     modifier: Modifier,
-    isEnabled: Boolean = false,
     onSubmit: () -> Unit
 ) {
 
@@ -34,7 +33,6 @@ fun LoginButton(
             .height(65.dp)
             .clip(RoundedCornerShape(32.5.dp))
             .background(colorResource(id = R.color.prussian_blue)),
-        enabled = isEnabled,
         onClick = { onSubmit() }) {
         Text(
             text = stringResource(id = R.string.login),
