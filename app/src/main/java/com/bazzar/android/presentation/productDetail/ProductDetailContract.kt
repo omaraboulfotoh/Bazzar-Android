@@ -1,6 +1,7 @@
 package com.bazzar.android.presentation.productDetail
 
 import com.android.model.home.Brand
+import com.android.model.home.ItemDetail
 import com.android.model.home.Product
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
@@ -9,11 +10,11 @@ import com.bazzar.android.presentation.base.ViewState
 class ProductDetailContract {
     data class State(
         val productDetail: Product? = null,
-        val selectedItemDetailId: Int? = null,
-        val selectedColorId: Int? = null,
+        val selectedItemDetail: ItemDetail? = null,
         val selectedColoredImagesList: List<String> = listOf(),
         val selectedSizeTitleList: List<String> = listOf(),
         val rating: Float? = 0f,
+        val isTextExpanded: Boolean = false,
     ) : ViewState
 
     sealed class Event : ViewEvent {
@@ -26,6 +27,7 @@ class ProductDetailContract {
         object OnVisitYourCartClicked : Event()
         object OnBackIconClicked : Event()
         object OnShareClicked : Event()
+        object OnSeeMoreBrandClicked : Event()
         object OnSeeMoreClicked : Event()
         data class OnRelatedItemClicked(val itemIndex: Int) : Event()
         object OnBuyNowClicked : Event()

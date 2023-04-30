@@ -46,6 +46,7 @@ class OtpViewModel @Inject constructor(
                         sharedPrefersManager.saveUserData(userData)
                         setEffect { OtpContract.Effect.Navigation.GoToHomeScreen }
                     }
+
                     else -> {}
                 }
             }

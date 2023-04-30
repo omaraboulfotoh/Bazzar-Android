@@ -9,7 +9,7 @@ fun Double.removeTrailingZeros(): String =
 fun Int?.toBoolean() = this == 1
 
 fun Double.toPriceFormat(): String =
-    DecimalFormat("#,##0.00")
+    DecimalFormat("#,###0.000")
         .format(this)
 
 fun Int?.orZero() = this ?: 0

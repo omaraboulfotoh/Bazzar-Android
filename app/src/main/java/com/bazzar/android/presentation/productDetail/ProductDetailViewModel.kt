@@ -29,18 +29,19 @@ class ProductDetailViewModel @Inject constructor(
             is ProductDetailContract.Event.OnShareClicked -> shareProduct()
 
             is ProductDetailContract.Event.OnVisitYourCartClicked -> {}
-            is ProductDetailContract.Event.OnSeeMoreClicked -> navigateToBrandItems()
+            is ProductDetailContract.Event.OnSeeMoreBrandClicked -> navigateToBrandItems()
             is ProductDetailContract.Event.OnRelatedItemClicked -> openSelectedProduct(event.itemIndex)
             is ProductDetailContract.Event.OnBuyNowClicked -> addToCart()
             // state
             is ProductDetailContract.Event.OnContinueShoppingClicked -> dismissDialog()
             is ProductDetailContract.Event.OnColorItemSelected -> updateColor(event.colorIndex)
             is ProductDetailContract.Event.OnSizeItemSelected -> updateSizeAndItemId(event.sizeIndex)
+            ProductDetailContract.Event.OnSeeMoreClicked -> setState { copy(isTextExpanded = isTextExpanded.not()) }
         }
     }
 
     private fun openSelectedProduct(itemIndex: Int) {
-        val product = currentState.productDetail?.relatedItems.orEmpty().get(itemIndex) ?: return
+        val product = currentState.productDetail?.relatedItems.orEmpty()[itemIndex]
         setEffect { ProductDetailContract.Effect.Navigation.GoToOpenProduct(product) }
     }
 
@@ -71,27 +72,27 @@ class ProductDetailViewModel @Inject constructor(
     }
 
     private fun updateSizeAndItemId(sizeIndex: Int) {
-        setState {
-            copy(
-                selectedItemDetailId = currentState.productDetail?.itemDetails?.find {
-                    it.sizeTitle == selectedSizeTitleList[sizeIndex] && it.colorId == selectedColorId
-                }?.id.orZero()
-            )
-        }
+//        setState {
+//            copy(
+//                selectedItemDetail = currentState.productDetail?.itemDetails?.find {
+//                    it.sizeTitle == selectedSizeTitleList[sizeIndex] && it.colorId == selectedColorId
+//                }
+//            )
+//        }
     }
 
     private fun updateColor(colorIndex: Int) {
-        setState {
-            copy(
-                // update colorId
-                selectedColorId = currentState.productDetail?.itemImages?.get(colorIndex)?.colorId.orZero(),
-                // update slider images
-                selectedColoredImagesList = filterColorImagesWithId(selectedColorId.orZero()).orEmpty()
-                    .map { it.imagePath ?: "" },
-                //  update size with respect to color
-                selectedSizeTitleList = filterSizeWithColorIdsList(selectedColorId.orZero()).orEmpty(),
-            )
-        }
+//        setState {
+//            copy(
+//                // update colorId
+//                selectedColorId = currentState.productDetail?.itemImages?.get(colorIndex)?.colorId.orZero(),
+//                // update slider images
+//                selectedColoredImagesList = filterColorImagesWithId(selectedColorId.orZero()).orEmpty()
+//                    .map { it.imagePath ?: "" },
+//                //  update size with respect to color
+//                selectedSizeTitleList = filterSizeWithColorIdsList(selectedColorId.orZero()).orEmpty(),
+//            )
+//        }
     }
 
     fun init(product: Product) {
@@ -109,11 +110,6 @@ class ProductDetailViewModel @Inject constructor(
                 is Result.Success -> {
                     val productDetail = productDetailResponse.data
                     val selectedItemDetail = productDetail?.itemDetails?.first()
-                    setState {
-                        copy(
-                            productDetail = productDetail,
-                        )
-                    }
                     val selectedImagedList = filterColorImagesWithId(
                         selectedItemDetail?.colorId.orZero()
                     )?.map { it.imagePath.orEmpty() }
@@ -123,7 +119,8 @@ class ProductDetailViewModel @Inject constructor(
 
                     setState {
                         copy(
-                            selectedItemDetailId = selectedItemDetail?.id.orZero(),
+                            productDetail = productDetail,
+                            selectedItemDetail = selectedItemDetail,
                             selectedColoredImagesList = selectedImagedList.orEmpty(),
                             selectedSizeTitleList = selectedTitleList.orEmpty()
                         )

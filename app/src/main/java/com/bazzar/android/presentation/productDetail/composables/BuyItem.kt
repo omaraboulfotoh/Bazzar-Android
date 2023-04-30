@@ -21,14 +21,14 @@ import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 
 @Composable
-fun BuyItem(modifier: Modifier, itemDetailId: Int, onBuyNowClicked: (Int) -> Unit) {
+fun BuyItem(modifier: Modifier, onBuyNowClicked: () -> Unit) {
     Box(
         modifier = modifier
             .width(124.dp)
             .height(65.dp)
             .clip(RoundedCornerShape(32.5.dp))
             .background(colorResource(id = R.color.prussian_blue))
-            .clickable { onBuyNowClicked(itemDetailId) },
+            .clickable { onBuyNowClicked() },
         contentAlignment = Alignment.Center
     )
     {

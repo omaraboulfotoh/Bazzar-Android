@@ -1,7 +1,16 @@
 package com.bazzar.android.presentation.productDetail.composables
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -9,7 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -17,10 +26,14 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.RemoteImage
+import com.bazzar.android.presentation.composables.Subtitle
+import com.bazzar.android.presentation.theme.BazzarTheme
+import com.bazzar.android.presentation.theme.Shapes
 
 @Composable
 fun BrandSection(
@@ -28,55 +41,97 @@ fun BrandSection(
     brandName: String,
     productTitle: String,
     oldPrice: String,
-    newPrice: String,
-    modifier: Modifier
+    newPrice: String?,
+    modifier: Modifier = Modifier,
+    onBrandClicked: () -> Unit
 ) {
-    Box(
+    Column(
         modifier = modifier
-            .height(112.dp)
-            .background(color = Color.White)
-            .padding(start = 16.dp)
+            .wrapContentSize()
+            .fillMaxWidth()
+            .background(color = BazzarTheme.colors.white)
+            .padding(BazzarTheme.spacing.m),
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Column(
-            Modifier.padding(top = 18.dp),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+
+        // top brand view
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xxs),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
+            RemoteImage(
+                imageUrl = brandImagePath,
+                background = BazzarTheme.colors.white,
                 modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                RemoteImage(
-                    imageUrl = brandImagePath,
-                    modifier = Modifier.size(22.dp),
-                    contentScale = ContentScale.Crop
-                )
-                Text(
-                    text = brandName,
-                    style = androidx.compose.material.MaterialTheme.typography.subtitle1.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold))
-                    )
-                )
-                Spacer(modifier = Modifier.width(155.dp))
-                Text(
-                    text = stringResource(id = R.string.see_more),
-                    style = androidx.compose.material.MaterialTheme.typography.subtitle1.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold))
-                    )
-                )
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_right),
-                    contentDescription = null,
-                    Modifier.padding(start = 4.dp)
-                )
-            }
+                    .size(22.dp)
+                    .clip(Shapes.medium)
+                    .padding(2.dp)
+                    .border(1.dp, color = BazzarTheme.colors.stroke),
+                contentScale = ContentScale.Fit
+            )
+            Subtitle(
+                modifier = Modifier.wrapContentSize(),
+                text = brandName,
+                color = BazzarTheme.colors.black,
+                style = BazzarTheme.typography.subtitle1Bold
+            )
+            Spacer(modifier = Modifier.weight(1f))
+
             Text(
-                text = productTitle, style = MaterialTheme.typography.subtitle1.copy(
+                modifier = Modifier
+                    .wrapContentSize()
+                    .clickable { onBrandClicked() },
+                text = stringResource(id = R.string.see_more),
+                color = BazzarTheme.colors.black,
+                style = BazzarTheme.typography.overline.copy(fontWeight = FontWeight.W500)
+            )
+            Icon(
+                painter = painterResource(id = R.drawable.ic_arrow_right),
+                contentDescription = null,
+            )
+        }
+
+        // product title
+        Text(
+            text = productTitle, style = MaterialTheme.typography.subtitle1.copy(
+                fontFamily = FontFamily(Font(R.font.montserrat_semibold))
+            )
+        )
+
+        // show the price
+        Row {
+            Text(
+                text =
+                buildAnnotatedString {
+                    withStyle(
+                        style = SpanStyle(
+                            fontFamily =
+                            FontFamily(Font(R.font.montserrat_bold))
+                        )
+                    ) {
+                        append(newPrice ?: oldPrice)
+                    }
+                    withStyle(
+                        style = SpanStyle(
+                            fontFamily =
+                            FontFamily(Font(R.font.montserrat_regular))
+                        )
+                    ) {
+                        append(
+                            stringResource(
+                                id = R.string.home_screen_product_price
+                            )
+                        )
+                    }
+                },
+                Modifier.alpha(0.7f),
+                style = MaterialTheme.typography.subtitle2.copy(
                     fontFamily = FontFamily(Font(R.font.montserrat_semibold))
                 )
             )
-            Row {
+            if (newPrice.isNullOrEmpty().not())
                 Text(
                     text =
                     buildAnnotatedString {
@@ -86,36 +141,7 @@ fun BrandSection(
                                 FontFamily(Font(R.font.montserrat_bold))
                             )
                         ) {
-                            append(newPrice.toString())
-                        }
-                        withStyle(
-                            style = SpanStyle(
-                                fontFamily =
-                                FontFamily(Font(R.font.montserrat_regular))
-                            )
-                        ) {
-                            append(
-                                stringResource(
-                                    id = R.string.home_screen_product_price
-                                )
-                            )
-                        }
-                    },
-                    Modifier.alpha(0.7f),
-                    style = MaterialTheme.typography.subtitle2.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_semibold))
-                    )
-                )
-                Text(
-                    text =
-                    buildAnnotatedString {
-                        withStyle(
-                            style = SpanStyle(
-                                fontFamily =
-                                FontFamily(Font(R.font.montserrat_bold))
-                            )
-                        ) {
-                            append(oldPrice.toString())
+                            append(oldPrice)
                         }
                         withStyle(
                             style = SpanStyle(
@@ -137,7 +163,6 @@ fun BrandSection(
                 )
 
 
-            }
         }
     }
 }

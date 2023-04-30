@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.otp_screen
 
+import com.android.model.home.UserData
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
 import com.bazzar.android.presentation.base.ViewState

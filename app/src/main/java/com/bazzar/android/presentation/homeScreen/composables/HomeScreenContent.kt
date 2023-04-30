@@ -31,7 +31,7 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
             })
         }
         item {
-            IndicatorImageSlider(imagePathList = state.slides1.orEmpty()
+            IndicatorHomeImageSlider(imagePathList = state.slides1.orEmpty()
                 .mapNotNull { it.imagePath ?: "" },
                 modifier = Modifier.wrapContentHeight(),
                 onSliderClicked = {
@@ -40,7 +40,7 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
         }
         if (state.categoryItems.isNullOrEmpty().not()) item {
             ProductsGroup(
-                productsList = state.categoryItems,
+                productsList = state.categoryItems.orEmpty(),
                 headerTitle = stringResource(id = R.string.home_screen_products_group),
                 onProductClicked = { itemId ->
                     HomeContract.Event.OnProductClicked(itemId)
@@ -52,7 +52,7 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
                 onSendEvent(HomeContract.Event.OnCategoryClicked(it))
             })
         item {
-            IndicatorImageSlider(
+            IndicatorHomeImageSlider(
                 state.slides2.orEmpty().mapNotNull { it.imagePath ?: "" },
                 modifier = Modifier.wrapContentHeight(),
                 onSliderClicked = {

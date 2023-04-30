@@ -26,9 +26,9 @@ class LoginViewModel @Inject constructor(
     override fun handleEvents(event: LoginContract.Event) {
         when (event) {
             is LoginContract.Event.OnLogin -> logIn(
-                currentState.mobileNumber,
-                currentState.password
+                currentState.mobileNumber, currentState.password
             )
+
             is LoginContract.Event.OnContinueAsAGuest -> setEffect { LoginContract.Effect.Navigation.GoToHomeAsGuest }
             is LoginContract.Event.OnCreateNewAccount -> setEffect { LoginContract.Effect.Navigation.GoToRegisterScreen }
         }
@@ -46,10 +46,9 @@ class LoginViewModel @Inject constructor(
                         is Result.Success -> {
                             sharedPrefersManager.saveToken(userData.accessToken)
                             sharedPrefersManager.saveUserData(userData)
-                            setEffect {
-                                LoginContract.Effect.Navigation.GoToHome()
-                            }
+                            setEffect { LoginContract.Effect.Navigation.GoToHome }
                         }
+
                         else -> {}
                     }
                 }

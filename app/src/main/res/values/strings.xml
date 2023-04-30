@@ -116,4 +116,7 @@
     <string name="exclusive">Exclusive</string>
     <string name="soldout">Sold out</string>
     <string name="terms_and_condition_required">Terms and Condition should be agreed</string>
+    <string name="sku_format">SKU: %s</string>
+    <string name="read_more">Read More</string>
+    <string name="read_less">Read Less</string>
 </resources>
