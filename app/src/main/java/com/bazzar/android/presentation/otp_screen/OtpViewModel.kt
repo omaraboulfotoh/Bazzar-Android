@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.otp_screen
 
+import androidx.core.text.isDigitsOnly
 import com.android.local.SharedPrefersManager
 import com.android.model.home.UserData
 import com.android.model.request.VerifyOtpRequest
@@ -18,17 +19,36 @@ class OtpViewModel @Inject constructor(
 ) : BaseViewModel<OtpContract.Event, OtpContract.State, OtpContract.Effect>(
     globalState
 ) {
+    companion object {
+        const val OTP_SIZE: Int = 4
+    }
+
     private var isInitialized = false
     override fun setInitialState() = OtpContract.State()
 
     override fun handleEvents(event: OtpContract.Event) {
         when (event) {
-            OtpContract.Event.OnConfirmClicked ->
-                verifyOtp(
-                    otpSMS = currentState.otp ?: ""
-                )
-
+            is OtpContract.Event.OnConfirmClicked -> {
+                val otp = currentState.otp ?: ""
+                if (isInputDataValidated(otp)) {
+                    verifyOtp(otpSMS = otp)
+                }
+            }
             is OtpContract.Event.OnOtpChanged -> setState { copy(otp = event.otp) }
+        }
+    }
+
+    private fun isInputDataValidated(userEnteredOtp: String): Boolean {
+        return when {
+            userEnteredOtp.length != OTP_SIZE -> {
+                // error message wrong size
+                false
+            }
+            !userEnteredOtp.isDigitsOnly() -> {
+                // error message not digit
+                false
+            }
+            else -> true
         }
     }
 
