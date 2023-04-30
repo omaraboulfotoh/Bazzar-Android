@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.login
 
+import androidx.core.text.isDigitsOnly
 import com.android.local.SharedPrefersManager
 import com.android.model.request.UserLoginRequest
 import com.android.network.domain.usecases.HomeUseCase
@@ -19,18 +20,33 @@ class LoginViewModel @Inject constructor(
 ) : BaseViewModel<LoginContract.Event, LoginContract.State, LoginContract.Effect>(
     globalState
 ) {
+    companion object {
+        const val Mobile_Number_COUNT: Int = 10
+    }
 
     private var isInitialized = false
     override fun setInitialState() = LoginContract.State()
 
     override fun handleEvents(event: LoginContract.Event) {
         when (event) {
-            is LoginContract.Event.OnLogin -> logIn(
-                currentState.mobileNumber,
-                currentState.password
-            )
+            is LoginContract.Event.OnLogin -> {
+                if (isMobileValidated(currentState.mobileNumber!!)) {
+                    logIn(
+                        currentState.mobileNumber,
+                        currentState.password
+                    )
+                }
+            }
             is LoginContract.Event.OnContinueAsAGuest -> setEffect { LoginContract.Effect.Navigation.GoToHomeAsGuest }
             is LoginContract.Event.OnCreateNewAccount -> setEffect { LoginContract.Effect.Navigation.GoToRegisterScreen }
+        }
+    }
+
+    private fun isMobileValidated(mobileNumber: String): Boolean {
+        return when {
+            mobileNumber.length != Mobile_Number_COUNT -> false
+            mobileNumber.isDigitsOnly().not() -> false
+            else -> true
         }
     }
 
@@ -46,9 +62,7 @@ class LoginViewModel @Inject constructor(
                         is Result.Success -> {
                             sharedPrefersManager.saveToken(userData.accessToken)
                             sharedPrefersManager.saveUserData(userData)
-                            setEffect {
-                                LoginContract.Effect.Navigation.GoToHome()
-                            }
+                            setEffect { LoginContract.Effect.Navigation.GoToHome }
                         }
                         else -> {}
                     }
