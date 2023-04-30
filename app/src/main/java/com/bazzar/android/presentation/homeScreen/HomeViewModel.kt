@@ -35,7 +35,8 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun onProductClicked(index: Int) {
-        
+        val product = currentState.categoryItems?.get(index) ?: return
+        setEffect { HomeContract.Effect.Navigation.GoToProductDetails(product) }
     }
 
     private fun handleBrandClicked(index: Int) {

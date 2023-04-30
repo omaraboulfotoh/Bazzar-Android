@@ -27,7 +27,7 @@ class HomeContract {
 
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
-            object GoToHome : Navigation()
+            data class GoToProductDetails(val product: Product) : Navigation()
             data class GoToSliderPage(val slider: HomeSlider) : Navigation()
             data class GoToBrandProductsList(val brand: Brand) : Navigation()
             data class GoToCategoryProductsList(val category: Category) : Navigation()

@@ -8,7 +8,7 @@ import com.bazzar.android.presentation.base.ViewState
 class AccountContract {
     data class State(
         val isUserLoggedIn: Boolean? = false,
-        val userData: UserData
+        val userData: UserData? = null
     ) : ViewState
 
     sealed class Event : ViewEvent {
