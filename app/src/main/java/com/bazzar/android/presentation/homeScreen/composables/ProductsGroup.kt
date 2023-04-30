@@ -32,7 +32,8 @@ fun ProductsGroup(
     ) {
 
         itemsIndexed(productsList) { index, product ->
-            ProductItem(product, onItemClicked = { onProductClicked(index) })
+            ProductItem(product,
+                onItemClicked = { onProductClicked(index) })
         }
     }
 }

@@ -71,7 +71,7 @@ fun ProductDescription(
                 OverLine(
                     modifier = Modifier
                         .wrapContentSize()
-                        .padding(BazzarTheme.spacing.xxs),
+                        .padding(BazzarTheme.spacing.extra_xxs),
                     text = stringResource(id = R.string.sku_format, sku),
                     color = BazzarTheme.colors.textGray,
                     style = BazzarTheme.typography.overlineBold

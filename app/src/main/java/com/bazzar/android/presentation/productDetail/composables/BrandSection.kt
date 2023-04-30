@@ -101,7 +101,11 @@ fun BrandSection(
         )
 
         // show the price
-        Row {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.s),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(
                 text =
                 buildAnnotatedString {
@@ -126,7 +130,7 @@ fun BrandSection(
                         )
                     }
                 },
-                Modifier.alpha(0.7f),
+                Modifier,
                 style = MaterialTheme.typography.subtitle2.copy(
                     fontFamily = FontFamily(Font(R.font.montserrat_semibold))
                 )
@@ -156,7 +160,8 @@ fun BrandSection(
                             )
                         }
                     },
-                    Modifier.alpha(0.7f),
+                    Modifier,
+                    color = BazzarTheme.colors.textGray,
                     style = MaterialTheme.typography.subtitle2.copy(
                         fontFamily = FontFamily(Font(R.font.montserrat_semibold))
                     )
