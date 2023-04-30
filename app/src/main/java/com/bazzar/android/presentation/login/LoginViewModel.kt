@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.login
 
+import com.android.local.SharedPrefersManager
 import com.android.model.request.UserLoginRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
@@ -13,6 +14,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
+    private val sharedPrefersManager: SharedPrefersManager,
     private val resoundProvider: IResourceProvider,
 ) : BaseViewModel<LoginContract.Event, LoginContract.State, LoginContract.Effect>(
     globalState
@@ -37,12 +39,16 @@ class LoginViewModel @Inject constructor(
         if (phoneNumber.isNullOrEmpty().not() && password.isNullOrEmpty().not()) {
             homeUseCase.login(UserLoginRequest(phone = phoneNumber!!, password = password!!))
                 .collect { loginResponse ->
-                    val data = loginResponse.data!!
+                    val userData = loginResponse.data!!
                     when (loginResponse) {
                         is Result.Error -> globalState.error(loginResponse.message.orEmpty())
                         is Result.Loading -> {}
-                        is Result.Success -> setEffect {
-                            LoginContract.Effect.Navigation.GoToHome(userData = data)
+                        is Result.Success -> {
+                            sharedPrefersManager.saveToken(userData.accessToken)
+                            sharedPrefersManager.saveUserData(userData)
+                            setEffect {
+                                LoginContract.Effect.Navigation.GoToHome()
+                            }
                         }
                         else -> {}
                     }

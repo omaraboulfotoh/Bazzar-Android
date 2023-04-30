@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.otp_screen
 
+import com.android.local.SharedPrefersManager
 import com.android.model.home.UserData
 import com.android.model.request.VerifyOtpRequest
 import com.android.network.domain.usecases.HomeUseCase
@@ -13,6 +14,7 @@ import javax.inject.Inject
 class OtpViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
+    private val sharedPrefersManager: SharedPrefersManager,
 ) : BaseViewModel<OtpContract.Event, OtpContract.State, OtpContract.Effect>(
     globalState
 ) {
@@ -36,15 +38,11 @@ class OtpViewModel @Inject constructor(
                     is Result.Error -> globalState.error(otpResponse.message.orEmpty())
                     is Result.Loading -> globalState.loading(true)
                     is Result.Success -> {
-                        val data = otpResponse.data!!
-                        setEffect {
-                            OtpContract.Effect.Navigation.GoToHomeScreen(
-                                userData = data
-                            )
-                        }
-
+                        val userData = otpResponse.data!!
+                        sharedPrefersManager.saveToken(userData.accessToken)
+                        sharedPrefersManager.saveUserData(userData)
+                        setEffect { OtpContract.Effect.Navigation.GoToHomeScreen }
                     }
-
                     else -> {}
                 }
             }
@@ -56,5 +54,4 @@ class OtpViewModel @Inject constructor(
             isInitialized = true
         }
     }
-
 }
