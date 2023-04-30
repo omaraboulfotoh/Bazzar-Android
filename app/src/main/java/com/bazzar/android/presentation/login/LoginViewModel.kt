@@ -7,7 +7,6 @@ import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
-import com.bazzar.android.utils.IResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -16,12 +15,12 @@ class LoginViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
     private val sharedPrefersManager: SharedPrefersManager,
-    private val resoundProvider: IResourceProvider,
 ) : BaseViewModel<LoginContract.Event, LoginContract.State, LoginContract.Effect>(
     globalState
 ) {
     companion object {
         const val Mobile_Number_COUNT: Int = 10
+        const val MIN_PASSWORD_LENGTH: Int = 8
     }
 
     private var isInitialized = false
@@ -31,10 +30,12 @@ class LoginViewModel @Inject constructor(
         when (event) {
             is LoginContract.Event.OnLogin -> {
                 if (isMobileValidated(currentState.mobileNumber!!)) {
-                    logIn(
-                        currentState.mobileNumber,
-                        currentState.password
-                    )
+                    if (isValidPassword(currentState.password!!)) {
+                        logIn(
+                            currentState.mobileNumber,
+                            currentState.password
+                        )
+                    }
                 }
             }
             is LoginContract.Event.OnContinueAsAGuest -> setEffect { LoginContract.Effect.Navigation.GoToHomeAsGuest }
@@ -48,6 +49,22 @@ class LoginViewModel @Inject constructor(
             mobileNumber.isDigitsOnly().not() -> false
             else -> true
         }
+    }
+
+    private fun isValidPassword(password: String): Boolean {
+        var containsUppercase = false
+        var containsLowercase = false
+        var containsNumber = false
+
+        password.forEach {
+            when {
+                it.isUpperCase() -> containsUppercase = true
+                it.isLowerCase() -> containsLowercase = true
+                it.isDigit() -> containsNumber = true
+            }
+        }
+
+        return containsUppercase && containsLowercase && containsNumber && password.length >= MIN_PASSWORD_LENGTH
     }
 
     private fun logIn(phoneNumber: String?, password: String?) = executeCatching({
