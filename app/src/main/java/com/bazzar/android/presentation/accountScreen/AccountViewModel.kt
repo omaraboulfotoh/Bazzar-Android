@@ -17,8 +17,20 @@ class AccountViewModel @Inject constructor(
 
     override fun handleEvents(event: Event) {
         when (event) {
-
-            else -> {}
+            Event.OnAboutUsClicked -> {}
+            Event.OnAddressesClicked -> {}
+            Event.OnBazzarTermsAndConditionsClicked -> {}
+            Event.OnContactUs -> {}
+            Event.OnDeleteMyAccountClicked -> {}
+            Event.OnJoinUsClicked -> {}
+            Event.OnLanguageClicked -> {}
+            Event.OnLogOutClicked -> {}
+            Event.OnOrderHistoryClicked -> {}
+            Event.OnRewardCenterClicked -> {}
+            Event.OnWishListClicked -> {}
+            Event.OnSignupClicked -> {
+                setEffect { Effect.Navigation.GoToSignup }
+            }
         }
     }
 }

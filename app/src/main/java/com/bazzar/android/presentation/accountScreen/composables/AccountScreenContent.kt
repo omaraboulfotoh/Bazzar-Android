@@ -13,12 +13,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
+import com.bazzar.android.presentation.accountScreen.AccountContract
 import com.bazzar.android.presentation.composables.CustomButton
 import com.bazzar.android.presentation.otp_screen.composables.HeaderTitleBack
 
 @Preview
 @Composable
 fun AccountScreenContent(
+    state: AccountContract.State,
+    onEventSend: (AccountContract.Event) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -35,7 +38,8 @@ fun AccountScreenContent(
         item {
             CustomButton(
                 text = stringResource(id = R.string.sign_up),
-                modifier = Modifier.padding(top = 50.dp)
+                modifier = Modifier.padding(top = 50.dp),
+                onClick = { onEventSend(AccountContract.Event.OnSignupClicked) }
             )
         }
         item {

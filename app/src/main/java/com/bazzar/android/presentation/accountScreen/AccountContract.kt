@@ -12,6 +12,7 @@ class AccountContract {
     ) : ViewState
 
     sealed class Event : ViewEvent {
+        object OnSignupClicked : Event()
         object OnOrderHistoryClicked : Event()
         object OnWishListClicked : Event()
         object OnAddressesClicked : Event()
@@ -26,7 +27,9 @@ class AccountContract {
     }
 
     sealed class Effect : ViewSideEffect {
-        sealed class Navigation : Effect() {}
+        sealed class Navigation : Effect() {
+            object GoToSignup : Navigation()
+        }
     }
 
 }

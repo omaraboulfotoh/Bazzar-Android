@@ -1,6 +1,7 @@
 package com.bazzar.android.presentation.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,13 +22,14 @@ import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 
 @Composable
-fun CustomButton(text:String,modifier:Modifier){
+fun CustomButton(text: String, modifier: Modifier, onClick: () -> Unit = {}) {
     Box(
         modifier = modifier
             .width(343.dp)
             .height(65.dp)
             .clip(RoundedCornerShape(62.5.dp))
-            .background(colorResource(id = R.color.prussian_blue)),
+            .background(colorResource(id = R.color.prussian_blue))
+            .clickable { onClick() },
     )
     {
         Text(
