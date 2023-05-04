@@ -35,6 +35,7 @@ class OtpViewModel @Inject constructor(
                 }
             }
             is OtpContract.Event.OnOtpChanged -> setState { copy(otp = event.otp) }
+            is OtpContract.Event.OnSendAgain -> resendOtp()
         }
     }
 
@@ -51,6 +52,18 @@ class OtpViewModel @Inject constructor(
             else -> true
         }
     }
+
+    private fun resendOtp() = executeCatching({
+        val id = currentState.userData?.id ?: return@executeCatching
+        homeUseCase.resendOtp(userId = id)
+            .collect { resendReponse ->
+                when (resendReponse) {
+                    is Result.Error -> globalState.error(resendReponse.message.orEmpty())
+                    is Result.Loading -> globalState.loading(true)
+                    is Result.Success -> { }
+                }
+            }
+    })
 
     private fun verifyOtp(otpSMS: String) = executeCatching({
         // todo add validation on OTP

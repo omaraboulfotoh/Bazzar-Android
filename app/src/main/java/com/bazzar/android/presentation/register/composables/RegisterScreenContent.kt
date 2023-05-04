@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
@@ -24,27 +23,27 @@ fun RegisterScreenContent(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = BazzarTheme.spacing.m)
             .padding(bottom = BottomNavigationHeight)
-            .background(BazzarTheme.colors.backgroundColor),
+            .background(BazzarTheme.colors.white),
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.s)
 
     ) {
         item {
             BazzarAppBar(
+                title = stringResource(id = R.string.create_account),
                 onNavigationClick = {
                     onSendEvent(RegisterContract.Event.OnBackClicked)
                 },
-                title = stringResource(id = R.string.create_account),
             )
         }
         item {
             RegisterDataEntry(
-                modifier = Modifier.padding(top = 14.dp),
+                modifier = Modifier.padding(vertical = 14.dp),
                 fullName = state.fullName.orEmpty(),
                 email = state.email.orEmpty(),
                 phone = state.phoneNumber.orEmpty(),
+                isTermsChecked = state.isAgreeTermsAndConditions,
                 onPhoneChanged = {
                     onSendEvent(RegisterContract.Event.OnPhoneChanged(it))
                 },
@@ -57,7 +56,10 @@ fun RegisterScreenContent(
                 onTermsAndConditionClicked = {
                     onSendEvent(RegisterContract.Event.OnAgreeTermsAndConditions)
                 },
-                onCreateAccount = { onSendEvent(RegisterContract.Event.OnCreateAccount) })
+                onCreateAccount = {
+                    onSendEvent(RegisterContract.Event.OnCreateAccount)
+                }
+            )
         }
     }
 }

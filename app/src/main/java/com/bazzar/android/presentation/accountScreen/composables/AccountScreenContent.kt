@@ -31,10 +31,18 @@ fun AccountScreenContent(state: AccountContract.State, onSendEvent: (AccountCont
             )
         }
         item {
-            CustomButton(
-                text = stringResource(id = R.string.sign_up),
-                modifier = Modifier.padding(top = 50.dp)
-            )
+            if (state.isUserLoggedIn) {
+                AccountItem(
+                    modifier = Modifier.padding(top = 50.dp),
+                    userData = state.userData
+                )
+            } else {
+                CustomButton(
+                    text = stringResource(id = R.string.sign_up),
+                    modifier = Modifier.padding(top = 50.dp),
+                    onClick = { onSendEvent.invoke(AccountContract.Event.OnSignupClicked) }
+                )
+            }
         }
         item {
             LanguageItem(
