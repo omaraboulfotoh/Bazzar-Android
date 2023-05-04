@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.TileMode
 
 val COLOR_NAVY: Color = Color(0xff000760)
 val COLOR_BLUE: Color = Color(0Xff00B7FF)
+val COLOR_LIGHT_BLUE = Color(0xffbff2ff)
 val COLOR_RED: Color = Color(0XffE82357)
 val COLOR_BLACK: Color = Color(0Xff0F1015)
 val COLOR_WHITE: Color = Color(0Xffffffff)
