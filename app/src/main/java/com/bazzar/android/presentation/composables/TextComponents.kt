@@ -266,7 +266,7 @@ fun Caption(
     modifier: Modifier = Modifier,
     maxLines: Int = Int.MAX_VALUE,
     textAlign: TextAlign = TextAlign.Center,
-    color: Color = BazzarTheme.colors.primaryText,
+    color: Color = BazzarTheme.colors.black,
     isBold: Boolean = false,
 ) {
     Text(
@@ -275,7 +275,7 @@ fun Caption(
         maxLines = maxLines,
         textAlign = textAlign,
         color = color,
-        style = if (isBold) BazzarTheme.typography.captionBold else BazzarTheme.typography.caption,
+        style = if (isBold) BazzarTheme.typography.captionSemiBold else BazzarTheme.typography.caption,
         overflow = TextOverflow.Ellipsis
     )
 }
