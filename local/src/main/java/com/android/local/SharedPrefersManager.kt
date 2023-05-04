@@ -98,4 +98,14 @@ class SharedPrefersManager @Inject constructor(private val sharedPreferences: Sh
         return sharedPreferences.contains(Constants.sharedPreference_user_data)
     }
 
+    fun isFirstTimeOpened(): Boolean {
+        return sharedPreferences.contains(Constants.first_time_opened).not()
+    }
+
+    fun setFirstTimeOpened() {
+        sharedPreferences.edit().apply {
+            putString(Constants.first_time_opened, Constants.first_time_opened)
+        }.commit()
+    }
+
 }

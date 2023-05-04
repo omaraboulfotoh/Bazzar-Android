@@ -5,6 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.bazzar.android.common.navigateAndClearBackStack
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
+import com.bazzar.android.presentation.destinations.HomeScreenDestination
 import com.bazzar.android.presentation.destinations.OnBoardingDestination
 import com.bazzar.android.presentation.splash.composables.SplashScreenContent
 import com.ramcosta.composedestinations.annotation.Destination
@@ -24,7 +25,11 @@ fun SplashScreen(
     viewModel.sideEffect { effect ->
         when (effect) {
             SplashContract.Effect.Navigation.GoToHome -> navigator.navigateAndClearBackStack(
-                OnBoardingDestination()
+                OnBoardingDestination
+            )
+
+            SplashContract.Effect.Navigation.GoToOnBoarding -> navigator.navigateAndClearBackStack(
+                HomeScreenDestination
             )
         }
     }

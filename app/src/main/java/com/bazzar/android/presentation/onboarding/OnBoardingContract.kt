@@ -1,21 +1,20 @@
-package com.bazzar.android.presentation.splash
+package com.bazzar.android.presentation.onboarding
 
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
 import com.bazzar.android.presentation.base.ViewState
 
-class SplashContract {
+class OnBoardingContract {
 
     object State : ViewState
 
     sealed class Event : ViewEvent {
-        data class SendAnimationProgress(val progress: Float) : Event()
+        object OnSkipClicked : Event()
     }
 
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
             object GoToHome : Navigation()
-            object GoToOnBoarding : Navigation()
         }
     }
 }
