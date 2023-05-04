@@ -10,16 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
+import com.bazzar.android.presentation.accountScreen.AccountContract
 import com.bazzar.android.presentation.composables.CustomButton
 import com.bazzar.android.presentation.otp_screen.composables.HeaderTitleBack
 
-@Preview
 @Composable
-fun AccountScreenContent(
-) {
+fun AccountScreenContent(state: AccountContract.State, onSendEvent: (AccountContract.Event) -> Unit) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -42,6 +40,14 @@ fun AccountScreenContent(
             LanguageItem(
                 modifier = Modifier.padding(top = 24.dp),
                 iconPainter = painterResource(R.drawable.icon_awesome_flag)
+            )
+        }
+        item {
+            BarItem(
+                modifier = Modifier.padding(top = 24.dp),
+                title = stringResource(id = R.string.history_list),
+                iconPainter = painterResource(id = R.drawable.ic_order_history),
+                onClick = { onSendEvent(AccountContract.Event.OnOrderHistoryClicked) }
             )
         }
         item {

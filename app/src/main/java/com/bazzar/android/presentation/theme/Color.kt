@@ -66,6 +66,7 @@ data class AbsColors(
     val spacer: Color = COLOR_LIGHT_SILVER,
     val progressBg: Color = COLOR_NAVY,
     val dividerColor: Color = COLOR_DARK_GREY,
+    val dodgerBlue: Color = Color(0xff00B7FF)
 )
 
 val LocalAbsColor = staticCompositionLocalOf { AbsColors() }

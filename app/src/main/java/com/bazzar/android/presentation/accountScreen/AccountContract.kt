@@ -26,7 +26,9 @@ class AccountContract {
     }
 
     sealed class Effect : ViewSideEffect {
-        sealed class Navigation : Effect() {}
+        sealed class Navigation : Effect() {
+            object GoToOrdersHistory : Navigation()
+        }
     }
 
 }
