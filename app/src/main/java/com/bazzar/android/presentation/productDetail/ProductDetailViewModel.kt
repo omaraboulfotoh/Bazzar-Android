@@ -2,6 +2,7 @@ package com.bazzar.android.presentation.productDetail
 
 import com.android.local.SharedPrefersManager
 import com.android.model.home.Brand
+import com.android.model.home.ItemDetail
 import com.android.model.home.ItemImages
 import com.android.model.home.Product
 import com.android.network.domain.usecases.HomeUseCase
@@ -12,7 +13,6 @@ import com.bazzar.android.presentation.app.ConfirmationDialogParams
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.utils.IResourceProvider
-import com.bazzar.android.utils.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -103,9 +103,8 @@ class ProductDetailViewModel @Inject constructor(
 
     private fun updateColor(colorIndex: Int) {
         val selectedColor = currentState.colorsList[colorIndex]
-        val updatedSizedList = filterSizeWithColorIdsList(
-            selectedColor.colorId.orZero()
-        )
+        val updatedSizedList =
+            filterSizeWithColorIdsList(selectedColor.colorId.orZero(), currentState.productDetail)
         setState {
             copy(
                 sizeTitleList = updatedSizedList,
@@ -134,9 +133,9 @@ class ProductDetailViewModel @Inject constructor(
                         productDetail?.itemDetails.orEmpty().map { it.colorId }.toSet().toList()
                     val colorsList = getColorsList(colorsIdsList, productDetail)
                     val selectedImagedList =
-                        filterColorImagesWithId(selectedItemDetail?.colorId.orZero())
+                        filterColorImagesWithId(selectedItemDetail?.colorId.orZero(), productDetail)
                     val selectedTitleList = filterSizeWithColorIdsList(
-                        selectedItemDetail?.colorId.orZero()
+                        selectedItemDetail?.colorId.orZero(), productDetail
                     )
 
                     setState {
@@ -173,12 +172,15 @@ class ProductDetailViewModel @Inject constructor(
         return list
     }
 
-    private fun filterColorImagesWithId(colorId: Int) =
-        currentState.productDetail?.itemImages?.filter { it.colorId == colorId }.orEmpty()
+    private fun filterColorImagesWithId(colorId: Int, productDetail: Product?) =
+        productDetail?.itemImages?.filter { it.colorId == colorId }.orEmpty()
             .mapNotNull { it.imagePath }
 
-    private fun filterSizeWithColorIdsList(colorId: Int) =
-        currentState.productDetail?.itemDetails?.filter { it.colorId == colorId }.orEmpty()
+    private fun filterSizeWithColorIdsList(
+        colorId: Int,
+        productDetail: Product?
+    ): List<ItemDetail> =
+        productDetail?.itemDetails?.filter { it.colorId == colorId }.orEmpty()
 }
 
 

@@ -43,7 +43,7 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
                 productsList = state.categoryItems.orEmpty(),
                 headerTitle = stringResource(id = R.string.home_screen_products_group),
                 onProductClicked = { itemId ->
-                    HomeContract.Event.OnProductClicked(itemId)
+                    onSendEvent(HomeContract.Event.OnProductClicked(itemId))
                 }
             )
         }

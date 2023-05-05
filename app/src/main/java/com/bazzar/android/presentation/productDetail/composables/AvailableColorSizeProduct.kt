@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement.spacedBy
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Card
@@ -49,7 +51,6 @@ fun AvailableColorSizeProduct(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .defaultMinSize(minHeight = 180.dp)
             .background(BazzarTheme.colors.white)
             .padding(horizontal = BazzarTheme.spacing.m, vertical = BazzarTheme.spacing.xs),
         horizontalAlignment = Alignment.Start,
@@ -71,50 +72,67 @@ fun AvailableColorSizeProduct(
             verticalAlignment = Alignment.CenterVertically
         ) {
             itemColors.forEachIndexed { index, item ->
-                val modifier = if (item.imagePath.isNullOrEmpty().not()) Modifier
-                    .size(64.dp) else Modifier
-                    .wrapContentWidth()
-                    .height(64.dp)
-                Card(
-                    modifier = modifier.clickable { onColorSelected(index) },
-                    shape = Shapes.medium,
-                    border = BorderStroke(
-                        1.dp,
-                        color = (colorResource(id = if (selectedDetail?.colorId == item.colorId) R.color.prussian_blue else R.color.light_gray)),
-                    )
-                ) {
-                    if (item.imagePath.isNullOrEmpty().not()) {
-                        RemoteImage(
-                            imageUrl = item.imagePath,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(BazzarTheme.spacing.xs),
-                            background = BazzarTheme.colors.white,
-                            contentScale = ContentScale.Fit
+                val modifier =
+                    if (item.imagePath.isNullOrEmpty().not()) Modifier.size(64.dp) else
+                        Modifier
+                            .wrapContentWidth()
+                            .height(64.dp)
+
+                Box(modifier = Modifier
+                    .wrapContentSize()
+                    .clickable {
+                        onColorSelected(index)
+                    }) {
+                    Card(
+                        modifier = modifier,
+                        shape = Shapes.medium,
+                        border = BorderStroke(
+                            1.dp,
+                            color = (colorResource(id = if (selectedDetail?.colorId == item.colorId) R.color.prussian_blue else R.color.light_gray)),
                         )
-                    } else {
-                        Caption(
-                            text = item.colorTitle.orEmpty(),
-                            isBold = true,
-                            color = (colorResource(id = if (selectedDetail?.colorId == item.colorId) R.color.prussian_blue else R.color.light_gray))
-                        )
+                    ) {
+                        if (item.imagePath.isNullOrEmpty().not()) {
+                            RemoteImage(
+                                imageUrl = item.imagePath,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(BazzarTheme.spacing.xs),
+                                background = BazzarTheme.colors.white,
+                                contentScale = ContentScale.Fit
+                            )
+                        } else {
+                            Caption(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(horizontal = BazzarTheme.spacing.xxs),
+                                text = item.colorTitle.orEmpty(),
+                                isBold = true,
+                                textAlign = TextAlign.Center,
+                                color = (colorResource(id = if (selectedDetail?.colorId == item.colorId) R.color.prussian_blue else R.color.light_gray))
+                            )
+                        }
                     }
                 }
             }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .horizontalScroll(stateSizes),
-                horizontalArrangement = spacedBy(BazzarTheme.spacing.m),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                sizeList.forEachIndexed { index, item ->
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .horizontalScroll(stateSizes),
+            horizontalArrangement = spacedBy(BazzarTheme.spacing.m),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            sizeList.forEachIndexed { index, item ->
+                Box(modifier = Modifier
+                    .wrapContentSize()
+                    .clickable {
+                        onSizeSelected(index)
+                    }) {
                     Card(
                         modifier = Modifier
-                            .wrapContentWidth()
-                            .height(32.dp)
-                            .clickable { onSizeSelected(index) },
+                            .wrapContentSize()
+                            .defaultMinSize(minHeight = 24.dp, minWidth = 48.dp),
                         shape = Shapes.medium,
                         border = BorderStroke(
                             1.dp,
@@ -122,8 +140,12 @@ fun AvailableColorSizeProduct(
                         )
                     ) {
                         Caption(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(horizontal = BazzarTheme.spacing.xxs),
                             text = item.sizeTitle.orEmpty(),
                             isBold = true,
+                            textAlign = TextAlign.Center,
                             color = (colorResource(id = if (selectedDetail?.id == item.id) R.color.prussian_blue else R.color.light_gray))
                         )
                     }

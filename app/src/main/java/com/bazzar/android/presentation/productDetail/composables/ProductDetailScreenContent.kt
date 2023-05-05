@@ -24,12 +24,15 @@ fun ProductDetailScreenContent(
     onSendEvent: (Event) -> Unit,
 ) {
     Column {
-        Box {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(BazzarTheme.colors.backgroundColor)
+                .padding(bottom = BottomNavigationHeight)
+        ) {
             LazyColumn(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = BottomNavigationHeight)
-                    .background(BazzarTheme.colors.backgroundColor),
+                    .fillMaxSize(),
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs)
             ) {
@@ -63,12 +66,10 @@ fun ProductDetailScreenContent(
                         sizeList = state.sizeTitleList,
                         selectedDetail = state.selectedItemDetail,
                         onColorSelected = { index ->
-                            Event.OnColorItemSelected(
-                                index
-                            )
+                            onSendEvent(Event.OnColorItemSelected(index))
                         },
                         onSizeSelected = { index ->
-                            Event.OnSizeItemSelected(index)
+                            onSendEvent(Event.OnSizeItemSelected(index))
                         })
                 }
                 item {
@@ -89,7 +90,8 @@ fun ProductDetailScreenContent(
                     ProductsGroup(productsList = state.productDetail?.relatedItems.orEmpty(),
                         headerTitle = stringResource(id = R.string.related_product),
                         onProductClicked = { itemIndex ->
-                            Event.OnRelatedItemClicked(itemIndex)
+                            onSendEvent(Event.OnRelatedItemClicked(itemIndex))
+
                         })
                 }
                 item {
@@ -98,7 +100,7 @@ fun ProductDetailScreenContent(
             }
             BuyItem(modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(end = 16.dp),
+                .padding(end = BazzarTheme.spacing.m, bottom = BazzarTheme.spacing.m),
                 onBuyNowClicked = { onSendEvent(Event.OnBuyNowClicked) })
         }
     }
