@@ -5,7 +5,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.accountScreen.composables.AccountScreenContent
-import com.bazzar.android.presentation.destinations.LoginScreenDestination
+import com.bazzar.android.presentation.destinations.OrdersHistoryScreenDestination
+import com.bazzar.android.presentation.destinations.RegisterScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -21,10 +22,14 @@ fun AccountScreen(
 
     viewModel.sideEffect { effect ->
         when (effect) {
-            AccountContract.Effect.Navigation.GoToSignup ->
-                navigator.navigate(LoginScreenDestination)
+            is AccountContract.Effect.Navigation.GoToOrdersHistory -> {
+                navigator.navigate(OrdersHistoryScreenDestination())
+            }
+            is AccountContract.Effect.Navigation.GoToRegistration -> {
+                navigator.navigate(RegisterScreenDestination)
+            }
         }
     }
-    AccountScreenContent(state = state,
-        onEventSend = { viewModel.setEvent(it) })
+    viewModel.initState()
+    AccountScreenContent(state = state) { viewModel.setEvent(it) }
 }

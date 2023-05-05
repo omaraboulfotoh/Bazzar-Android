@@ -11,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
@@ -21,11 +22,8 @@ import com.bazzar.android.R
 
 @Composable
 fun OtpTextField(
-    modifier: Modifier = Modifier
-        .padding(top = 148.dp)
-        .width(328.dp)
-        .height(76.dp),
-    otpText: String = "5",
+    modifier: Modifier = Modifier,
+    otpText: String,
     otpCount: Int = 4,
     onOtpTextChange: (text: String, finalDigitEntered: Boolean) -> Unit
 ) {
@@ -36,7 +34,7 @@ fun OtpTextField(
     }
 
     BasicTextField(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         value = TextFieldValue(otpText, selection = TextRange(otpText.length)),
         onValueChange = {
             if (it.text.length <= otpCount) {
@@ -65,24 +63,22 @@ private fun CharView(
 ) {
     val isFocused = text.length == index
     val char = when {
-        index == text.length -> "0"
-        index > text.length -> ""
+        index >= text.length -> ""
         else -> text[index].toString()
     }
     Text(
         modifier = Modifier
-            .width(40.dp)
+            .width(76.dp)
             .border(
-                1.dp, when {
-                    isFocused -> colorResource(id = R.color.prussian_blue)
-                    else -> colorResource(id = R.color.deep_sky_blue)
-                }, RoundedCornerShape(8.dp)
+                width = if (isFocused) 2.dp else 0.dp,
+                color = colorResource(id = R.color.deep_sky_blue),
+                shape = RoundedCornerShape(8.dp)
             )
-            .padding(2.dp)
-            .background(colorResource(id = R.color.prussian_blue)),
+            .background(color = colorResource(id = R.color.prussian_blue), shape = RoundedCornerShape(8.dp))
+            .padding(vertical = 14.dp),
         text = char,
         style = MaterialTheme.typography.h4,
         color = colorResource(id = R.color.white),
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Center,
     )
 }

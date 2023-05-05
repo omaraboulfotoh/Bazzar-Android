@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.accountScreen
 
+import com.android.local.SharedPrefersManager
 import com.bazzar.android.presentation.accountScreen.AccountContract.Effect
 import com.bazzar.android.presentation.accountScreen.AccountContract.Event
 import com.bazzar.android.presentation.accountScreen.AccountContract.State
@@ -12,25 +13,31 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountViewModel @Inject constructor(
     globalState: IGlobalState,
+    private val sharedPrefersManager: SharedPrefersManager,
 ) : BaseViewModel<Event, State, Effect>(globalState) {
+
+    private var isInitialized = false
+
     override fun setInitialState() = State()
 
     override fun handleEvents(event: Event) {
         when (event) {
-            Event.OnAboutUsClicked -> {}
-            Event.OnAddressesClicked -> {}
-            Event.OnBazzarTermsAndConditionsClicked -> {}
-            Event.OnContactUs -> {}
-            Event.OnDeleteMyAccountClicked -> {}
-            Event.OnJoinUsClicked -> {}
-            Event.OnLanguageClicked -> {}
-            Event.OnLogOutClicked -> {}
-            Event.OnOrderHistoryClicked -> {}
-            Event.OnRewardCenterClicked -> {}
-            Event.OnWishListClicked -> {}
-            Event.OnSignupClicked -> {
-                setEffect { Effect.Navigation.GoToSignup }
-            }
+            is Event.OnOrderHistoryClicked -> setEffect { Effect.Navigation.GoToOrdersHistory }
+            is Event.OnSignupClicked -> setEffect { Effect.Navigation.GoToRegistration }
+            else -> {}
         }
     }
+
+    fun initState() {
+        if (isInitialized.not()) {
+            setState {
+                copy(
+                    isUserLoggedIn = sharedPrefersManager.isUserLongedIn(),
+                    userData = sharedPrefersManager.getUserData()
+                )
+            }
+            isInitialized = false
+        }
+    }
+
 }

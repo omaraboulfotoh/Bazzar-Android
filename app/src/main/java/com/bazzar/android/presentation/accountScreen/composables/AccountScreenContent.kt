@@ -10,19 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.presentation.accountScreen.AccountContract
 import com.bazzar.android.presentation.composables.CustomButton
 import com.bazzar.android.presentation.otp_screen.composables.HeaderTitleBack
 
-@Preview
 @Composable
-fun AccountScreenContent(
-    state: AccountContract.State,
-    onEventSend: (AccountContract.Event) -> Unit
-) {
+fun AccountScreenContent(state: AccountContract.State, onSendEvent: (AccountContract.Event) -> Unit) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -36,16 +31,31 @@ fun AccountScreenContent(
             )
         }
         item {
-            CustomButton(
-                text = stringResource(id = R.string.sign_up),
-                modifier = Modifier.padding(top = 50.dp),
-                onClick = { onEventSend(AccountContract.Event.OnSignupClicked) }
-            )
+            if (state.isUserLoggedIn) {
+                AccountItem(
+                    modifier = Modifier.padding(top = 50.dp),
+                    userData = state.userData
+                )
+            } else {
+                CustomButton(
+                    text = stringResource(id = R.string.sign_up),
+                    modifier = Modifier.padding(top = 50.dp),
+                    onClick = { onSendEvent.invoke(AccountContract.Event.OnSignupClicked) }
+                )
+            }
         }
         item {
             LanguageItem(
                 modifier = Modifier.padding(top = 24.dp),
                 iconPainter = painterResource(R.drawable.icon_awesome_flag)
+            )
+        }
+        item {
+            BarItem(
+                modifier = Modifier.padding(top = 24.dp),
+                title = stringResource(id = R.string.history_list),
+                iconPainter = painterResource(id = R.drawable.ic_order_history),
+                onClick = { onSendEvent(AccountContract.Event.OnOrderHistoryClicked) }
             )
         }
         item {

@@ -32,6 +32,8 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest) =
         apiServices.verifyOtp(verifyOtpRequest)
 
+    override suspend fun resendOtp(userId: Int): Response<BaseWrapper<out Any>> =
+        apiServices.resendOtp(userId)
 
     override suspend fun addUserAddress(userAddress: UserAddress): Response<BaseWrapper<Any>> =
         apiServices.addUserAddress(userAddress)

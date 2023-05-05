@@ -20,6 +20,7 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
     suspend fun register(request: UserRegisterRequest) = homeRepo.register(request)
     suspend fun login(userLoginRequest: UserLoginRequest) = homeRepo.login(userLoginRequest)
     suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest) = homeRepo.verifyOtp(verifyOtpRequest)
+    suspend fun resendOtp(userId: Int) = homeRepo.resendOtp(userId)
     suspend fun addUserAddress(userAddress: UserAddress) = homeRepo.addUserAddress(userAddress)
     suspend fun updateUserAddress(userAddress: UserAddress) =
         homeRepo.updateUserAddress(userAddress)

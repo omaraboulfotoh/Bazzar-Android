@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="white_smoke">#F8F8F8</color>
     <color name="prussian_blue">#000760</color>
+    <color name="prussian_blue_disable">#7F83AF</color>
     <color name="deep_sky_blue">#00B7FF</color>
     <color name="titan_white">#EBEDFF</color>
     <color name="whisper">#E4E4E4</color>

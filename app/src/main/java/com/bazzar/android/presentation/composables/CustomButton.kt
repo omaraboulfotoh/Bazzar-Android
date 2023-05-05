@@ -22,14 +22,22 @@ import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 
 @Composable
-fun CustomButton(text: String, modifier: Modifier, onClick: () -> Unit = {}) {
+fun CustomButton(
+    modifier:Modifier,
+    text:String,
+    isDisable: Boolean = false,
+    onClick: () -> Unit = {},
+){
     Box(
         modifier = modifier
             .width(343.dp)
             .height(65.dp)
             .clip(RoundedCornerShape(62.5.dp))
-            .background(colorResource(id = R.color.prussian_blue))
-            .clickable { onClick() },
+            .background(
+                if (isDisable) colorResource(id = R.color.prussian_blue_disable)
+                else colorResource(id = R.color.prussian_blue)
+            )
+            .clickable { onClick.invoke() },
     )
     {
         Text(

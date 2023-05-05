@@ -29,9 +29,9 @@ import com.bazzar.android.R
 
 @Composable
 fun RemoteImage(
+    modifier: Modifier = Modifier,
     imageUrl: String?,
     description: String? = null,
-    modifier: Modifier = Modifier,
     alignment: Alignment = Alignment.Center,
     placeholder: Painter = painterResource(id = R.drawable.bazzars_home_title),
     contentScale: ContentScale = ContentScale.Crop,

@@ -7,12 +7,11 @@ import com.bazzar.android.presentation.base.ViewState
 
 class AccountContract {
     data class State(
-        val isUserLoggedIn: Boolean? = false,
+        val isUserLoggedIn: Boolean = false,
         val userData: UserData? = null
     ) : ViewState
 
     sealed class Event : ViewEvent {
-        object OnSignupClicked : Event()
         object OnOrderHistoryClicked : Event()
         object OnWishListClicked : Event()
         object OnAddressesClicked : Event()
@@ -24,11 +23,13 @@ class AccountContract {
         object OnRewardCenterClicked : Event()
         object OnLogOutClicked : Event()
         object OnDeleteMyAccountClicked : Event()
+        object OnSignupClicked : Event()
     }
 
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
-            object GoToSignup : Navigation()
+            object GoToOrdersHistory : Navigation()
+            object GoToRegistration : Navigation()
         }
     }
 

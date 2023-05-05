@@ -194,6 +194,21 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
+    override suspend fun resendOtp(userId: Int): Flow<Result<out Any>> =
+        flow {
+            try {
+                homeRemoteDataSource.resendOtp(userId).let {
+                    if (it.isSuccessful) {
+                        emit(Result.Success(it.body()?.data ?: true))
+                    } else {
+                        Result.Error("", "error will be handled")
+                    }
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "verifyOtpError: ", throwable)
+                emit(Result.Error(false, throwable.message))
+            }
+        }.onStart { emit(Result.Loading(false)) }.flowOn(Dispatchers.IO)
 
     override suspend fun addUserAddress(userAddress: UserAddress): Flow<Result<Any>> {
         TODO("Not yet implemented")
