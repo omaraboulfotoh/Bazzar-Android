@@ -1,14 +1,14 @@
 package com.bazzar.android.presentation.onboarding
 
 import com.android.local.SharedPrefersManager
-import com.bazzar.android.presentation.app.GlobalState
+import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class OnBoardingViewModel @Inject constructor(
-    globalState: GlobalState,
+    globalState: IGlobalState,
     private val sharedPrefersManager: SharedPrefersManager
 ) :
     BaseViewModel<OnBoardingContract.Event, OnBoardingContract.State, OnBoardingContract.Effect>(

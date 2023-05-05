@@ -6,7 +6,8 @@ import com.bazzar.android.common.navigateAndClearBackStack
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.destinations.HomeScreenDestination
-import com.bazzar.android.presentation.destinations.OnBoardingDestination
+import com.bazzar.android.presentation.destinations.MainScreenDestination
+import com.bazzar.android.presentation.destinations.OnBoardingScreenDestination
 import com.bazzar.android.presentation.splash.composables.SplashScreenContent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
@@ -24,13 +25,14 @@ fun SplashScreen(
 
     viewModel.sideEffect { effect ->
         when (effect) {
-            SplashContract.Effect.Navigation.GoToHome -> navigator.navigateAndClearBackStack(
-                OnBoardingDestination
-            )
+            SplashContract.Effect.Navigation.GoToHome ->
+                navigator.navigateAndClearBackStack(MainScreenDestination())
 
-            SplashContract.Effect.Navigation.GoToOnBoarding -> navigator.navigateAndClearBackStack(
-                HomeScreenDestination
-            )
+            SplashContract.Effect.Navigation.GoToOnBoarding -> {
+                navigator.navigateAndClearBackStack(
+                    OnBoardingScreenDestination
+                )
+            }
         }
     }
     SplashScreenContent(state = state, onEventSent = { viewModel.setEvent(it) })

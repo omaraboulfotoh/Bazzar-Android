@@ -22,6 +22,7 @@ import com.bazzar.android.common.navigateAndClearBackStack
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.presentation.composables.PrimaryButton
 import com.bazzar.android.presentation.destinations.HomeScreenDestination
+import com.bazzar.android.presentation.destinations.MainScreenDestination
 import com.bazzar.android.presentation.theme.COLOR_BLUE
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -29,8 +30,8 @@ import com.google.accompanist.pager.rememberPagerState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@Destination
 @Composable
+@Destination
 fun OnBoardingScreen(
     viewModel: OnBoardingViewModel = hiltViewModel(),
     navigator: DestinationsNavigator,
@@ -41,7 +42,7 @@ fun OnBoardingScreen(
     viewModel.sideEffect { effect ->
         when (effect) {
             OnBoardingContract.Effect.Navigation.GoToHome ->
-                navigator.navigateAndClearBackStack(HomeScreenDestination)
+                navigator.navigateAndClearBackStack(MainScreenDestination())
         }
     }
 
