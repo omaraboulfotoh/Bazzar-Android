@@ -1,12 +1,14 @@
 package com.android.network.datasource
 
 import com.android.model.home.*
+import com.android.model.order.OrderHistory
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
 import com.android.model.request.VerifyOtpRequest
 import com.android.model.responses.base.BaseWrapper
 import retrofit2.Response
+import retrofit2.http.Query
 
 interface HomeRemoteDataSource {
     suspend fun getHome(): Response<BaseWrapper<HomeResponse>>
@@ -21,5 +23,6 @@ interface HomeRemoteDataSource {
     suspend fun addUserAddress(userAddress: UserAddress): Response<BaseWrapper<Any>>
     suspend fun updateUserAddress(userAddress: UserAddress): Response<BaseWrapper<Any>>
     suspend fun loadCheckout(checkout: Checkout): Response<BaseWrapper<Any>>
+    suspend fun getOrdersHistory(arabic: Boolean = false): Response<BaseWrapper<List<OrderHistory>>>
 
 }

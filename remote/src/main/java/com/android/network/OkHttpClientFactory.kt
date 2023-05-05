@@ -4,6 +4,7 @@ import com.android.local.SharedPrefersManager
 import com.android.network.OkHttpClientFactory.createOkHttpClient
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLSocket
@@ -31,8 +32,8 @@ object OkHttpClientFactory {
         val timeout = 500L
 
         val builder = OkHttpClient.Builder()
-            .addInterceptor(makeLoggingInterceptor(true))
             .addInterceptor(makeInterceptor(prefersStore))
+            .addInterceptor(makeLoggingInterceptor(true))
             .connectTimeout(timeout, TimeUnit.SECONDS)
             .readTimeout(timeout, TimeUnit.SECONDS)
 
@@ -60,7 +61,7 @@ object OkHttpClientFactory {
             val original = chain.request()
             val requestBuilder = original.newBuilder()
             requestBuilder.addHeader("Content-Type", "application/json")
-                .addHeader("Accept-Language", "en")
+                .addHeader("Accept-Language", prefersStore.getAppLanguage())
                 .addHeader("Accept", "application/json")
             prefersStore.getToken()?.let {
                 requestBuilder.addHeader("Authorization", "Bearer $it")

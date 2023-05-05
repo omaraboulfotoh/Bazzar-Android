@@ -9,6 +9,7 @@ import com.android.model.home.HomeResponse
 import com.android.model.home.Product
 import com.android.model.home.UserAddress
 import com.android.model.home.UserData
+import com.android.model.order.OrderHistory
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
@@ -222,5 +223,16 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         TODO("Not yet implemented")
     }
 
-
+    override suspend fun getOrdersHistory(arabic: Boolean): Flow<Result<List<OrderHistory>>> =
+        flow {
+            try {
+                homeRemoteDataSource.getOrdersHistory(arabic).let {
+                    if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: listOf()))
+                    else emit(Result.Error(listOf(), "error will be handled"))
+                }
+            }catch (throwable: Throwable) {
+                Log.e("Error", "getOrdersHistory: ", throwable)
+                emit(Result.Error(listOf(), throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 }

@@ -1,6 +1,7 @@
 package com.bazzar.android.presentation.ordersHistory
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
@@ -16,11 +17,15 @@ fun OrdersHistoryScreen(
 ) {
     val state = viewModel.viewState()
 
+    LaunchedEffect(Unit) {
+        viewModel.init()
+    }
+
     viewModel.sideEffect { effect ->
         when (effect) {
-            else -> {}
+            is OrdersHistoryContract.Effect.Navigation.GoToBack -> navigator.navigateUp()
         }
     }
 
-    OrdersHistoryScreenContent()
+    OrdersHistoryScreenContent(state = state) { viewModel.setEvent(it) }
 }

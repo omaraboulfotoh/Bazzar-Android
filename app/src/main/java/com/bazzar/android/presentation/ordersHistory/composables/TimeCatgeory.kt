@@ -1,6 +1,7 @@
 package com.bazzar.android.presentation.ordersHistory.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,21 +16,29 @@ import androidx.compose.ui.unit.dp
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
-fun TimeCategory(modifier: Modifier = Modifier) {
+fun TimeCategory(
+    modifier: Modifier = Modifier,
+    timeCategoryList: List<String>,
+    selectedTimeCategoryIndex: Int,
+    onTimeCategoryClicked: (index: Int) -> Unit,
+) {
     LazyRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs),
         contentPadding = PaddingValues(horizontal = BazzarTheme.spacing.xs)
     ) {
-        itemsIndexed(listOf("All", "Last Weak", "Last Month")) { index, s ->
+        itemsIndexed(timeCategoryList) { index, timeCategory ->
             Box(
                 modifier = Modifier
-                    .background(BazzarTheme.colors.white, shape = RoundedCornerShape(8.dp))
-                    .padding(vertical = 8.dp, horizontal = 16.dp),
+                    .background(
+                        BazzarTheme.colors.white, shape = RoundedCornerShape(8.dp)
+                    )
+                    .padding(vertical = BazzarTheme.spacing.xs, horizontal = BazzarTheme.spacing.m)
+                    .clickable { onTimeCategoryClicked.invoke(index) },
             ) {
                 Text(
-                    text = s,
-                    color = if (index == 0) BazzarTheme.colors.black else BazzarTheme.colors.indicatorGrey,
+                    text = timeCategory,
+                    color = if (index == selectedTimeCategoryIndex) BazzarTheme.colors.black else BazzarTheme.colors.indicatorGrey,
                     style = BazzarTheme.typography.captionMedium
                 )
             }

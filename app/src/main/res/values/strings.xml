@@ -132,4 +132,7 @@
 
 
     <string name="history_list">Orders History</string>
+    <string name="order_number">Order Number</string>
+    <string name="order_total">Order Total</string>
+    <string name="qty">Qty</string>
 </resources>

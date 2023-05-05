@@ -1,6 +1,7 @@
 package com.android.network.domain.repos
 
 import com.android.model.home.*
+import com.android.model.order.OrderHistory
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
@@ -21,5 +22,6 @@ interface HomeRepo {
     suspend fun addUserAddress(userAddress: UserAddress): Flow<Result<Any>>
     suspend fun updateUserAddress(userAddress: UserAddress): Flow<Result<Any>>
     suspend fun loadCheckout(checkout: Checkout): Flow<Result<Any>>
+    suspend fun getOrdersHistory(arabic: Boolean = false): Flow<Result<List<OrderHistory>>>
 
 }
