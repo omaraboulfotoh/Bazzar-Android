@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.android.model.home.Brand
 import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.HeaderTextWithViewAll
-import com.bazzar.android.presentation.composables.RemoteImage
+import com.bazzar.android.presentation.composables.RemoteImageCard
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 fun LazyListScope.FeaturedBrands(
@@ -53,7 +53,7 @@ fun LazyListScope.FeaturedBrands(
                     colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.white)),
                     elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
                     content = {
-                        RemoteImage(
+                        RemoteImageCard(
                             imageUrl = product.imagePath,
                             contentScale = ContentScale.Inside,
                             background = BazzarTheme.colors.white,

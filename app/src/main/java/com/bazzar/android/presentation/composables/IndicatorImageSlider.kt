@@ -39,8 +39,7 @@ fun IndicatorImageSlider(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(375.dp)
-            .padding(bottom = BazzarTheme.spacing.m),
+            .height(375.dp),
         shape = Shapes.large,
         backgroundColor = BazzarTheme.colors.white,
 
@@ -52,11 +51,9 @@ fun IndicatorImageSlider(
 
         ) {
             BazzarAppBar(onNavigationClick = { onBackClicked() }, actions = {
-                Box(
-                    modifier = Modifier
-                        .defaultMinSize(minWidth = 50.dp, minHeight = 50.dp)
-                        .clickable { onShareClicked() }
-                ) {
+                Box(modifier = Modifier
+                    .defaultMinSize(minWidth = 50.dp, minHeight = 50.dp)
+                    .clickable { onShareClicked() }) {
                     Icon(
                         modifier = Modifier.align(Alignment.CenterEnd),
                         painter = painterResource(id = R.drawable.ic_share),
@@ -80,11 +77,10 @@ fun IndicatorImageSlider(
                 ) { page ->
                     RemoteImage(
                         imageUrl = (imagePathList[page]),
-                        contentScale = ContentScale.Inside,
+                        contentScale = ContentScale.Crop,
                         background = BazzarTheme.colors.white,
                         withShimmer = true,
-                        modifier = Modifier
-                            .fillMaxSize()
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
 
@@ -114,7 +110,7 @@ fun IndicatorImageSlider(
                 }
 
             }
-            if (imagePathList.size > 1)
+            if (imagePathList.size > 1) {
                 HorizontalPagerIndicator(
                     pagerState = pagerState,
                     modifier = Modifier.wrapContentSize(),
@@ -123,6 +119,8 @@ fun IndicatorImageSlider(
                     indicatorWidth = BazzarTheme.spacing.xs,
                     indicatorHeight = BazzarTheme.spacing.xs,
                 )
+                Spacer(modifier = Modifier.height(BazzarTheme.spacing.m))
+            }
         }
     }
 }

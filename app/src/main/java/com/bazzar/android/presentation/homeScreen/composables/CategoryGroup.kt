@@ -26,6 +26,7 @@ import com.bazzar.android.R
 import com.bazzar.android.presentation.common.gridItems
 import com.bazzar.android.presentation.composables.HeaderTextWithViewAll
 import com.bazzar.android.presentation.composables.RemoteImage
+import com.bazzar.android.presentation.composables.RemoteImageCard
 
 fun LazyListScope.CategoryGroup(
     categoryList: List<Category>,
@@ -62,7 +63,7 @@ fun LazyListScope.CategoryGroup(
                 RemoteImage(
                     imageUrl = category.imagePath,
                     contentScale = ContentScale.Crop,
-                    withShimmer = false,
+                    withShimmer = true,
                     modifier = Modifier
                         .align(Alignment.TopCenter)
                         .size(120.dp)

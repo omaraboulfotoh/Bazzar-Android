@@ -28,7 +28,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bazzar.android.R
-import com.bazzar.android.presentation.composables.RemoteImage
+import com.bazzar.android.presentation.composables.RemoteImageCard
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
@@ -64,7 +64,7 @@ private fun ItemImages() {
                 )
                 .padding(4.dp)
         ) {
-            RemoteImage(
+            RemoteImageCard(
                 modifier = Modifier.size(28.dp),
                 imageUrl = "https://demo.bazzargate.com/image?ss=55A1F566-4628-4E32-9777-968E5B0689D2&w=200&h=0&r=1"
             )
@@ -80,7 +80,7 @@ private fun ItemImages() {
                 )
                 .padding(4.dp)
         ) {
-            RemoteImage(
+            RemoteImageCard(
                 modifier = Modifier.size(28.dp),
                 imageUrl = "https://demo.bazzargate.com/image?ss=55A1F566-4628-4E32-9777-968E5B0689D2&w=200&h=0&r=1"
             )
@@ -96,7 +96,7 @@ private fun ItemImages() {
                 )
                 .padding(4.dp)
         ) {
-            RemoteImage(
+            RemoteImageCard(
                 modifier = Modifier.size(28.dp),
                 imageUrl = "https://demo.bazzargate.com/image?ss=55A1F566-4628-4E32-9777-968E5B0689D2&w=200&h=0&r=1"
             )

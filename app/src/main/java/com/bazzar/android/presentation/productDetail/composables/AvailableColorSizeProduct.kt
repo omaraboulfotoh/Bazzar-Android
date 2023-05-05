@@ -33,6 +33,7 @@ import com.android.model.home.ItemImages
 import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.Caption
 import com.bazzar.android.presentation.composables.RemoteImage
+import com.bazzar.android.presentation.composables.RemoteImageCard
 import com.bazzar.android.presentation.theme.BazzarTheme
 import com.bazzar.android.presentation.theme.Shapes
 
@@ -98,18 +99,21 @@ fun AvailableColorSizeProduct(
                                     .fillMaxSize()
                                     .padding(BazzarTheme.spacing.xs),
                                 background = BazzarTheme.colors.white,
-                                contentScale = ContentScale.Fit
+                                contentScale = ContentScale.FillBounds
                             )
                         } else {
-                            Caption(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(horizontal = BazzarTheme.spacing.xxs),
-                                text = item.colorTitle.orEmpty(),
-                                isBold = true,
-                                textAlign = TextAlign.Center,
-                                color = (colorResource(id = if (selectedDetail?.colorId == item.colorId) R.color.prussian_blue else R.color.light_gray))
-                            )
+                            Box(Modifier.fillMaxSize()) {
+                                Caption(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(horizontal = BazzarTheme.spacing.xxs)
+                                        .align(Alignment.Center),
+                                    text = item.colorTitle.orEmpty(),
+                                    isBold = true,
+                                    textAlign = TextAlign.Center,
+                                    color = (colorResource(id = if (selectedDetail?.colorId == item.colorId) R.color.prussian_blue else R.color.light_gray))
+                                )
+                            }
                         }
                     }
                 }
@@ -139,15 +143,18 @@ fun AvailableColorSizeProduct(
                             color = (colorResource(id = if (selectedDetail?.id == item.id) R.color.prussian_blue else R.color.light_gray)),
                         )
                     ) {
-                        Caption(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(horizontal = BazzarTheme.spacing.xxs),
-                            text = item.sizeTitle.orEmpty(),
-                            isBold = true,
-                            textAlign = TextAlign.Center,
-                            color = (colorResource(id = if (selectedDetail?.id == item.id) R.color.prussian_blue else R.color.light_gray))
-                        )
+                        Box(Modifier.fillMaxSize()) {
+                            Caption(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(all = BazzarTheme.spacing.xxs)
+                                    .align(Alignment.Center),
+                                text = item.sizeTitle.orEmpty(),
+                                isBold = true,
+                                textAlign = TextAlign.Center,
+                                color = (colorResource(id = if (selectedDetail?.id == item.id) R.color.prussian_blue else R.color.light_gray))
+                            )
+                        }
                     }
                 }
             }

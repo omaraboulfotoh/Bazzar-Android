@@ -65,7 +65,7 @@ fun SemiCircleImageView(imagePath: String, text: String) {
                 .size(126.dp)
                 .align(Alignment.TopCenter),
         ) {
-            RemoteImage(
+            RemoteImageCard(
                 imageUrl = imagePath,
                 contentScale = ContentScale.Crop, modifier = Modifier
                     .width(126.dp)
