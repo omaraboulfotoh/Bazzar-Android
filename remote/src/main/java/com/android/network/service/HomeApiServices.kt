@@ -1,6 +1,7 @@
 package com.android.network.service
 
 import com.android.model.home.*
+import com.android.model.order.OrderHistory
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
@@ -48,6 +49,8 @@ interface HomeApiServices {
     @POST("LoadCheckout")
     suspend fun loadCheckout(@Body checkout: Checkout): Response<BaseWrapper<Any>>
 
+    @POST("OrderHistory")
+    suspend fun getOrdersHistory(@Query("arabic") arabic: Boolean = false): Response<BaseWrapper<List<OrderHistory>>>
 
 }
 

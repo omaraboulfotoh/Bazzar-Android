@@ -1,6 +1,7 @@
 package com.android.network.datasource.impl
 
 import com.android.model.home.*
+import com.android.model.order.OrderHistory
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
@@ -41,4 +42,7 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
 
     override suspend fun loadCheckout(checkout: Checkout): Response<BaseWrapper<Any>> =
         apiServices.loadCheckout(checkout)
+
+    override suspend fun getOrdersHistory(arabic: Boolean): Response<BaseWrapper<List<OrderHistory>>> =
+        apiServices.getOrdersHistory(arabic)
 }
