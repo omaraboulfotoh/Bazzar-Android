@@ -3,12 +3,13 @@ package com.android.network.service
 import com.android.model.home.*
 import com.android.model.order.OrderHistory
 import com.android.model.request.SearchProductRequest
-import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
 import com.android.model.request.VerifyOtpRequest
 import com.android.model.responses.base.BaseWrapper
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -32,7 +33,11 @@ interface HomeApiServices {
     suspend fun getAllProductDetails(@Query("ItemId") ItemId: Int): Response<BaseWrapper<Product>>
 
     @POST("Login")
-    suspend fun login(@Body userLoginRequest: UserLoginRequest): Response<BaseWrapper<UserData>>
+    @FormUrlEncoded
+    suspend fun login(
+        @Field("phone") phone: String,
+        @Field("password") password: String,
+    ): Response<BaseWrapper<UserData>>
 
     @POST("Register")
     suspend fun register(@Body request: UserRegisterRequest): Response<BaseWrapper<UserData>>

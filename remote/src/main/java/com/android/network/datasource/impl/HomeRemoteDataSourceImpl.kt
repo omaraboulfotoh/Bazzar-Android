@@ -28,7 +28,7 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
         apiServices.register(request)
 
     override suspend fun login(userLoginRequest: UserLoginRequest) =
-        apiServices.login(userLoginRequest)
+        apiServices.login(userLoginRequest.phone, userLoginRequest.password)
 
     override suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest) =
         apiServices.verifyOtp(verifyOtpRequest)

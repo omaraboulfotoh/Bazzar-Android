@@ -80,6 +80,12 @@ fun String.toServerDateFormat(): Date? =
 fun String.toFullDateFormat(): Date? =
     SimpleDateFormat(FULL_TIME_DATE_FORMAT, Locale.US).parse(this)
 
+fun String.fromBasicServerToFullDateFormat(): String? {
+    val serverFormat = SimpleDateFormat(BASIC_SERVER_DATE_FORMAT, Locale.US)
+    val fullDateFormat = SimpleDateFormat(FULL_TIME_DATE_FORMAT, Locale.US)
+    return fullDateFormat.format(serverFormat.parse(this))
+}
+
 fun LocalDate.toDayNameMonthYear() =
     this.toJavaLocalDate()
         .format(DateTimeFormatter.ofPattern(DAYNAME_MONTH_YEAR_DATE_FORMAT, Locale.US))
@@ -122,6 +128,7 @@ fun formatToTime(hourOfDay: Int, minute: Int, seconds: Int = 0): String =
     String.format("%02d:%02d:%02d", hourOfDay, minute, seconds)
 
 const val SERVER_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+const val BASIC_SERVER_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SS"
 const val FULL_TIME_DATE_FORMAT = "yyyy-MM-dd hh:mm a"
 const val DAY_TIME_DATE_FORMAT = "MM/dd hh:mm a"
 const val DATE_TIME_FORMAT: String = "dd-MM-yyyy 'at' hh:mm a"

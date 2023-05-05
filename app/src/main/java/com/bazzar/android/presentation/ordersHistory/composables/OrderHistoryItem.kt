@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
@@ -34,7 +35,8 @@ import com.android.model.order.OrderHistory
 import com.android.model.order.OrderItem
 import com.android.model.order.StatusLog
 import com.bazzar.android.R
-import com.bazzar.android.presentation.composables.RemoteImageCard
+import com.bazzar.android.common.fromBasicServerToFullDateFormat
+import com.bazzar.android.presentation.composables.RemoteImage
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
@@ -55,7 +57,7 @@ fun OrderHistoryItem(
                 totalPrice = "${orderHistory.totalPrice}"
             )
             OrderStatus(orderStatus = orderHistory.statusLog.orEmpty())
-            OrderFooter(date = orderHistory.orderDate, orderHistory.orderDate)
+            OrderFooter(date = orderHistory.orderDate)
         }
     }
 }
@@ -63,7 +65,9 @@ fun OrderHistoryItem(
 @Composable
 private fun ItemImages(items: List<OrderItem>) {
     Row(
-        modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         items.forEach {
             Box(
@@ -83,6 +87,26 @@ private fun ItemImages(items: List<OrderItem>) {
                 )
             }
         }
+        Text(
+            text = buildAnnotatedString {
+                withStyle(
+                    style = SpanStyle(
+                        fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                        fontSize = 14.sp,
+                    )
+                ) {
+                    append(stringResource(id = R.string.qty))
+                }
+                withStyle(
+                    style = SpanStyle(
+                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        fontSize = 14.sp,
+                    )
+                ) {
+                    append(":x${items.size}")
+                }
+            }
+        )
     }
 }
 
@@ -103,7 +127,7 @@ private fun OrderNumberAndPrice(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = "Order Number",
+                text = stringResource(id = R.string.order_number),
                 style = BazzarTheme.typography.body2,
                 fontSize = 14.sp,
             )
@@ -126,7 +150,7 @@ private fun OrderNumberAndPrice(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = "Order Total",
+                text = stringResource(id = R.string.order_total),
                 style = BazzarTheme.typography.body2,
                 fontSize = 14.sp,
             )
@@ -144,10 +168,10 @@ private fun OrderNumberAndPrice(
                     withStyle(
                         style = SpanStyle(
                             fontFamily = FontFamily(Font(R.font.montserrat_regular)),
-                            fontSize = 12.sp,
+                            fontSize = 14.sp,
                         )
                     ) {
-                        append("kw")
+                        append(" kd")
                     }
                 },
             )
@@ -168,7 +192,7 @@ private fun OrderStatus(orderStatus: List<StatusLog>) {
             Box(
                 modifier = Modifier.border(
                     width = 1.dp,
-                    color = if (item.isSelected == true) BazzarTheme.colors.primaryButtonColor else BazzarTheme.colors.borderColor,
+                    color = if (item.isSelected == true) BazzarTheme.colors.primaryButtonColor else BazzarTheme.colors.stroke,
                     shape = RoundedCornerShape(6.dp)
                 )
             ) {
@@ -176,7 +200,7 @@ private fun OrderStatus(orderStatus: List<StatusLog>) {
                     modifier = Modifier.padding(vertical = 14.dp, horizontal = 10.dp),
                     style = BazzarTheme.typography.overlineBold,
                     text = item.title ?: "",
-                    color = if (index == 0) BazzarTheme.colors.primaryButtonColor else BazzarTheme.colors.textGray
+                    color = if (item.isSelected == true) BazzarTheme.colors.primaryButtonColor else BazzarTheme.colors.textGray
                 )
             }
         }
@@ -184,10 +208,7 @@ private fun OrderStatus(orderStatus: List<StatusLog>) {
 }
 
 @Composable
-private fun OrderFooter(
-    date: String,
-    time: String
-) {
+private fun OrderFooter(date: String) {
     Column(
         modifier = Modifier.padding(
             start = BazzarTheme.spacing.m,
@@ -206,7 +227,7 @@ private fun OrderFooter(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "$date  $time", style = BazzarTheme.typography.overlineBold)
+            Text(text = date.fromBasicServerToFullDateFormat() ?: "", style = BazzarTheme.typography.overlineBold)
 
 //            TextButton(modifier = Modifier
 //                .background(
@@ -217,7 +238,7 @@ private fun OrderFooter(
 //                    width = 1.dp,
 //                    color = BazzarTheme.colors.dodgerBlue,
 //                    shape = RoundedCornerShape(34.dp)
-//                ), shape = RoundedCornerShape(14.dp), onClick = { /*TODO*/ }) {
+//                ), shape = RoundedCornerShape(14.dp), onClick = { }) {
 //                Text(
 //                    modifier = Modifier.padding(vertical = 8.dp, horizontal = 10.dp),
 //                    text = "Order Details",

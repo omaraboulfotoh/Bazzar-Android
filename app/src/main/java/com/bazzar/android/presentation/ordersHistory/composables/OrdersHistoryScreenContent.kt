@@ -32,11 +32,20 @@ fun OrdersHistoryScreenContent(
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
     ) {
-        BazzarAppBar(title = stringResource(id = R.string.history_list), onNavigationClick = { })
+        BazzarAppBar(
+            title = stringResource(id = R.string.history_list),
+            onNavigationClick = { onSendEvent.invoke(OrdersHistoryContract.Event.OnBackIconClicked) }
+        )
         TimeCategory(
             timeCategoryList = state.timeCategoryList.orEmpty(),
             selectedTimeCategoryIndex = state.selectedTimeCategoryIndex,
-            onTimeCategoryClicked = { onSendEvent.invoke(OrdersHistoryContract.Event.OnTimeCategoryClicked(it)) }
+            onTimeCategoryClicked = {
+                onSendEvent.invoke(
+                    OrdersHistoryContract.Event.OnTimeCategoryClicked(
+                        it
+                    )
+                )
+            }
         )
         LazyColumn(
             modifier = Modifier.fillMaxSize(),

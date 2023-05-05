@@ -23,7 +23,7 @@ fun OrdersHistoryScreen(
 
     viewModel.sideEffect { effect ->
         when (effect) {
-            else -> {}
+            is OrdersHistoryContract.Effect.Navigation.GoToBack -> navigator.navigateUp()
         }
     }
 
