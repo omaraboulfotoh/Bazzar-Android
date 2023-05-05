@@ -15,10 +15,15 @@ import androidx.compose.ui.res.stringResource
 import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.BazzarAppBar
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
+import com.bazzar.android.presentation.ordersHistory.OrdersHistoryContract
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
-fun OrdersHistoryScreenContent(modifier: Modifier = Modifier) {
+fun OrdersHistoryScreenContent(
+    modifier: Modifier = Modifier,
+    state: OrdersHistoryContract.State,
+    onSendEvent: (OrdersHistoryContract.Event) -> Unit,
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -28,14 +33,18 @@ fun OrdersHistoryScreenContent(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
     ) {
         BazzarAppBar(title = stringResource(id = R.string.history_list), onNavigationClick = { })
-        TimeCategory()
+        TimeCategory(
+            timeCategoryList = state.timeCategoryList.orEmpty(),
+            selectedTimeCategoryIndex = state.selectedTimeCategoryIndex,
+            onTimeCategoryClicked = { onSendEvent.invoke(OrdersHistoryContract.Event.OnTimeCategoryClicked(it)) }
+        )
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(BazzarTheme.spacing.m),
             verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
         ) {
-            itemsIndexed(listOf(1, 2)) { _, _ ->
-                OrderHistoryItem()
+            itemsIndexed(state.orderList.orEmpty()) { _, item ->
+                OrderHistoryItem(orderHistory = item)
             }
         }
     }

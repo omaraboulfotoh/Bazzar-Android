@@ -10,8 +10,6 @@ import com.google.gson.reflect.TypeToken
 import javax.inject.Inject
 
 class SharedPrefersManager @Inject constructor(private val sharedPreferences: SharedPreferences) {
-    val LANGUAGE_AR = "ar"
-    val LANGUAGE_EN = "en"
 
     fun getAppLanguage(): String {
         return sharedPreferences.getString(Constants.sharedPreference_language, null) ?: LANGUAGE_AR
@@ -96,6 +94,11 @@ class SharedPrefersManager @Inject constructor(private val sharedPreferences: Sh
 
     fun isUserLongedIn(): Boolean {
         return sharedPreferences.contains(Constants.sharedPreference_user_data)
+    }
+
+    companion object {
+        const val LANGUAGE_AR = "ar"
+        const val LANGUAGE_EN = "en"
     }
 
 }

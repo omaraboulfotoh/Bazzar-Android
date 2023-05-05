@@ -20,92 +20,77 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.android.model.order.OrderHistory
+import com.android.model.order.OrderItem
+import com.android.model.order.StatusLog
 import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.RemoteImage
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
-fun OrderHistoryItem(modifier: Modifier = Modifier) {
+fun OrderHistoryItem(
+    modifier: Modifier = Modifier,
+    orderHistory: OrderHistory
+) {
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(22.dp),
-        colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.white)),
+        colors = CardDefaults.cardColors(containerColor = BazzarTheme.colors.white),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
         Column(modifier = Modifier.padding(vertical = 10.dp)) {
-            ItemImages()
-            OrderNumberAndPrice()
-            OrderActions()
-            OrderFooter()
+            ItemImages(items = orderHistory.items.orEmpty())
+            OrderNumberAndPrice(
+                orderNumber = orderHistory.orderNumber,
+                totalPrice = "${orderHistory.totalPrice}"
+            )
+            OrderStatus(orderStatus = orderHistory.statusLog.orEmpty())
+            OrderFooter(date = orderHistory.orderDate, orderHistory.orderDate)
         }
     }
 }
 
 @Composable
-private fun ItemImages() {
+private fun ItemImages(items: List<OrderItem>) {
     Row(
         modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
     ) {
-        Box(
-            modifier = Modifier
-                .padding(horizontal = 4.dp)
-                .background(color = BazzarTheme.colors.white, shape = RoundedCornerShape(6.dp))
-                .border(
-                    width = 1.dp,
-                    color = BazzarTheme.colors.stroke,
-                    shape = RoundedCornerShape(6.dp)
+        items.forEach {
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = BazzarTheme.spacing.xxs)
+                    .background(color = BazzarTheme.colors.white, shape = RoundedCornerShape(6.dp))
+                    .border(
+                        width = 1.dp,
+                        color = BazzarTheme.colors.stroke,
+                        shape = RoundedCornerShape(6.dp)
+                    )
+                    .padding(4.dp)
+            ) {
+                RemoteImage(
+                    modifier = Modifier.size(28.dp),
+                    imageUrl = it.imagePath
                 )
-                .padding(4.dp)
-        ) {
-            RemoteImage(
-                modifier = Modifier.size(28.dp),
-                imageUrl = "https://demo.bazzargate.com/image?ss=55A1F566-4628-4E32-9777-968E5B0689D2&w=200&h=0&r=1"
-            )
-        }
-        Box(
-            modifier = Modifier
-                .padding(horizontal = 4.dp)
-                .background(color = BazzarTheme.colors.white, shape = RoundedCornerShape(6.dp))
-                .border(
-                    width = 1.dp,
-                    color = BazzarTheme.colors.stroke,
-                    shape = RoundedCornerShape(6.dp)
-                )
-                .padding(4.dp)
-        ) {
-            RemoteImage(
-                modifier = Modifier.size(28.dp),
-                imageUrl = "https://demo.bazzargate.com/image?ss=55A1F566-4628-4E32-9777-968E5B0689D2&w=200&h=0&r=1"
-            )
-        }
-        Box(
-            modifier = Modifier
-                .padding(horizontal = 4.dp)
-                .background(color = BazzarTheme.colors.white, shape = RoundedCornerShape(6.dp))
-                .border(
-                    width = 1.dp,
-                    color = BazzarTheme.colors.stroke,
-                    shape = RoundedCornerShape(6.dp)
-                )
-                .padding(4.dp)
-        ) {
-            RemoteImage(
-                modifier = Modifier.size(28.dp),
-                imageUrl = "https://demo.bazzargate.com/image?ss=55A1F566-4628-4E32-9777-968E5B0689D2&w=200&h=0&r=1"
-            )
+            }
         }
     }
 }
 
 @Composable
-private fun OrderNumberAndPrice() {
+private fun OrderNumberAndPrice(
+    orderNumber: String,
+    totalPrice: String,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -124,7 +109,7 @@ private fun OrderNumberAndPrice() {
             )
             Text(
                 modifier = Modifier.padding(top = 4.dp),
-                text = "1000256321",
+                text = orderNumber,
                 style = BazzarTheme.typography.body2Bold,
                 fontSize = 14.sp,
             )
@@ -147,16 +132,31 @@ private fun OrderNumberAndPrice() {
             )
             Text(
                 modifier = Modifier.padding(top = 4.dp),
-                text = "000.000 KW",
-                style = BazzarTheme.typography.body2Bold,
-                fontSize = 14.sp,
+                text = buildAnnotatedString {
+                    withStyle(
+                        style = SpanStyle(
+                            fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                            fontSize = 14.sp,
+                        )
+                    ) {
+                        append(totalPrice)
+                    }
+                    withStyle(
+                        style = SpanStyle(
+                            fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                            fontSize = 12.sp,
+                        )
+                    ) {
+                        append("kw")
+                    }
+                },
             )
         }
     }
 }
 
 @Composable
-private fun OrderActions() {
+private fun OrderStatus(orderStatus: List<StatusLog>) {
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
@@ -164,20 +164,18 @@ private fun OrderActions() {
         contentPadding = PaddingValues(horizontal = BazzarTheme.spacing.m),
         horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs)
     ) {
-        itemsIndexed(
-            listOf(
-                "Order Placed", "Preparing Order", "Out For Delivery", "Foods"
-            )
-        ) { index, item ->
-            TextButton(modifier = Modifier.border(
-                width = 1.dp,
-                color = if (index == 0) BazzarTheme.colors.primaryButtonColor else BazzarTheme.colors.borderColor,
-                shape = RoundedCornerShape(6.dp)
-            ), shape = RoundedCornerShape(6.dp), onClick = { /*TODO*/ }) {
+        itemsIndexed(orderStatus) { index, item ->
+            Box(
+                modifier = Modifier.border(
+                    width = 1.dp,
+                    color = if (item.isSelected == true) BazzarTheme.colors.primaryButtonColor else BazzarTheme.colors.borderColor,
+                    shape = RoundedCornerShape(6.dp)
+                )
+            ) {
                 Text(
                     modifier = Modifier.padding(vertical = 14.dp, horizontal = 10.dp),
                     style = BazzarTheme.typography.overlineBold,
-                    text = item,
+                    text = item.title ?: "",
                     color = if (index == 0) BazzarTheme.colors.primaryButtonColor else BazzarTheme.colors.textGray
                 )
             }
@@ -186,11 +184,19 @@ private fun OrderActions() {
 }
 
 @Composable
-private fun OrderFooter() {
-    Column(modifier = Modifier.padding(start = 16.dp, end = 8.dp)) {
+private fun OrderFooter(
+    date: String,
+    time: String
+) {
+    Column(
+        modifier = Modifier.padding(
+            start = BazzarTheme.spacing.m,
+            end = BazzarTheme.spacing.xs
+        )
+    ) {
         Divider(
             modifier = Modifier
-                .padding(vertical = 16.dp)
+                .padding(vertical = BazzarTheme.spacing.m)
                 .fillMaxWidth()
                 .height(1.dp)
                 .background(BazzarTheme.colors.borderColor)
@@ -200,27 +206,25 @@ private fun OrderFooter() {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = "22/2/2023   02:30 pm", style = BazzarTheme.typography.overlineBold
-            )
+            Text(text = "$date  $time", style = BazzarTheme.typography.overlineBold)
 
-            TextButton(modifier = Modifier
-                .background(
-                    color = BazzarTheme.colors.primaryButtonColor,
-                    shape = RoundedCornerShape(34.dp)
-                )
-                .border(
-                    width = 1.dp,
-                    color = BazzarTheme.colors.dodgerBlue,
-                    shape = RoundedCornerShape(34.dp)
-                ), shape = RoundedCornerShape(14.dp), onClick = { /*TODO*/ }) {
-                Text(
-                    modifier = Modifier.padding(vertical = 8.dp, horizontal = 10.dp),
-                    text = "Order Details",
-                    color = BazzarTheme.colors.dodgerBlue,
-                    style = BazzarTheme.typography.overlineBold
-                )
-            }
+//            TextButton(modifier = Modifier
+//                .background(
+//                    color = BazzarTheme.colors.primaryButtonColor,
+//                    shape = RoundedCornerShape(34.dp)
+//                )
+//                .border(
+//                    width = 1.dp,
+//                    color = BazzarTheme.colors.dodgerBlue,
+//                    shape = RoundedCornerShape(34.dp)
+//                ), shape = RoundedCornerShape(14.dp), onClick = { /*TODO*/ }) {
+//                Text(
+//                    modifier = Modifier.padding(vertical = 8.dp, horizontal = 10.dp),
+//                    text = "Order Details",
+//                    color = BazzarTheme.colors.dodgerBlue,
+//                    style = BazzarTheme.typography.overlineBold
+//                )
+//            }
         }
     }
 }

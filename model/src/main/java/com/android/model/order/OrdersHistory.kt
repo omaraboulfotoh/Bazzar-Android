@@ -18,14 +18,14 @@ data class OrderHistory(
     val orderNotes: String? = null,
     val paymentURL: String? = null,
     val customer: String? = null,
-    val address: Address? = null,
-    val items: List<Item> = emptyList(),
-    val statusLog: List<StatusLog> = emptyList()
+    val address: OrderAddress? = null,
+    val items: List<OrderItem>? = emptyList(),
+    val statusLog: List<StatusLog>? = emptyList()
 ) : Parcelable
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-data class Address(
+data class OrderAddress(
     val id: Int? = null,
     val areaId: Int? = null,
     val streetName: String? = null,
@@ -38,7 +38,7 @@ data class Address(
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-data class Item(
+data class OrderItem(
     val itemDetailId: Int? = null,
     val itemId: Int? = null,
     val categoryTitle: String? = "",
