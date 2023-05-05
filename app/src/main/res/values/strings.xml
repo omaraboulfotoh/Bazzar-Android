@@ -125,6 +125,10 @@
     <string name="onboarding_desc1">انضم لعايلتنا وشاركنا الأرباح\n .سجل ويانا وابدأ البيع</string>
     <string name="onboarding_desc2">تبي تبيع بضاعتك في مزادنا\n .سجل ويانا وابدأ البيع</string>
     <string name="onboarding_desc3">كل ما تشتري تاخذ نقاط أكتر\n .وبالتالي خصومات أكتر</string>
+    <string name="product_added_to_cart">The product has been successfully added to your cart</string>
+    <string name="product_added_to_cart_title">Added To Cart</string>
+    <string name="continue_shopping">Continue shopping</string>
+    <string name="visit_cart">Visit your Cart\n</string>
 
 
 </resources>

@@ -4,8 +4,17 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.spacedBy
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -17,6 +26,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.android.model.home.ItemDetail
+import com.android.model.home.ItemImages
 import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.Caption
 import com.bazzar.android.presentation.composables.RemoteImage
@@ -25,12 +36,11 @@ import com.bazzar.android.presentation.theme.Shapes
 
 @Composable
 fun AvailableColorSizeProduct(
-    itemImages: List<String> = listOf(),
-    sizeList: List<String> = listOf(),
+    itemColors: List<ItemImages> = listOf(),
+    sizeList: List<ItemDetail> = listOf(),
+    selectedDetail: ItemDetail?,
     onColorSelected: (Int) -> Unit,
     onSizeSelected: (Int) -> Unit,
-    isColorItemClicked: Boolean = false,
-    isSizeClicked: Boolean = false,
 ) {
 
     val stateImages = rememberScrollState()
@@ -56,57 +66,67 @@ fun AvailableColorSizeProduct(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .horizontalScroll(stateSizes),
+                .horizontalScroll(stateImages),
             horizontalArrangement = spacedBy(BazzarTheme.spacing.m),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            itemImages.forEachIndexed { index, item ->
+            itemColors.forEachIndexed { index, item ->
+                val modifier = if (item.imagePath.isNullOrEmpty().not()) Modifier
+                    .size(64.dp) else Modifier
+                    .wrapContentWidth()
+                    .height(64.dp)
                 Card(
-                    modifier = Modifier
-                        .size(64.dp)
-                        .clickable { onColorSelected(index) },
+                    modifier = modifier.clickable { onColorSelected(index) },
                     shape = Shapes.medium,
                     border = BorderStroke(
                         1.dp,
-                        color = (colorResource(id = if (isColorItemClicked) R.color.prussian_blue else R.color.light_gray)),
+                        color = (colorResource(id = if (selectedDetail?.colorId == item.colorId) R.color.prussian_blue else R.color.light_gray)),
                     )
                 ) {
-                    RemoteImage(
-                        imageUrl = item,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(BazzarTheme.spacing.xs),
-                        background = BazzarTheme.colors.white,
-                        contentScale = ContentScale.Fit
-                    )
+                    if (item.imagePath.isNullOrEmpty().not()) {
+                        RemoteImage(
+                            imageUrl = item.imagePath,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(BazzarTheme.spacing.xs),
+                            background = BazzarTheme.colors.white,
+                            contentScale = ContentScale.Fit
+                        )
+                    } else {
+                        Caption(
+                            text = item.colorTitle.orEmpty(),
+                            isBold = true,
+                            color = (colorResource(id = if (selectedDetail?.colorId == item.colorId) R.color.prussian_blue else R.color.light_gray))
+                        )
+                    }
                 }
             }
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .horizontalScroll(stateSizes),
-            horizontalArrangement = spacedBy(BazzarTheme.spacing.m),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            sizeList.forEachIndexed { index, sizeTitle ->
-                Card(
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .height(32.dp)
-                        .clickable { onColorSelected(index) },
-                    shape = Shapes.medium,
-                    border = BorderStroke(
-                        1.dp,
-                        color = (colorResource(id = if (isColorItemClicked) R.color.prussian_blue else R.color.light_gray)),
-                    )
-                ) {
-                    Caption(
-                        text = sizeTitle,
-                        isBold = true,
-                        color = (colorResource(id = if (isSizeClicked) R.color.prussian_blue else R.color.light_gray))
-                    )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .horizontalScroll(stateSizes),
+                horizontalArrangement = spacedBy(BazzarTheme.spacing.m),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                sizeList.forEachIndexed { index, item ->
+                    Card(
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .height(32.dp)
+                            .clickable { onSizeSelected(index) },
+                        shape = Shapes.medium,
+                        border = BorderStroke(
+                            1.dp,
+                            color = (colorResource(id = if (selectedDetail?.id == item.id) R.color.prussian_blue else R.color.light_gray)),
+                        )
+                    ) {
+                        Caption(
+                            text = item.sizeTitle.orEmpty(),
+                            isBold = true,
+                            color = (colorResource(id = if (selectedDetail?.id == item.id) R.color.prussian_blue else R.color.light_gray))
+                        )
+                    }
                 }
             }
         }

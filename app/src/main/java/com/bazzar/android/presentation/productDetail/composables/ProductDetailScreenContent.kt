@@ -34,7 +34,8 @@ fun ProductDetailScreenContent(
                 verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs)
             ) {
                 item {
-                    IndicatorImageSlider(imagePathList = state.selectedColoredImagesList,
+                    IndicatorImageSlider(
+                        imagePathList = state.selectedColoredImagesList,
                         showNewBadge = state.productDetail?.isNew.orFalse(),
                         showExclusiveBadge = state.productDetail?.isExclusive.orFalse(),
                         showDiscountBadge = state.productDetail?.discountPercentage != null,
@@ -57,11 +58,10 @@ fun ProductDetailScreenContent(
                         })
                 }
                 item {
-                    AvailableColorSizeProduct(isColorItemClicked = false,
-                        isSizeClicked = false,
-                        itemImages = state.productDetail?.itemImages?.distinctBy { it.colorId }
-                            ?.map { it.imagePath ?: "" } ?: listOf(),
-                        sizeList = state.selectedSizeTitleList,
+                    AvailableColorSizeProduct(
+                        itemColors = state.colorsList,
+                        sizeList = state.sizeTitleList,
+                        selectedDetail = state.selectedItemDetail,
                         onColorSelected = { index ->
                             Event.OnColorItemSelected(
                                 index
