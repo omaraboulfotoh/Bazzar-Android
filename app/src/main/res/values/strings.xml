@@ -119,5 +119,17 @@
     <string name="sku_format">SKU: %s</string>
     <string name="read_more">Read More</string>
     <string name="read_less">Read Less</string>
+    <string name="onboarding_start">ابدأ</string>
+    <string name="onboarding_skip">تخطي</string>
+    <string name="onboarding_title">مع بازارز.. إنت غير</string>
+    <string name="onboarding_desc1">انضم لعايلتنا وشاركنا الأرباح\n .سجل ويانا وابدأ البيع</string>
+    <string name="onboarding_desc2">تبي تبيع بضاعتك في مزادنا\n .سجل ويانا وابدأ البيع</string>
+    <string name="onboarding_desc3">كل ما تشتري تاخذ نقاط أكتر\n .وبالتالي خصومات أكتر</string>
+    <string name="product_added_to_cart">The product has been successfully added to your cart</string>
+    <string name="product_added_to_cart_title">Added To Cart</string>
+    <string name="continue_shopping">Continue shopping</string>
+    <string name="visit_cart">Visit your Cart\n</string>
+
+
     <string name="history_list">Orders History</string>
 </resources>

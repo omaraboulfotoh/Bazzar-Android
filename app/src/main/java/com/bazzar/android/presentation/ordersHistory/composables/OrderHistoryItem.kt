@@ -34,7 +34,7 @@ import com.android.model.order.OrderHistory
 import com.android.model.order.OrderItem
 import com.android.model.order.StatusLog
 import com.bazzar.android.R
-import com.bazzar.android.presentation.composables.RemoteImage
+import com.bazzar.android.presentation.composables.RemoteImageCard
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable

@@ -46,7 +46,7 @@ android {
         }
         prod {
             dimension 'default'
-            buildConfigField "String", "BASE_URL", "\"https://api.bazzargate.com/MobileApp/\""
+            buildConfigField "String", "BASE_URL", "\"https://api.bzaaarz.com/MobileApp/\""
             buildConfigField "String", "IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/original\""
             buildConfigField "String", "MDB_ID", "\"c9856d0cb57c3f14bf75bdc6c063b8f3\""
             versionNameSuffix "-prod"

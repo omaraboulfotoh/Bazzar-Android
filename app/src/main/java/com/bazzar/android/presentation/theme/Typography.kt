@@ -123,8 +123,10 @@ data class AbsTypography(
         ),
     val captionBold: TextStyle =
         caption.copy(fontWeight = FontWeight.Bold),
+    val captionSemiBold: TextStyle =
+        caption.copy(fontWeight = FontWeight.SemiBold),
     val captionMedium: TextStyle =
         caption.copy(fontWeight = FontWeight.Medium)
-    )
+)
 
 val LocalAbsTypography = staticCompositionLocalOf { AbsTypography() }

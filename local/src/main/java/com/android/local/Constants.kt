@@ -10,4 +10,5 @@ object Constants {
     var sharedPreference_category_list = "categoryList"
     var sharedPreference_product_list = "productList"
     var sharedPreference_user_data = "userData"
+    var first_time_opened = "firstTimeOpened"
 }

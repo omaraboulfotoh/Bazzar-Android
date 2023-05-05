@@ -40,6 +40,9 @@ interface HomeApiServices {
     @POST("VerifyOtp")
     suspend fun verifyOtp(@Body verifyOtpRequest: VerifyOtpRequest): Response<BaseWrapper<UserData>>
 
+    @POST("ResendOTP")
+    suspend fun resendOtp(@Query("userId") userId: Int):Response<BaseWrapper<out Any>>
+
     @POST("AddUserAddress")
     suspend fun addUserAddress(@Body userAddress: UserAddress): Response<BaseWrapper<Any>>
 

@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import com.android.model.home.Product
 import com.bazzar.android.R
 import com.bazzar.android.common.nullIfEmpty
-import com.bazzar.android.presentation.composables.RemoteImage
+import com.bazzar.android.presentation.composables.RemoteImageCard
 
 
 @Preview
@@ -46,7 +46,7 @@ fun ProductCartItem(product: Product? = null, productCounter: Int? = 0) {
                 modifier = Modifier.padding(start = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                RemoteImage(
+                RemoteImageCard(
                     imageUrl = product?.imagePath,
                     modifier = Modifier
                         .padding(top = 12.dp)

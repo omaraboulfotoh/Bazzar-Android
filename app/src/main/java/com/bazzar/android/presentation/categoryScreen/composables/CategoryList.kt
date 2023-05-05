@@ -27,7 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.android.model.home.Category
 import com.bazzar.android.R
-import com.bazzar.android.presentation.composables.RemoteImage
+import com.bazzar.android.presentation.composables.RemoteImageCard
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @SuppressLint("UnrememberedMutableState")
@@ -63,7 +63,7 @@ fun LazyListScope.CategoryList(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.s)
                 ) {
-                    RemoteImage(
+                    RemoteImageCard(
                         imageUrl = category.imagePath,
                         contentScale = ContentScale.FillWidth,
                         modifier = Modifier
@@ -108,7 +108,7 @@ fun LazyListScope.CategoryList(
                             .wrapContentHeight()
                             .padding(top = BazzarTheme.spacing.s)
                     ) {
-                        RemoteImage(
+                        RemoteImageCard(
                             imageUrl = category.imagePath,
                             withShimmer = false,
                             contentScale = ContentScale.Fit,
@@ -148,7 +148,7 @@ fun LazyListScope.CategoryList(
                                     .clickable { onSubCategoryItemClicked(index) },
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                RemoteImage(
+                                RemoteImageCard(
                                     imageUrl = item.imagePath,
                                     withShimmer = true,
                                     contentScale = ContentScale.Crop,

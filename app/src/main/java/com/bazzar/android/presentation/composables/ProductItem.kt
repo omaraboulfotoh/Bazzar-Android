@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -66,7 +65,7 @@ fun ProductItem(product: Product, onItemClicked: (Int) -> Unit) {
                     .fillMaxWidth()
                     .weight(1.5f)
             ) {
-                RemoteImage(
+                RemoteImageCard(
                     imageUrl = product.imagePath,
                     contentScale = ContentScale.Crop,
                     background = BazzarTheme.colors.white,

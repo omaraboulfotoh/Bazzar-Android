@@ -13,6 +13,7 @@ class OtpContract {
 
     sealed class Event : ViewEvent {
         object OnConfirmClicked : Event()
+        object OnSendAgain : Event()
         data class OnOtpChanged(val otp: String) : Event()
     }
 

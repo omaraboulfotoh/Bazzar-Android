@@ -13,7 +13,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
-import com.bazzar.android.presentation.composables.RemoteImage
+import com.bazzar.android.presentation.composables.RemoteImageCard
 import com.bazzar.android.presentation.theme.BazzarTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -54,7 +54,7 @@ fun IndicatorHomeImageSlider(
                 colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.white)),
                 elevation = CardDefaults.cardElevation(defaultElevation = BazzarTheme.spacing.xs),
                 content = {
-                    RemoteImage(
+                    RemoteImageCard(
                         imageUrl = (imagePathList[page]),
                         contentScale = ContentScale.FillWidth,
                         withShimmer = true,
