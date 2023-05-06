@@ -1,9 +1,12 @@
 package com.bazzar.android.presentation.login.composables
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -14,17 +17,23 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
+import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
-fun TermsAndConditions(modifier:Modifier) {
-    Box(modifier = modifier
-        .width(375.dp)
-        .height(115.dp)) {
+fun TermsAndConditions(modifier: Modifier) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(bottom = BazzarTheme.spacing.m)
+    ) {
         Text(
-            modifier = Modifier.padding(top = 78.dp),
+            modifier = Modifier.wrapContentSize(),
+            textAlign = TextAlign.Center,
             text = buildAnnotatedString {
                 withStyle(
                     style = SpanStyle(

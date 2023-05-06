@@ -1,12 +1,15 @@
 package com.android.network.domain.repos
 
 import com.android.model.home.*
+import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
 import com.android.model.request.VerifyOtpRequest
+import com.android.model.responses.base.BaseWrapper
 import com.android.network.states.Result
 import kotlinx.coroutines.flow.Flow
+import retrofit2.Response
 
 interface HomeRepo {
     suspend fun getHome(): Flow<Result<HomeResponse>>
@@ -24,5 +27,10 @@ interface HomeRepo {
     suspend fun getAllAreas(arabic: Boolean): Flow<Result<List<Area>>>
     suspend fun loadCheckout(checkout: Checkout): Flow<Result<Any>>
     suspend fun getOrdersHistory(arabic: Boolean = false): Flow<Result<List<OrderHistory>>>
+    suspend fun loadCheckout(
+        arabic: Boolean = false,
+        request: LoadCheckoutRequest
+    ): Flow<Result<CheckoutModel>>
+
 
 }

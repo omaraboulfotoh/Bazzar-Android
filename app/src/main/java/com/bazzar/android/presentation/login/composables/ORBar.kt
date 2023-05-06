@@ -1,10 +1,13 @@
 package com.bazzar.android.presentation.login.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,20 +20,21 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
+import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
-fun ORBar(modifier:Modifier) {
-    Box(
+fun ORBar(modifier: Modifier) {
+    Row(
         modifier = modifier
             .fillMaxWidth()
-            .wrapContentHeight()
+            .wrapContentHeight(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(1.dp)
     ) {
-        Box(
-            modifier = Modifier
-                .background(Color.White)
-                .height(5.dp)
-                .fillMaxWidth()
-                .align(Alignment.Center)
+        Divider(
+            Modifier
+                .weight(1f)
+                .height(1.dp), color = BazzarTheme.colors.white
         )
         Text(
             text = stringResource(id = R.string.or),
@@ -38,7 +42,11 @@ fun ORBar(modifier:Modifier) {
                 colorResource(id = R.color.prussian_blue),
                 fontFamily = FontFamily(Font(R.font.montserrat_bold))
             ),
-            modifier = Modifier.align(Alignment.Center)
+        )
+        Divider(
+            Modifier
+                .weight(1f)
+                .height(1.dp), color = BazzarTheme.colors.white
         )
     }
 }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,9 +18,10 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
+import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
-fun CreateNewAccount(modifier: Modifier, goToRegister: ()->Unit) {
+fun CreateNewAccount(modifier: Modifier, goToRegister: () -> Unit) {
     Button(
         modifier = modifier
             .width(343.dp)
@@ -30,6 +32,10 @@ fun CreateNewAccount(modifier: Modifier, goToRegister: ()->Unit) {
                 colorResource(id = R.color.prussian_blue),
                 shape = RoundedCornerShape(32.5.dp)
             ),
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = BazzarTheme.colors.backgroundColor,
+            disabledBackgroundColor = BazzarTheme.colors.backgroundColor,
+        ),
         onClick = { goToRegister() }) {
         Text(
             text = stringResource(id = R.string.Create_new_account),

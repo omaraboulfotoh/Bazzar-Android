@@ -1,6 +1,8 @@
 package com.android.network.datasource
 
 import com.android.model.home.*
+import com.android.model.request.CartItemRequest
+import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
@@ -24,5 +26,6 @@ interface HomeRemoteDataSource {
     suspend fun getAllAreas(arabic: Boolean): Response<BaseWrapper<List<Area>>>
     suspend fun loadCheckout(checkout: Checkout): Response<BaseWrapper<Any>>
     suspend fun getOrdersHistory(arabic: Boolean = false): Response<BaseWrapper<List<OrderHistory>>>
+    suspend fun loadCheckout(arabic: Boolean = false,request: LoadCheckoutRequest): Response<BaseWrapper<CheckoutModel>>
 
 }

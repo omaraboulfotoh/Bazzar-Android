@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -70,7 +71,7 @@ fun RegisterDataEntry(
                     .border(
                         width = 1.dp,
                         color = BazzarTheme.colors.primaryButtonTextColorDisabled,
-                        shape = RoundedCornerShape(BazzarTheme.spacing.spacerMini)
+                        shape = RoundedCornerShape(32.5.dp),
                     )
                     .padding(vertical = 4.dp),
                 colors = TextFieldDefaults.textFieldColors(
@@ -82,7 +83,7 @@ fun RegisterDataEntry(
                 ),
                 value = fullName,
                 onValueChange = onNameChanged,
-                shape = RoundedCornerShape(BazzarTheme.spacing.spacerMini),
+                shape = RoundedCornerShape(32.5.dp),
                 placeholder = {
                     Text(
                         text = stringResource(id = R.string.type_name),
@@ -108,9 +109,10 @@ fun RegisterDataEntry(
                     .border(
                         width = 1.dp,
                         color = BazzarTheme.colors.primaryButtonTextColorDisabled,
-                        shape = RoundedCornerShape(BazzarTheme.spacing.spacerMini)
+                        shape = RoundedCornerShape(32.5.dp),
                     )
                     .padding(vertical = 4.dp),
+                shape = RoundedCornerShape(32.5.dp),
                 colors = TextFieldDefaults.textFieldColors(
                     textColor = colorResource(id = R.color.prussian_blue),
                     backgroundColor = BazzarTheme.colors.white,
@@ -146,7 +148,7 @@ fun RegisterDataEntry(
                     .border(
                         width = 1.dp,
                         color = BazzarTheme.colors.primaryButtonTextColorDisabled,
-                        shape = RoundedCornerShape(BazzarTheme.spacing.spacerMini)
+                        shape = RoundedCornerShape(32.5.dp),
                     )
                     .padding(vertical = 4.dp),
                 colors = TextFieldDefaults.textFieldColors(
@@ -157,6 +159,7 @@ fun RegisterDataEntry(
                     disabledIndicatorColor = Color.Transparent
                 ),
                 value = phone, onValueChange = onPhoneChanged,
+                shape = RoundedCornerShape(32.5.dp),
                 placeholder = {
                     Text(
                         text = stringResource(
@@ -230,6 +233,7 @@ fun RegisterDataEntry(
                     )
                 )
             }
+            Spacer(modifier = Modifier.weight(1f))
             Box(Modifier.fillMaxWidth()) {
                 Box(
                     modifier = Modifier

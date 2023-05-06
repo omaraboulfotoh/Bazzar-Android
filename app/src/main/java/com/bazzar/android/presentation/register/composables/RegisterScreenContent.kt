@@ -2,6 +2,7 @@ package com.bazzar.android.presentation.register.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,7 +21,7 @@ import com.bazzar.android.presentation.theme.BazzarTheme
 fun RegisterScreenContent(
     state: RegisterContract.State, onSendEvent: (RegisterContract.Event) -> Unit,
 ) {
-    LazyColumn(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(bottom = BottomNavigationHeight)
@@ -29,38 +30,34 @@ fun RegisterScreenContent(
         verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.s)
 
     ) {
-        item {
-            BazzarAppBar(
-                title = stringResource(id = R.string.create_account),
-                onNavigationClick = {
-                    onSendEvent(RegisterContract.Event.OnBackClicked)
-                },
-            )
-        }
-        item {
-            RegisterDataEntry(
-                modifier = Modifier.padding(vertical = 14.dp),
-                fullName = state.fullName.orEmpty(),
-                email = state.email.orEmpty(),
-                phone = state.phoneNumber.orEmpty(),
-                isTermsChecked = state.isAgreeTermsAndConditions,
-                onPhoneChanged = {
-                    onSendEvent(RegisterContract.Event.OnPhoneChanged(it))
-                },
-                onEmailChanged = {
-                    onSendEvent(RegisterContract.Event.OnEmailChanged(it))
-                },
-                onNameChanged = {
-                    onSendEvent(RegisterContract.Event.OnNameChanged(it))
-                },
-                onTermsAndConditionClicked = {
-                    onSendEvent(RegisterContract.Event.OnAgreeTermsAndConditions)
-                },
-                onCreateAccount = {
-                    onSendEvent(RegisterContract.Event.OnCreateAccount)
-                }
-            )
-        }
+        BazzarAppBar(
+            title = stringResource(id = R.string.create_account),
+            onNavigationClick = {
+                onSendEvent(RegisterContract.Event.OnBackClicked)
+            },
+        )
+        RegisterDataEntry(
+            modifier = Modifier.padding(vertical = 14.dp),
+            fullName = state.fullName.orEmpty(),
+            email = state.email.orEmpty(),
+            phone = state.phoneNumber.orEmpty(),
+            isTermsChecked = state.isAgreeTermsAndConditions,
+            onPhoneChanged = {
+                onSendEvent(RegisterContract.Event.OnPhoneChanged(it))
+            },
+            onEmailChanged = {
+                onSendEvent(RegisterContract.Event.OnEmailChanged(it))
+            },
+            onNameChanged = {
+                onSendEvent(RegisterContract.Event.OnNameChanged(it))
+            },
+            onTermsAndConditionClicked = {
+                onSendEvent(RegisterContract.Event.OnAgreeTermsAndConditions)
+            },
+            onCreateAccount = {
+                onSendEvent(RegisterContract.Event.OnCreateAccount)
+            }
+        )
     }
 }
 

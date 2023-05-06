@@ -2,17 +2,23 @@ package com.bazzar.android.presentation.cartScreen
 
 import com.android.local.SharedPrefersManager
 import com.android.model.home.Product
+import com.android.model.request.CartItemRequest
+import com.android.model.request.LoadCheckoutRequest
+import com.android.network.domain.usecases.HomeUseCase
+import com.android.network.states.Result
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 
 @HiltViewModel
 class CartViewModel @Inject constructor(
     globalState: IGlobalState,
-    private val sharedPrefersManager: SharedPrefersManager
+    private val sharedPrefersManager: SharedPrefersManager,
+    private val homeUseCase: HomeUseCase
 ) : BaseViewModel<CartContract.Event, CartContract.State, CartContract.Effect>(globalState) {
 
     private var isInitialized = false
@@ -62,14 +68,29 @@ class CartViewModel @Inject constructor(
 
     private fun handleCheckout() {
         if (sharedPrefersManager.isUserLongedIn()) {
-            startCheckout()
+            setEffect { CartContract.Effect.Navigation.GoToSelectAddress }
         } else {
             setEffect { CartContract.Effect.Navigation.GoToLogin }
         }
     }
 
     private fun startCheckout() = executeCatching({
-
+        val cartItems = currentState.productCartList.orEmpty().map {
+            CartItemRequest(
+                it.selectedItemDetails?.id.orZero(),
+                it.selectedItemDetails?.quantity.orZero()
+            )
+        }
+        homeUseCase.loadCheckout(false, LoadCheckoutRequest(cartItems = cartItems))
+            .collect { response ->
+                when (response) {
+                    is Result.Error -> globalState.error(response.message.orEmpty())
+                    is Result.Loading -> globalState.loading(true)
+                    is Result.Success -> {
+                        setEffect { CartContract.Effect.Navigation.GoToSelectAddress }
+                    }
+                }
+            }
     })
 
     fun init() {
@@ -81,7 +102,8 @@ class CartViewModel @Inject constructor(
     }
 
     private fun handleCartInfo(productsList: List<Product>) {
-        val totalCount = productsList.sumOf { it.selectedItemDetails?.quantity.orZero() }
+        val totalCount =
+            productsList.sumOf { it.selectedItemDetails?.quantity.orZero() }
         val totalAmount =
             productsList.sumOf { it.selectedItemDetails?.quantity.orZero() * it.selectedItemDetails?.price.orZero() }
         setState {
@@ -94,31 +116,33 @@ class CartViewModel @Inject constructor(
     }
 }
 
-private fun MutableList<Product>.plusOne(itemIndex: Int) = mapIndexed { index, product ->
-    if (itemIndex == index) {
-        product.copy(
-            selectedItemDetails =
-            product.selectedItemDetails?.copy(
-                quantity =
-                product.selectedItemDetails?.quantity.orZero() + 1
+private fun MutableList<Product>.plusOne(itemIndex: Int) =
+    mapIndexed { index, product ->
+        if (itemIndex == index) {
+            product.copy(
+                selectedItemDetails =
+                product.selectedItemDetails?.copy(
+                    quantity =
+                    product.selectedItemDetails?.quantity.orZero() + 1
+                )
             )
-        )
-    } else
-        product
-}
+        } else
+            product
+    }
 
-private fun MutableList<Product>.MinusOne(itemIndex: Int) = mapIndexed { index, product ->
-    if (itemIndex == index) {
-        product.copy(
-            selectedItemDetails =
-            product.selectedItemDetails?.copy(
-                quantity =
-                product.selectedItemDetails?.quantity.orZero() - 1
+private fun MutableList<Product>.MinusOne(itemIndex: Int) =
+    mapIndexed { index, product ->
+        if (itemIndex == index) {
+            product.copy(
+                selectedItemDetails =
+                product.selectedItemDetails?.copy(
+                    quantity =
+                    product.selectedItemDetails?.quantity.orZero() - 1
+                )
             )
-        )
-    } else
-        product
-}
+        } else
+            product
+    }
 
 enum class ItemOperation {
     ADD_ONE,

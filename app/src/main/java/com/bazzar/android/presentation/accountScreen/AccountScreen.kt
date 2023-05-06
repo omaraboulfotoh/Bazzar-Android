@@ -6,6 +6,7 @@ import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.accountScreen.composables.AccountScreenContent
 import com.bazzar.android.presentation.destinations.AddressBookScreenDestination
+import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.destinations.OrdersHistoryScreenDestination
 import com.bazzar.android.presentation.destinations.RegisterScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
@@ -26,9 +27,11 @@ fun AccountScreen(
             is AccountContract.Effect.Navigation.GoToOrdersHistory -> {
                 navigator.navigate(OrdersHistoryScreenDestination())
             }
+
             is AccountContract.Effect.Navigation.GoToRegistration -> {
-                navigator.navigate(RegisterScreenDestination)
+                navigator.navigate(LoginScreenDestination)
             }
+
             is AccountContract.Effect.Navigation.GoToAddressBook -> {
                 navigator.navigate(AddressBookScreenDestination)
             }

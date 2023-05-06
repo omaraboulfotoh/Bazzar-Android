@@ -140,4 +140,6 @@
     <string name="order_number">Order Number</string>
     <string name="order_total">Order Total</string>
     <string name="qty">Qty</string>
+    <string name="password">Enter Password</string>
+    <string name="continue_as_guest">Continue as a guest</string>
 </resources>

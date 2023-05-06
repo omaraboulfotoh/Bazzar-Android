@@ -6,11 +6,13 @@ import com.android.model.home.Area
 import com.android.model.home.Brand
 import com.android.model.home.Category
 import com.android.model.home.Checkout
+import com.android.model.home.CheckoutModel
 import com.android.model.home.HomeResponse
 import com.android.model.home.Product
 import com.android.model.home.UserAddress
 import com.android.model.home.UserData
 import com.android.model.home.OrderHistory
+import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
@@ -267,6 +269,24 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
     override suspend fun loadCheckout(checkout: Checkout): Flow<Result<Any>> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun loadCheckout(
+        arabic: Boolean,
+        request: LoadCheckoutRequest
+    ): Flow<Result<CheckoutModel>> =
+        flow {
+            try {
+                homeRemoteDataSource.loadCheckout(arabic, request).let {
+                    if (it.isSuccessful) emit(
+                        Result.Success(it.body()?.data ?: CheckoutModel())
+                    )
+                    else emit(Result.Error(CheckoutModel(), "error will be handled"))
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "getOrdersHistory: ", throwable)
+                emit(Result.Error(CheckoutModel(), throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
     override suspend fun getOrdersHistory(arabic: Boolean): Flow<Result<List<OrderHistory>>> =
         flow {

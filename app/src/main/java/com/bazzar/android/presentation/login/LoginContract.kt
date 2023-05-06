@@ -9,9 +9,11 @@ class LoginContract {
         var mobileNumber: String? = "",
         var password: String? = "",
     ) : ViewState
+
     sealed class Event : ViewEvent {
         object OnLogin : Event()
-
+        data class OnPhoneChanged(val phoneNumber: String) : Event()
+        data class OnPasswordChanged(val password: String) : Event()
 
         //navigation
         object OnCreateNewAccount : Event()
@@ -22,7 +24,7 @@ class LoginContract {
         sealed class Navigation : Effect() {
             object GoToRegisterScreen : Navigation()
             object GoToHomeAsGuest : Navigation()
-            object GoToHome : Navigation()
+            object GoBack : Navigation()
         }
     }
 

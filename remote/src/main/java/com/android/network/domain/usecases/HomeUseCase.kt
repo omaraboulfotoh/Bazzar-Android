@@ -1,6 +1,7 @@
 package com.android.network.domain.usecases
 
 import com.android.model.home.*
+import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
@@ -26,6 +27,9 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
     suspend fun getAllAreas(arabic: Boolean) = homeRepo.getAllAreas(arabic)
     suspend fun updateUserAddress(userAddress: UserAddress) =
         homeRepo.updateUserAddress(userAddress)
+
     suspend fun loadCheckout(checkout: Checkout) = homeRepo.loadCheckout(checkout)
     suspend fun getOrdersHistory(arabic: Boolean = false) = homeRepo.getOrdersHistory(arabic)
+    suspend fun loadCheckout(arabic: Boolean = false, request: LoadCheckoutRequest) =
+        homeRepo.loadCheckout(arabic, request)
 }

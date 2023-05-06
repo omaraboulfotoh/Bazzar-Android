@@ -1,6 +1,7 @@
 package com.android.network.service
 
 import com.android.model.home.*
+import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserRegisterRequest
 import com.android.model.request.VerifyOtpRequest
@@ -34,8 +35,8 @@ interface HomeApiServices {
     @POST("Login")
     @FormUrlEncoded
     suspend fun login(
-        @Field("phone") phone: String,
-        @Field("password") password: String,
+        @Field("Phone") phone: String,
+        @Field("Password") password: String,
     ): Response<BaseWrapper<UserData>>
 
     @POST("Register")
@@ -45,7 +46,7 @@ interface HomeApiServices {
     suspend fun verifyOtp(@Body verifyOtpRequest: VerifyOtpRequest): Response<BaseWrapper<UserData>>
 
     @POST("ResendOTP")
-    suspend fun resendOtp(@Query("userId") userId: Int):Response<BaseWrapper<String>>
+    suspend fun resendOtp(@Query("userId") userId: Int): Response<BaseWrapper<String>>
 
     @GET("GetAllUserAddress")
     suspend fun getAllAddresses(): Response<BaseWrapper<List<UserAddress>>>
@@ -64,6 +65,13 @@ interface HomeApiServices {
 
     @POST("OrderHistory")
     suspend fun getOrdersHistory(@Query("arabic") arabic: Boolean = false): Response<BaseWrapper<List<OrderHistory>>>
+
+    @POST("LoadCheckout")
+    suspend fun loadCheckout(
+        @Query("arabic") arabic: Boolean = false,
+        @Body body: LoadCheckoutRequest
+    ): Response<BaseWrapper<CheckoutModel>>
+
 
 }
 
