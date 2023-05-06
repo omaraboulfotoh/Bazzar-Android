@@ -50,13 +50,23 @@ fun AccountScreenContent(state: AccountContract.State, onSendEvent: (AccountCont
                 iconPainter = painterResource(R.drawable.icon_awesome_flag)
             )
         }
-        item {
-            BarItem(
-                modifier = Modifier.padding(top = 24.dp),
-                title = stringResource(id = R.string.history_list),
-                iconPainter = painterResource(id = R.drawable.ic_order_history),
-                onClick = { onSendEvent(AccountContract.Event.OnOrderHistoryClicked) }
-            )
+        if (state.isUserLoggedIn) {
+            item {
+                BarItem(
+                    modifier = Modifier.padding(top = 24.dp),
+                    title = stringResource(id = R.string.history_list),
+                    iconPainter = painterResource(id = R.drawable.ic_order_history),
+                    onClick = { onSendEvent(AccountContract.Event.OnOrderHistoryClicked) }
+                )
+            }
+            item {
+                BarItem(
+                    modifier = Modifier.padding(top = 24.dp),
+                    title = stringResource(id = R.string.address_book),
+                    iconPainter = painterResource(id = R.drawable.ic_location),
+                    onClick = { onSendEvent(AccountContract.Event.OnAddressesClicked) }
+                )
+            }
         }
         item {
             BarItem(

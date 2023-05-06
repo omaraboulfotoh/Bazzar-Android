@@ -30,6 +30,7 @@ class AccountContract {
         sealed class Navigation : Effect() {
             object GoToOrdersHistory : Navigation()
             object GoToRegistration : Navigation()
+            object GoToAddressBook : Navigation()
         }
     }
 

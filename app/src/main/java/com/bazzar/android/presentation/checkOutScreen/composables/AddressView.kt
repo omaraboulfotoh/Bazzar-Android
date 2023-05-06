@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.android.model.home.UserAddress
 import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.MultipleStylesInText
 import com.bazzar.android.presentation.composables.PrimaryButton
@@ -75,7 +76,11 @@ fun AddressView(
             }
 
         }
-        AddressItem(address, phoneNumber, toggleEnabled)
+        AddressItem(
+            address = UserAddress(id = 0, streetName = "mansoura", isDefault = false),
+            onEditAddressClick = { },
+            onSetAsDefaultClick = { },
+        )
         PrimaryButton(
             text = stringResource(id = R.string.add_new_address),
             onClick = { /*TODO*/ },

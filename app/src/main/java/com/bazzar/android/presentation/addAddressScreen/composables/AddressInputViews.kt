@@ -20,109 +20,183 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.android.model.home.Area
 import com.bazzar.android.R
-import com.bazzar.android.presentation.composables.PickerTextField
+import com.bazzar.android.presentation.composables.PickerTextInputField
 import com.bazzar.android.presentation.composables.TextInputField
+import com.bazzar.android.presentation.theme.BazzarTheme
 
-@Preview
+//@Preview
 @Composable
-fun AddressInputViews(toggleEnabled: Boolean = false) {
-    val scrollState = rememberScrollState()
+fun AddressInputViews(
+    modifier: Modifier = Modifier,
+    governments: List<Area>,
+    areas: List<Area>,
+    selectedGovernment: Area? = null,
+    selectedArea: Area? = null,
+    streetName: String? = null,
+    jaddah: String? = null,
+    houseNumber: String? = null,
+    flatNumber: String? = null,
+    notes: String? = null,
+    toggleEnabled: Boolean = false,
+    onSelectGovernment: (government: Area) -> Unit,
+    onSelectArea: (area: Area) -> Unit,
+    onStreetNameChangec: (value: String) -> Unit,
+    onJaddahChanged: (value: String) -> Unit,
+    onHouseNumberChanged: (value: String) -> Unit,
+    onFlatNumberChanged: (value: String) -> Unit,
+    onNotesChanged: (value: String) -> Unit,
+    onToggleChanged: (value: Boolean) -> Unit,
+) {
     Column(
-        modifier = Modifier
-            .verticalScroll(scrollState)
+        modifier = modifier
+            .verticalScroll(rememberScrollState())
             .background(Color.White)
-            .padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp),
+            .padding(horizontal = BazzarTheme.spacing.m),
+        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
         horizontalAlignment = Alignment.Start
     ) {
-        PickerTextField(
-            text = "",
+        PickerTextInputField(
+            modifier = Modifier.fillMaxWidth(),
+            text = selectedGovernment?.title ?: "",
             label = stringResource(R.string.governorate),
             placeholder = stringResource(id = R.string.select_your_governorate),
-            onPick = {}
+            pickerItems = governments,
+            selectedItem = selectedGovernment,
+            textStyle = BazzarTheme.typography.body2Bold.copy(fontSize = 14.sp),
+            textInputBackgroundColor = Color.Transparent,
+            onValueChange = { },
+            onItemSelection = { onSelectGovernment.invoke(it) },
+            labelColor = BazzarTheme.colors.primaryButtonColor,
+            textColor = BazzarTheme.colors.primaryButtonColor,
+            placeholderColor = BazzarTheme.colors.primaryButtonColor,
+            PickerItemView = { item, onClick ->
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onClick.invoke(item) }
+                        .padding(vertical = BazzarTheme.spacing.xs),
+                    text = item.title ?: "",
+                    style = BazzarTheme.typography.body2,
+                    fontSize = 14.sp,
+                )
+            }
         )
-        PickerTextField(
-            text = "",
+        PickerTextInputField(
+            modifier = Modifier.fillMaxWidth(),
+            text = selectedArea?.title ?: "",
             label = stringResource(R.string.area),
             placeholder = stringResource(id = R.string.select_your_area),
-            onPick = {}
+            pickerItems = areas,
+            selectedItem = selectedArea,
+            textStyle = BazzarTheme.typography.body2Bold.copy(fontSize = 14.sp),
+            textInputBackgroundColor = Color.Transparent,
+            onValueChange = { },
+            onItemSelection = { onSelectArea.invoke(it) },
+            labelColor = BazzarTheme.colors.primaryButtonColor,
+            textColor = BazzarTheme.colors.primaryButtonColor,
+            placeholderColor = BazzarTheme.colors.primaryButtonColor,
+            PickerItemView = { item, onClick ->
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onClick.invoke(item) }
+                        .padding(vertical = BazzarTheme.spacing.xs),
+                    text = item.title ?: "",
+                    style = BazzarTheme.typography.body2,
+                    fontSize = 14.sp,
+                )
+            }
         )
         TextInputField(
-            text = "",
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            text = streetName.orEmpty(),
             label = stringResource(id = R.string.street),
             placeholder = stringResource(id = R.string.select_your_street_name),
-            modifier = Modifier
-                .wrapContentHeight()
-                .defaultMinSize(88.dp, 88.dp)
-                .fillMaxWidth(),
-            onValueChange = {}
-        )
-        Text(
-            text = stringResource(id = R.string.optional_data),
-            modifier = Modifier.fillMaxWidth(),
-            style = MaterialTheme.typography.subtitle1.copy(
-                fontFamily = FontFamily(Font(R.font.montserrat_bold)),
-                color = colorResource(id = R.color.prussian_blue),
-            )
+            borderFocusColor = BazzarTheme.colors.primaryButtonColor,
+            borderUnFocusColor = BazzarTheme.colors.stroke,
+            textStyle = BazzarTheme.typography.body2.copy(fontSize = 14.sp, textAlign = TextAlign.End),
+            placeHolderStyle = BazzarTheme.typography.body2.copy(fontSize = 14.sp),
+            placeholderColor = BazzarTheme.colors.primaryButtonColor,
+            textColor = BazzarTheme.colors.primaryButtonColor,
+            onValueChange = { onStreetNameChangec.invoke(it) }
         )
         TextInputField(
-            text = "",
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            text = jaddah.orEmpty(),
             label = stringResource(id = R.string.jaddah),
             placeholder = stringResource(id = R.string.optional),
-            modifier = Modifier
-                .wrapContentHeight()
-                .defaultMinSize(88.dp, 88.dp)
-                .fillMaxWidth(),
-            onValueChange = {}
+            borderFocusColor = BazzarTheme.colors.primaryButtonColor,
+            borderUnFocusColor = BazzarTheme.colors.stroke,
+            textStyle = BazzarTheme.typography.body2.copy(fontSize = 14.sp, textAlign = TextAlign.End),
+            placeHolderStyle = BazzarTheme.typography.body2.copy(fontSize = 14.sp),
+            placeholderColor = BazzarTheme.colors.primaryButtonColor,
+            textColor = BazzarTheme.colors.primaryButtonColor,
+            onValueChange = { onJaddahChanged.invoke(it) }
 
         )
         TextInputField(
-            text = "",
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            text = houseNumber.orEmpty(),
             label = stringResource(id = R.string.house_number),
             placeholder = stringResource(id = R.string.optional),
-            modifier = Modifier
-                .wrapContentHeight()
-                .defaultMinSize(88.dp, 88.dp)
-                .fillMaxWidth(),
-            onValueChange = {}
+            borderFocusColor = BazzarTheme.colors.primaryButtonColor,
+            borderUnFocusColor = BazzarTheme.colors.stroke,
+            textStyle = BazzarTheme.typography.body2.copy(fontSize = 14.sp, textAlign = TextAlign.End),
+            placeHolderStyle = BazzarTheme.typography.body2.copy(fontSize = 14.sp),
+            placeholderColor = BazzarTheme.colors.primaryButtonColor,
+            textColor = BazzarTheme.colors.primaryButtonColor,
+            onValueChange = { onHouseNumberChanged.invoke(it) }
 
         )
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            TextInputField(
-                text = "",
-                label = stringResource(id = R.string.floor_number),
-                placeholder = stringResource(id = R.string.optional),
-                modifier = Modifier
-                    .width(150.dp)
-                    .height(60.dp),
-                onValueChange = {}
-            )
-            TextInputField(
-                text = "",
-                label = stringResource(id = R.string.flat_number),
-                placeholder = stringResource(id = R.string.optional),
-                modifier = Modifier
-                    .width(150.dp)
-                    .height(60.dp),
-                onValueChange = {},
-            )
-
-        }
         TextInputField(
-            text = "",
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            text = flatNumber.orEmpty(),
+            label = stringResource(id = R.string.flat_number),
+            placeholder = stringResource(id = R.string.optional),
+            borderFocusColor = BazzarTheme.colors.primaryButtonColor,
+            borderUnFocusColor = BazzarTheme.colors.stroke,
+            textStyle = BazzarTheme.typography.body2.copy(fontSize = 14.sp, textAlign = TextAlign.End),
+            placeHolderStyle = BazzarTheme.typography.body2.copy(fontSize = 14.sp),
+            placeholderColor = BazzarTheme.colors.primaryButtonColor,
+            textColor = BazzarTheme.colors.primaryButtonColor,
+            onValueChange = { onFlatNumberChanged.invoke(it) }
+
+        )
+        TextInputField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            text = notes.orEmpty(),
             label = stringResource(id = R.string.notes),
             placeholder = stringResource(id = R.string.optional),
-            modifier = Modifier
-                .wrapContentHeight()
-                .defaultMinSize(88.dp, 88.dp)
-                .fillMaxWidth(),
-            onValueChange = {}
+            borderFocusColor = BazzarTheme.colors.primaryButtonColor,
+            borderUnFocusColor = BazzarTheme.colors.stroke,
+            textStyle = BazzarTheme.typography.body2.copy(fontSize = 14.sp, textAlign = TextAlign.End),
+            placeHolderStyle = BazzarTheme.typography.body2.copy(fontSize = 14.sp),
+            placeholderColor = BazzarTheme.colors.primaryButtonColor,
+            textColor = BazzarTheme.colors.primaryButtonColor,
+            onValueChange = { onNotesChanged.invoke(it) }
 
         )
-        Row {
+        Row(
+            modifier = Modifier
+                .padding(top = BazzarTheme.spacing.m)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
             Text(
                 text = stringResource(id = R.string.set_default_address),
                 textAlign = TextAlign.Start,
@@ -138,14 +212,14 @@ fun AddressInputViews(toggleEnabled: Boolean = false) {
                     .height(20.dp)
                     .clip(RoundedCornerShape(10.dp))
                     .background(colorResource(id = if (toggleEnabled) R.color.deep_sky_blue else R.color.light_gray))
-                    .clickable {/* TODO */ },
+                    .clickable { onToggleChanged.invoke(toggleEnabled.not()) },
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.toggle_circle),
                     contentDescription = null,
                     tint = colorResource(id = if (toggleEnabled) R.color.prussian_blue else R.color.dark_gray),
-                    modifier = if (!toggleEnabled) Modifier
+                    modifier = if (toggleEnabled) Modifier
                         .align(Alignment.CenterStart)
                         .padding(2.dp) else Modifier
                         .align(Alignment.CenterEnd)

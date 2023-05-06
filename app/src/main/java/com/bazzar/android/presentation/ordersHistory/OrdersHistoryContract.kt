@@ -1,6 +1,6 @@
 package com.bazzar.android.presentation.ordersHistory
 
-import com.android.model.order.OrderHistory
+import com.android.model.home.OrderHistory
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
 import com.bazzar.android.presentation.base.ViewState

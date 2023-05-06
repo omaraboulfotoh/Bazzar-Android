@@ -56,9 +56,9 @@ class OtpViewModel @Inject constructor(
     private fun resendOtp() = executeCatching({
         val id = currentState.userData?.id ?: return@executeCatching
         homeUseCase.resendOtp(userId = id)
-            .collect { resendReponse ->
-                when (resendReponse) {
-                    is Result.Error -> globalState.error(resendReponse.message.orEmpty())
+            .collect { resendResponse ->
+                when (resendResponse) {
+                    is Result.Error -> globalState.error(resendResponse.message.orEmpty())
                     is Result.Loading -> globalState.loading(true)
                     is Result.Success -> { }
                 }

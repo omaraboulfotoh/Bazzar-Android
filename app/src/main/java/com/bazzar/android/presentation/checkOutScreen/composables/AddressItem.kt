@@ -3,8 +3,17 @@ package com.bazzar.android.presentation.checkOutScreen.composables
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -12,7 +21,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -21,50 +29,77 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.android.model.home.UserAddress
 import com.bazzar.android.R
-import com.bazzar.android.presentation.composables.MultipleStylesInText
+import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
-fun AddressItem(address: String="", phoneNumber: String="", toggleEnabled: Boolean=false) {
-    Box(
-        modifier = Modifier
-            .padding(top = 16.dp)
-            .fillMaxWidth()
-            .height(167.dp)
-            .clip(RoundedCornerShape(20.dp))
-            .background(Color.White)
+fun AddressItem(
+    address: UserAddress,
+    onSetAsDefaultClick: () -> Unit,
+    onEditAddressClick: () -> Unit,
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        backgroundColor = BazzarTheme.colors.white,
+        shape = RoundedCornerShape(22.dp),
+        elevation = 4.dp,
     ) {
         Column(
-            modifier = Modifier.padding(top = 16.dp, start = 16.dp)
+            modifier = Modifier.padding(BazzarTheme.spacing.m),
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
                 Text(
-                    text = stringResource(id = R.string.home),
-                    style = MaterialTheme.typography.subtitle2.copy(
-                        color = colorResource(id = R.color.black),
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                    text = "${stringResource(id = R.string.address_number)}: ${address.id}",
+                    style = BazzarTheme.typography.body2Bold,
+                    fontSize = 14.sp,
+                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Image(
+                        modifier = Modifier
+                            .padding(end = BazzarTheme.spacing.m)
+                            .clickable { onEditAddressClick.invoke() },
+                        imageVector = ImageVector.vectorResource(id = R.drawable.icon_awesome_pen),
+                        contentDescription = null,
                     )
-                )
-                Image(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.icon_awesome_pen),
-                    null,
-                    modifier = Modifier.padding(start = 228.dp)
-                )
-                Image(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_trash),
-                    null,
-                    modifier = Modifier.padding(start = 16.dp)
-                )
-
+                    Image(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_trash),
+                        contentDescription = null,
+                    )
+                }
             }
-            Text(
-                text = address, style = MaterialTheme.typography.subtitle2.copy(
-                    color = colorResource(id = R.color.black),
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold))
-                )
+            Divider(
+                modifier = Modifier
+                    .padding(top = BazzarTheme.spacing.xs)
+                    .fillMaxWidth()
+                    .height(1.dp)
             )
-            MultipleStylesInText(stringResource(id = R.string.mobile_number), phoneNumber)
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                modifier = Modifier.padding(top = BazzarTheme.spacing.m),
+                text = "${stringResource(id = R.string.address_flat)}: ${address.flatNumber}, " +
+                        "${stringResource(id = R.string.address_building)}: ${address.houseNumber}, " +
+                        "${stringResource(id = R.string.address_street)}: ${address.streetName}, ",
+                style = BazzarTheme.typography.body2,
+                fontSize = 14.sp,
+            )
+            Divider(
+                modifier = Modifier
+                    .padding(top = BazzarTheme.spacing.xs)
+                    .fillMaxWidth()
+                    .height(1.dp)
+            )
+            Row(
+                modifier = Modifier
+                    .padding(top = BazzarTheme.spacing.m)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
                 Text(
                     text = stringResource(id = R.string.set_default_address),
                     style = MaterialTheme.typography.subtitle2.copy(
@@ -73,19 +108,21 @@ fun AddressItem(address: String="", phoneNumber: String="", toggleEnabled: Boole
                     )
                 )
                 Box(
-                    Modifier
-                        .padding(start = 96.dp)
+                    modifier = Modifier
                         .width(40.dp)
                         .height(20.dp)
                         .clip(RoundedCornerShape(10.dp))
-                        .background(colorResource(id = if (toggleEnabled) R.color.deep_sky_blue else R.color.light_gray))
-                        .clickable {/* TODO */ }, contentAlignment = Alignment.Center
+                        .background(colorResource(id = if (address.isDefault == true) R.color.deep_sky_blue else R.color.light_gray))
+                        .clickable {
+                            if (address.isDefault != null) onSetAsDefaultClick.invoke()
+                        },
+                    contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.toggle_circle),
                         contentDescription = null,
-                        tint = colorResource(id = if (toggleEnabled) R.color.prussian_blue else R.color.dark_gray),
-                        modifier = if (!toggleEnabled) Modifier
+                        tint = colorResource(id = if (address.isDefault == true) R.color.prussian_blue else R.color.dark_gray),
+                        modifier = if (address.isDefault != true) Modifier
                             .align(Alignment.CenterStart)
                             .padding(2.dp) else Modifier
                             .align(Alignment.CenterEnd)
