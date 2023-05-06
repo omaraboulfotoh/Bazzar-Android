@@ -31,6 +31,7 @@ class AccountContract {
             object GoToOrdersHistory : Navigation()
             object GoToRegistration : Navigation()
             object GoToAddressBook : Navigation()
+            object GoToHome : Navigation()
         }
     }
 

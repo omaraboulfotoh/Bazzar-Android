@@ -1,9 +1,17 @@
 package com.bazzar.android.presentation.accountScreen.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -11,17 +19,21 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.bazzar.android.R
 import com.bazzar.android.presentation.accountScreen.AccountContract
 import com.bazzar.android.presentation.composables.CustomButton
+import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.otp_screen.composables.HeaderTitleBack
+import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
 fun AccountScreenContent(state: AccountContract.State, onSendEvent: (AccountContract.Event) -> Unit) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.white_smoke)),
+            .background(colorResource(id = R.color.white_smoke))
+            .padding(bottom = BottomNavigationHeight),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
@@ -93,7 +105,7 @@ fun AccountScreenContent(state: AccountContract.State, onSendEvent: (AccountCont
         }
         item {
             IconsRow(
-                modifier = Modifier.padding(top = 30.dp),
+                modifier = Modifier.padding(top = 56.dp),
                 iconPainterList = listOf(
                     R.drawable.twittericon,
                     R.drawable.snapicon,
@@ -101,6 +113,49 @@ fun AccountScreenContent(state: AccountContract.State, onSendEvent: (AccountCont
                     R.drawable.instagramicon
                 )
             )
+        }
+
+        item {
+            if (state.isUserLoggedIn) {
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = BazzarTheme.spacing.m, vertical = 56.dp)
+                        .fillMaxSize()
+                ) {
+                    IconButton(onClick = {  }) {
+                        Row (verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                imageVector = Icons.Filled.Logout,
+                                tint = BazzarTheme.colors.discountText,
+                                contentDescription = ""
+                            )
+                            Text(
+                                modifier = Modifier.padding(
+                                    top = BazzarTheme.spacing.m,
+                                    start = BazzarTheme.spacing.xxs,
+                                    bottom = BazzarTheme.spacing.m,
+                                    end = BazzarTheme.spacing.m
+                                ),
+                                text = stringResource(id = R.string.logout),
+                                style = BazzarTheme.typography.body2Medium.copy(
+                                    color = BazzarTheme.colors.discountText,
+                                    fontSize = 14.sp
+                                )
+                            )
+                        }
+                    }
+                    Text(
+                        modifier = Modifier
+                            .padding(top = BazzarTheme.spacing.xl)
+                            .clickable {  },
+                        text = stringResource(id = R.string.delete_my_account),
+                        style = BazzarTheme.typography.body2Medium.copy(
+                            color = BazzarTheme.colors.discountText,
+                            fontSize = 14.sp
+                        )
+                    )
+                }
+            }
         }
     }
 

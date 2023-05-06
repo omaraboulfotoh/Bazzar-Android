@@ -1,6 +1,7 @@
 package com.bazzar.android.presentation.accountScreen
 
 import com.android.local.SharedPrefersManager
+import com.android.network.domain.usecases.HomeUseCase
 import com.bazzar.android.presentation.accountScreen.AccountContract.Effect
 import com.bazzar.android.presentation.accountScreen.AccountContract.Event
 import com.bazzar.android.presentation.accountScreen.AccountContract.State
@@ -13,6 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountViewModel @Inject constructor(
     globalState: IGlobalState,
+    private val homeUseCase: HomeUseCase,
     private val sharedPrefersManager: SharedPrefersManager,
 ) : BaseViewModel<Event, State, Effect>(globalState) {
 
@@ -25,9 +27,20 @@ class AccountViewModel @Inject constructor(
             is Event.OnOrderHistoryClicked -> setEffect { Effect.Navigation.GoToOrdersHistory }
             is Event.OnSignupClicked -> setEffect { Effect.Navigation.GoToRegistration }
             is Event.OnAddressesClicked -> setEffect { Effect.Navigation.GoToAddressBook }
+            is Event.OnLogOutClicked -> { handleLogout() }
+            is Event.OnDeleteMyAccountClicked -> { handleDeleteMyAccount() }
             else -> {}
         }
     }
+
+    private fun handleLogout() = executeCatching({
+        sharedPrefersManager.logout()
+        setEffect { Effect.Navigation.GoToHome }
+    })
+
+    private fun handleDeleteMyAccount() = executeCatching({
+
+    })
 
     fun initState() {
         if (isInitialized.not()) {
