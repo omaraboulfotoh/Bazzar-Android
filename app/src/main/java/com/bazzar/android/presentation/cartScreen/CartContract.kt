@@ -15,15 +15,17 @@ class CartContract {
 
     sealed class Event : ViewEvent {
         object OnCheckout : Event()
-        data class OnDeleteItem(val index: Int)
-        data class OnPlusItem(val index: Int)
-        data class OnMinusItem(val index: Int)
-        data class OnProductClicked(val index: Int)
+        data class OnDeleteItem(val index: Int) : Event()
+        data class OnPlusItem(val index: Int) : Event()
+        data class OnMinusItem(val index: Int) : Event()
+        data class OnProductClicked(val index: Int) : Event()
     }
 
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
             data class GoToProduct(val product: Product) : Navigation()
+            object GoToLogin : Navigation()
+            object GoToSelectAddress : Navigation()
         }
     }
 
