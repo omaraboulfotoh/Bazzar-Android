@@ -1,4 +1,4 @@
-package com.android.model.order
+package com.android.model.home
 
 import android.os.Parcelable
 import com.squareup.moshi.JsonClass

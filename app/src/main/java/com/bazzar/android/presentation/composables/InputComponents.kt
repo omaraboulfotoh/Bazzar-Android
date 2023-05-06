@@ -2,8 +2,11 @@ package com.bazzar.android.presentation.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -19,11 +22,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.bazzar.android.R
 import com.bazzar.android.presentation.theme.BazzarTheme
 import com.bazzar.android.presentation.theme.Shapes_MediumX
@@ -41,7 +49,10 @@ fun TextInputField(
     textColor: Color = BazzarTheme.colors.secondaryText,
     disabledTextColor: Color = textColor.copy(ContentAlpha.disabled),
     backgroundColor: Color = Color.Transparent,
-    strokeColor: Color = BazzarTheme.colors.borderColor,
+    borderFocusColor: Color = BazzarTheme.colors.borderColor,
+    borderUnFocusColor: Color = BazzarTheme.colors.borderColor,
+    textStyle: TextStyle = BazzarTheme.typography.subtitle1,
+    placeHolderStyle: TextStyle = BazzarTheme.typography.subtitle1,
     placeholderColor: Color = BazzarTheme.colors.placeholder,
     labelColor: Color = textColor,
     cursorColor: Color = textColor,
@@ -59,10 +70,11 @@ fun TextInputField(
 
         OutlinedTextField(
             value = text,
+            textStyle = textStyle,
             placeholder = {
                 MessageBody(
                     placeholder,
-                    style = BazzarTheme.typography.subtitle1,
+                    style = placeHolderStyle,
                     color = placeholderColor
                 )
             },
@@ -75,8 +87,8 @@ fun TextInputField(
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 textColor = textColor,
                 disabledTextColor = disabledTextColor,
-                focusedBorderColor = strokeColor,
-                unfocusedBorderColor = strokeColor,
+                focusedBorderColor = borderFocusColor,
+                unfocusedBorderColor = borderUnFocusColor,
                 backgroundColor = backgroundColor,
                 placeholderColor = placeholderColor,
                 unfocusedLabelColor = placeholderColor,
@@ -117,106 +129,124 @@ fun PickerTextField(
 
 @Composable
 fun <T> PickerTextInputField(
-    text: String,
-    label: String,
-    placeholder: String,
+    modifier: Modifier = Modifier,
+    childModifier: Modifier = Modifier,
+    dropDownModifier: Modifier = Modifier,
+    text: String = "",
+    textStyle: TextStyle = BazzarTheme.typography.body2,
+    label: String = "",
+    placeholder: String = "",
     onValueChange: (String) -> Unit,
-    selectedItem: T,
-    items: List<T>,
-    previewItem: @Composable RowScope.(item: T) -> Unit,
-    pickerItem: @Composable ColumnScope.(item: T, onClick: () -> Unit) -> Unit,
-    onItemSelection: (item: T) -> Unit,
+    pickerItems: List<T>,
+    selectedItem: T? = null,
     itemSpacer: Dp = BazzarTheme.spacing.xxs,
-    modifier: Modifier = Modifier.fillMaxWidth(),
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Done,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     textColor: Color = Color.White,
-    backgroundColor: Color = Color.Black,
-    strokeColor: Color = Color.Black,
+    textInputBackgroundColor: Color = Color.Black,
     placeholderColor: Color = BazzarTheme.colors.placeholder,
     labelColor: Color = textColor,
     cursorColor: Color = textColor,
+    isReadOnly: Boolean = false,
     isError: Boolean = false,
     singleLine: Boolean = true,
+    onItemSelection: (item: T) -> Unit,
+    PickerItemView: @Composable ColumnScope.(item: T, onClick: (item: T) -> Unit) -> Unit?,
+    PreviewItem: @Composable (RowScope.(item: T) -> Unit)? = null,
 ) {
 
+    val screenWidth = LocalContext.current.resources.displayMetrics.widthPixels.dp / LocalDensity.current.density
     var isDropdownExpanded by remember { mutableStateOf(false) }
 
     fun collapse() {
         isDropdownExpanded = isDropdownExpanded.not()
     }
 
-    Column(modifier = modifier) {
+    Column(modifier = modifier.clickable { collapse() }) {
         DescriptionBody(text = label, color = labelColor)
-
         Spacer(modifier = Modifier.height(BazzarTheme.spacing.xs))
-
         Row(
-            modifier = Modifier
+            modifier = childModifier
                 .fillMaxWidth()
-                .background(backgroundColor, shape = Shapes_MediumX)
-                .padding(horizontal = BazzarTheme.spacing.s),
+                .background(BazzarTheme.colors.white, shape = Shapes_MediumX)
+                .border(
+                    width = 1.dp,
+                    color = if (isDropdownExpanded) BazzarTheme.colors.primaryButtonColor else BazzarTheme.colors.stroke,
+                    shape = Shapes_MediumX
+                ),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            TextField(
+                modifier = Modifier.weight(1f),
+                value = text,
+                textStyle = textStyle,
+                placeholder = {
+                    MessageBody(
+                        placeholder,
+                        style = BazzarTheme.typography.body2.copy(fontSize = 16.sp),
+                        color = placeholderColor
+                    )
+                },
+                onValueChange = onValueChange,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = keyboardType,
+                    imeAction = imeAction
+                ),
+                keyboardActions = keyboardActions,
+                enabled = isReadOnly,
+                singleLine = singleLine,
+                isError = isError,
+                colors = TextFieldDefaults.textFieldColors(
+                    textColor = textColor,
+                    backgroundColor = textInputBackgroundColor,
+                    placeholderColor = placeholderColor,
+                    unfocusedLabelColor = placeholderColor,
+                    cursorColor = cursorColor,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent
+                ),
+            )
 
             Row(
-                modifier = Modifier.clickable { collapse() },
+                modifier = Modifier.padding(end = BazzarTheme.spacing.m),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                previewItem(selectedItem)
-
-                Spacer(modifier = Modifier.width(BazzarTheme.spacing.xs))
-
+                if (PreviewItem != null && selectedItem != null) {
+                    PreviewItem(selectedItem)
+                    Spacer(modifier = Modifier.width(BazzarTheme.spacing.xs))
+                }
                 Image(
-                    imageVector = if (isDropdownExpanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
+                    imageVector =
+                    if (isDropdownExpanded) Icons.Filled.KeyboardArrowUp
+                    else Icons.Filled.KeyboardArrowDown,
                     contentDescription = "",
                     colorFilter = ColorFilter.tint(textColor)
                 )
             }
 
             DropdownMenu(
-                modifier = Modifier
-                    .padding(horizontal = BazzarTheme.spacing.xs)
-                    .wrapContentWidth(),
+                modifier = dropDownModifier,
                 expanded = isDropdownExpanded,
                 onDismissRequest = { collapse() },
                 content = {
-                    items.forEachIndexed { index, item ->
-                        pickerItem(item) { onItemSelection(item); collapse() }
-                        if (index != items.lastIndex) Spacer(modifier = Modifier.height(itemSpacer))
+                    LazyColumn(modifier = Modifier
+                        .size(width = screenWidth, height = 200.dp)
+                        .heightIn(min = 200.dp)
+                        .padding(BazzarTheme.spacing.m)
+                        .border(width = 1.dp, color = BazzarTheme.colors.stroke, shape = Shapes_MediumX)
+                        .padding(BazzarTheme.spacing.m),
+                    ) {
+                        itemsIndexed(pickerItems) { index, item ->
+                            PickerItemView(item) {
+                                onItemSelection.invoke(item)
+                                collapse()
+                            }
+                            if (index != pickerItems.lastIndex) Spacer(modifier = Modifier.height(itemSpacer))
+                        }
                     }
                 }
-            )
-
-            OutlinedTextField(
-                value = text,
-                placeholder = {
-                    MessageBody(
-                        placeholder,
-                        style = BazzarTheme.typography.body1,
-                        color = placeholderColor
-                    )
-                },
-                onValueChange = onValueChange,
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = keyboardType,
-                    imeAction = imeAction
-                ),
-                keyboardActions = keyboardActions,
-                singleLine = singleLine,
-                isError = isError,
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    textColor = textColor,
-                    focusedBorderColor = strokeColor,
-                    unfocusedBorderColor = strokeColor,
-                    backgroundColor = backgroundColor,
-                    placeholderColor = placeholderColor,
-                    unfocusedLabelColor = placeholderColor,
-                    cursorColor = cursorColor
-                ),
-                shape = Shapes_MediumX
             )
         }
     }

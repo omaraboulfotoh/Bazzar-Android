@@ -31,9 +31,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.android.model.order.OrderHistory
-import com.android.model.order.OrderItem
-import com.android.model.order.StatusLog
+import com.android.model.home.OrderHistory
+import com.android.model.home.OrderItem
+import com.android.model.home.StatusLog
 import com.bazzar.android.R
 import com.bazzar.android.common.fromBasicServerToFullDateFormat
 import com.bazzar.android.presentation.composables.RemoteImage
@@ -227,7 +227,10 @@ private fun OrderFooter(date: String) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = date.fromBasicServerToFullDateFormat() ?: "", style = BazzarTheme.typography.overlineBold)
+            Text(
+                text = date.fromBasicServerToFullDateFormat() ?: "",
+                style = BazzarTheme.typography.overlineBold
+            )
 
 //            TextButton(modifier = Modifier
 //                .background(

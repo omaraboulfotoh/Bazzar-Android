@@ -1,7 +1,6 @@
 package com.android.network.datasource.impl
 
 import com.android.model.home.*
-import com.android.model.order.OrderHistory
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
@@ -33,14 +32,20 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest) =
         apiServices.verifyOtp(verifyOtpRequest)
 
-    override suspend fun resendOtp(userId: Int): Response<BaseWrapper<out Any>> =
+    override suspend fun resendOtp(userId: Int): Response<BaseWrapper<String>> =
         apiServices.resendOtp(userId)
 
-    override suspend fun addUserAddress(userAddress: UserAddress): Response<BaseWrapper<Any>> =
+    override suspend fun getAllAddresses(): Response<BaseWrapper<List<UserAddress>>> =
+        apiServices.getAllAddresses()
+
+    override suspend fun addUserAddress(userAddress: UserAddress): Response<BaseWrapper<UserAddress>> =
         apiServices.addUserAddress(userAddress)
 
-    override suspend fun updateUserAddress(userAddress: UserAddress): Response<BaseWrapper<Any>> =
+    override suspend fun updateUserAddress(userAddress: UserAddress): Response<BaseWrapper<UserAddress>> =
         apiServices.updateUserAddress(userAddress)
+
+    override suspend fun getAllAreas(arabic: Boolean): Response<BaseWrapper<List<Area>>> =
+        apiServices.getAllAreas(arabic)
 
     override suspend fun loadCheckout(checkout: Checkout): Response<BaseWrapper<Any>> =
         apiServices.loadCheckout(checkout)

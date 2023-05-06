@@ -101,12 +101,17 @@
     <string name="optional_data">Optional Data</string>
     <string name="check_out">Check Out</string>
     <string name="add_new_address">Add New Address</string>
+    <string name="edit_user_address">Edit Address</string>
     <string name="shipping_address">Shipping Address</string>
     <string name="continue_to_pay">Continue to pay</string>
     <string name="default_address">Default Address</string>
     <string name="change_default_address">Change default address</string>
     <string name="mobile_number">Mobile number: </string>
     <string name="address_book">Address Book</string>
+    <string name="address_number">Address Number</string>
+    <string name="address_flat">Flat</string>
+    <string name="address_building">Building</string>
+    <string name="address_street">Street</string>
     <string name="buy_now">Buy Now</string>
     <string name="all">All</string>
     <string name="availables">Availables</string>
