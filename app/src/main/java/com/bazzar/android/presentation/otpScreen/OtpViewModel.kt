@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.otp_screen
+package com.bazzar.android.presentation.otpScreen
 
 import androidx.core.text.isDigitsOnly
 import com.android.local.SharedPrefersManager

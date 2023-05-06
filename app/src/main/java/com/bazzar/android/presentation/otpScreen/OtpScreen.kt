@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.otp_screen
+package com.bazzar.android.presentation.otpScreen
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -7,7 +7,7 @@ import com.bazzar.android.common.navigateAndClearBackStack
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.destinations.MainScreenDestination
-import com.bazzar.android.presentation.otp_screen.composables.OtpScreenContent
+import com.bazzar.android.presentation.otpScreen.composables.OtpScreenContent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 

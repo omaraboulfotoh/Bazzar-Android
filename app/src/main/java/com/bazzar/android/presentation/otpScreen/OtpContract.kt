@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.otp_screen
+package com.bazzar.android.presentation.otpScreen
 
 import com.android.model.home.UserData
 import com.bazzar.android.presentation.base.ViewEvent

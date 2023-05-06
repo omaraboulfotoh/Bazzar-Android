@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.otp_screen.composables
+package com.bazzar.android.presentation.otpScreen.composables
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.otp_screen.composables
+package com.bazzar.android.presentation.otpScreen.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.BazzarAppBar
-import com.bazzar.android.presentation.otp_screen.OtpContract
+import com.bazzar.android.presentation.otpScreen.OtpContract
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
