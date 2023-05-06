@@ -26,11 +26,14 @@ import com.bazzar.android.R
 import com.bazzar.android.presentation.accountScreen.AccountContract
 import com.bazzar.android.presentation.composables.CustomButton
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
-import com.bazzar.android.presentation.otp_screen.composables.HeaderTitleBack
+import com.bazzar.android.presentation.otpScreen.composables.HeaderTitleBack
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
-fun AccountScreenContent(state: AccountContract.State, onSendEvent: (AccountContract.Event) -> Unit) {
+fun AccountScreenContent(
+    state: AccountContract.State,
+    onSendEvent: (AccountContract.Event) -> Unit
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -156,7 +159,7 @@ fun AccountScreenContent(state: AccountContract.State, onSendEvent: (AccountCont
                         .fillMaxSize()
                 ) {
                     IconButton(onClick = { onSendEvent(AccountContract.Event.OnLogOutClicked) }) {
-                        Row (verticalAlignment = Alignment.CenterVertically) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(
                                 imageVector = Icons.Filled.Logout,
                                 tint = BazzarTheme.colors.discountText,
