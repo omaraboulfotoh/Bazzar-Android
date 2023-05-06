@@ -65,7 +65,7 @@ fun LazyListScope.CategoryList(
                 ) {
                     RemoteImageCard(
                         imageUrl = category.imagePath,
-                        contentScale = ContentScale.FillWidth,
+                        contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxHeight(),

@@ -18,6 +18,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.DefaultAlpha
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -37,6 +38,7 @@ fun RemoteImageCard(
     placeholder: Painter = painterResource(id = R.drawable.bazzars_home_title),
     contentScale: ContentScale = ContentScale.Crop,
     withShimmer: Boolean = false,
+    shape: Shape = Shapes.large,
     background: Color = BazzarTheme.colors.transparentColor,
     alpha: Float = DefaultAlpha,
 ) {
@@ -44,7 +46,8 @@ fun RemoteImageCard(
     val showShimmer = remember { mutableStateOf(true) }
     Card(
         modifier = modifier.background(background),
-        backgroundColor = background
+        backgroundColor = background,
+        shape = shape
     ) {
         AsyncImage(
             model = imageUrl,

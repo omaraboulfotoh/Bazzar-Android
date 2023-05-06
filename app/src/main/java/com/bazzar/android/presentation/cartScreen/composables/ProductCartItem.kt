@@ -29,6 +29,7 @@ import com.android.model.home.Product
 import com.bazzar.android.R
 import com.bazzar.android.common.nullIfEmpty
 import com.bazzar.android.presentation.composables.RemoteImageCard
+import com.bazzar.android.presentation.theme.BazzarTheme
 
 
 @Preview
@@ -41,22 +42,25 @@ fun ProductCartItem(product: Product? = null, productCounter: Int? = 0) {
             .clip(RoundedCornerShape(20.dp))
             .background(Color.White),
     ) {
-        Row(modifier = Modifier.padding(top = 12.dp)) {
+        Row(
+            modifier = Modifier.padding(BazzarTheme.spacing.s),
+            horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
+            verticalAlignment = Alignment.Top
+        ) {
             Column(
-                modifier = Modifier.padding(start = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier
+                    .wrapContentSize()
+                    .fillMaxHeight(),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
                 RemoteImageCard(
                     imageUrl = product?.imagePath,
-                    modifier = Modifier
-                        .padding(top = 12.dp)
-                        .size(88.dp),
+                    modifier = Modifier.size(88.dp),
                     withShimmer = true
                 )
                 Row(
-                    Modifier
-                        .padding(top = 10.dp)
-                        .width(73.dp),
+                    Modifier.width(73.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -79,24 +83,31 @@ fun ProductCartItem(product: Product? = null, productCounter: Int? = 0) {
 
                 }
             }
+
             Column(
-                modifier = Modifier.padding(start = 8.dp)
+                modifier = Modifier
+                    .weight(2f)
+                    .fillMaxHeight(),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xxs)
             ) {
                 Text(
-                    text = product?.brandTitle ?: "Brand Name",
+                    modifier = Modifier.fillMaxWidth(),
+                    maxLines = 1,
+                    text = product?.brandTitle.orEmpty(),
                     style = MaterialTheme.typography.subtitle2.copy(
                         fontFamily = FontFamily(Font(R.font.montserrat_bold))
                     )
                 )
 
                 Text(
-                    text = product?.title ?: "Product title",
+                    text = product?.title.orEmpty(),
                     style = MaterialTheme.typography.subtitle2.copy(
                         fontFamily = FontFamily(Font(R.font.montserrat_regular))
                     ),
-                    modifier = Modifier.padding(top = 4.dp)
+                    maxLines = 2,
+                    modifier = Modifier.fillMaxWidth()
                 )
-
 
                 Text(
                     text = buildAnnotatedString {
@@ -114,10 +125,11 @@ fun ProductCartItem(product: Product? = null, productCounter: Int? = 0) {
                                 fontSize = 14.sp
                             )
                         ) {
-                            append(product?.title ?: "Item Color")
+                            append(product?.selectedItemDetails?.colorTitle.orEmpty())
                         }
-                    }, modifier = Modifier.padding(top = 16.dp)
+                    }, modifier = Modifier.fillMaxWidth()
                 )
+
                 Text(
                     text = buildAnnotatedString {
                         withStyle(
@@ -134,19 +146,23 @@ fun ProductCartItem(product: Product? = null, productCounter: Int? = 0) {
                                 fontSize = 14.sp
                             )
                         ) {
-                            append(product?.title ?: "Item Size")
+                            append(product?.selectedItemDetails?.sizeTitle.orEmpty())
                         }
                     }, style = MaterialTheme.typography.subtitle2.copy(
 
-                    ), modifier = Modifier.padding(top = 16.dp)
+                    ), modifier = Modifier.fillMaxWidth()
                 )
 
             }
             Column(
-                modifier = Modifier.padding(start = 80.dp).height(132.dp),
-                verticalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight(),
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.End
             ) {
                 Image(
+                    modifier = Modifier.padding(BazzarTheme.spacing.xxs),
                     imageVector = ImageVector.vectorResource(R.drawable.ic_trash),
                     contentDescription = null
                 )
@@ -169,7 +185,8 @@ fun ProductCartItem(product: Product? = null, productCounter: Int? = 0) {
                         ) {
                             append(stringResource(R.string.home_screen_product_price))
                         }
-                    }, style = MaterialTheme.typography.subtitle2.copy(
+                    },
+                    style = MaterialTheme.typography.subtitle2.copy(
 
                     ),
                 )

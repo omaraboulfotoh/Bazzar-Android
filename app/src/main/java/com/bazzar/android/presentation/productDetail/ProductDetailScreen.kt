@@ -5,6 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.android.model.home.Product
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
+import com.bazzar.android.presentation.destinations.CartScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.bazzar.android.presentation.destinations.ProductScreenDestination
 import com.bazzar.android.presentation.productDetail.composables.ProductDetailScreenContent
@@ -27,7 +28,9 @@ fun ProductDetailScreen(
         when (effect) {
             is ProductDetailContract.Effect.Navigation.GoToBack -> navigator.navigateUp()
             is ProductDetailContract.Effect.ShareProduct -> {}
-            is ProductDetailContract.Effect.Navigation.GoToCart -> {}
+            is ProductDetailContract.Effect.Navigation.GoToCart ->
+                navigator.navigate(CartScreenDestination)
+
             is ProductDetailContract.Effect.Navigation.GoToProductBrandList -> navigator.navigate(
                 ProductScreenDestination(brand = effect.brand)
             )

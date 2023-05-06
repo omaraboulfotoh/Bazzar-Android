@@ -8,16 +8,22 @@ import com.bazzar.android.presentation.base.ViewState
 class CartContract {
 
     data class State(
-        val productWishList: List<Product>? = emptyList(),
         val productCartList: List<Product>? = emptyList(),
-        var counterItem: Int? = null
+        val counterItem: Int? = null,
+        val totalCartAMount: Double = 0.0
     ) : ViewState
 
     sealed class Event : ViewEvent {
+        object OnCheckout : Event()
+        data class OnDeleteItem(val index: Int)
+        data class OnPlusItem(val index: Int)
+        data class OnMinusItem(val index: Int)
+        data class OnProductClicked(val index: Int)
     }
 
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
+            data class GoToProduct(val product: Product) : Navigation()
         }
     }
 
