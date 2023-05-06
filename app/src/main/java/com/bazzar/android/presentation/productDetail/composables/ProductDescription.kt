@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.text.HtmlCompat
 import com.bazzar.android.R
+import com.bazzar.android.presentation.composables.ExpandingText
 import com.bazzar.android.presentation.composables.OverLine
 import com.bazzar.android.presentation.composables.Subtitle
 import com.bazzar.android.presentation.theme.BazzarTheme
@@ -79,31 +80,13 @@ fun ProductDescription(
             }
 
             // product desc
-            HtmlText(
-                html = text, modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-            )
 
-            // show more and less
-            Text(text = stringResource(
-                id = if (text.length > maxLines && !isTextExpanded)
-                    R.string.read_more else R.string.read_less
-            ), style = MaterialTheme.typography.body2,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onReadMoreLessClicked() })
+            ExpandingText(
+                text = text,
+                viewMoreActionText = stringResource(id = R.string.read_more),
+                viewLessActionText = stringResource(id = R.string.read_less),
+                maxLinesSize = 2
+            )
         }
     }
-}
-
-@Composable
-fun HtmlText(html: String, modifier: Modifier = Modifier) {
-    AndroidView(modifier = modifier,
-        factory = { context -> TextView(context) },
-        update = {
-            it.text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_COMPACT)
-        }
-    )
 }

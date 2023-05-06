@@ -3,10 +3,12 @@ package com.bazzar.android.presentation.theme
 import androidx.compose.material.Typography
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
 import com.bazzar.android.R
 
@@ -126,7 +128,23 @@ data class AbsTypography(
     val captionSemiBold: TextStyle =
         caption.copy(fontWeight = FontWeight.SemiBold),
     val captionMedium: TextStyle =
-        caption.copy(fontWeight = FontWeight.Medium)
+        caption.copy(fontWeight = FontWeight.Medium),
+    val h7BoldSpan: SpanStyle = SpanStyle(
+        fontFamily = montserrat,
+        fontSize = 18.sp,
+        fontWeight = FontWeight.Bold,
+        textDecoration = TextDecoration.Underline
+    ),
+    val subtitleBoldSpan: SpanStyle = SpanStyle(
+        fontFamily = montserrat,
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Bold
+    ),
+    val subtitleSpan: SpanStyle = SpanStyle(
+        fontFamily = montserrat,
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Normal
+    ),
 )
 
 val LocalAbsTypography = staticCompositionLocalOf { AbsTypography() }

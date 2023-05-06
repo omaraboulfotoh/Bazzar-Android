@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.RemoteImageCard
 import com.bazzar.android.presentation.theme.BazzarTheme
+import com.bazzar.android.presentation.theme.Shapes
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
@@ -50,7 +51,7 @@ fun IndicatorHomeImageSlider(
                     .fillMaxSize()
                     .padding(BazzarTheme.spacing.xs)
                     .clickable { onSliderClicked(page) },
-                shape = RoundedCornerShape(16.dp),
+                shape = Shapes.large,
                 colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.white)),
                 elevation = CardDefaults.cardElevation(defaultElevation = BazzarTheme.spacing.xs),
                 content = {
