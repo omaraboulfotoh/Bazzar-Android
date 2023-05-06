@@ -20,13 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BazzarComposeTheme {
-                val navController = rememberNavController()
                 App(globalState)
-                DestinationsNavHost(
-                    navGraph = NavGraphs.root,
-                    navController = navController,
-                    startRoute = NavGraphs.root.startRoute
-                )
             }
         }
     }

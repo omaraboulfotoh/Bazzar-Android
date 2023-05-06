@@ -65,14 +65,14 @@ fun ProductItem(product: Product, onItemClicked: (Int) -> Unit) {
                     .fillMaxWidth()
                     .weight(1.5f)
             ) {
-                RemoteImageCard(
+                RemoteImage(
                     imageUrl = product.imagePath,
                     contentScale = ContentScale.Crop,
                     background = BazzarTheme.colors.white,
                     modifier = Modifier
                         .fillMaxSize()
                         .align(Alignment.Center)
-                        .clip(Shapes.large)
+                        .clip(RoundedCornerShape(topStart = 0.dp, topEnd = 0.dp))
                 )
                 // new badge
                 if (product.isNew.orFalse())

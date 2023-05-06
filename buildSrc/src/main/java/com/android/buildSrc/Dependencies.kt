@@ -163,7 +163,8 @@ object Dependencies {
         "io.github.raamcosta.compose-destinations:core:${Versions.Android.COMPOSE_DESTINATION}"
     const val COMPOSE_DESTINATION_KSP =
         "io.github.raamcosta.compose-destinations:ksp:${Versions.Android.COMPOSE_DESTINATION}"
-
+    const val DESTINATIONS_ANIM =
+        "io.github.raamcosta.compose-destinations:animations-core:${Versions.Android.COMPOSE_DESTINATION}"
     const val COMPOSE_VIEW_MODEL =
         "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.Android.VIEW_MODEL}"
 

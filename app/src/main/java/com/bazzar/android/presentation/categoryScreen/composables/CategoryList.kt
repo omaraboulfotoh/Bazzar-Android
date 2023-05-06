@@ -27,8 +27,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.android.model.home.Category
 import com.bazzar.android.R
+import com.bazzar.android.presentation.composables.RemoteImage
 import com.bazzar.android.presentation.composables.RemoteImageCard
 import com.bazzar.android.presentation.theme.BazzarTheme
+import com.bazzar.android.presentation.theme.Shapes
 
 @SuppressLint("UnrememberedMutableState")
 fun LazyListScope.CategoryList(
@@ -63,11 +65,12 @@ fun LazyListScope.CategoryList(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.s)
                 ) {
-                    RemoteImageCard(
+                    RemoteImage(
                         imageUrl = category.imagePath,
-                        contentScale = ContentScale.Crop,
+                        contentScale = ContentScale.FillBounds,
                         modifier = Modifier
                             .weight(1f)
+                            .clip(Shapes.large)
                             .fillMaxHeight(),
                     )
                     Row(
@@ -155,8 +158,12 @@ fun LazyListScope.CategoryList(
                                     modifier = Modifier
                                         .width(160.dp)
                                         .height(100.dp)
-                                        .clip(RoundedCornerShape(15.dp))
-                                        .border(width = 1.dp, color = BazzarTheme.colors.white),
+                                        .clip(Shapes.large)
+                                        .border(
+                                            width = 1.dp,
+                                            color = BazzarTheme.colors.white,
+                                            shape = Shapes.large
+                                        ),
                                 )
                                 Text(
                                     text = item.title ?: "",

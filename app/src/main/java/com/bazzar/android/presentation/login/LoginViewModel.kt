@@ -35,8 +35,8 @@ class LoginViewModel @Inject constructor(
 
         homeUseCase.login(
             UserLoginRequest(
-                phone = "+965${currentState.mobileNumber.orEmpty()}",
-                password = currentState.password.orEmpty()
+                "+965${currentState.mobileNumber.orEmpty()}",
+                currentState.password.orEmpty()
             )
         ).collect { loginResponse ->
             when (loginResponse) {

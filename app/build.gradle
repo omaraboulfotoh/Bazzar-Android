@@ -150,6 +150,7 @@ dependencies {
     implementation Dependencies.COMPOSE_UI_UTIL
     implementation Dependencies.COMPOSE_DESTINATION
     ksp Dependencies.COMPOSE_DESTINATION_KSP
+    implementation Dependencies.DESTINATIONS_ANIM
     implementation Dependencies.ACTIVITY_COMPOSE
     implementation Dependencies.COMPOSE_MATERIAL
     implementation Dependencies.COMPOSE_MATERIAL_ICONS_EXTENDED
