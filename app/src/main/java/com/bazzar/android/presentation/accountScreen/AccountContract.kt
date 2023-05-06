@@ -17,10 +17,13 @@ class AccountContract {
         object OnAddressesClicked : Event()
         object OnBazzarTermsAndConditionsClicked : Event()
         object OnAboutUsClicked : Event()
-        object OnContactUs : Event()
+        object OnContactUsClicked : Event()
         object OnLanguageClicked : Event()
         object OnJoinUsClicked : Event()
         object OnRewardCenterClicked : Event()
+        object OnInstagramClicked : Event()
+        object OnFacebookClicked : Event()
+        object OnTwitterClicked : Event()
         object OnLogOutClicked : Event()
         object OnDeleteMyAccountClicked : Event()
         object OnSignupClicked : Event()
@@ -31,6 +34,13 @@ class AccountContract {
             object GoToOrdersHistory : Navigation()
             object GoToRegistration : Navigation()
             object GoToAddressBook : Navigation()
+            object GoToHome : Navigation()
+            object GoToAboutUs: Navigation()
+            object GoToTermsAndConditions: Navigation()
+            object GoToContactUs: Navigation()
+            object GoToFacebookPage: Navigation()
+            object GoToInstagramPage: Navigation()
+            object GoToTwitterPage: Navigation()
         }
     }
 

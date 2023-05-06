@@ -187,4 +187,6 @@ object Dependencies {
         "com.google.accompanist:accompanist-systemuicontroller:${Versions.Android.ACCOMPANIST_SYSTEM_UI}"
 
     const val COIL = "io.coil-kt:coil-compose:${Versions.COIL}"
+
+    const val WEB_BROWSER = "androidx.browser:browser:${Versions.WEB_BROWSER}"
 }
