@@ -59,6 +59,7 @@ object Versions {
     const val DATE_TIME = "0.3.2"
     const val ATOMICS = "0.18.3"
     const val COIL = "2.2.0"
+    const val WEB_BROWSER = "1.5.0"
     object Android {
         const val ACTIVITY_COMPOSE = "1.4.0"
         const val COMPOSE = "1.3.0"

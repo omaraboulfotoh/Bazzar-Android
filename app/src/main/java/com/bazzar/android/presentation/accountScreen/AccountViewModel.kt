@@ -27,6 +27,12 @@ class AccountViewModel @Inject constructor(
             is Event.OnOrderHistoryClicked -> setEffect { Effect.Navigation.GoToOrdersHistory }
             is Event.OnSignupClicked -> setEffect { Effect.Navigation.GoToRegistration }
             is Event.OnAddressesClicked -> setEffect { Effect.Navigation.GoToAddressBook }
+            is Event.OnFacebookClicked -> setEffect { Effect.Navigation.GoToFacebookPage }
+            is Event.OnInstagramClicked -> setEffect { Effect.Navigation.GoToInstagramPage }
+            is Event.OnTwitterClicked -> setEffect { Effect.Navigation.GoToTwitterPage }
+            is Event.OnAboutUsClicked -> setEffect { Effect.Navigation.GoToAboutUs }
+            is Event.OnBazzarTermsAndConditionsClicked -> setEffect { Effect.Navigation.GoToTermsAndConditions }
+            is Event.OnContactUsClicked-> setEffect { Effect.Navigation.GoToContactUs }
             is Event.OnLogOutClicked -> { handleLogout() }
             is Event.OnDeleteMyAccountClicked -> { handleDeleteMyAccount() }
             else -> {}
