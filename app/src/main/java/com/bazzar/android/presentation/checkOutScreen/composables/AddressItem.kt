@@ -41,7 +41,8 @@ fun AddressItem(
     onEditAddressClick: () -> Unit,
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth(),
         backgroundColor = BazzarTheme.colors.white,
         shape = RoundedCornerShape(22.dp),
         elevation = 4.dp,

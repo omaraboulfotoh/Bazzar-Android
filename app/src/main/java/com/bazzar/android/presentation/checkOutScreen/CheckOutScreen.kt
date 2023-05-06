@@ -5,6 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.checkOutScreen.composables.CheckOutScreenContent
+import com.bazzar.android.presentation.destinations.AddressScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -19,8 +20,13 @@ fun CheckOutScreen(
     val state = viewModel.viewState()
     viewModel.sideEffect { effect ->
         when (effect) {
+            CheckOutContract.Effect.Navigation.GoBAck -> navigator.navigateUp()
+            CheckOutContract.Effect.Navigation.GoToAddNewAddress -> navigator.navigate(
+                AddressScreenDestination()
+            )
 
-            else -> {}
+            is CheckOutContract.Effect.Navigation.GoToCheckout -> {
+            }
         }
     }
     // init logic

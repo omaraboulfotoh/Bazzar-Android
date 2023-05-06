@@ -6,6 +6,7 @@ import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.cartScreen.composables.CartScreenContent
 import com.bazzar.android.presentation.destinations.AddressBookScreenDestination
+import com.bazzar.android.presentation.destinations.CheckOutScreenDestination
 import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
@@ -26,10 +27,11 @@ fun CartScreen(
                 ProductDetailScreenDestination(product = effect.product)
             )
 
-            CartContract.Effect.Navigation.GoToLogin -> navigator.navigate(LoginScreenDestination)
-            CartContract.Effect.Navigation.GoToSelectAddress -> navigator.navigate(
-                AddressBookScreenDestination
-            )
+            CartContract.Effect.Navigation.GoToLogin ->
+                navigator.navigate(LoginScreenDestination)
+
+            CartContract.Effect.Navigation.GoToSelectAddress ->
+                navigator.navigate(CheckOutScreenDestination)
         }
     }
     // init logic

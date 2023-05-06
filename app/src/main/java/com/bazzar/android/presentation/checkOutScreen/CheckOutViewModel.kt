@@ -1,25 +1,58 @@
 package com.bazzar.android.presentation.checkOutScreen
 
 import com.android.network.domain.usecases.HomeUseCase
+import com.android.network.states.Result
+import com.bazzar.android.common.orFalse
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.presentation.checkOutScreen.CheckOutContract.Effect
+import com.bazzar.android.presentation.checkOutScreen.CheckOutContract.Event
+import com.bazzar.android.presentation.checkOutScreen.CheckOutContract.State
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+@HiltViewModel
 class CheckOutViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
-) : BaseViewModel<CheckOutContract.Event, CheckOutContract.State, CheckOutContract.Effect>(
+) : BaseViewModel<Event, State, Effect>(
     globalState
 ) {
-    override fun setInitialState(): CheckOutContract.State {
-        TODO("Not yet implemented")
+
+    private var isInitialized = false
+    override fun setInitialState() = State()
+
+    override fun handleEvents(event: Event) {
+        when (event) {
+            Event.OnAddNewAddressClicked -> setEffect { Effect.Navigation.GoToAddNewAddress }
+            Event.OnContinueClicked -> navigateToCheckout()
+            Event.OnBackClicked -> setEffect { Effect.Navigation.GoBAck }
+        }
     }
 
-    override fun handleEvents(event: CheckOutContract.Event) {
-        TODO("Not yet implemented")
+    private fun navigateToCheckout() {
+        val selectedAddress = currentState.selectedAddress ?: return
+        setEffect { Effect.Navigation.GoToCheckout(selectedAddress) }
     }
 
     fun init() {
-        TODO("Not yet implemented")
+        if (isInitialized.not()) {
+            loadAddress()
+            isInitialized = false
+        }
     }
+
+    private fun loadAddress() = executeCatching({
+
+        homeUseCase.getAllAddresses().collect {
+            when (it) {
+                is Result.Error -> globalState.error(it.message.orEmpty())
+                is Result.Loading -> globalState.loading(true)
+                is Result.Success -> {
+                    val selectedAddress = it.data.orEmpty().firstOrNull { it.isDefault.orFalse() }
+                    setState { copy(selectedAddress = selectedAddress) }
+                }
+            }
+        }
+    })
 }

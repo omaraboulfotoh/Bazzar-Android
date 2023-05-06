@@ -30,7 +30,7 @@ fun AddressList(
             AddressItem(
                 address = item,
                 onSetAsDefaultClick = { onSetAsDefaultClick.invoke(index) },
-                onEditAddressClick = { onEditAddressClick.invoke(item) }
+                onEditAddressClick = { onEditAddressClick.invoke(item) },
             )
         }
 

@@ -21,12 +21,15 @@ class AddressBookViewModel @Inject constructor(
             is AddressBookContract.Event.OnBackIconClicked -> {
                 setEffect { AddressBookContract.Effect.Navigation.GoToBack }
             }
+
             is AddressBookContract.Event.OnSetAsDefaultClicked -> {
                 setAddressAsDefault(event.index)
             }
+
             is AddressBookContract.Event.OnEditAddressClicked -> {
                 setEffect { AddressBookContract.Effect.Navigation.GoToEditAddress(event.userAddress) }
             }
+
             is AddressBookContract.Event.OnAddAddressClicked -> {
                 setEffect { AddressBookContract.Effect.Navigation.GoToAddressScreen }
             }
@@ -35,7 +38,7 @@ class AddressBookViewModel @Inject constructor(
 
     private fun setAddressAsDefault(index: Int) = executeCatching({
         val updatedAddresses = currentState.addressList
-            .mapIndexed { i, address -> address.copy(isDefault = i == index)}
+            .mapIndexed { i, address -> address.copy(isDefault = i == index) }
         setState { copy(addressList = updatedAddresses) }
         homeUseCase.updateUserAddress(updatedAddresses[index])
             .collect { }

@@ -30,6 +30,7 @@ fun AddressBookScreenContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(horizontal = BazzarTheme.spacing.m)
             .background(BazzarTheme.colors.backgroundColor),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
@@ -37,7 +38,7 @@ fun AddressBookScreenContent(
         BazzarAppBar(
             title = stringResource(id = R.string.address_book),
             isUpperCase = false,
-            backgroundColor = BazzarTheme.colors.white,
+            backgroundColor = BazzarTheme.colors.backgroundColor,
             onNavigationClick = { onSendEvent(AddressBookContract.Event.OnBackIconClicked) }
         )
         AddressList(
