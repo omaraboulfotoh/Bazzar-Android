@@ -26,6 +26,6 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun navigateToNextStep() =
-        setEffect { if (sharedPrefersManager.isFirstTimeOpened()) Effect.Navigation.GoToHome else Effect.Navigation.GoToOnBoarding }
+        setEffect { if (sharedPrefersManager.isFirstTimeOpened()) Effect.Navigation.GoToOnBoarding else Effect.Navigation.GoToHome }
 
 }

@@ -74,17 +74,18 @@ fun CartScreenContent(
             }
 
             // checkout button
-            PrimaryButton(
-                text = stringResource(id = R.string.check_out),
-                onClick = { onSendEvent(CartContract.Event.OnCheckout) },
-                modifier = Modifier
-                    .width(124.dp)
-                    .height(65.dp)
-                    .clip(RoundedCornerShape(32.5.dp))
-                    .background(colorResource(id = R.color.prussian_blue))
-                    .align(Alignment.BottomStart),
-                textColor = colorResource(id = R.color.white)
-            )
+            if (state.productCartList.isNullOrEmpty().not())
+                PrimaryButton(
+                    text = stringResource(id = R.string.check_out),
+                    onClick = { onSendEvent(CartContract.Event.OnCheckout) },
+                    modifier = Modifier
+                        .width(124.dp)
+                        .height(65.dp)
+                        .clip(RoundedCornerShape(32.5.dp))
+                        .background(colorResource(id = R.color.prussian_blue))
+                        .align(Alignment.BottomStart),
+                    textColor = colorResource(id = R.color.white)
+                )
         }
         Spacer(modifier = Modifier.height(BazzarTheme.spacing.m))
     }

@@ -80,8 +80,9 @@ fun SemiCircleImageView(imagePath: String, text: String) {
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 55.dp)
-                .align(Alignment.BottomEnd),
+                .padding(bottom = BazzarTheme.spacing.xl)
+                .padding(horizontal = BazzarTheme.spacing.xs)
+                .align(Alignment.BottomCenter),
             style = MaterialTheme.typography.subtitle2.copy(
                 fontFamily = FontFamily(Font(R.font.montserrat_medium)),
                 color = colorResource(id = R.color.white)

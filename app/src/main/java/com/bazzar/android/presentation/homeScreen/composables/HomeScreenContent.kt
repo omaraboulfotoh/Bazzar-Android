@@ -38,9 +38,9 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
                     onSendEvent(HomeContract.Event.OnSliderClicked(0, it))
                 })
         }
-//        item {
-//            FeaturedBazzarSlider(slides2 = state.featuredBazzars.orEmpty())
-//        }
+        item {
+            FeaturedBazzarSlider(slides2 = state.featuredBazzars.orEmpty())
+        }
         if (state.featuredCategories.isNullOrEmpty()
                 .not()
         ) CategoryGroup(state.featuredCategories.orEmpty(), onCategoryClicked = {

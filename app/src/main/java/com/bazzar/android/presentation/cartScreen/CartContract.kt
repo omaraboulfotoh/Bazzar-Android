@@ -10,7 +10,7 @@ class CartContract {
     data class State(
         val productCartList: List<Product>? = emptyList(),
         val counterItem: Int? = null,
-        val totalCartAMount: Double = 0.0
+        val totalCartAMount: Double = 0.0,
     ) : ViewState
 
     sealed class Event : ViewEvent {

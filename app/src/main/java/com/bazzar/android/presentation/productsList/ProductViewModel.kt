@@ -30,7 +30,7 @@ class ProductViewModel @Inject constructor(
     override fun handleEvents(event: ProductContract.Event) {
         when (event) {
             is ProductContract.Event.OnSubCategoryClicked -> onSubCategorySelected(event.categoryIndex)
-            ProductContract.Event.OnBackIconClicked -> ProductContract.Effect.Navigation.GoToBack
+            ProductContract.Event.OnBackIconClicked -> setEffect { ProductContract.Effect.Navigation.GoToBack }
             ProductContract.Event.OnSearchClicked -> {
                 setState { copy(isSearchClicked = isSearchClicked.not()) }
             }

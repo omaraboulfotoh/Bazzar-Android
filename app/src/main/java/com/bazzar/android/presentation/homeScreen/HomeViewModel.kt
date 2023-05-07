@@ -77,7 +77,8 @@ class HomeViewModel @Inject constructor(
                         slides2 = it.data?.slider2,
                         categoryItems = it.data?.categoryItems,
                         featuredBrands = it.data?.featuredBrands,
-                        featuredCategories = it.data?.featuredCategories
+                        featuredCategories = it.data?.featuredCategories,
+                        featuredBazzars = it.data?.featuredBzarz
                     )
                 }
 
