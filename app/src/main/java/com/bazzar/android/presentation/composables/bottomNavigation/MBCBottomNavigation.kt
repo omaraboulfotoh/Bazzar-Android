@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.bazzar.android.presentation.NavGraphs
 import com.bazzar.android.presentation.appCurrentDestinationAsState
-import com.bazzar.android.presentation.composables.DescriptionBody
 import com.bazzar.android.presentation.composables.OverLine
 import com.bazzar.android.presentation.theme.BazzarTheme
 import com.ramcosta.composedestinations.navigation.popUpTo
@@ -33,6 +32,7 @@ fun MBCBottomNavigation(
     val items = listOf(
         BottomNavItemDestination.Home,
         BottomNavItemDestination.Categories,
+        BottomNavItemDestination.Bazzars,
         BottomNavItemDestination.Cart,
         BottomNavItemDestination.Profile
     )

@@ -152,4 +152,5 @@
     <string name="total">Total</string>
     <string name="place_order">Place Your Order\n</string>
     <string name="payment_method">Payment Method</string>
+    <string name="search_by_bzar_name">Search by bzar name</string>
 </resources>

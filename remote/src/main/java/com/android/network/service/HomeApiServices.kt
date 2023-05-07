@@ -78,6 +78,8 @@ interface HomeApiServices {
         @Body body: LoadCheckoutRequest
     ): Response<BaseWrapper<CreateOrderModel>>
 
+    @GET("AllBzarz")
+    suspend fun getAllBazars(@Query("arabic") arabic: Boolean = false): Response<BaseWrapper<List<Bazar>>>
 
 }
 

@@ -3,6 +3,7 @@ package com.android.network.domain.repos.impl
 import android.util.Log
 import androidx.annotation.WorkerThread
 import com.android.model.home.Area
+import com.android.model.home.Bazar
 import com.android.model.home.Brand
 import com.android.model.home.Category
 import com.android.model.home.Checkout
@@ -295,4 +296,17 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             emit(Result.Error(CreateOrderModel(), throwable.message))
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun getAllBazars(arabic: Boolean): Flow<Result<List<Bazar>>> =
+        flow {
+            try {
+                homeRemoteDataSource.getAllBazars(arabic).let {
+                    if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: listOf()))
+                    else emit(Result.Error(listOf(), "error will be handled"))
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "getAllBazars: ", throwable)
+                emit(Result.Error(listOf(), throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 }

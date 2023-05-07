@@ -37,5 +37,6 @@ interface HomeRepo {
         request: LoadCheckoutRequest
     ): Flow<Result<CreateOrderModel>>
 
+    suspend fun getAllBazars(arabic: Boolean = false): Flow<Result<List<Bazar>>>
 
 }
