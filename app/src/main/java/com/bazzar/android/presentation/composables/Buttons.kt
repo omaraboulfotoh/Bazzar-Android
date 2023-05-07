@@ -56,7 +56,7 @@ fun PrimaryOutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier.fillMaxWidth(),
     enabled: Boolean = true,
-    stroke: Color = BazzarTheme.colors.stroke,
+    stroke: Color = BazzarTheme.colors.white,
     icon: ImageVector? = null,
 ) {
 
@@ -81,7 +81,7 @@ fun PrimaryOutlinedButton(
         MessageBody(
             text = text,
             style = BazzarTheme.typography.subtitle1SemiBold,
-            color = BazzarTheme.colors.black
+            color = BazzarTheme.colors.white
         )
     }
 }

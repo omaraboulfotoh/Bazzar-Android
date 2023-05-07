@@ -37,7 +37,8 @@ fun AccountScreenContent(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.white_smoke))
+            .background(BazzarTheme.colors.backgroundColor)
+            .padding(horizontal = BazzarTheme.spacing.m)
             .padding(bottom = BottomNavigationHeight),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -63,8 +64,7 @@ fun AccountScreenContent(
         }
         item {
             LanguageItem(
-                modifier = Modifier.padding(top = 24.dp),
-                iconPainter = painterResource(R.drawable.icon_awesome_flag)
+                modifier = Modifier.padding(top = 24.dp)
             )
         }
         if (state.isUserLoggedIn) {

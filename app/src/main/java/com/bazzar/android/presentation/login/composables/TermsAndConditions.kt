@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -32,7 +33,9 @@ fun TermsAndConditions(modifier: Modifier) {
             .padding(bottom = BazzarTheme.spacing.m)
     ) {
         Text(
-            modifier = Modifier.wrapContentSize(),
+            modifier = Modifier
+                .wrapContentSize()
+                .align(Alignment.Center),
             textAlign = TextAlign.Center,
             text = buildAnnotatedString {
                 withStyle(

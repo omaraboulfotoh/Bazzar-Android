@@ -29,7 +29,7 @@ fun DefaultMessageDialog(
     dismissOnBackPress: Boolean = true,
     dismissOnClickOutside: Boolean = true,
     bodyColor: Color = Color.White,
-    backgroundColor: Color = BazzarTheme.colors.backgroundColor
+    backgroundColor: Color = BazzarTheme.colors.primaryButtonColor
 ) {
     Dialog(
         onDismissRequest = onNegative,
@@ -74,7 +74,10 @@ fun DefaultMessageDialog(
 
                 Spacer(modifier = Modifier.padding(BazzarTheme.spacing.xl))
 
-                PrimaryButton(text = buttonText, onClick = onPositive)
+                PrimaryOutlinedButton(
+                    text = buttonText,
+                    onClick = onPositive,
+                )
             }
         }
     }

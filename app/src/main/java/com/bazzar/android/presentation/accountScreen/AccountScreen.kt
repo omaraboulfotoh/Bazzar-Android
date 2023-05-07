@@ -24,8 +24,6 @@ fun AccountScreen(
     viewModel: AccountViewModel = hiltViewModel(),
     navigator: DestinationsNavigator,
 ) {
-
-
     val state = viewModel.viewState()
     val context = LocalContext.current
 
@@ -78,7 +76,6 @@ fun AccountScreen(
             }
         }
     }
-
     viewModel.initState()
     AccountScreenContent(state = state) { viewModel.setEvent(it) }
 }

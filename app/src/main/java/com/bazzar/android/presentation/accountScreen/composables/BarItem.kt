@@ -30,7 +30,7 @@ fun BarItem(
 ) {
     Box(
         modifier = modifier
-            .width(343.dp)
+            .fillMaxWidth()
             .height(90.dp)
             .clickable { onClick.invoke() }
             .clip(RoundedCornerShape(25.dp))
