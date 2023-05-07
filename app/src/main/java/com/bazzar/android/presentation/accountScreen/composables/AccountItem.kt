@@ -75,7 +75,7 @@ fun AccountItem(
             }
         )
         Image(
-            painter = painterResource(id = R.drawable.ic_bazzar_circula),
+            painter = painterResource(id = R.drawable.ic_bazzar_circular_icon),
             contentDescription = "",
         )
     }

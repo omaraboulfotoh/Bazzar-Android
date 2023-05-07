@@ -35,4 +35,6 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
 
     suspend fun createOrder(arabic: Boolean = false, request: LoadCheckoutRequest) =
         homeRepo.createOrder(arabic, request)
+
+    suspend fun getAllBazars(arabic: Boolean = false) = homeRepo.getAllBazars(arabic)
 }

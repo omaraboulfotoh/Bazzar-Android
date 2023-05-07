@@ -9,6 +9,7 @@ import kotlinx.android.parcel.Parcelize
 @JsonClass(generateAdapter = true)
 data class SearchProductRequest(
     @Json(name = "categoryId") val categoryId: Int? = null,
+    @Json(name = "marketerId") val marketerId: Int? = null,
     @Json(name = "brandList") val brandList: List<Int> = emptyList(),
     @Json(name = "searchKey") val searchKey: String? = null,
     @Json(name = "pageSize") val pageSize: Int = 20,
