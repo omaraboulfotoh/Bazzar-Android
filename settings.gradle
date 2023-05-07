@@ -15,7 +15,7 @@ dependencyResolutionManagement {
         maven { url 'https://jitpack.io' }
     }
 }
-rootProject.name = "Bazzar App"
+rootProject.name = "BZAAARZ"
 include ':app'
 include ':remote'
 include ':model'
