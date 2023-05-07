@@ -18,3 +18,27 @@ data class Category(
     val imagePath: String? = null,
     val isSelected: Boolean = false,
 ) : Parcelable
+
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class ProductSection(
+    @Json(name = "categoryId")
+    val categoryId: Int? = null,
+    @Json(name = "title")
+    val title: String? = null,
+    @Json(name = "items")
+    val items: List<Product>? = null
+) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class BzarzModel(
+    @Json(name = "id")
+    val id: Int? = null,
+    @Json(name = "name")
+    val name: String? = null,
+    @Json(name = "imagePath")
+    val imagePath: String? = null,
+) : Parcelable
+

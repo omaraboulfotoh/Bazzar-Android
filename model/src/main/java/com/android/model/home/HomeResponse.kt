@@ -17,5 +17,7 @@ data class HomeResponse(
     @Json(name = "featuredCategories")
     val featuredCategories: List<Category>? = emptyList(),
     @Json(name = "categoryItems")
-    val categoryItems: List<Product>? = emptyList(),
+    val categoryItems: List<ProductSection>? = emptyList(),
+    @Json(name = "featuredBzarz")
+    val featuredBzarz: List<BzarzModel>? = emptyList(),
 ) : Parcelable

@@ -30,12 +30,15 @@ class HomeViewModel @Inject constructor(
 
             is HomeContract.Event.OnBrandClicked -> handleBrandClicked(event.index)
             is HomeContract.Event.OnCategoryClicked -> handleCategoryClicked(event.index)
-            is HomeContract.Event.OnProductClicked -> onProductClicked(event.index)
+            is HomeContract.Event.OnProductClicked -> onProductClicked(
+                event.index,
+                event.sectionIndex
+            )
         }
     }
 
-    private fun onProductClicked(index: Int) {
-        val product = currentState.categoryItems?.get(index) ?: return
+    private fun onProductClicked(index: Int, sectionIndex: Int) {
+        val product = currentState.categoryItems?.get(sectionIndex)?.items?.get(index) ?: return
         setEffect { HomeContract.Effect.Navigation.GoToProductDetails(product) }
     }
 

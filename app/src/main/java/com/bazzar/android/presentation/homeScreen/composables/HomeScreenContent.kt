@@ -38,31 +38,37 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
                     onSendEvent(HomeContract.Event.OnSliderClicked(0, it))
                 })
         }
-        if (state.categoryItems.isNullOrEmpty().not()) item {
-            ProductsGroup(
-                productsList = state.categoryItems.orEmpty(),
-                headerTitle = stringResource(id = R.string.home_screen_products_group),
-                onProductClicked = { itemId ->
-                    onSendEvent(HomeContract.Event.OnProductClicked(itemId))
-                }
-            )
+//        item {
+//            FeaturedBazzarSlider(slides2 = state.featuredBazzars.orEmpty())
+//        }
+        if (state.featuredCategories.isNullOrEmpty()
+                .not()
+        ) CategoryGroup(state.featuredCategories.orEmpty(), onCategoryClicked = {
+            onSendEvent(HomeContract.Event.OnCategoryClicked(it))
+        })
+
+        state.categoryItems.orEmpty().forEachIndexed { index, productSection ->
+            item {
+                ProductsGroup(productsList = productSection.items.orEmpty(),
+                    headerTitle = stringResource(id = R.string.home_screen_products_group),
+                    onProductClicked = { itemId ->
+                        onSendEvent(HomeContract.Event.OnProductClicked(itemId, index))
+                    })
+            }
         }
-        if (state.featuredCategories.isNullOrEmpty().not())
-            CategoryGroup(state.featuredCategories.orEmpty(), onCategoryClicked = {
-                onSendEvent(HomeContract.Event.OnCategoryClicked(it))
-            })
+
         item {
-            IndicatorHomeImageSlider(
-                state.slides2.orEmpty().mapNotNull { it.imagePath ?: "" },
+            IndicatorHomeImageSlider(state.slides2.orEmpty().mapNotNull { it.imagePath ?: "" },
                 modifier = Modifier.wrapContentHeight(),
                 onSliderClicked = {
                     onSendEvent(HomeContract.Event.OnSliderClicked(1, it))
                 })
         }
-        if (state.featuredBrands.isNullOrEmpty().not())
-            FeaturedBrands(state.featuredBrands.orEmpty(), onBrandClicked = {
-                onSendEvent(HomeContract.Event.OnBrandClicked(it))
-            })
+        if (state.featuredBrands.isNullOrEmpty()
+                .not()
+        ) FeaturedBrands(state.featuredBrands.orEmpty(), onBrandClicked = {
+            onSendEvent(HomeContract.Event.OnBrandClicked(it))
+        })
 
         item {
             Spacer(modifier = Modifier.height(BazzarTheme.spacing.xs))
