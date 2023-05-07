@@ -1,18 +1,16 @@
 package com.bazzar.android.presentation.createOrder.composables
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,7 +35,8 @@ import com.bazzar.android.presentation.composables.RemoteImage
 import com.bazzar.android.presentation.composables.Subtitle
 import com.bazzar.android.presentation.composables.Title
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
-import com.bazzar.android.presentation.createOrder.CreateOrderContract.*
+import com.bazzar.android.presentation.createOrder.CreateOrderContract.Event
+import com.bazzar.android.presentation.createOrder.CreateOrderContract.State
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
@@ -170,7 +169,11 @@ fun CreateOrderScreenContent(
                     state.paymentMethodList.orEmpty().forEachIndexed { index, paymentMethod ->
 
                         Row(
-                            modifier = Modifier.wrapContentSize(),
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .clickable {
+                                    onSendEvent(Event.OnPaymentMethodClicked(index))
+                                },
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs)
                         ) {

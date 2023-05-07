@@ -72,6 +72,12 @@ interface HomeApiServices {
         @Body body: LoadCheckoutRequest
     ): Response<BaseWrapper<CheckoutModel>>
 
+    @POST("CreateOrder")
+    suspend fun createOrder(
+        @Query("arabic") arabic: Boolean = false,
+        @Body body: LoadCheckoutRequest
+    ): Response<BaseWrapper<CheckoutModel>>
+
 
 }
 

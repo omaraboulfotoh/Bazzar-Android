@@ -28,7 +28,7 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
         apiServices.register(request)
 
     override suspend fun login(userLoginRequest: UserLoginRequest) =
-        apiServices.login(userLoginRequest.Phone,userLoginRequest.Password)
+        apiServices.login(userLoginRequest.Phone, userLoginRequest.Password)
 
     override suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest) =
         apiServices.verifyOtp(verifyOtpRequest)
@@ -56,6 +56,12 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
         request: LoadCheckoutRequest
     ): Response<BaseWrapper<CheckoutModel>> =
         apiServices.loadCheckout(arabic, body = request)
+
+    override suspend fun createOrder(
+        arabic: Boolean,
+        request: LoadCheckoutRequest
+    ): Response<BaseWrapper<CheckoutModel>> =
+        apiServices.createOrder(arabic, body = request)
 
     override suspend fun getOrdersHistory(arabic: Boolean) =
         apiServices.getOrdersHistory(arabic)

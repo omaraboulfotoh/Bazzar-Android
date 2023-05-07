@@ -34,16 +34,14 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             homeRemoteDataSource.getHome().let {
                 if (it.isSuccessful) {
                     emit(Result.Success(it.body()?.data ?: HomeResponse()))
-                } else
-                    Result.Error(
-                        HomeResponse(), "error will be handled"
-                    )
+                } else Result.Error(
+                    HomeResponse(), "error will be handled"
+                )
             }
         } catch (throwable: Throwable) {
             emit(
                 Result.Error(
-                    HomeResponse(),
-                    throwable.message
+                    HomeResponse(), throwable.message
                 )
             )
         }
@@ -54,16 +52,14 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             homeRemoteDataSource.getAllCategories().let {
                 if (it.isSuccessful) {
                     emit(Result.Success(it.body()?.data ?: emptyList()))
-                } else
-                    Result.Error(
-                        listOf<Category>(), "error will be handled"
-                    )
+                } else Result.Error(
+                    listOf<Category>(), "error will be handled"
+                )
             }
         } catch (throwable: Throwable) {
             emit(
                 Result.Error(
-                    listOf<Category>(),
-                    throwable.message
+                    listOf<Category>(), throwable.message
                 )
             )
         }
@@ -74,16 +70,14 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             homeRemoteDataSource.getAllBrands().let {
                 if (it.isSuccessful) {
                     emit(Result.Success(it.body()?.data ?: emptyList()))
-                } else
-                    Result.Error(
-                        listOf<Brand>(), "error will be handled"
-                    )
+                } else Result.Error(
+                    listOf<Brand>(), "error will be handled"
+                )
             }
         } catch (throwable: Throwable) {
             emit(
                 Result.Error(
-                    listOf<Brand>(),
-                    throwable.message
+                    listOf<Brand>(), throwable.message
                 )
             )
         }
@@ -95,16 +89,14 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                 homeRemoteDataSource.getAllProductList(searchProduct).let {
                     if (it.isSuccessful) {
                         emit(Result.Success(it.body()?.data ?: emptyList()))
-                    } else
-                        Result.Error(
-                            listOf<Product>(), "error will be handled"
-                        )
+                    } else Result.Error(
+                        listOf<Product>(), "error will be handled"
+                    )
                 }
             } catch (throwable: Throwable) {
                 emit(
                     Result.Error(
-                        listOf<Product>(),
-                        throwable.message
+                        listOf<Product>(), throwable.message
                     )
                 )
             }
@@ -115,17 +107,15 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             homeRemoteDataSource.getAllProductDetails(productId).let {
                 if (it.isSuccessful) {
                     emit(Result.Success(it.body()?.data ?: Product()))
-                } else
-                    Result.Error(
-                        Product(), "error will be handled"
-                    )
+                } else Result.Error(
+                    Product(), "error will be handled"
+                )
             }
         } catch (throwable: Throwable) {
             Log.e("Error", "getAllProductDetails: ", throwable)
             emit(
                 Result.Error(
-                    Product(),
-                    throwable.message
+                    Product(), throwable.message
                 )
             )
         }
@@ -136,44 +126,39 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             homeRemoteDataSource.register(request).let {
                 if (it.isSuccessful) {
                     emit(Result.Success(it.body()?.data ?: UserData()))
-                } else
-                    Result.Error(
-                        UserData(), "error will be handled"
-                    )
+                } else Result.Error(
+                    UserData(), "error will be handled"
+                )
             }
         } catch (throwable: Throwable) {
             Log.e("Error", "RegisterError: ", throwable)
             emit(
                 Result.Error(
-                    UserData(),
-                    throwable.message
+                    UserData(), throwable.message
                 )
             )
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
 
-    override suspend fun login(userLoginRequest: UserLoginRequest): Flow<Result<UserData>> =
-        flow {
-            try {
-                homeRemoteDataSource.login(userLoginRequest).let {
-                    if (it.isSuccessful) {
-                        emit(Result.Success(it.body()?.data ?: UserData()))
-                    } else
-                        Result.Error(
-                            UserData(), "error will be handled"
-                        )
-                }
-            } catch (throwable: Throwable) {
-                Log.e("Error", "LoginError: ", throwable)
-                emit(
-                    Result.Error(
-                        UserData(),
-                        throwable.message
-                    )
+    override suspend fun login(userLoginRequest: UserLoginRequest): Flow<Result<UserData>> = flow {
+        try {
+            homeRemoteDataSource.login(userLoginRequest).let {
+                if (it.isSuccessful) {
+                    emit(Result.Success(it.body()?.data ?: UserData()))
+                } else Result.Error(
+                    UserData(), "error will be handled"
                 )
             }
-        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+        } catch (throwable: Throwable) {
+            Log.e("Error", "LoginError: ", throwable)
+            emit(
+                Result.Error(
+                    UserData(), throwable.message
+                )
+            )
+        }
+    }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
 
     override suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Flow<Result<UserData>> =
@@ -182,50 +167,46 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                 homeRemoteDataSource.verifyOtp(verifyOtpRequest).let {
                     if (it.isSuccessful) {
                         emit(Result.Success(it.body()?.data ?: UserData()))
-                    } else
-                        Result.Error(
-                            UserData(), "error will be handled"
-                        )
+                    } else Result.Error(
+                        UserData(), "error will be handled"
+                    )
                 }
             } catch (throwable: Throwable) {
                 Log.e("Error", "verifyOtpError: ", throwable)
                 emit(
                     Result.Error(
-                        UserData(),
-                        throwable.message
+                        UserData(), throwable.message
                     )
                 )
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
-    override suspend fun resendOtp(userId: Int): Flow<Result<String>> =
-        flow {
-            try {
-                homeRemoteDataSource.resendOtp(userId).let {
-                    if (it.isSuccessful) {
-                        emit(Result.Success(""))
-                    } else {
-                        Result.Error("", "error will be handled")
-                    }
+    override suspend fun resendOtp(userId: Int): Flow<Result<String>> = flow {
+        try {
+            homeRemoteDataSource.resendOtp(userId).let {
+                if (it.isSuccessful) {
+                    emit(Result.Success(""))
+                } else {
+                    Result.Error("", "error will be handled")
                 }
-            } catch (throwable: Throwable) {
-                Log.e("Error", "verifyOtpError: ", throwable)
-                emit(Result.Error("", throwable.message))
             }
-        }.onStart { emit(Result.Loading("")) }.flowOn(Dispatchers.IO)
+        } catch (throwable: Throwable) {
+            Log.e("Error", "verifyOtpError: ", throwable)
+            emit(Result.Error("", throwable.message))
+        }
+    }.onStart { emit(Result.Loading("")) }.flowOn(Dispatchers.IO)
 
-    override suspend fun getAllAddresses(): Flow<Result<List<UserAddress>>> =
-        flow {
-            try {
-                homeRemoteDataSource.getAllAddresses().let {
-                    if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: listOf()))
-                    else emit(Result.Error(listOf(), "error will be handled"))
-                }
-            } catch (throwable: Throwable) {
-                Log.e("Error", "getAllAddresses: ", throwable)
-                emit(Result.Error(listOf(), throwable.message))
+    override suspend fun getAllAddresses(): Flow<Result<List<UserAddress>>> = flow {
+        try {
+            homeRemoteDataSource.getAllAddresses().let {
+                if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: listOf()))
+                else emit(Result.Error(listOf(), "error will be handled"))
             }
-        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+        } catch (throwable: Throwable) {
+            Log.e("Error", "getAllAddresses: ", throwable)
+            emit(Result.Error(listOf(), throwable.message))
+        }
+    }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
     override suspend fun addUserAddress(userAddress: UserAddress): Flow<Result<UserAddress>> =
         flow {
@@ -253,40 +234,37 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
-    override suspend fun getAllAreas(arabic: Boolean): Flow<Result<List<Area>>> =
-        flow {
-            try {
-                homeRemoteDataSource.getAllAreas(arabic).let {
-                    if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: listOf()))
-                    else emit(Result.Error(listOf(), "error will be handled"))
-                }
-            } catch (throwable: Throwable) {
-                Log.e("Error", "getAllAreas: ", throwable)
-                emit(Result.Error(listOf(), throwable.message))
+    override suspend fun getAllAreas(arabic: Boolean): Flow<Result<List<Area>>> = flow {
+        try {
+            homeRemoteDataSource.getAllAreas(arabic).let {
+                if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: listOf()))
+                else emit(Result.Error(listOf(), "error will be handled"))
             }
-        }.onStart { emit(Result.Loading(listOf())) }.flowOn(Dispatchers.IO)
+        } catch (throwable: Throwable) {
+            Log.e("Error", "getAllAreas: ", throwable)
+            emit(Result.Error(listOf(), throwable.message))
+        }
+    }.onStart { emit(Result.Loading(listOf())) }.flowOn(Dispatchers.IO)
 
     override suspend fun loadCheckout(checkout: Checkout): Flow<Result<Any>> {
         TODO("Not yet implemented")
     }
 
     override suspend fun loadCheckout(
-        arabic: Boolean,
-        request: LoadCheckoutRequest
-    ): Flow<Result<CheckoutModel>> =
-        flow {
-            try {
-                homeRemoteDataSource.loadCheckout(arabic, request).let {
-                    if (it.isSuccessful) emit(
-                        Result.Success(it.body()?.data ?: CheckoutModel())
-                    )
-                    else emit(Result.Error(CheckoutModel(), "error will be handled"))
-                }
-            } catch (throwable: Throwable) {
-                Log.e("Error", "getOrdersHistory: ", throwable)
-                emit(Result.Error(CheckoutModel(), throwable.message))
+        arabic: Boolean, request: LoadCheckoutRequest
+    ): Flow<Result<CheckoutModel>> = flow {
+        try {
+            homeRemoteDataSource.loadCheckout(arabic, request).let {
+                if (it.isSuccessful) emit(
+                    Result.Success(it.body()?.data ?: CheckoutModel())
+                )
+                else emit(Result.Error(CheckoutModel(), "error will be handled"))
             }
-        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+        } catch (throwable: Throwable) {
+            Log.e("Error", "getOrdersHistory: ", throwable)
+            emit(Result.Error(CheckoutModel(), throwable.message))
+        }
+    }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
     override suspend fun getOrdersHistory(arabic: Boolean): Flow<Result<List<OrderHistory>>> =
         flow {
@@ -300,4 +278,20 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                 emit(Result.Error(listOf(), throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun createOrder(
+        arabic: Boolean, request: LoadCheckoutRequest
+    ): Flow<Result<CheckoutModel>> = flow {
+        try {
+            homeRemoteDataSource.createOrder(arabic, request).let {
+                if (it.isSuccessful) emit(
+                    Result.Success(it.body()?.data ?: CheckoutModel())
+                )
+                else emit(Result.Error(CheckoutModel(), "error will be handled"))
+            }
+        } catch (throwable: Throwable) {
+            Log.e("Error", "getOrdersHistory: ", throwable)
+            emit(Result.Error(CheckoutModel(), throwable.message))
+        }
+    }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 }

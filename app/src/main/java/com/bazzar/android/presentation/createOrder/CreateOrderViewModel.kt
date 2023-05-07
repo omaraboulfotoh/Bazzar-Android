@@ -58,11 +58,14 @@ class CreateOrderViewModel @Inject constructor(
                     is Result.Error -> globalState.error(response.message.orEmpty())
                     is Result.Loading -> globalState.loading(true)
                     is Result.Success -> {
+                        val paymentMethodList =
+                            response.data?.paymentMethods.orEmpty().toMutableList()
+                        paymentMethodList[0] = paymentMethodList.first().copy(isSelected = true)
                         setState {
                             copy(
                                 address = address,
                                 productCartList = products,
-                                paymentMethodList = response.data?.paymentMethods.orEmpty(),
+                                paymentMethodList = paymentMethodList,
                                 totalPrice = response.data?.totalPrice.orZero(),
                                 shipping = response.data?.shipping.orZero(),
                                 subTotal = response.data?.subTotal.orZero(),
@@ -73,11 +76,39 @@ class CreateOrderViewModel @Inject constructor(
             }
     })
 
-    private fun changePaymentMethod(index: Int) {
-
+    private fun changePaymentMethod(itemIndex: Int) {
+        val updated = currentState.paymentMethodList.orEmpty().mapIndexed { index, paymentMethod ->
+            paymentMethod.copy(isSelected = itemIndex == index)
+        }
+        setState { copy(paymentMethodList = updated) }
     }
 
-    private fun callCreateOrder() {
+    private fun callCreateOrder() = executeCatching({
 
-    }
+        val products = sharedPrefersManager.getProductList().orEmpty()
+        val cartItems = products.map {
+            CartItemRequest(
+                it.selectedItemDetails?.id.orZero(),
+                it.selectedItemDetails?.quantity.orZero()
+            )
+        }
+
+        homeUseCase.createOrder(
+            false,
+            LoadCheckoutRequest(
+                userAddressId = currentState.address?.id.orZero(),
+                cartItems = cartItems,
+                paymentMethodId = currentState.paymentMethodList.orEmpty()
+                    .firstOrNull { it.isSelected == true }?.id.orZero()
+            )
+        ).collect { response ->
+            when (response) {
+                is Result.Error -> globalState.error(response.message.orEmpty())
+                is Result.Loading -> globalState.loading(true)
+                is Result.Success -> {
+
+                }
+            }
+        }
+    })
 }
