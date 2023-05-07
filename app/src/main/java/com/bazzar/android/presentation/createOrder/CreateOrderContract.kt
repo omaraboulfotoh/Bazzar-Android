@@ -22,6 +22,7 @@ class CreateOrderContract {
         object OnCreateOrderClicked : Event()
         object OnBackClicked : Event()
         data class OnPaymentMethodClicked(val index: Int) : Event()
+        data class OnPaymentCallBack(val status: Boolean) : Event()
         data class OnNotesChanged(val notes: String) : Event()
     }
 
@@ -29,6 +30,7 @@ class CreateOrderContract {
         sealed class Navigation : Effect() {
             object GoToSuccessScreen : Navigation()
             object GoBack : Navigation()
+            data class OpenWebView(val url: String) : Navigation()
         }
     }
 

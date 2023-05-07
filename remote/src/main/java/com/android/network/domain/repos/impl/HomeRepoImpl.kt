@@ -7,6 +7,7 @@ import com.android.model.home.Brand
 import com.android.model.home.Category
 import com.android.model.home.Checkout
 import com.android.model.home.CheckoutModel
+import com.android.model.home.CreateOrderModel
 import com.android.model.home.HomeResponse
 import com.android.model.home.Product
 import com.android.model.home.UserAddress
@@ -281,17 +282,17 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
 
     override suspend fun createOrder(
         arabic: Boolean, request: LoadCheckoutRequest
-    ): Flow<Result<CheckoutModel>> = flow {
+    ): Flow<Result<CreateOrderModel>> = flow {
         try {
             homeRemoteDataSource.createOrder(arabic, request).let {
                 if (it.isSuccessful) emit(
-                    Result.Success(it.body()?.data ?: CheckoutModel())
+                    Result.Success(it.body()?.data ?: CreateOrderModel())
                 )
-                else emit(Result.Error(CheckoutModel(), "error will be handled"))
+                else emit(Result.Error(CreateOrderModel(), "error will be handled"))
             }
         } catch (throwable: Throwable) {
             Log.e("Error", "getOrdersHistory: ", throwable)
-            emit(Result.Error(CheckoutModel(), throwable.message))
+            emit(Result.Error(CreateOrderModel(), throwable.message))
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 }

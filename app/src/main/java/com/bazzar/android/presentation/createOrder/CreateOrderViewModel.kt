@@ -31,6 +31,16 @@ class CreateOrderViewModel @Inject constructor(
             is CreateOrderContract.Event.OnPaymentMethodClicked -> changePaymentMethod(event.index)
             is CreateOrderContract.Event.OnNotesChanged -> setState { copy(additionalNotes = event.notes) }
             CreateOrderContract.Event.OnBackClicked -> setEffect { CreateOrderContract.Effect.Navigation.GoBack }
+            is CreateOrderContract.Event.OnPaymentCallBack -> handlePaymentSuccess(event.status)
+        }
+    }
+
+    private fun handlePaymentSuccess(status: Boolean) {
+        if (status) {
+            sharedPrefersManager.saveProductList(emptyList())
+            setEffect { CreateOrderContract.Effect.Navigation.GoToSuccessScreen }
+        } else {
+            globalState.error("Payment Failure")
         }
     }
 
@@ -92,7 +102,6 @@ class CreateOrderViewModel @Inject constructor(
                 it.selectedItemDetails?.quantity.orZero()
             )
         }
-
         homeUseCase.createOrder(
             false,
             LoadCheckoutRequest(
@@ -106,7 +115,7 @@ class CreateOrderViewModel @Inject constructor(
                 is Result.Error -> globalState.error(response.message.orEmpty())
                 is Result.Loading -> globalState.loading(true)
                 is Result.Success -> {
-
+                    setEffect { CreateOrderContract.Effect.Navigation.OpenWebView(response.data?.paymentURL.orEmpty()) }
                 }
             }
         }

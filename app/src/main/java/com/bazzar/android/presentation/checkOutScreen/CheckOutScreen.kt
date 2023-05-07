@@ -2,6 +2,7 @@ package com.bazzar.android.presentation.checkOutScreen
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.bazzar.android.common.navigateAndPopCurrent
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.checkOutScreen.composables.CheckOutScreenContent
@@ -26,7 +27,7 @@ fun CheckOutScreen(
                 AddressScreenDestination()
             )
 
-            is CheckOutContract.Effect.Navigation.GoToCheckout -> navigator.navigate(
+            is CheckOutContract.Effect.Navigation.GoToCheckout -> navigator.navigateAndPopCurrent(
                 CreateOrderScreenDestination(effect.selectedAddress)
             )
         }

@@ -35,7 +35,7 @@ interface HomeRepo {
     suspend fun createOrder(
         arabic: Boolean = false,
         request: LoadCheckoutRequest
-    ): Flow<Result<CheckoutModel>>
+    ): Flow<Result<CreateOrderModel>>
 
 
 }

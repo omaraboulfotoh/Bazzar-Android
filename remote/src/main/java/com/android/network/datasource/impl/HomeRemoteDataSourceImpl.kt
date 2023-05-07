@@ -60,7 +60,7 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun createOrder(
         arabic: Boolean,
         request: LoadCheckoutRequest
-    ): Response<BaseWrapper<CheckoutModel>> =
+    ): Response<BaseWrapper<CreateOrderModel>> =
         apiServices.createOrder(arabic, body = request)
 
     override suspend fun getOrdersHistory(arabic: Boolean) =

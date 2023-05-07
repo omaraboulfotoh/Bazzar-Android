@@ -76,7 +76,7 @@ interface HomeApiServices {
     suspend fun createOrder(
         @Query("arabic") arabic: Boolean = false,
         @Body body: LoadCheckoutRequest
-    ): Response<BaseWrapper<CheckoutModel>>
+    ): Response<BaseWrapper<CreateOrderModel>>
 
 
 }

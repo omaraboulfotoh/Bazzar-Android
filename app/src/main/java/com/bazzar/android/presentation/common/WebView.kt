@@ -14,12 +14,15 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.bazzar.android.presentation.composables.BazzarAppBar
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.result.ResultBackNavigator
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Destination
 @Composable
 fun WebViewScreen(
     navigator: DestinationsNavigator,
     title: String? = null,
+    resultNavigator: ResultBackNavigator<Boolean>,
     url: String
 ) {
     val backDispatcher =
@@ -35,10 +38,26 @@ fun WebViewScreen(
 
         }
     ) {
-        if (url.isNotEmpty())
-            WebView(data = url)
-        else
+        if (url.isNotEmpty()) {
+            WebView(data = url, webViewClient = object : WebViewClient() {
+                override fun doUpdateVisitedHistory(
+                    view: WebView?,
+                    url: String?,
+                    isReload: Boolean,
+                ) {
+                    super.doUpdateVisitedHistory(view, url, isReload)
+                    url?.let {
+                        if (it.contains("PaymentSuccess")) {
+                            resultNavigator.navigateBack(true)
+                        } else if (it.contains("PaymentCanceled")) {
+                            resultNavigator.navigateBack(false)
+                        }
+                    }
+                }
+            })
+        } else {
             Toast.makeText(LocalContext.current, "Empty Url", Toast.LENGTH_LONG).show()
+        }
     }
 
 }
