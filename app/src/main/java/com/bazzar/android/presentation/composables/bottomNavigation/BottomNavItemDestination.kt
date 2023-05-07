@@ -31,6 +31,15 @@ sealed class BottomNavItemDestination(
             CategoryScreenDestination
         )
 
+    object Bazzars :
+        BottomNavItemDestination(
+            MainContract.CART_TAB,
+            R.string.bazzar,
+            R.drawable.ic_bazzar_circular,
+            R.drawable.ic_bazzar_circular_icon,
+            BazarListScreenDestination
+        )
+
     object Cart :
         BottomNavItemDestination(
             MainContract.CART_TAB,

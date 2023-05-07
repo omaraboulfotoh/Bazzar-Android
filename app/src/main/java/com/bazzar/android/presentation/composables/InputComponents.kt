@@ -29,7 +29,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bazzar.android.R
@@ -255,43 +254,35 @@ fun <T> PickerTextInputField(
 @Composable
 fun SearchTextInput(
     modifier: Modifier = Modifier,
+    childRowModifier: Modifier = Modifier,
     leadingIcon: (@Composable () -> Unit)? = null,
     trailingIcon: (@Composable () -> Unit)? = null,
     value: String,
-    textColor: Color = Color.Black,
     onValueChange: (String) -> Unit,
     hint: String = stringResource(id = R.string.search),
-    fontSize: TextUnit = BazzarTheme.typography.subtitle1.fontSize,
-    backgroundColor: Color = BazzarTheme.colors.black,
+    textStyle: TextStyle = LocalTextStyle.current.copy(
+        color = Color.Black,
+        fontSize = BazzarTheme.typography.subtitle1.fontSize
+    ),
+    cursorColor: SolidColor = SolidColor(Color.White),
 ) {
     BasicTextField(
-        modifier = modifier
-            .background(
-                backgroundColor,
-                MaterialTheme.shapes.small,
-            )
-            .fillMaxWidth(),
+        modifier = modifier,
         value = value,
         onValueChange = onValueChange,
         singleLine = true,
-        cursorBrush = SolidColor(Color.White),
-        textStyle = LocalTextStyle.current.copy(
-            color = textColor,
-            fontSize = fontSize
-        ),
+        cursorBrush = cursorColor,
+        textStyle = textStyle,
         decorationBox = { innerTextField ->
             Row(
-                modifier,
+                modifier = childRowModifier,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if (leadingIcon != null) leadingIcon()
                 Box(Modifier.weight(1f)) {
                     if (value.isEmpty()) Text(
-                        hint,
-                        style = LocalTextStyle.current.copy(
-                            color = textColor,
-                            fontSize = fontSize
-                        )
+                        text = hint,
+                        style = textStyle
                     )
                     innerTextField()
                 }

@@ -26,7 +26,8 @@ interface HomeRemoteDataSource {
     suspend fun getAllAreas(arabic: Boolean): Response<BaseWrapper<List<Area>>>
     suspend fun loadCheckout(checkout: Checkout): Response<BaseWrapper<Any>>
     suspend fun getOrdersHistory(arabic: Boolean = false): Response<BaseWrapper<List<OrderHistory>>>
-    suspend fun loadCheckout(arabic: Boolean = false,request: LoadCheckoutRequest): Response<BaseWrapper<CheckoutModel>>
-    suspend fun createOrder(arabic: Boolean = false,request: LoadCheckoutRequest): Response<BaseWrapper<CreateOrderModel>>
+    suspend fun loadCheckout(arabic: Boolean = false, request: LoadCheckoutRequest): Response<BaseWrapper<CheckoutModel>>
+    suspend fun createOrder(arabic: Boolean = false, request: LoadCheckoutRequest): Response<BaseWrapper<CreateOrderModel>>
+    suspend fun getAllBazars(arabic: Boolean = false): Response<BaseWrapper<List<Bazar>>>
 
 }
