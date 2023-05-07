@@ -22,17 +22,36 @@ android {
         testInstrumentationRunner Configs.testInstrumentationRunner
     }
 
-    buildTypes {
-        debug {
-            debuggable true
-            minifyEnabled true
-            shrinkResources false
+    signingConfigs {
+        debugConfig {
+            keyAlias 'bzaarz'
+            keyPassword '123456789'
+            storeFile file('bzaarz.jks')
+            storePassword '123456789'
         }
+        releaseConfig {
+            keyAlias 'bzaarz'
+            keyPassword '123456789'
+            storeFile file('bzaarz.jks')
+            storePassword '123456789'
+        }
+    }
+    buildTypes {
+
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseConfig
+            ext.alwaysUpdateBuildId = false
+            lintOptions {
+                disable 'MissingTranslation'
+            }
+        }
+        debug {
+            minifyEnabled false
             debuggable true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            shrinkResources false
+            signingConfig signingConfigs.debugConfig
         }
     }
 
