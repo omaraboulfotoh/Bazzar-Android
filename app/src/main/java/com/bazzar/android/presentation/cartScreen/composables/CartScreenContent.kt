@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.cartScreen.composables
 
+import android.media.metrics.Event
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -59,7 +60,15 @@ fun CartScreenContent(
             ) {
                 state.productCartList?.let {
                     itemsIndexed(it) { index, product ->
-                        ProductCartItem(product)
+                        ProductCartItem(product, onItemClicked = {
+                            onSendEvent(CartContract.Event.OnProductClicked(index))
+                        }, onDeleteClicked = {
+                            onSendEvent(CartContract.Event.OnDeleteItem(index))
+                        }, onMinusClicked = {
+                            onSendEvent(CartContract.Event.OnMinusItem(index))
+                        }, onPlusClicked = {
+                            onSendEvent(CartContract.Event.OnPlusItem(index))
+                        })
                     }
                 }
             }

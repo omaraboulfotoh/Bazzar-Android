@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.checkOutScreen.composables
+package com.bazzar.android.presentation.checkoutScreen.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.bazzar.android.R
-import com.bazzar.android.presentation.checkOutScreen.CheckOutContract
+import com.bazzar.android.presentation.checkoutScreen.CheckOutContract
 import com.bazzar.android.presentation.composables.BazzarAppBar
 import com.bazzar.android.presentation.theme.BazzarTheme
 

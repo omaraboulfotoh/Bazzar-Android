@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.checkOutScreen.composables
+package com.bazzar.android.presentation.checkoutScreen.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row

@@ -2,6 +2,7 @@ package com.bazzar.android.presentation.cartScreen.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -28,19 +29,26 @@ import androidx.compose.ui.unit.sp
 import com.android.model.home.Product
 import com.bazzar.android.R
 import com.bazzar.android.common.nullIfEmpty
+import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.composables.RemoteImageCard
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 
-@Preview
 @Composable
-fun ProductCartItem(product: Product? = null, productCounter: Int? = 0) {
+fun ProductCartItem(
+    product: Product? = null,
+    onMinusClicked: () -> Unit,
+    onPlusClicked: () -> Unit,
+    onDeleteClicked: () -> Unit,
+    onItemClicked: () -> Unit,
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(145.dp)
             .clip(RoundedCornerShape(20.dp))
-            .background(Color.White),
+            .background(Color.White)
+            .clickable { onItemClicked() },
     ) {
         Row(
             modifier = Modifier.padding(BazzarTheme.spacing.s),
@@ -65,19 +73,21 @@ fun ProductCartItem(product: Product? = null, productCounter: Int? = 0) {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Image(
+                        modifier = Modifier.clickable { onMinusClicked() },
                         imageVector = ImageVector.vectorResource(R.drawable.ic_minus),
                         contentDescription = null
                     )
                     Text(
-                        text = productCounter.toString(),
+                        text = product?.selectedItemDetails?.quantity.orZero().toString(),
                         style = MaterialTheme.typography.overline.copy(
                             color = colorResource(id = R.color.prussian_blue),
                             fontFamily = FontFamily(Font(R.font.montserrat_bold))
                         )
                     )
                     Image(
+
                         painter = painterResource(R.drawable.ic_plus),
-                        modifier = Modifier,
+                        modifier = Modifier.clickable { onPlusClicked() },
                         contentDescription = null
                     )
 
@@ -162,7 +172,11 @@ fun ProductCartItem(product: Product? = null, productCounter: Int? = 0) {
                 horizontalAlignment = Alignment.End
             ) {
                 Image(
-                    modifier = Modifier.padding(BazzarTheme.spacing.xxs),
+                    modifier = Modifier
+                        .padding(BazzarTheme.spacing.xxs)
+                        .clickable {
+                            onDeleteClicked()
+                        },
                     imageVector = ImageVector.vectorResource(R.drawable.ic_trash),
                     contentDescription = null
                 )

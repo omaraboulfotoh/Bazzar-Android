@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.android.model.home.UserAddress
-import com.bazzar.android.presentation.checkOutScreen.composables.AddressItem
+import com.bazzar.android.presentation.checkoutScreen.composables.AddressItem
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable

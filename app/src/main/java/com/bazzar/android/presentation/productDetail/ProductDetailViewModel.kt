@@ -96,7 +96,11 @@ class ProductDetailViewModel @Inject constructor(
         setState {
             copy(
                 selectedItemDetail = selectedItemDetail,
-                productDetail = currentState.productDetail?.copy(selectedItemDetails = selectedItemDetail)
+                productDetail = currentState.productDetail?.copy(
+                    selectedItemDetails = selectedItemDetail.copy(
+                        quantity = 1
+                    )
+                )
             )
         }
     }
@@ -109,7 +113,9 @@ class ProductDetailViewModel @Inject constructor(
             copy(
                 sizeTitleList = updatedSizedList,
                 selectedItemDetail = updatedSizedList.firstOrNull(),
-                productDetail = currentState.productDetail?.copy(selectedItemDetails = selectedItemDetail)
+                productDetail = currentState.productDetail?.copy(selectedItemDetails = selectedItemDetail?.copy(
+                    quantity = 1
+                ))
             )
         }
     }

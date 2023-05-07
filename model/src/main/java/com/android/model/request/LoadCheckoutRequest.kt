@@ -8,6 +8,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class LoadCheckoutRequest(
+    @Json(name = "userAddressId")
+    val userAddressId: Int = 0,
     @Json(name = "cartItems")
     val cartItems: List<CartItemRequest>,
     @Json(name = "orderNotes")

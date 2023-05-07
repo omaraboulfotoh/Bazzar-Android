@@ -1,13 +1,13 @@
-package com.bazzar.android.presentation.checkOutScreen
+package com.bazzar.android.presentation.checkoutScreen
 
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.common.orFalse
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
-import com.bazzar.android.presentation.checkOutScreen.CheckOutContract.Effect
-import com.bazzar.android.presentation.checkOutScreen.CheckOutContract.Event
-import com.bazzar.android.presentation.checkOutScreen.CheckOutContract.State
+import com.bazzar.android.presentation.checkoutScreen.CheckOutContract.Effect
+import com.bazzar.android.presentation.checkoutScreen.CheckOutContract.Event
+import com.bazzar.android.presentation.checkoutScreen.CheckOutContract.State
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -43,7 +43,6 @@ class CheckOutViewModel @Inject constructor(
     }
 
     private fun loadAddress() = executeCatching({
-
         homeUseCase.getAllAddresses().collect {
             when (it) {
                 is Result.Error -> globalState.error(it.message.orEmpty())

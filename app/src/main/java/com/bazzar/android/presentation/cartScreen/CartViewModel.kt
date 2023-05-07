@@ -64,6 +64,7 @@ class CartViewModel @Inject constructor(
                 setEffect { CartContract.Effect.Navigation.GoToProduct(item) }
             }
         }
+        sharedPrefersManager.saveProductList(productsList)
     }
 
     private fun handleCheckout() {
@@ -73,25 +74,6 @@ class CartViewModel @Inject constructor(
             setEffect { CartContract.Effect.Navigation.GoToLogin }
         }
     }
-
-    private fun startCheckout() = executeCatching({
-        val cartItems = currentState.productCartList.orEmpty().map {
-            CartItemRequest(
-                it.selectedItemDetails?.id.orZero(),
-                it.selectedItemDetails?.quantity.orZero()
-            )
-        }
-        homeUseCase.loadCheckout(false, LoadCheckoutRequest(cartItems = cartItems))
-            .collect { response ->
-                when (response) {
-                    is Result.Error -> globalState.error(response.message.orEmpty())
-                    is Result.Loading -> globalState.loading(true)
-                    is Result.Success -> {
-                        setEffect { CartContract.Effect.Navigation.GoToSelectAddress }
-                    }
-                }
-            }
-    })
 
     fun init() {
         if (isInitialized.not()) {

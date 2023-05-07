@@ -56,3 +56,12 @@ data class ItemImages(
     @Json(name = "imagePath") val imagePath: String? = null,
     @Json(name = "colorTitle") val colorTitle: String? = null
 ) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+data class PaymentMethod(
+    @Json(name = "id") val id: Int? = null,
+    @Json(name = "imageUrl") val imageUrl: String? = null,
+    @Json(name = "title") val title: String? = null,
+    val isSelected: Boolean? = false,
+) : Parcelable

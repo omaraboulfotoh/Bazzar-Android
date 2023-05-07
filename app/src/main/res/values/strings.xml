@@ -145,4 +145,11 @@
     <string name="password">Enter Password</string>
     <string name="continue_as_guest">Continue as a guest</string>
     <string name="order_success_places">Your order has been successfully placed</string>
+    <string name="order_summry">Order Summary</string>
+    <string name="invoice_details">Invoice Details</string>
+    <string name="sub_total">SubTotal</string>
+    <string name="shipping">Delivery Charges</string>
+    <string name="total">Total</string>
+    <string name="place_order">Place Your Order\n</string>
+    <string name="payment_method">Payment Method</string>
 </resources>

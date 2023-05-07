@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.checkOutScreen
+package com.bazzar.android.presentation.checkoutScreen
 
 import com.android.model.home.Product
 import com.android.model.home.UserAddress
