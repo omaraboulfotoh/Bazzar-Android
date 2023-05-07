@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.toPriceFormat
-import com.bazzar.android.presentation.checkoutScreen.composables.AddressItem
+import com.bazzar.android.presentation.checkOutScreen.composables.AddressItem
 import com.bazzar.android.presentation.composables.BazzarAppBar
 import com.bazzar.android.presentation.composables.PrimaryButton
 import com.bazzar.android.presentation.composables.RemoteImage

@@ -1,8 +1,6 @@
 package com.bazzar.android.presentation.checkOutScreen
 
-import com.android.model.home.Product
 import com.android.model.home.UserAddress
-import com.bazzar.android.presentation.addressBookScreen.AddressBookViewModel
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
 import com.bazzar.android.presentation.base.ViewState

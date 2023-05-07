@@ -43,7 +43,6 @@ class CheckOutViewModel @Inject constructor(
     }
 
     private fun loadAddress() = executeCatching({
-
         homeUseCase.getAllAddresses().collect {
             when (it) {
                 is Result.Error -> globalState.error(it.message.orEmpty())

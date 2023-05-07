@@ -89,7 +89,7 @@ fun AddressView(
         }
         PrimaryButton(
             text = stringResource(id = R.string.add_new_address),
-            onClick = onAddNewAddressClicked,
+            onClick = {onAddNewAddressClicked},
             textColor = colorResource(id = R.color.prussian_blue),
             background = Color.Unspecified,
             modifier = Modifier
@@ -105,7 +105,7 @@ fun AddressView(
         )
         PrimaryButton(
             text = stringResource(id = R.string.continue_to_pay),
-            onClick = onContinueClicked,
+            onClick = { onContinueClicked() },
             textColor = Color.White,
             background = colorResource(id = R.color.prussian_blue),
             modifier = Modifier
