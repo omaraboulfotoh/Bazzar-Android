@@ -12,6 +12,7 @@ import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.SocialMedia
 import com.bazzar.android.presentation.accountScreen.composables.AccountScreenContent
 import com.bazzar.android.presentation.destinations.AddressBookScreenDestination
+import com.bazzar.android.presentation.destinations.EditProfileScreenDestination
 import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.destinations.MainScreenDestination
 import com.bazzar.android.presentation.destinations.OrdersHistoryScreenDestination
@@ -29,6 +30,10 @@ fun AccountScreen(
 
     viewModel.sideEffect { effect ->
         when (effect) {
+            is AccountContract.Effect.Navigation.GoToEditProfile -> {
+                navigator.navigate(EditProfileScreenDestination(userData = effect.userData))
+            }
+
             is AccountContract.Effect.Navigation.GoToOrdersHistory -> {
                 navigator.navigate(OrdersHistoryScreenDestination())
             }

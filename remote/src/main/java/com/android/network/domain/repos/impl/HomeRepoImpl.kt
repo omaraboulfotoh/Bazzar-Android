@@ -9,6 +9,7 @@ import com.android.model.home.Category
 import com.android.model.home.Checkout
 import com.android.model.home.CheckoutModel
 import com.android.model.home.CreateOrderModel
+import com.android.model.home.EditProfileResponse
 import com.android.model.home.HomeResponse
 import com.android.model.home.Product
 import com.android.model.home.UserAddress
@@ -142,6 +143,31 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
+    override suspend fun editProfile(request: UserRegisterRequest): Flow<Result<EditProfileResponse>> =
+        flow {
+            try {
+                homeRemoteDataSource.editProfile(request).let {
+                    if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: EditProfileResponse()))
+                    else Result.Error(EditProfileResponse(), "error will be handled")
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "editProfile: ", throwable)
+                emit(Result.Error(EditProfileResponse(), throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun changePassword(currentPassword: String, newPassword: String): Flow<Result<Boolean>> =
+        flow {
+            try {
+                homeRemoteDataSource.changePassword(currentPassword, newPassword).let {
+                    if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: false))
+                    else Result.Error(false, "error will be handled")
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "changePassword: ", throwable)
+                emit(Result.Error(false, throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
     override suspend fun login(userLoginRequest: UserLoginRequest): Flow<Result<UserData>> = flow {
         try {

@@ -47,6 +47,14 @@
     <string name="enter_mobile_number">Enter your mobile number</string>
     <string name="or">OR</string>
     <string name="create_account">Create Account</string>
+    <string name="edit_account">Edit Account</string>
+    <string name="change_password">Change Password</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="enter_current_password">Enter your current password</string>
+    <string name="enter_new_password">Enter your new password</string>
+    <string name="current_and_new_password_required">Current nd New password are required</string>
+    <string name="password_error_validation">Password should contains numbers and uppercase and lowercase and symbol character</string>
     <string name="email">Email</string>
     <string name="phone_number">Phone Number</string>
     <string name="well_will_send">we will send </string>
@@ -123,6 +131,8 @@
     <string name="exclusive">Exclusive</string>
     <string name="soldout">Sold out</string>
     <string name="terms_and_condition_required">Terms and Condition should be agreed</string>
+    <string name="phone_wrong">phone number is wrong</string>
+    <string name="required_user_name">User Name is required</string>
     <string name="sku_format">SKU: %s</string>
     <string name="read_more">Read More</string>
     <string name="read_less">Read Less</string>
