@@ -43,9 +43,11 @@ class GlobalState : IGlobalState {
     }
 
     override fun loading(show: Boolean) {
-        errorState.value = null
-        confirmationState.value = null
-        successState.value = null
+        if (show) {
+            errorState.value = null
+            confirmationState.value = null
+            successState.value = null
+        }
         loadingState.value = show
     }
 

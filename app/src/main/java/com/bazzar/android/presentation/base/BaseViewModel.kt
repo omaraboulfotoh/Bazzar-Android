@@ -68,7 +68,7 @@ abstract class BaseViewModel<Event : ViewEvent, UiState : ViewState, Effect : Vi
     fun <T> executeCatching(
         block: suspend () -> T,
         onError: ((Throwable, String) -> Unit)? = null,
-        withLoading: Boolean = false,
+        withLoading: Boolean = true,
     ) {
         viewModelScope.launch {
             try {
