@@ -36,14 +36,12 @@ fun EditProfileScreenContent(
                 onSendEvent(EditProfileContract.Event.OnBackClicked)
             },
         )
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(color = BazzarTheme.colors.backgroundColor)
-        ) {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
             item {
                 EditProfileDataEntry(
-                    modifier = Modifier.padding(
+                    modifier = Modifier
+                        .background(color = BazzarTheme.colors.backgroundColor)
+                        .padding(
                         horizontal = BazzarTheme.spacing.spacerMini,
                         vertical = BazzarTheme.spacing.l
                     ),
