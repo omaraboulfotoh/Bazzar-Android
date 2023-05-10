@@ -27,6 +27,14 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun register(request: UserRegisterRequest) =
         apiServices.register(request)
 
+    override suspend fun editProfile(request: UserRegisterRequest): Response<BaseWrapper<EditProfileResponse>> =
+        apiServices.editProfile(request)
+
+    override suspend fun changePassword(
+        currentPassword: String,
+        newPassword: String
+    ): Response<BaseWrapper<Boolean>> = apiServices.changePassword(currentPassword, newPassword)
+
     override suspend fun login(userLoginRequest: UserLoginRequest) =
         apiServices.login(userLoginRequest.Phone, userLoginRequest.Password)
 

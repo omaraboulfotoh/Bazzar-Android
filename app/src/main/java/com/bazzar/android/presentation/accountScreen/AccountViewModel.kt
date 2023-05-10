@@ -24,6 +24,7 @@ class AccountViewModel @Inject constructor(
 
     override fun handleEvents(event: Event) {
         when (event) {
+            is Event.OnAccountClicked -> { setEffect { Effect.Navigation.GoToEditProfile(event.userData) } }
             is Event.OnOrderHistoryClicked -> setEffect { Effect.Navigation.GoToOrdersHistory }
             is Event.OnSignupClicked -> setEffect { Effect.Navigation.GoToRegistration }
             is Event.OnAddressesClicked -> setEffect { Effect.Navigation.GoToAddressBook }

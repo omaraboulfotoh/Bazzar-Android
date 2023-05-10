@@ -2,6 +2,7 @@ package com.bazzar.android.presentation.accountScreen.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,6 +32,7 @@ import com.bazzar.android.presentation.theme.BazzarTheme
 fun AccountItem(
     modifier: Modifier = Modifier,
     userData: UserData?,
+    onAccountItemClick: () -> Unit,
 ) {
     if (userData == null) return
 
@@ -41,7 +43,9 @@ fun AccountItem(
             .background(
                 color = BazzarTheme.colors.primaryButtonColor,
                 shape = RoundedCornerShape(BazzarTheme.spacing.xl)
-            ).padding(BazzarTheme.spacing.xl),
+            )
+            .clickable { onAccountItemClick.invoke() }
+            .padding(BazzarTheme.spacing.xl),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -61,7 +65,7 @@ fun AccountItem(
                         color = BazzarTheme.colors.white
                     )
                 ) {
-                    append(userData.email)
+                    append(if (userData.email.isNotEmpty()) "${userData.email}\n" else "")
                 }
                 withStyle(
                     style = SpanStyle(
@@ -70,7 +74,7 @@ fun AccountItem(
                         color = BazzarTheme.colors.white
                     )
                 ) {
-                    append("\n${userData.phone}")
+                    append(userData.phone)
                 }
             }
         )

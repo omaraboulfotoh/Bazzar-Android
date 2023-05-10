@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.register.composables
+package com.bazzar.android.presentation.editProfile.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -8,14 +8,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Checkbox
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -37,26 +38,32 @@ import com.bazzar.android.R
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
-fun RegisterDataEntry(
-    isTermsChecked: Boolean = false,
+fun EditProfileDataEntry(
+    modifier: Modifier = Modifier,
     email: String,
     fullName: String,
     phone: String,
-    modifier: Modifier,
-    onCreateAccount: () -> Unit,
     onEmailChanged: (String) -> Unit,
-    onPhoneChanged: (String) -> Unit,
     onNameChanged: (String) -> Unit,
-    onTermsAndConditionClicked: () -> Unit
+    onEditProfileClick: () -> Unit,
+    onChangePasswordClick: () -> Unit,
 ) {
     Column(
-        modifier = modifier
-            .background(Color.White)
-            .fillMaxSize()
-            .padding(horizontal = BazzarTheme.spacing.spacerMini, vertical = BazzarTheme.spacing.l),
+        modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
-        Column(modifier = Modifier.padding(bottom = 24.dp)) {
+        Button(
+            shape = RoundedCornerShape(28.dp),
+            onClick = onChangePasswordClick
+        ) {
+            Text(
+                modifier = Modifier.padding(BazzarTheme.spacing.m),
+                text = stringResource(id = R.string.change_password),
+                style = BazzarTheme.typography.captionBold,
+                color = BazzarTheme.colors.white,
+            )
+        }
+        Column(modifier = Modifier.padding(top= 16.dp, bottom = 88.dp)) {
             Text(
                 text = stringResource(id = R.string.user_name),
                 style = MaterialTheme.typography.subtitle2.copy(
@@ -87,46 +94,53 @@ fun RegisterDataEntry(
                 placeholder = {
                     Text(
                         text = stringResource(id = R.string.type_name),
-                        style = BazzarTheme.typography.caption,
-                        color = BazzarTheme.colors.primaryButtonColor
+                        style = MaterialTheme.typography.subtitle1.copy(
+                            fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                            color = colorResource(id = R.color.prussian_blue)
+                        ),
                     )
                 },
             )
-//            Text(
-//                text = stringResource(id = R.string.email),
-//                style = MaterialTheme.typography.subtitle2.copy(
-//                    color = colorResource(id = R.color.prussian_blue),
-//                    fontFamily = FontFamily(Font(R.font.montserrat_bold))
-//                ),
-//                modifier = Modifier.padding(top = 24.dp)
-//            )
-//            TextField(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(top = BazzarTheme.spacing.xs)
-//                    .border(
-//                        width = 1.dp,
-//                        color = BazzarTheme.colors.primaryButtonTextColorDisabled,
-//                        shape = RoundedCornerShape(32.5.dp),
-//                    )
-//                    .padding(vertical = 4.dp),
-//                shape = RoundedCornerShape(32.5.dp),
-//                colors = TextFieldDefaults.textFieldColors(
-//                    textColor = colorResource(id = R.color.prussian_blue),
-//                    backgroundColor = BazzarTheme.colors.white,
-//                    focusedIndicatorColor = Color.Transparent,
-//                    unfocusedIndicatorColor = Color.Transparent,
-//                    disabledIndicatorColor = Color.Transparent
-//                ),
-//                value = email, onValueChange = onEmailChanged,
-//                placeholder = {
-//                    Text(
-//                        text = stringResource(id = R.string.type_email),
-//                        style = BazzarTheme.typography.caption,
-//                        color = BazzarTheme.colors.primaryButtonColor
-//                    )
-//                },
-//            )
+            Text(
+                text = stringResource(id = R.string.email),
+                style = MaterialTheme.typography.subtitle2.copy(
+                    color = colorResource(id = R.color.prussian_blue),
+                    fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                ),
+                modifier = Modifier.padding(top = 24.dp)
+            )
+            TextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = BazzarTheme.spacing.xs)
+                    .border(
+                        width = 1.dp,
+                        color = BazzarTheme.colors.primaryButtonTextColorDisabled,
+                        shape = RoundedCornerShape(32.5.dp),
+                    )
+                    .padding(vertical = 4.dp),
+                shape = RoundedCornerShape(32.5.dp),
+                colors = TextFieldDefaults.textFieldColors(
+                    textColor = colorResource(id = R.color.prussian_blue),
+                    backgroundColor = BazzarTheme.colors.white,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent
+                ),
+                value = email,
+                onValueChange = onEmailChanged,
+                placeholder = {
+                    Text(
+                        text = stringResource(
+                            id = R.string.type_email
+                        ),
+                        style = MaterialTheme.typography.subtitle1.copy(
+                            fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                            color = colorResource(id = R.color.prussian_blue)
+                        ),
+                    )
+                },
+            )
             Text(
                 text = stringResource(id = R.string.phone_number),
                 style = MaterialTheme.typography.subtitle2.copy(
@@ -152,13 +166,19 @@ fun RegisterDataEntry(
                     unfocusedIndicatorColor = Color.Transparent,
                     disabledIndicatorColor = Color.Transparent
                 ),
-                value = phone, onValueChange = onPhoneChanged,
+                value = phone,
+                enabled = false,
+                onValueChange = { },
                 shape = RoundedCornerShape(32.5.dp),
                 placeholder = {
                     Text(
-                        text = stringResource(id = R.string.type_number),
-                        style = BazzarTheme.typography.caption,
-                        color = BazzarTheme.colors.primaryButtonColor
+                        text = stringResource(
+                            id = R.string.type_number
+                        ),
+                        style = MaterialTheme.typography.subtitle1.copy(
+                            fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                            color = colorResource(id = R.color.prussian_blue)
+                        )
                     )
                 },
                 leadingIcon = {
@@ -203,47 +223,25 @@ fun RegisterDataEntry(
                 )
             )
         }
-
-        Column {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
+        Box(Modifier.fillMaxWidth()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(65.dp)
+                    .clip(RoundedCornerShape(32.5.dp))
+                    .background(colorResource(id = R.color.prussian_blue))
+                    .align(Alignment.Center)
+                    .clickable {
+                        onEditProfileClick()
+                    }
             ) {
-                Checkbox(
-                    checked = isTermsChecked,
-                    onCheckedChange = { checked_ ->
-                        onTermsAndConditionClicked()
-                    },
-                )
                 Text(
-                    modifier = Modifier.padding(start = 2.dp),
-                    text = stringResource(id = R.string.agree_terms_conditions),
-                    style = MaterialTheme.typography.overline.copy(
-                        color = colorResource(id = R.color.prussian_blue),
+                    text = stringResource(id = R.string.edit_account),
+                    style = MaterialTheme.typography.subtitle1.copy(
                         fontFamily = FontFamily(Font(R.font.montserrat_bold))
-                    )
+                    ),
+                    modifier = Modifier.align(Alignment.Center)
                 )
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            Box(Modifier.fillMaxWidth()) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(65.dp)
-                        .clip(RoundedCornerShape(32.5.dp))
-                        .background(colorResource(id = R.color.prussian_blue))
-                        .align(Alignment.Center)
-                        .clickable {
-                            onCreateAccount()
-                        }
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.create_account),
-                        style = MaterialTheme.typography.subtitle1.copy(
-                            fontFamily = FontFamily(Font(R.font.montserrat_bold))
-                        ),
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
             }
         }
     }

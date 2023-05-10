@@ -42,6 +42,16 @@ interface HomeApiServices {
     @POST("Register")
     suspend fun register(@Body request: UserRegisterRequest): Response<BaseWrapper<UserData>>
 
+    @POST("EditProfile")
+    suspend fun editProfile(@Body request: UserRegisterRequest): Response<BaseWrapper<EditProfileResponse>>
+
+    @POST("ChangePassword")
+    @FormUrlEncoded
+    suspend fun changePassword(
+        @Field("OldPassword") currentPassword: String,
+        @Field("NewPassword") newPassword: String
+    ): Response<BaseWrapper<Boolean>>
+
     @POST("VerifyOtp")
     suspend fun verifyOtp(@Body verifyOtpRequest: VerifyOtpRequest): Response<BaseWrapper<UserData>>
 

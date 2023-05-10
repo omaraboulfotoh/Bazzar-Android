@@ -12,6 +12,7 @@ class AccountContract {
     ) : ViewState
 
     sealed class Event : ViewEvent {
+        data class OnAccountClicked(val userData: UserData) : Event()
         object OnOrderHistoryClicked : Event()
         object OnWishListClicked : Event()
         object OnAddressesClicked : Event()
@@ -31,6 +32,7 @@ class AccountContract {
 
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
+            data class GoToEditProfile(val userData: UserData) : Navigation()
             object GoToOrdersHistory : Navigation()
             object GoToRegistration : Navigation()
             object GoToAddressBook : Navigation()
