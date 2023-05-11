@@ -37,12 +37,13 @@ class AccountContract {
             object GoToRegistration : Navigation()
             object GoToAddressBook : Navigation()
             object GoToHome : Navigation()
-            object GoToAboutUs: Navigation()
-            object GoToTermsAndConditions: Navigation()
-            object GoToContactUs: Navigation()
-            object GoToFacebookPage: Navigation()
-            object GoToInstagramPage: Navigation()
-            object GoToTwitterPage: Navigation()
+            object GoToAboutUs : Navigation()
+            object GoToTermsAndConditions : Navigation()
+            object GoToContactUs : Navigation()
+            object GoToFacebookPage : Navigation()
+            object GoToInstagramPage : Navigation()
+            object GoToTwitterPage : Navigation()
+            object OnRestartApp : Navigation()
         }
     }
 

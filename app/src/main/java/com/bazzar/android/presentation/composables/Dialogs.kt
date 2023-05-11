@@ -12,6 +12,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,28 +44,15 @@ fun DefaultMessageDialog(
 
             Column(
                 modifier = Modifier.padding(BazzarTheme.spacing.primaryPadding),
-                horizontalAlignment = Alignment.End
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.l)
             ) {
-                Box(modifier = Modifier.fillMaxWidth()) {
-
-                    Title(
-                        text = title,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        color = BazzarTheme.colors.primaryButtonColor
-                    )
-
-                    Image(
-                        imageVector = Icons.Filled.Close,
-                        contentDescription = "Close",
-                        modifier = Modifier
-                            .clickable { onNegative() }
-                            .align(Alignment.CenterEnd),
-                        colorFilter = ColorFilter.tint(bodyColor)
-                    )
-                }
-
-                Spacer(modifier = Modifier.padding(BazzarTheme.spacing.l))
+                Title(
+                    text = title,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    color = BazzarTheme.colors.primaryButtonColor
+                )
 
                 MessageBody(
                     text = body,
@@ -72,11 +61,10 @@ fun DefaultMessageDialog(
                     color = bodyColor
                 )
 
-                Spacer(modifier = Modifier.padding(BazzarTheme.spacing.xl))
-
-                PrimaryOutlinedButton(
+                PrimaryButton(
                     text = buttonText,
                     onClick = onPositive,
+                    background = BazzarTheme.colors.white
                 )
             }
         }
@@ -172,84 +160,6 @@ fun TwoButtonsMessageDialog(
     }
 }
 
-@Composable
-fun PatrolStepsMessageDialog(
-    title: String,
-    body: String,
-    buttonText: String,
-    onNegative: () -> Unit,
-    onPositive: () -> Unit,
-    dismissOnBackPress: Boolean = true,
-    dismissOnClickOutside: Boolean = true,
-    bodyColor: Color = Color.White,
-    backgroundColor: Color = BazzarTheme.colors.backgroundColor,
-    negativeButtonText: String
-) {
-    Dialog(
-        onDismissRequest = onNegative,
-        properties = DialogProperties(dismissOnBackPress, dismissOnClickOutside)
-    ) {
-        Card(
-            shape = MaterialTheme.shapes.large,
-            backgroundColor = backgroundColor,
-        ) {
-
-            Column(
-                modifier = Modifier.padding(BazzarTheme.spacing.primaryPadding),
-                horizontalAlignment = Alignment.End
-            ) {
-                Box(modifier = Modifier.fillMaxWidth()) {
-
-                    Title(
-                        text = title,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        color = BazzarTheme.colors.primaryButtonColor
-                    )
-
-                    Image(
-                        imageVector = Icons.Filled.Close,
-                        contentDescription = "Close",
-                        modifier = Modifier
-                            .clickable { onPositive() }
-                            .align(Alignment.CenterEnd),
-                        colorFilter = ColorFilter.tint(bodyColor)
-                    )
-                }
-
-                Spacer(modifier = Modifier.padding(BazzarTheme.spacing.l))
-
-                MessageBody(
-                    text = body,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Start,
-                    color = bodyColor
-                )
-
-                Spacer(modifier = Modifier.padding(BazzarTheme.spacing.l))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    PrimaryButton(
-                        modifier = Modifier.weight(0.5f),
-                        text = negativeButtonText,
-                        onClick = onNegative,
-                        background = BazzarTheme.colors.primaryButtonColor
-                    )
-                    Spacer(modifier = Modifier.width(BazzarTheme.spacing.s))
-                    PrimaryButton(
-                        modifier = Modifier.weight(0.5f),
-                        text = buttonText,
-                        onClick = onPositive
-                    )
-                }
-            }
-        }
-    }
-}
-
 
 @Composable
 fun ConfirmationMessageDialog(
@@ -259,7 +169,8 @@ fun ConfirmationMessageDialog(
     negativeButtonText: String,
     onNegative: () -> Unit,
     onPositive: () -> Unit,
-    backgroundColor: Color = MaterialTheme.colors.background
+    backgroundColor: Color = MaterialTheme.colors.background,
+    icon: ImageVector? = null,
 ) {
     Dialog(onDismissRequest = onNegative) {
         Card(
@@ -269,33 +180,27 @@ fun ConfirmationMessageDialog(
 
             Column(
                 modifier = Modifier.padding(BazzarTheme.spacing.primaryPadding),
-                horizontalAlignment = Alignment.End
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.l)
             ) {
-                Image(
-                    imageVector = Icons.Filled.Close,
-                    contentDescription = "Close",
-                    modifier = Modifier.clickable { onNegative() }
-                )
 
                 Title(
                     text = title,
                     modifier = Modifier.fillMaxWidth(),
                 )
 
-                Spacer(modifier = Modifier.padding(BazzarTheme.spacing.l))
-
                 MessageBody(
                     text = body,
                     modifier = Modifier.fillMaxWidth(),
                 )
 
-                Spacer(modifier = Modifier.padding(BazzarTheme.spacing.xl))
 
                 Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp)
+                        .padding(top = BazzarTheme.spacing.s),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
 
                     Box(
@@ -303,14 +208,12 @@ fun ConfirmationMessageDialog(
                             .weight(1f)
                             .fillMaxWidth()
                     ) {
-                        PrimaryButton(
-                            background = BazzarTheme.colors.primaryButtonColor,
+                        PrimaryOutlinedButton(
+                            stroke = BazzarTheme.colors.white,
                             text = negativeButtonText,
                             onClick = onNegative
                         )
                     }
-
-                    Spacer(modifier = Modifier.width(16.dp))
 
                     Box(
                         modifier = Modifier
@@ -319,7 +222,9 @@ fun ConfirmationMessageDialog(
                     ) {
                         PrimaryButton(
                             text = positiveButtonText,
-                            onClick = onPositive
+                            onClick = onPositive,
+                            background = BazzarTheme.colors.white,
+                            icon = icon
                         )
                     }
                 }

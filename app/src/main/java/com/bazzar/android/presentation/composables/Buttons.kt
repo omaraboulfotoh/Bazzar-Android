@@ -27,6 +27,7 @@ fun PrimaryButton(
     textColor: Color = BazzarTheme.colors.primaryButtonTextColor,
     textColorDisabled: Color = BazzarTheme.colors.primaryButtonTextColorDisabled,
     enabled: Boolean = true,
+    icon: ImageVector? = null,
 ) {
     Button(
         onClick = onClick,
@@ -47,6 +48,11 @@ fun PrimaryButton(
             color = if (enabled) textColor else textColorDisabled,
             style = BazzarTheme.typography.body2Bold
         )
+        icon?.let {
+            Image(imageVector = icon, contentDescription = "")
+            Spacer(modifier = Modifier.width(BazzarTheme.spacing.spacerMini))
+        }
+
     }
 }
 
@@ -57,6 +63,8 @@ fun PrimaryOutlinedButton(
     modifier: Modifier = Modifier.fillMaxWidth(),
     enabled: Boolean = true,
     stroke: Color = BazzarTheme.colors.white,
+    color: Color = BazzarTheme.colors.secondaryText,
+    background: Color = BazzarTheme.colors.primaryButtonColor,
     icon: ImageVector? = null,
 ) {
 
@@ -65,7 +73,9 @@ fun PrimaryOutlinedButton(
         onClick = onClick,
         shape = Shapes.medium,
         enabled = enabled,
-        colors = ButtonDefaults.outlinedButtonColors(),
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = background,
+        ),
         border = BorderStroke(1.dp, stroke),
         elevation = ButtonDefaults.elevation(
             defaultElevation = 0.dp,
@@ -81,7 +91,7 @@ fun PrimaryOutlinedButton(
         MessageBody(
             text = text,
             style = BazzarTheme.typography.subtitle1SemiBold,
-            color = BazzarTheme.colors.white
+            color = color
         )
     }
 }

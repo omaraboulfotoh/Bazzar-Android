@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.register
 
+import android.util.Patterns
 import com.android.model.home.UserData
 import com.android.model.request.UserRegisterRequest
 import com.android.network.domain.usecases.HomeUseCase
@@ -44,15 +45,39 @@ class RegisterViewModel @Inject constructor(
         if (currentState.isAgreeTermsAndConditions.not()) {
             globalState.error(resourceProvider.getString(R.string.terms_and_condition_required))
         } else {
-            // todo should handle the validation for each field and take care that phone number max digits is 7 without +965
-            val userRegisterRequest = UserRegisterRequest(
-                name = currentState.fullName.orEmpty(),
-                englishName = currentState.fullName.orEmpty(),
-                email = currentState.email.orEmpty(),
-                phone = "+965${currentState.phoneNumber.orEmpty()}"
-            )
-            register(userRegisterRequest)
+            val email = currentState.email.orEmpty()
+            val name = currentState.fullName.orEmpty()
+            val phone = currentState.phoneNumber.orEmpty()
+            if (isValid(email, name, phone)) {
+                val userRegisterRequest = UserRegisterRequest(
+                    name = name,
+                    englishName = name,
+                    email = email,
+                    phone = "+965${phone}"
+                )
+                register(userRegisterRequest)
+            }
         }
+    }
+
+    private fun isValid(email: String, name: String, phone: String): Boolean {
+        var isValid = true
+        val errorsList = mutableListOf<String>()
+        if (Patterns.EMAIL_ADDRESS.matcher(email).matches().not()) {
+            isValid = false
+            errorsList.add(resourceProvider.getString(R.string.invalid_email))
+        }
+        if ((phone.count() in 8..6).not()) {
+            isValid = false
+            errorsList.add(resourceProvider.getString(R.string.invalid_phone))
+        }
+        if (name.isNullOrEmpty()) {
+            isValid = false
+            errorsList.add(resourceProvider.getString(R.string.name_required))
+        }
+        if (isValid.not())
+            globalState.error(errorsList)
+        return isValid
     }
 
     private fun navigateToOtpScreen(data: UserData?) {

@@ -6,11 +6,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.bazzar.android.BuildConfig
 import com.bazzar.android.common.buildUrlIntent
 import com.bazzar.android.common.event.openWebPageInAppBrowser
+import com.bazzar.android.common.getActivity
 import com.bazzar.android.common.navigateAndClearBackStack
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.SocialMedia
 import com.bazzar.android.presentation.accountScreen.composables.AccountScreenContent
+import com.bazzar.android.presentation.app.MainActivity
 import com.bazzar.android.presentation.destinations.AddressBookScreenDestination
 import com.bazzar.android.presentation.destinations.EditProfileScreenDestination
 import com.bazzar.android.presentation.destinations.LoginScreenDestination
@@ -27,6 +29,7 @@ fun AccountScreen(
 ) {
     val state = viewModel.viewState()
     val context = LocalContext.current
+    val activity = LocalContext.current.getActivity<MainActivity>()!!
 
     viewModel.sideEffect { effect ->
         when (effect) {
@@ -79,6 +82,8 @@ fun AccountScreen(
                     context.startActivity(this)
                 }
             }
+
+            AccountContract.Effect.Navigation.OnRestartApp -> MainActivity.restartApp(activity)
         }
     }
     viewModel.initState()

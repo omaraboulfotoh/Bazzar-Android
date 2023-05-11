@@ -68,7 +68,11 @@ fun AccountScreenContent(
         }
         item {
             LanguageItem(
-                modifier = Modifier.padding(top = 24.dp)
+                modifier = Modifier
+                    .padding(top = 24.dp)
+                    .clickable {
+                        onSendEvent(AccountContract.Event.OnLanguageClicked)
+                    }
             )
         }
         if (state.isUserLoggedIn) {
