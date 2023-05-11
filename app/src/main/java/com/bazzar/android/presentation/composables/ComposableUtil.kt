@@ -97,11 +97,13 @@ fun HeaderTextWithViewAll(text: String, showViewAll: Boolean = false) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = BazzarTheme.spacing.m),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
+            modifier = Modifier.weight(1f),
             text = text,
+            textAlign = TextAlign.Start,
             style = MaterialTheme.typography.subtitle1.copy(
                 fontFamily = FontFamily(Font(R.font.montserrat_bold)),
                 color = colorResource(id = R.color.prussian_blue),

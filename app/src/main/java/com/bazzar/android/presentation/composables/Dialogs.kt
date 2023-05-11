@@ -64,6 +64,7 @@ fun DefaultMessageDialog(
                 PrimaryButton(
                     text = buttonText,
                     onClick = onPositive,
+                    textColor = BazzarTheme.colors.primaryButtonColor,
                     background = BazzarTheme.colors.white
                 )
             }
@@ -81,84 +82,6 @@ fun DefaultMessageDialogPreview() =
         onNegative = {},
         onPositive = {}
     )
-
-@Composable
-fun TwoButtonsMessageDialog(
-    title: String,
-    body: String,
-    buttonText: String,
-    onNegative: () -> Unit,
-    onPositive: () -> Unit,
-    dismissOnBackPress: Boolean = true,
-    dismissOnClickOutside: Boolean = true,
-    bodyColor: Color = Color.White,
-    backgroundColor: Color = BazzarTheme.colors.backgroundColor,
-    negativeButtonText: String
-) {
-    Dialog(
-        onDismissRequest = onNegative,
-        properties = DialogProperties(dismissOnBackPress, dismissOnClickOutside)
-    ) {
-        Card(
-            shape = MaterialTheme.shapes.large,
-            backgroundColor = backgroundColor,
-        ) {
-
-            Column(
-                modifier = Modifier.padding(BazzarTheme.spacing.primaryPadding),
-                horizontalAlignment = Alignment.End
-            ) {
-                Box(modifier = Modifier.fillMaxWidth()) {
-
-                    Title(
-                        text = title,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        color = BazzarTheme.colors.primaryButtonColor
-                    )
-
-                    Image(
-                        imageVector = Icons.Filled.Close,
-                        contentDescription = "Close",
-                        modifier = Modifier
-                            .clickable { onNegative() }
-                            .align(Alignment.CenterEnd),
-                        colorFilter = ColorFilter.tint(bodyColor)
-                    )
-                }
-
-                Spacer(modifier = Modifier.padding(BazzarTheme.spacing.l))
-
-                MessageBody(
-                    text = body,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Start,
-                    color = bodyColor
-                )
-
-                Spacer(modifier = Modifier.padding(BazzarTheme.spacing.l))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    PrimaryButton(
-                        modifier = Modifier.weight(0.5f),
-                        text = negativeButtonText,
-                        onClick = onNegative,
-                        background = BazzarTheme.colors.primaryButtonColor
-                    )
-                    Spacer(modifier = Modifier.width(BazzarTheme.spacing.s))
-                    PrimaryButton(
-                        modifier = Modifier.weight(0.5f),
-                        text = buttonText,
-                        onClick = onPositive
-                    )
-                }
-            }
-        }
-    }
-}
 
 
 @Composable
@@ -224,6 +147,7 @@ fun ConfirmationMessageDialog(
                             text = positiveButtonText,
                             onClick = onPositive,
                             background = BazzarTheme.colors.white,
+                            textColor = BazzarTheme.colors.primaryButtonColor,
                             icon = icon
                         )
                     }
@@ -236,11 +160,11 @@ fun ConfirmationMessageDialog(
 @Preview
 @Composable
 fun TwoButtonPreview() =
-    TwoButtonsMessageDialog(
+    ConfirmationMessageDialog(
         title = "Title",
         body = "Body",
-        buttonText = "Got it",
+        negativeButtonText = "Got it",
         onNegative = {},
         onPositive = {},
-        negativeButtonText = "close"
+        positiveButtonText = "close"
     )
