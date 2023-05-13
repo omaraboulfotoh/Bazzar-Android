@@ -81,6 +81,7 @@
     <string name="contact_us">Contact US</string>
     <string name="logout">Log out</string>
     <string name="delete_my_account">Delete my account</string>
+    <string name="delete_my_account_description">Are you sure you want to delete you account ? </string>
     <string name="language">Language</string>
     <string name="english" translatable="false">English </string>
     <string name="arabic" translatable="false">العربية</string>
@@ -166,4 +167,5 @@
     <string name="name_required">name is required</string>
     <string name="logout_message">"Are you sure you want to logout ? "</string>
     <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
 </resources>

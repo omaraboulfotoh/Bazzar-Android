@@ -18,6 +18,7 @@ fun AddressList(
     addressList: List<UserAddress>,
     onSetAsDefaultClick: (index: Int) -> Unit,
     onEditAddressClick: (userAddress: UserAddress) -> Unit,
+    onDeleteAddress: (index: Int) -> Unit,
 ) {
     LazyColumn(
         modifier = modifier.padding(horizontal = BazzarTheme.spacing.m),
@@ -28,6 +29,7 @@ fun AddressList(
             AddressItem(
                 address = item,
                 onSetAsDefaultClick = { onSetAsDefaultClick.invoke(index) },
+                onDeleteAddress = { onDeleteAddress.invoke(index) },
                 onEditAddressClick = { onEditAddressClick.invoke(item) },
             )
         }

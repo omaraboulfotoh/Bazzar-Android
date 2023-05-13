@@ -81,6 +81,7 @@
     <string name="contact_us">اتصل بنا</string>
     <string name="logout">تسجيل الخروج</string>
     <string name="delete_my_account">حذف حسابي</string>
+    <string name="delete_my_account_description">هل أنت متأكد أنك تريد حذف حسابك؟</string>
     <string name="language">اللغة</string>
     <string name="english" translatable="false">English </string>
     <string name="arabic" translatable="false">العربية</string>
@@ -167,4 +168,5 @@
     <string name="name_required">الاسم مطلوب</string>
     <string name="logout_message">"هل أنت متأكد أنك تريد تسجيل الخروج؟"</string>
     <string name="cancel">إلغاء</string>
+    <string name="delete">حذف</string>
 </resources>

@@ -18,6 +18,7 @@ interface HomeRemoteDataSource {
     suspend fun getAllProductDetails(productId: Int): Response<BaseWrapper<Product>>
     suspend fun register(request: UserRegisterRequest): Response<BaseWrapper<UserData>>
     suspend fun editProfile(request: UserRegisterRequest): Response<BaseWrapper<EditProfileResponse>>
+    suspend fun deleteAccount(): Response<BaseWrapper<Boolean>>
     suspend fun changePassword(currentPassword: String, newPassword: String): Response<BaseWrapper<Boolean>>
     suspend fun login(request: UserLoginRequest): Response<BaseWrapper<UserData>>
     suspend fun verifyOtp(request: VerifyOtpRequest): Response<BaseWrapper<UserData>>

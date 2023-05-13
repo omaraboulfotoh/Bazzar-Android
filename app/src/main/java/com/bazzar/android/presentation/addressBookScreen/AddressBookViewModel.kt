@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.addressBookScreen
 
+import com.android.model.home.UserAddress
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.presentation.app.IGlobalState
@@ -26,6 +27,10 @@ class AddressBookViewModel @Inject constructor(
                 setAddressAsDefault(event.index)
             }
 
+            is AddressBookContract.Event.OnDeleteAddressClicked -> {
+                deleteAddress(event.index)
+            }
+
             is AddressBookContract.Event.OnEditAddressClicked -> {
                 setEffect { AddressBookContract.Effect.Navigation.GoToEditAddress(event.userAddress) }
             }
@@ -37,12 +42,28 @@ class AddressBookViewModel @Inject constructor(
     }
 
     private fun setAddressAsDefault(index: Int) = executeCatching({
-        val updatedAddresses = currentState.addressList
-            .mapIndexed { i, address -> address.copy(isDefault = i == index) }
-        setState { copy(addressList = updatedAddresses) }
-        homeUseCase.updateUserAddress(updatedAddresses[index])
-            .collect { }
+        var address = currentState.addressList[index]
+        address = address.copy(isDefault = address.isDefault?.not())
+        homeUseCase.updateUserAddress(userAddress = address)
+            .collect { response ->
+                when (response) {
+                    is Result.Error -> globalState.error(response.message.orEmpty())
+                    is Result.Loading -> globalState.loading(true)
+                    is Result.Success -> {
+                        val updatedAddresses = ArrayList(currentState.addressList)
+                        updatedAddresses[index] = response.data
+                        setState { copy(addressList = updatedAddresses) }
+                    }
+                }
+            }
     })
+
+    private fun deleteAddress(index: Int) {
+        // ToDO: remove or replace this logic with api logic after add it
+        val addressList = ArrayList(currentState.addressList)
+        addressList.removeAt(index)
+        setState { copy(addressList = addressList) }
+    }
 
     fun init() = executeCatching({
         homeUseCase.getAllAddresses()
