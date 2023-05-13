@@ -2,6 +2,7 @@ package com.bazzar.android.presentation.accountScreen
 
 import com.android.local.SharedPrefersManager
 import com.android.network.domain.usecases.HomeUseCase
+import com.android.network.states.Result
 import com.bazzar.android.R
 import com.bazzar.android.presentation.accountScreen.AccountContract.Effect
 import com.bazzar.android.presentation.accountScreen.AccountContract.Event
@@ -9,7 +10,6 @@ import com.bazzar.android.presentation.accountScreen.AccountContract.State
 import com.bazzar.android.presentation.app.ConfirmationDialogParams
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
-import com.bazzar.android.presentation.productDetail.ProductDetailContract
 import com.bazzar.android.utils.IResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -42,16 +42,9 @@ class AccountViewModel @Inject constructor(
             is Event.OnAboutUsClicked -> setEffect { Effect.Navigation.GoToAboutUs }
             is Event.OnBazzarTermsAndConditionsClicked -> setEffect { Effect.Navigation.GoToTermsAndConditions }
             is Event.OnContactUsClicked -> setEffect { Effect.Navigation.GoToContactUs }
-            is Event.OnLogOutClicked -> {
-                showLogoutDialog()
-            }
-
-            is Event.OnDeleteMyAccountClicked -> {
-                handleDeleteMyAccount()
-            }
-
+            is Event.OnLogOutClicked -> showLogoutDialog()
+            is Event.OnDeleteMyAccountClicked -> showDeleteAccountDialog()
             is Event.OnLanguageClicked -> changeLanguage()
-
             else -> {}
         }
     }
@@ -88,8 +81,34 @@ class AccountViewModel @Inject constructor(
         }
     }
 
-    private fun handleDeleteMyAccount() = executeCatching({
+    private fun showDeleteAccountDialog() {
+        globalState.confirmationDialog(
+            params = ConfirmationDialogParams(
+                title = resourceProvider.getString(R.string.delete_my_account),
+                description = resourceProvider.getString(R.string.delete_my_account_description),
+                positiveButtonTitle = resourceProvider.getString(R.string.delete),
+                negativeButtonTitle = resourceProvider.getString(R.string.cancel),
+                onPositive = {
+                    handleDeleteMyAccount()
+                }
+            )
+        )
+    }
 
+    private fun handleDeleteMyAccount() = executeCatching({
+        homeUseCase.deleteAccount()
+            .collect { deleteResponse ->
+                when (deleteResponse) {
+                    is Result.Error -> globalState.error(deleteResponse.message.orEmpty())
+                    is Result.Loading -> globalState.loading(true)
+                    is Result.Success -> {
+                        if (deleteResponse.data == true) {
+                            sharedPrefersManager.logout()
+                            setState { copy(isUserLoggedIn = false, userData = null) }
+                        }
+                    }
+                }
+            }
     })
 
     fun initState() {

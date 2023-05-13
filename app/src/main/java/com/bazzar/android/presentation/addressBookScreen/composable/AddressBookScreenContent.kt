@@ -45,6 +45,7 @@ fun AddressBookScreenContent(
             modifier = Modifier.weight(1f),
             addressList = state.addressList,
             onSetAsDefaultClick = { onSendEvent(AddressBookContract.Event.OnSetAsDefaultClicked(it)) },
+            onDeleteAddress = { onSendEvent(AddressBookContract.Event.OnDeleteAddressClicked(it)) },
             onEditAddressClick = { onSendEvent(AddressBookContract.Event.OnEditAddressClicked(it)) }
         )
         Button(

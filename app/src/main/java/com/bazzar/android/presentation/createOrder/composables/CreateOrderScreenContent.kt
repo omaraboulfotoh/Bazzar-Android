@@ -213,7 +213,7 @@ fun CreateOrderScreenContent(
                     )
                     state.address?.let {
                         AddressItem(
-                            address = it, onSetAsDefaultClick = {}, onEditAddressClick = {}
+                            address = it, onSetAsDefaultClick = {}, onEditAddressClick = {}, onDeleteAddress = { }
                         )
                     }
                 }

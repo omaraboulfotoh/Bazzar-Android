@@ -39,6 +39,7 @@ fun AddressItem(
     address: UserAddress,
     onSetAsDefaultClick: () -> Unit,
     onEditAddressClick: () -> Unit,
+    onDeleteAddress: () -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -69,6 +70,7 @@ fun AddressItem(
                         contentDescription = null,
                     )
                     Image(
+                        modifier = Modifier.clickable { onDeleteAddress.invoke() },
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_trash),
                         contentDescription = null,
                     )

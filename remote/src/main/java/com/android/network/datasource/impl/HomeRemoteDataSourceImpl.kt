@@ -30,6 +30,9 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun editProfile(request: UserRegisterRequest): Response<BaseWrapper<EditProfileResponse>> =
         apiServices.editProfile(request)
 
+    override suspend fun deleteAccount(): Response<BaseWrapper<Boolean>> =
+        apiServices.deleteAccount()
+
     override suspend fun changePassword(
         currentPassword: String,
         newPassword: String

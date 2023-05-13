@@ -156,6 +156,19 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
+    override suspend fun deleteAccount(): Flow<Result<Boolean>> =
+        flow {
+            try {
+                homeRemoteDataSource.deleteAccount().let {
+                    if (it.isSuccessful) emit(Result.Success(it.body()?.data == true))
+                    else Result.Error(false, "error will be handled")
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "deleteAccount: ", throwable)
+                emit(Result.Error(false, throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
     override suspend fun changePassword(currentPassword: String, newPassword: String): Flow<Result<Boolean>> =
         flow {
             try {

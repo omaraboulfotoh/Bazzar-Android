@@ -85,6 +85,7 @@ fun AddressView(
                 address = selectedAddress,
                 onEditAddressClick = { },
                 onSetAsDefaultClick = { },
+                onDeleteAddress = { }
             )
         }
         PrimaryButton(

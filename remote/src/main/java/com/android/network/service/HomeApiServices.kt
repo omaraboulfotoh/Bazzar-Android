@@ -45,6 +45,9 @@ interface HomeApiServices {
     @POST("EditProfile")
     suspend fun editProfile(@Body request: UserRegisterRequest): Response<BaseWrapper<EditProfileResponse>>
 
+    @POST("DeleteAccount")
+    suspend fun deleteAccount(): Response<BaseWrapper<Boolean>>
+
     @POST("ChangePassword")
     @FormUrlEncoded
     suspend fun changePassword(

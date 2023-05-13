@@ -19,6 +19,7 @@ interface HomeRepo {
     suspend fun getAllProductDetails(productId: Int): Flow<Result<Product>>
     suspend fun register(request: UserRegisterRequest): Flow<Result<UserData>>
     suspend fun editProfile(request: UserRegisterRequest): Flow<Result<EditProfileResponse>>
+    suspend fun deleteAccount(): Flow<Result<Boolean>>
     suspend fun changePassword(currentPassword: String, newPassword: String): Flow<Result<Boolean>>
     suspend fun login(userLoginRequest: UserLoginRequest): Flow<Result<UserData>>
     suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Flow<Result<UserData>>
