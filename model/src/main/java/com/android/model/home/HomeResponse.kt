@@ -8,6 +8,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class HomeResponse(
+    @Json(name = "ads")
+    val ads: List<Ad>? = emptyList(),
     @Json(name = "slider1")
     val slider1: List<HomeSlider>? = emptyList(),
     @Json(name = "slider2")

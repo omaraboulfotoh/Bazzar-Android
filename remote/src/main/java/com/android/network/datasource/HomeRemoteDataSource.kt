@@ -26,11 +26,11 @@ interface HomeRemoteDataSource {
     suspend fun getAllAddresses(): Response<BaseWrapper<List<UserAddress>>>
     suspend fun addUserAddress(userAddress: UserAddress): Response<BaseWrapper<UserAddress>>
     suspend fun updateUserAddress(userAddress: UserAddress): Response<BaseWrapper<UserAddress>>
-    suspend fun getAllAreas(arabic: Boolean): Response<BaseWrapper<List<Area>>>
+    suspend fun getAllAreas(): Response<BaseWrapper<List<Area>>>
     suspend fun loadCheckout(checkout: Checkout): Response<BaseWrapper<Any>>
-    suspend fun getOrdersHistory(arabic: Boolean = false): Response<BaseWrapper<List<OrderHistory>>>
-    suspend fun loadCheckout(arabic: Boolean = false, request: LoadCheckoutRequest): Response<BaseWrapper<CheckoutModel>>
-    suspend fun createOrder(arabic: Boolean = false, request: LoadCheckoutRequest): Response<BaseWrapper<CreateOrderModel>>
-    suspend fun getAllBazars(arabic: Boolean = false): Response<BaseWrapper<List<Bazar>>>
+    suspend fun getOrdersHistory(): Response<BaseWrapper<List<OrderHistory>>>
+    suspend fun loadCheckout(request: LoadCheckoutRequest): Response<BaseWrapper<CheckoutModel>>
+    suspend fun createOrder(request: LoadCheckoutRequest): Response<BaseWrapper<CreateOrderModel>>
+    suspend fun getAllBazars(): Response<BaseWrapper<List<Bazar>>>
 
 }

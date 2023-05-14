@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.homeScreen
 
+import com.android.model.home.Ad
 import com.android.model.home.Brand
 import com.android.model.home.BzarzModel
 import com.android.model.home.Category
@@ -13,6 +14,7 @@ import com.bazzar.android.presentation.base.ViewState
 class HomeContract {
 
     data class State(
+        val ads: List<Ad>? = emptyList(),
         val slides1: List<HomeSlider>? = emptyList(),
         val slides2: List<HomeSlider>? = emptyList(),
         val featuredCategories: List<Category>? = emptyList(),

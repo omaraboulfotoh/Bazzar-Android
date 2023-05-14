@@ -275,9 +275,9 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
-    override suspend fun getAllAreas(arabic: Boolean): Flow<Result<List<Area>>> = flow {
+    override suspend fun getAllAreas(): Flow<Result<List<Area>>> = flow {
         try {
-            homeRemoteDataSource.getAllAreas(arabic).let {
+            homeRemoteDataSource.getAllAreas().let {
                 if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: listOf()))
                 else emit(Result.Error(listOf(), "error will be handled"))
             }
@@ -291,26 +291,23 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         TODO("Not yet implemented")
     }
 
-    override suspend fun loadCheckout(
-        arabic: Boolean, request: LoadCheckoutRequest
-    ): Flow<Result<CheckoutModel>> = flow {
-        try {
-            homeRemoteDataSource.loadCheckout(arabic, request).let {
-                if (it.isSuccessful) emit(
-                    Result.Success(it.body()?.data ?: CheckoutModel())
-                )
-                else emit(Result.Error(CheckoutModel(), "error will be handled"))
-            }
-        } catch (throwable: Throwable) {
-            Log.e("Error", "getOrdersHistory: ", throwable)
-            emit(Result.Error(CheckoutModel(), throwable.message))
-        }
-    }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
-
-    override suspend fun getOrdersHistory(arabic: Boolean): Flow<Result<List<OrderHistory>>> =
+    override suspend fun loadCheckout(request: LoadCheckoutRequest): Flow<Result<CheckoutModel>> =
         flow {
             try {
-                homeRemoteDataSource.getOrdersHistory(arabic).let {
+                homeRemoteDataSource.loadCheckout(request).let {
+                    if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: CheckoutModel()))
+                    else emit(Result.Error(CheckoutModel(), "error will be handled"))
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "getOrdersHistory: ", throwable)
+                emit(Result.Error(CheckoutModel(), throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun getOrdersHistory(): Flow<Result<List<OrderHistory>>> =
+        flow {
+            try {
+                homeRemoteDataSource.getOrdersHistory().let {
                     if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: listOf()))
                     else emit(Result.Error(listOf(), "error will be handled"))
                 }
@@ -320,26 +317,23 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
-    override suspend fun createOrder(
-        arabic: Boolean, request: LoadCheckoutRequest
-    ): Flow<Result<CreateOrderModel>> = flow {
-        try {
-            homeRemoteDataSource.createOrder(arabic, request).let {
-                if (it.isSuccessful) emit(
-                    Result.Success(it.body()?.data ?: CreateOrderModel())
-                )
-                else emit(Result.Error(CreateOrderModel(), "error will be handled"))
-            }
-        } catch (throwable: Throwable) {
-            Log.e("Error", "getOrdersHistory: ", throwable)
-            emit(Result.Error(CreateOrderModel(), throwable.message))
-        }
-    }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
-
-    override suspend fun getAllBazars(arabic: Boolean): Flow<Result<List<Bazar>>> =
+    override suspend fun createOrder(request: LoadCheckoutRequest): Flow<Result<CreateOrderModel>> =
         flow {
             try {
-                homeRemoteDataSource.getAllBazars(arabic).let {
+                homeRemoteDataSource.createOrder(request).let {
+                    if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: CreateOrderModel()))
+                    else emit(Result.Error(CreateOrderModel(), "error will be handled"))
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "getOrdersHistory: ", throwable)
+                emit(Result.Error(CreateOrderModel(), throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun getAllBazars(): Flow<Result<List<Bazar>>> =
+        flow {
+            try {
+                homeRemoteDataSource.getAllBazars().let {
                     if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: listOf()))
                     else emit(Result.Error(listOf(), "error will be handled"))
                 }

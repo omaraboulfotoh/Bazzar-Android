@@ -61,8 +61,7 @@ class AddressViewModel @Inject constructor(
 
     fun init(userAddress: UserAddress?) = executeCatching({
         setState { copy(userAddress = userAddress, isEditAddress = userAddress != null) }
-        val isArabic = prefersManager.getAppLanguage() == SharedPrefersManager.LANGUAGE_AR
-        homeUseCase.getAllAreas(isArabic)
+        homeUseCase.getAllAreas()
             .collect { areasResponse ->
                 when (areasResponse) {
                     is Result.Error -> globalState.error(areasResponse.message.orEmpty())

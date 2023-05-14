@@ -1,24 +1,31 @@
 package com.bazzar.android.presentation.composables
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.bazzar.android.R
+import com.bazzar.android.common.advancedShadow
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
@@ -151,6 +158,77 @@ fun ConfirmationMessageDialog(
                             icon = icon
                         )
                     }
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Preview
+@Composable
+fun AdDialog(
+    imagePath: String? = null,
+    onDismiss: () -> Unit = { },
+) {
+
+    var showDialog by rememberSaveable { mutableStateOf(true) }
+
+    val dismiss = {
+        showDialog = false
+        onDismiss()
+    }
+
+    if (imagePath.isNullOrEmpty() || showDialog.not()) return
+
+    Dialog(
+        onDismissRequest = dismiss,
+        properties = DialogProperties(
+            dismissOnClickOutside = true,
+            usePlatformDefaultWidth = false,
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = BazzarTheme.spacing.m),
+            horizontalAlignment = Alignment.End,
+        ) {
+            IconButton(
+                onClick = dismiss,
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_close_circular),
+                    contentDescription = ""
+                )
+            }
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(428.dp)
+                    .advancedShadow(
+                        cornersRadius = 24.dp,
+                        shadowBlurRadius = 15.dp,
+                        alpha = 0.5f,
+                        offsetX = 5.dp,
+                        offsetY = 5.dp,
+                    ),
+                shape = RoundedCornerShape(24.dp),
+            ) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    RemoteImage(
+                        modifier = Modifier.fillMaxSize(),
+                        imageUrl = imagePath,
+                        contentScale = ContentScale.FillBounds
+                    )
+                    PrimaryButton(modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(BazzarTheme.spacing.m)
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(24.dp)),
+                        text = "Get It",
+                        onClick = dismiss
+                    )
                 }
             }
         }

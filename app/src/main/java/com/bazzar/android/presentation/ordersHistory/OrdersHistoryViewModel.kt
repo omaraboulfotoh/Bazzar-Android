@@ -28,8 +28,7 @@ class OrdersHistoryViewModel @Inject constructor(
     }
 
     fun init() = executeCatching({
-        val lang = prefersManager.getAppLanguage() == SharedPrefersManager.LANGUAGE_AR
-        homeUseCase.getOrdersHistory(lang)
+        homeUseCase.getOrdersHistory()
             .collect { ordersResult ->
                 when (ordersResult) {
                     is Result.Error -> globalState.error(ordersResult.message.orEmpty())

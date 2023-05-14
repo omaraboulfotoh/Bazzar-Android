@@ -56,27 +56,22 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun updateUserAddress(userAddress: UserAddress) =
         apiServices.updateUserAddress(userAddress)
 
-    override suspend fun getAllAreas(arabic: Boolean) =
-        apiServices.getAllAreas(arabic)
+    override suspend fun getAllAreas() = apiServices.getAllAreas()
 
     override suspend fun loadCheckout(checkout: Checkout) =
         apiServices.loadCheckout(checkout)
 
     override suspend fun loadCheckout(
-        arabic: Boolean,
         request: LoadCheckoutRequest
-    ): Response<BaseWrapper<CheckoutModel>> =
-        apiServices.loadCheckout(arabic, body = request)
+    ): Response<BaseWrapper<CheckoutModel>> = apiServices.loadCheckout(body = request)
 
     override suspend fun createOrder(
-        arabic: Boolean,
         request: LoadCheckoutRequest
     ): Response<BaseWrapper<CreateOrderModel>> =
-        apiServices.createOrder(arabic, body = request)
+        apiServices.createOrder(body = request)
 
-    override suspend fun getOrdersHistory(arabic: Boolean) =
-        apiServices.getOrdersHistory(arabic)
+    override suspend fun getOrdersHistory() = apiServices.getOrdersHistory()
 
-    override suspend fun getAllBazars(arabic: Boolean): Response<BaseWrapper<List<Bazar>>> =
-        apiServices.getAllBazars(arabic)
+    override suspend fun getAllBazars(): Response<BaseWrapper<List<Bazar>>> =
+        apiServices.getAllBazars()
 }

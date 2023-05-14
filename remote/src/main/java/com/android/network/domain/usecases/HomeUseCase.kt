@@ -28,15 +28,15 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
     suspend fun resendOtp(userId: Int) = homeRepo.resendOtp(userId)
     suspend fun getAllAddresses() = homeRepo.getAllAddresses()
     suspend fun addUserAddress(userAddress: UserAddress) = homeRepo.addUserAddress(userAddress)
-    suspend fun getAllAreas(arabic: Boolean) = homeRepo.getAllAreas(arabic)
+    suspend fun getAllAreas() = homeRepo.getAllAreas()
     suspend fun updateUserAddress(userAddress: UserAddress) = homeRepo.updateUserAddress(userAddress)
     suspend fun loadCheckout(checkout: Checkout) = homeRepo.loadCheckout(checkout)
-    suspend fun getOrdersHistory(arabic: Boolean = false) = homeRepo.getOrdersHistory(arabic)
-    suspend fun loadCheckout(arabic: Boolean = false, request: LoadCheckoutRequest) =
-        homeRepo.loadCheckout(arabic, request)
+    suspend fun getOrdersHistory() = homeRepo.getOrdersHistory()
+    suspend fun loadCheckout(request: LoadCheckoutRequest) =
+        homeRepo.loadCheckout(request)
 
-    suspend fun createOrder(arabic: Boolean = false, request: LoadCheckoutRequest) =
-        homeRepo.createOrder(arabic, request)
+    suspend fun createOrder(request: LoadCheckoutRequest) =
+        homeRepo.createOrder(request)
 
-    suspend fun getAllBazars(arabic: Boolean = false) = homeRepo.getAllBazars(arabic)
+    suspend fun getAllBazars() = homeRepo.getAllBazars()
 }

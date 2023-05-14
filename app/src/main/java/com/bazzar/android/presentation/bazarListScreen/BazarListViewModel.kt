@@ -36,8 +36,7 @@ class BazarListViewModel @Inject constructor(
     }
 
     fun getAllBazars() = executeCatching({
-        val arabic = sharedPrefersManager.getAppLanguage() == SharedPrefersManager.LANGUAGE_AR
-        homeUseCase.getAllBazars(arabic)
+        homeUseCase.getAllBazars()
             .collect {
                 when (it) {
                     is Result.Error -> globalState.error(it.message.orEmpty())

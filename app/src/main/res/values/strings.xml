@@ -146,7 +146,7 @@
     <string name="product_added_to_cart">The product has been successfully added to your cart</string>
     <string name="product_added_to_cart_title">Added To Cart</string>
     <string name="continue_shopping">Continue shopping</string>
-    <string name="visit_cart">Visit your Cart\n</string>
+    <string name="visit_cart">Visit your Cart</string>
     <string name="history_list">Orders History</string>
     <string name="order_number">Order Number</string>
     <string name="order_total">Order Total</string>
@@ -168,4 +168,5 @@
     <string name="logout_message">"Are you sure you want to logout ? "</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
+    <string name="talk_to_us">Talk to us</string>
 </resources>
