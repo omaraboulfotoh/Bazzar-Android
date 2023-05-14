@@ -60,7 +60,6 @@ class CreateOrderViewModel @Inject constructor(
             )
         }
         homeUseCase.loadCheckout(
-            false,
             LoadCheckoutRequest(userAddressId = address.id.orZero(), cartItems = cartItems)
         )
             .collect { response ->
@@ -103,7 +102,6 @@ class CreateOrderViewModel @Inject constructor(
             )
         }
         homeUseCase.createOrder(
-            false,
             LoadCheckoutRequest(
                 userAddressId = currentState.address?.id.orZero(),
                 cartItems = cartItems,

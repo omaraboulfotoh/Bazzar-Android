@@ -27,19 +27,13 @@ interface HomeRepo {
     suspend fun getAllAddresses(): Flow<Result<List<UserAddress>>>
     suspend fun addUserAddress(userAddress: UserAddress): Flow<Result<UserAddress>>
     suspend fun updateUserAddress(userAddress: UserAddress): Flow<Result<UserAddress>>
-    suspend fun getAllAreas(arabic: Boolean): Flow<Result<List<Area>>>
+    suspend fun getAllAreas(): Flow<Result<List<Area>>>
     suspend fun loadCheckout(checkout: Checkout): Flow<Result<Any>>
-    suspend fun getOrdersHistory(arabic: Boolean = false): Flow<Result<List<OrderHistory>>>
-    suspend fun loadCheckout(
-        arabic: Boolean = false,
-        request: LoadCheckoutRequest
-    ): Flow<Result<CheckoutModel>>
+    suspend fun getOrdersHistory(): Flow<Result<List<OrderHistory>>>
+    suspend fun loadCheckout(request: LoadCheckoutRequest): Flow<Result<CheckoutModel>>
 
-    suspend fun createOrder(
-        arabic: Boolean = false,
-        request: LoadCheckoutRequest
-    ): Flow<Result<CreateOrderModel>>
+    suspend fun createOrder(request: LoadCheckoutRequest): Flow<Result<CreateOrderModel>>
 
-    suspend fun getAllBazars(arabic: Boolean = false): Flow<Result<List<Bazar>>>
+    suspend fun getAllBazars(): Flow<Result<List<Bazar>>>
 
 }

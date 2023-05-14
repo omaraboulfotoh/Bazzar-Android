@@ -1,20 +1,29 @@
 package com.bazzar.android.presentation.productDetail.composables
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
+import com.bazzar.android.common.advancedShadow
 import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.common.toPriceFormat
 import com.bazzar.android.presentation.composables.IndicatorImageSlider
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.homeScreen.composables.ProductsGroup
-import com.bazzar.android.presentation.productDetail.ProductDetailContract.*
+import com.bazzar.android.presentation.productDetail.ProductDetailContract.Event
+import com.bazzar.android.presentation.productDetail.ProductDetailContract.State
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
@@ -97,19 +106,35 @@ fun ProductDetailScreenContent(
                     Spacer(modifier = Modifier.height(BazzarTheme.spacing.m))
                 }
             }
-            BuyItem(modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(end = BazzarTheme.spacing.m, bottom = BazzarTheme.spacing.m),
-                onBuyNowClicked = { onSendEvent(Event.OnBuyNowClicked) })
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(end = BazzarTheme.spacing.m, bottom = BazzarTheme.spacing.m),
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+            ) {
+                TalkToUs(
+                    modifier = Modifier.align(Alignment.End),
+                    onClick = { onSendEvent(Event.OnTackToUsClicked) }
+                )
+                BuyItem(
+                    modifier = Modifier
+                        .align(Alignment.End)
+                        .advancedShadow(
+                            cornersRadius = 33.dp,
+                            shadowBlurRadius = 15.dp,
+                            alpha = 0.5f,
+                            offsetX = 5.dp,
+                            offsetY = 5.dp,
+                        ),
+                    onBuyNowClicked = { onSendEvent(Event.OnBuyNowClicked) }
+                )
+            }
+            SuccessAddedToCart(
+                modifier = Modifier.align(Alignment.BottomCenter),
+                show = state.showSuccessAddedToCart,
+                onContinueShoppingClick = { onSendEvent(Event.OnContinueShoppingClicked) },
+                onVisitCardClick = { onSendEvent(Event.OnVisitYourCartClicked) },
+            )
         }
     }
 }
-
-
-
-
-
-
-
-
-

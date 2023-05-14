@@ -35,11 +35,12 @@ class ProductDetailViewModel @Inject constructor(
             // navigation
             is ProductDetailContract.Event.OnBackIconClicked -> setEffect { ProductDetailContract.Effect.Navigation.GoToBack }
             is ProductDetailContract.Event.OnShareClicked -> shareProduct()
-
-            is ProductDetailContract.Event.OnVisitYourCartClicked -> {}
+            is ProductDetailContract.Event.OnVisitYourCartClicked -> setEffect { ProductDetailContract.Effect.Navigation.GoToCart }
             is ProductDetailContract.Event.OnSeeMoreBrandClicked -> navigateToBrandItems()
             is ProductDetailContract.Event.OnRelatedItemClicked -> openSelectedProduct(event.itemIndex)
             is ProductDetailContract.Event.OnBuyNowClicked -> addToCart()
+            is ProductDetailContract.Event.OnContinueShoppingClicked -> setState { copy(showSuccessAddedToCart = false) }
+            is ProductDetailContract.Event.OnTackToUsClicked -> setEffect { ProductDetailContract.Effect.Navigation.GoToTalkToUs }
             // state
             is ProductDetailContract.Event.OnColorItemSelected -> updateColor(event.colorIndex)
             is ProductDetailContract.Event.OnSizeItemSelected -> updateSizeAndItemId(event.sizeIndex)
@@ -57,17 +58,7 @@ class ProductDetailViewModel @Inject constructor(
         val item = currentState.productDetail ?: return
         cartItems.add(item)
         sharedPrefersManager.saveProductList(cartItems)
-        globalState.confirmationDialog(
-            params = ConfirmationDialogParams(
-                title = resourceProvider.getString(R.string.product_added_to_cart_title),
-                description = resourceProvider.getString(R.string.product_added_to_cart),
-                positiveButtonTitle = resourceProvider.getString(R.string.visit_cart),
-                negativeButtonTitle = resourceProvider.getString(R.string.continue_shopping),
-                onPositive = {
-                    setEffect { ProductDetailContract.Effect.Navigation.GoToCart }
-                }
-            )
-        )
+        setState { copy(showSuccessAddedToCart = true) }
     }
 
     private fun navigateToBrandItems() {

@@ -71,28 +71,22 @@ interface HomeApiServices {
     suspend fun updateUserAddress(@Body userAddress: UserAddress): Response<BaseWrapper<UserAddress>>
 
     @GET("AllAreas")
-    suspend fun getAllAreas(@Query("arabic") arabic: Boolean = false): Response<BaseWrapper<List<Area>>>
+    suspend fun getAllAreas(): Response<BaseWrapper<List<Area>>>
 
     @POST("LoadCheckout")
     suspend fun loadCheckout(@Body checkout: Checkout): Response<BaseWrapper<Any>>
 
     @POST("OrderHistory")
-    suspend fun getOrdersHistory(@Query("arabic") arabic: Boolean = false): Response<BaseWrapper<List<OrderHistory>>>
+    suspend fun getOrdersHistory(): Response<BaseWrapper<List<OrderHistory>>>
 
     @POST("LoadCheckout")
-    suspend fun loadCheckout(
-        @Query("arabic") arabic: Boolean = false,
-        @Body body: LoadCheckoutRequest
-    ): Response<BaseWrapper<CheckoutModel>>
+    suspend fun loadCheckout(@Body body: LoadCheckoutRequest): Response<BaseWrapper<CheckoutModel>>
 
     @POST("CreateOrder")
-    suspend fun createOrder(
-        @Query("arabic") arabic: Boolean = false,
-        @Body body: LoadCheckoutRequest
-    ): Response<BaseWrapper<CreateOrderModel>>
+    suspend fun createOrder(@Body body: LoadCheckoutRequest): Response<BaseWrapper<CreateOrderModel>>
 
     @GET("AllBzarz")
-    suspend fun getAllBazars(@Query("arabic") arabic: Boolean = false): Response<BaseWrapper<List<Bazar>>>
+    suspend fun getAllBazars(): Response<BaseWrapper<List<Bazar>>>
 
 }
 

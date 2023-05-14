@@ -59,6 +59,12 @@ object OkHttpClientFactory {
     private fun makeInterceptor(prefersStore: SharedPrefersManager): Interceptor {
         return Interceptor { chain: Interceptor.Chain ->
             val original = chain.request()
+            val modifiedHttpUrl = original.url.newBuilder()
+                .addQueryParameter(
+                    "arabic",
+                    "${prefersStore.getAppLanguage() == SharedPrefersManager.LANGUAGE_AR}"
+            ).build()
+
             val requestBuilder = original.newBuilder()
             requestBuilder.addHeader("Content-Type", "application/json")
                 .addHeader("Accept-Language", prefersStore.getAppLanguage())
@@ -72,8 +78,11 @@ object OkHttpClientFactory {
              */
             requestBuilder.method(original.method, original.body)
             val startTime = System.currentTimeMillis()
-            val request = requestBuilder.build()
-            var response = chain.proceed(request)
+            val request = requestBuilder
+                .url(modifiedHttpUrl)
+                .build()
+            
+            val response = chain.proceed(request)
             response
         }
     }

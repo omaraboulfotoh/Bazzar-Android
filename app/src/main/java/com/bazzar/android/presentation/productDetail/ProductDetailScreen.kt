@@ -1,10 +1,13 @@
 package com.bazzar.android.presentation.productDetail
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.android.model.home.Product
+import com.bazzar.android.common.buildUrlIntent
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
+import com.bazzar.android.presentation.SocialMedia
 import com.bazzar.android.presentation.destinations.CartScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.bazzar.android.presentation.destinations.ProductScreenDestination
@@ -19,6 +22,9 @@ fun ProductDetailScreen(
     navigator: DestinationsNavigator,
     product: Product
 ) {
+
+    // context
+    val context = LocalContext.current
 
     // get state
     val state = viewModel.viewState()
@@ -37,6 +43,12 @@ fun ProductDetailScreen(
 
             is ProductDetailContract.Effect.Navigation.GoToOpenProduct ->
                 navigator.navigate(ProductDetailScreenDestination(product = effect.product))
+            is ProductDetailContract.Effect.Navigation.GoToTalkToUs -> {
+                buildUrlIntent(SocialMedia.WHATS_APP).apply {
+                    context.startActivity(this)
+                }
+
+            }
         }
     }
     // init logic

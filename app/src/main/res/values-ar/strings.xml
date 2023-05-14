@@ -146,7 +146,7 @@
     <string name="product_added_to_cart">تم إضافة المنتج بنجاح إلى سلة التسوق الخاصة بك</string>
     <string name="product_added_to_cart_title">تمت الإضافة إلى السلة</string>
     <string name="continue_shopping">مواصلة التسوق</string>
-    <string name="visit_cart">زيارة سلة التسوق الخاصة بك\n</string>
+    <string name="visit_cart">زيارة سلة التسوق الخاصة بك</string>
 
     <string name="history_list">تاريخ الطلبات</string>
     <string name="order_number">رقم الطلب</string>
@@ -169,4 +169,5 @@
     <string name="logout_message">"هل أنت متأكد أنك تريد تسجيل الخروج؟"</string>
     <string name="cancel">إلغاء</string>
     <string name="delete">حذف</string>
+    <string name="talk_to_us">تحدث معنا</string>
 </resources>
