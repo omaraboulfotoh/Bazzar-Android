@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "547169141811",
+    "project_id": "bzaaarz",
+    "storage_bucket": "bzaaarz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:547169141811:android:f44ae84cac261794e88f46",
+        "android_client_info": {
+          "package_name": "com.bazzar.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "547169141811-b8st5dj18l52eod4tjkhgha4f4rk8sm7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC432wMYriZAEZh-HZYL3qCMMij3tQ4i3I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "547169141811-b8st5dj18l52eod4tjkhgha4f4rk8sm7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "547169141811-4c6vkna8pqvta8daqm5pmvq0d0o44bac.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bazzargate.bazar"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
