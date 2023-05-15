@@ -34,9 +34,7 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
             horizontalAlignment = Alignment.Start,
         ) {
             item {
-                HomeHeader(onSearchClicked = {
-
-                })
+                HomeHeader(onSearchClicked = { onSendEvent(HomeContract.Event.OnSearchClicked) })
             }
             item {
                 IndicatorHomeImageSlider(imagePathList = state.slides1.orEmpty()

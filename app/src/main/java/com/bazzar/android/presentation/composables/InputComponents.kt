@@ -258,6 +258,8 @@ fun SearchTextInput(
     leadingIcon: (@Composable () -> Unit)? = null,
     trailingIcon: (@Composable () -> Unit)? = null,
     value: String,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     onValueChange: (String) -> Unit,
     hint: String = stringResource(id = R.string.search),
     textStyle: TextStyle = LocalTextStyle.current.copy(
@@ -273,6 +275,8 @@ fun SearchTextInput(
         singleLine = true,
         cursorBrush = cursorColor,
         textStyle = textStyle,
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
         decorationBox = { innerTextField ->
             Row(
                 modifier = childRowModifier,

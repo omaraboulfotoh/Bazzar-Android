@@ -11,4 +11,5 @@ object Constants {
     var sharedPreference_product_list = "productList"
     var sharedPreference_user_data = "userData"
     var first_time_opened = "firstTimeOpened"
+    var recent_search_list = "recentSearchList"
 }

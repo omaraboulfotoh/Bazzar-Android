@@ -27,7 +27,7 @@ class HomeViewModel @Inject constructor(
                 event.sliderIndex,
                 event.sliderItemIndex
             )
-
+            is HomeContract.Event.OnSearchClicked -> setEffect { HomeContract.Effect.Navigation.GoToSearch }
             is HomeContract.Event.OnBrandClicked -> handleBrandClicked(event.index)
             is HomeContract.Event.OnCategoryClicked -> handleCategoryClicked(event.index)
             is HomeContract.Event.OnProductClicked -> onProductClicked(
