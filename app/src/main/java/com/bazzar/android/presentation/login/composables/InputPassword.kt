@@ -39,6 +39,8 @@ fun InputPassword(
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent
         ),
+        singleLine = true,
+        maxLines = 1,
         value = password,
         visualTransformation = PasswordVisualTransformation(),
         onValueChange = onPasswordChanged,

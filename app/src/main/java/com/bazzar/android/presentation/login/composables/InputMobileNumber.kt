@@ -45,6 +45,8 @@ fun InputMobileNumber(phone: String = "", onPhoneChanged: (String) -> Unit, modi
                 )
             )
         },
+        singleLine = true,
+        maxLines = 1,
         leadingIcon = {
             Row(
                 modifier = Modifier.padding(horizontal = 8.dp),

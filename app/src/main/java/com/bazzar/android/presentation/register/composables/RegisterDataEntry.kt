@@ -74,6 +74,8 @@ fun RegisterDataEntry(
                         shape = RoundedCornerShape(32.5.dp),
                     )
                     .padding(vertical = 4.dp),
+                singleLine = true,
+                maxLines = 1,
                 colors = TextFieldDefaults.textFieldColors(
                     textColor = colorResource(id = R.color.prussian_blue),
                     backgroundColor = BazzarTheme.colors.white,
@@ -145,6 +147,8 @@ fun RegisterDataEntry(
                         shape = RoundedCornerShape(32.5.dp),
                     )
                     .padding(vertical = 4.dp),
+                singleLine = true,
+                maxLines = 1,
                 colors = TextFieldDefaults.textFieldColors(
                     textColor = colorResource(id = R.color.prussian_blue),
                     backgroundColor = BazzarTheme.colors.white,

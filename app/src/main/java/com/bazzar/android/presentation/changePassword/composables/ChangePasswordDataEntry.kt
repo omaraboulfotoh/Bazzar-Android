@@ -65,6 +65,8 @@ fun ChangePasswordDataEntry(
                     shape = RoundedCornerShape(16.dp),
                 )
                 .padding(vertical = 4.dp),
+            singleLine = true,
+            maxLines = 1,
             colors = TextFieldDefaults.textFieldColors(
                 textColor = colorResource(id = R.color.prussian_blue),
                 backgroundColor = BazzarTheme.colors.white,
@@ -104,6 +106,8 @@ fun ChangePasswordDataEntry(
                     shape = RoundedCornerShape(16.dp),
                 )
                 .padding(vertical = 4.dp),
+            singleLine = true,
+            maxLines = 1,
             colors = TextFieldDefaults.textFieldColors(
                 textColor = colorResource(id = R.color.prussian_blue),
                 backgroundColor = BazzarTheme.colors.white,
