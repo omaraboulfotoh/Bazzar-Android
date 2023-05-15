@@ -18,7 +18,10 @@ import com.bazzar.android.R
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
-fun BrandCategoryHeader(showBack: Boolean) {
+fun BrandCategoryHeader(
+    showBack: Boolean,
+    onSearchClick: () -> Unit,
+) {
     Box(
         Modifier
             .fillMaxWidth()
@@ -35,15 +38,6 @@ fun BrandCategoryHeader(showBack: Boolean) {
                     painter = painterResource(R.drawable.ic_back), contentDescription = "back"
                 )
             }
-        } else {
-            IconButton(
-                onClick = {
-                }, modifier = Modifier.align(alignment = Alignment.CenterEnd)
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.search_icon), contentDescription = "Search"
-                )
-            }
         }
 
         // handle the title view
@@ -57,6 +51,17 @@ fun BrandCategoryHeader(showBack: Boolean) {
                 .align(Alignment.Center)
                 .wrapContentSize()
         )
+
+        IconButton(
+            modifier = Modifier.align(alignment = Alignment.CenterEnd),
+            onClick = onSearchClick,
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.search_icon),
+                tint = BazzarTheme.colors.primaryButtonColor,
+                contentDescription = "Search"
+            )
+        }
 
     }
 }

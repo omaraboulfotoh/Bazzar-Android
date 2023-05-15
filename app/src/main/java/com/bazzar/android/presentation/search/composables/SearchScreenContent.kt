@@ -34,7 +34,7 @@ fun SearchScreenContent(state: State, onSendEvent: (Event) -> Unit) {
         }
         item {
             RecentSearchList(
-                recentSearchList = state.recentSearchList?.takeLast(4) ?: listOf(),
+                recentSearchList = state.recentSearchList?.takeLast(6) ?: listOf(),
                 onClick = { onSendEvent(Event.OnRecentSearchClicked(it)) },
                 onRemoveClick = { index, s ->
                     onSendEvent(

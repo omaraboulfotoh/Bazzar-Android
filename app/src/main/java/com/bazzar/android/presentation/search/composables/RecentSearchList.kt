@@ -39,17 +39,19 @@ fun RecentSearchList(
             style = BazzarTheme.typography.body2Bold,
             color = BazzarTheme.colors.black,
         )
-        Row(
-            modifier = Modifier
-                .padding(top = BazzarTheme.spacing.m)
-                .fillMaxSize()
-        ) {
-            recentSearchList.forEachIndexed { index, s ->
-                RecentSearchItem(
-                    term = s,
-                    onClick = { onClick(s) },
-                    onRemoveClick = { onRemoveClick(index, s) }
-                )
+        recentSearchList.chunked(2).forEachIndexed { parentIndex, chunkedArray ->
+            Row(
+                modifier = Modifier
+                    .padding(top = BazzarTheme.spacing.m)
+                    .fillMaxSize()
+            ) {
+                chunkedArray.forEachIndexed { index, s ->
+                    RecentSearchItem(
+                        term = s,
+                        onClick = { onClick(s) },
+                        onRemoveClick = { onRemoveClick((parentIndex * 2 + index), s) }
+                    )
+                }
             }
         }
     }

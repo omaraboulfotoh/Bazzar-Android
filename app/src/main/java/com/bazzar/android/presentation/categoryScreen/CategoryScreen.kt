@@ -7,6 +7,7 @@ import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.categoryScreen.composables.CategoryScreenContent
 import com.bazzar.android.presentation.destinations.CategoryScreenDestination
 import com.bazzar.android.presentation.destinations.ProductScreenDestination
+import com.bazzar.android.presentation.destinations.SearchScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -29,6 +30,9 @@ fun CategoryScreen(
             is CategoryContract.Effect.Navigation.GoToProductBrandList -> {
                 navigator.navigate(ProductScreenDestination(brand = effect.brand))
             }
+
+            is CategoryContract.Effect.Navigation.GoToSearch ->
+                navigator.navigate(SearchScreenDestination)
         }
     }
     // init logic

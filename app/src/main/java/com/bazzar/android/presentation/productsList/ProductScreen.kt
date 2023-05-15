@@ -7,6 +7,7 @@ import com.android.model.home.Category
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
+import com.bazzar.android.presentation.destinations.SearchScreenDestination
 import com.bazzar.android.presentation.productsList.composables.ProductScreenContent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -31,6 +32,8 @@ fun ProductScreen(
                     )
                 )
             }
+            is ProductContract.Effect.Navigation.GoToSearch ->
+                navigator.navigate(SearchScreenDestination)
             // category, brand
             ProductContract.Effect.Navigation.GoToBack -> navigator.navigateUp()
         }

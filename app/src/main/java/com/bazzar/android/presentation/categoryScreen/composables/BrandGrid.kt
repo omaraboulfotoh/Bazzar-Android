@@ -29,13 +29,21 @@ import com.bazzar.android.presentation.theme.BazzarTheme
 
 fun LazyListScope.BrandGrid(
     brandList: List<Brand>,
+    isSearchBrandOpen: Boolean = false,
+    searchBrandTerm: String? = null,
+    onSearchTermChanged: (String) -> Unit,
+    onSearchClick: (Boolean) -> Unit,
+    onCancelSearchClicked: () -> Unit,
     onBrandClicked: (Int) -> Unit,
 ) {
     item {
         Search(
-            searchClicked = false,
-            onSearchClick = {},
-            modifier = Modifier.padding(horizontal = BazzarTheme.spacing.m)
+            modifier = Modifier.padding(horizontal = BazzarTheme.spacing.m),
+            isSearchOpen = isSearchBrandOpen,
+            searchTerm = searchBrandTerm ?: "",
+            onSearchTermChanged = onSearchTermChanged,
+            onCancelSearchClicked = onCancelSearchClicked,
+            onSearchClick = onSearchClick,
         )
     }
     gridItems(
