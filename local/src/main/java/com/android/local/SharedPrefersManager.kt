@@ -106,6 +106,19 @@ class SharedPrefersManager @Inject constructor(private val sharedPreferences: Sh
         }.commit()
     }
 
+    fun saveRecentSearchList(recentSearchList: List<String>) {
+        sharedPreferences.edit().apply {
+            putString(Constants.recent_search_list, Gson().toJson(recentSearchList))
+        }.commit()
+    }
+
+    fun getRecentSearchList(): List<String>? {
+        return Gson().fromJson(
+            sharedPreferences.getString(Constants.recent_search_list, null),
+            object : TypeToken<List<String>>() {}.type
+        )
+    }
+
     companion object {
         const val LANGUAGE_AR = "ar"
         const val LANGUAGE_EN = "en"

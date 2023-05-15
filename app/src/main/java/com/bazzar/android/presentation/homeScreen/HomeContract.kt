@@ -28,6 +28,7 @@ class HomeContract {
         data class OnBrandClicked(val index: Int) : Event()
         data class OnCategoryClicked(val index: Int) : Event()
         data class OnProductClicked(val index: Int, val sectionIndex: Int) : Event()
+        object OnSearchClicked : Event()
     }
 
     sealed class Effect : ViewSideEffect {
@@ -36,6 +37,7 @@ class HomeContract {
             data class GoToSliderPage(val slider: HomeSlider) : Navigation()
             data class GoToBrandProductsList(val brand: Brand) : Navigation()
             data class GoToCategoryProductsList(val category: Category) : Navigation()
+            object GoToSearch : Navigation()
         }
     }
 }

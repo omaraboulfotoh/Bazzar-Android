@@ -18,6 +18,7 @@ fun ProductScreen(
     navigator: DestinationsNavigator,
     brand: Brand? = null,
     category: Category? = null,
+    searchTerm: String? = null
 ) {
     // get state
     val state = viewModel.viewState()
@@ -35,7 +36,7 @@ fun ProductScreen(
         }
     }
     // init logic
-    viewModel.init(brand, category)
+    viewModel.init(brand, category, searchTerm)
 
     ProductScreenContent(state = state) { viewModel.setEvent(it) }
 }

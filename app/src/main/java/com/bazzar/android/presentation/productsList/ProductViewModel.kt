@@ -64,14 +64,25 @@ class ProductViewModel @Inject constructor(
         loadProductData(updatedRequest)
     }
 
-    fun init(brand: Brand?, category: Category?) {
+    fun init(brand: Brand?, category: Category?, searchTerm: String?) {
 
         if (isInitialized.not()) {
+            if (searchTerm.isNullOrEmpty().not()) {
+                val searchTermRequest = SearchProductRequest(searchKey = searchTerm)
+                setState {
+                    copy(
+                        productScreenTitle = searchTerm!!,
+                        searchRequest = searchTermRequest,
+                    )
+                }
+                loadProductData(searchTermRequest)
+                return
+            }
             var request = SearchProductRequest(categoryId = category?.id)
 
             // if the screen opened from categories get the sub-list and adding first one as all
-            val subSubCategoriesList = category?.let { category ->
-                prefersManager.getCategoryList().orEmpty().filter { it.parentId == category.id }
+            val subSubCategoriesList = category?.let { _category ->
+                prefersManager.getCategoryList().orEmpty().filter { it.parentId == _category.id }
                     .toMutableList()
             }
             if (subSubCategoriesList.isNullOrEmpty().not() && category != null) {

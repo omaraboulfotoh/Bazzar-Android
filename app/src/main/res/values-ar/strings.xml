@@ -170,4 +170,6 @@
     <string name="cancel">إلغاء</string>
     <string name="delete">حذف</string>
     <string name="talk_to_us">تحدث معنا</string>
+    <string name="recent_search">عمليات البحث الاخيرة</string>
+    <string name="top_rated_products">المنتجات الأعلى تقييما</string>
 </resources>

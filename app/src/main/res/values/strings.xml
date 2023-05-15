@@ -169,4 +169,6 @@
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
     <string name="talk_to_us">Talk to us</string>
+    <string name="recent_search">Recent Search</string>
+    <string name="top_rated_products">Top Rated Products</string>
 </resources>
