@@ -2,9 +2,9 @@
 
 object Versions {
 
-    const val gradleVersion = "7.2.2"
+    const val gradleVersion = "7.3.1"
     const val kotlinVersion = "1.7.10"
-    const val googleServicesVersion = "4.3.10"
+    const val googleServicesVersion = "4.3.14"
     const val coreKtxVersion = "1.7.0"
     const val appCompatVersion = "1.4.1"
     const val materialVersion = "1.5.0"
