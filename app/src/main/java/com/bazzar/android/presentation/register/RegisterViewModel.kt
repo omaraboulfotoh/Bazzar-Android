@@ -52,7 +52,6 @@ class RegisterViewModel @Inject constructor(
                 val userRegisterRequest = UserRegisterRequest(
                     name = name,
                     englishName = name,
-                    email = email,
                     phone = "+965${phone}"
                 )
                 register(userRegisterRequest)
@@ -63,10 +62,6 @@ class RegisterViewModel @Inject constructor(
     private fun isValid(email: String, name: String, phone: String): Boolean {
         var isValid = true
         val errorsList = mutableListOf<String>()
-        if (Patterns.EMAIL_ADDRESS.matcher(email).matches().not()) {
-            isValid = false
-            errorsList.add(resourceProvider.getString(R.string.invalid_email))
-        }
         if ((phone.count() in 8..6).not()) {
             isValid = false
             errorsList.add(resourceProvider.getString(R.string.invalid_phone))

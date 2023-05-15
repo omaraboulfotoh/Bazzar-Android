@@ -144,7 +144,6 @@ fun ConfirmationMessageDialog(
                             onClick = onNegative
                         )
                     }
-
                     Box(
                         modifier = Modifier
                             .weight(1f)

@@ -13,7 +13,7 @@ data class UserRegisterRequest(
     @Json(name = "englishName")
     val englishName: String = "",
     @Json(name = "email")
-    val email: String = "",
+    val email: String? = null,
     @Json(name = "phone")
     val phone: String = ""
 ) : Parcelable
