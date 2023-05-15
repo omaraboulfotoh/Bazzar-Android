@@ -25,10 +25,19 @@ class CategoriesViewModel @Inject constructor(
         when (event) {
             is Event.OnBrandItemClicked -> goToBrandCategory(event.brandItemIndex)
             is Event.OnCategoryItemClicked -> getSubCategories(event.categoryItemIndex)
-            Event.OnSearchClicked -> {}
+            is Event.OnSearchClicked -> setEffect { Effect.Navigation.GoToSearch }
             is Event.OnSubCategoryItemClicked -> goToProductCategory(event.subCategoryItemIndex)
-            Event.OnToggleClicked -> setState { copy(showCategories = currentState.showCategories.not()) }
-            Event.OnDismissClicked -> handleDismissAction()
+            is Event.OnToggleClicked -> setState { copy(showCategories = currentState.showCategories.not()) }
+            is Event.OnDismissClicked -> handleDismissAction()
+            is Event.OnSearchBrandChanged -> handleSearchBrand(event.term)
+            is Event.OnSearchBrandClicked -> setState { copy(isSearchBrandOpen = true) }
+            is Event.OnCancelSearchBrandClicked -> setState {
+                copy(
+                    isSearchBrandOpen = false,
+                    searchBrandTerm = "",
+                    brandListToShow = currentState.brandList?.toList()
+                )
+            }
         }
     }
 
@@ -100,14 +109,16 @@ class CategoriesViewModel @Inject constructor(
                             is Result.Error -> globalState.error(brandsResponse.message.orEmpty())
                             is Result.Loading -> {}
                             is Result.Success -> {
+                                val brandList = brandsResponse.data
                                 sharedPrefersManager.saveCategoryList(categoriesResponse.data)
-                                sharedPrefersManager.saveBrandList(brandsResponse.data)
+                                sharedPrefersManager.saveBrandList(brandList)
                                 setState {
                                     copy(
                                         categoryList = categoriesResponse.data,
                                         mainCategorisesList = categoriesResponse.data.orEmpty()
                                             .filter { it.parentId == null },
-                                        brandList = brandsResponse.data
+                                        brandList = brandList,
+                                        brandListToShow = brandList?.toList()
                                     )
                                 }
                             }
@@ -120,5 +131,11 @@ class CategoriesViewModel @Inject constructor(
                 else -> {}
             }
         }
+    })
+
+    private fun handleSearchBrand(term: String) = executeCatching({
+        val brandListToShow =
+            currentState.brandList?.filter { it.title?.contains(term, ignoreCase = true) == true }
+        setState { copy(searchBrandTerm = term, brandListToShow = brandListToShow) }
     })
 }

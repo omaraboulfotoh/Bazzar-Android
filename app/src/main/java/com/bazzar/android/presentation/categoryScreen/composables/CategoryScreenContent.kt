@@ -10,10 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.bazzar.android.R
 import com.bazzar.android.presentation.categoryScreen.CategoryContract
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.theme.BazzarTheme
@@ -34,7 +31,10 @@ fun CategoryScreenContent(
         verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
     ) {
         item {
-            BrandCategoryHeader(state.showCategories.not())
+            BrandCategoryHeader(
+                state.showCategories.not(),
+                onSearchClick = { onSendEvent(CategoryContract.Event.OnSearchClicked) }
+            )
         }
         item {
             ToggleBrandCategory(
@@ -60,7 +60,12 @@ fun CategoryScreenContent(
                 })
         } else {
             BrandGrid(
-                brandList = state.brandList.orEmpty(),
+                brandList = state.brandListToShow.orEmpty(),
+                searchBrandTerm = state.searchBrandTerm,
+                isSearchBrandOpen = state.isSearchBrandOpen,
+                onSearchTermChanged = { onSendEvent(CategoryContract.Event.OnSearchBrandChanged(it)) },
+                onSearchClick = { onSendEvent(CategoryContract.Event.OnSearchBrandClicked) },
+                onCancelSearchClicked = { onSendEvent(CategoryContract.Event.OnCancelSearchBrandClicked) },
                 onBrandClicked = { onSendEvent(CategoryContract.Event.OnBrandItemClicked(it)) }
             )
         }

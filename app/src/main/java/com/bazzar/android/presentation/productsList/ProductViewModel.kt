@@ -31,10 +31,7 @@ class ProductViewModel @Inject constructor(
         when (event) {
             is ProductContract.Event.OnSubCategoryClicked -> onSubCategorySelected(event.categoryIndex)
             ProductContract.Event.OnBackIconClicked -> setEffect { ProductContract.Effect.Navigation.GoToBack }
-            ProductContract.Event.OnSearchClicked -> {
-                setState { copy(isSearchClicked = isSearchClicked.not()) }
-            }
-
+            ProductContract.Event.OnSearchClicked -> { setEffect { ProductContract.Effect.Navigation.GoToSearch } }
             is ProductContract.Event.OnProductClicked -> navigateToProductDetails(event.itemIndex)
         }
     }

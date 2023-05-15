@@ -29,6 +29,7 @@ class ProductContract {
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
             data class GoToProductDetailPage(val product: Product) : Navigation()
+            object GoToSearch : Navigation()
             object GoToBack : Navigation()
         }
 
