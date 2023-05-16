@@ -62,7 +62,7 @@ class RegisterViewModel @Inject constructor(
     private fun isValid(email: String, name: String, phone: String): Boolean {
         var isValid = true
         val errorsList = mutableListOf<String>()
-        if ((phone.count() in 8..6).not()) {
+        if (phone.isEmpty() || phone.count() > 8) {
             isValid = false
             errorsList.add(resourceProvider.getString(R.string.invalid_phone))
         }

@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Checkbox
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -31,6 +33,8 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
@@ -74,6 +78,11 @@ fun RegisterDataEntry(
                         shape = RoundedCornerShape(32.5.dp),
                     )
                     .padding(vertical = 4.dp),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions.Default,
                 singleLine = true,
                 maxLines = 1,
                 colors = TextFieldDefaults.textFieldColors(
@@ -147,6 +156,10 @@ fun RegisterDataEntry(
                         shape = RoundedCornerShape(32.5.dp),
                     )
                     .padding(vertical = 4.dp),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Phone,
+                    imeAction = ImeAction.Done
+                ),
                 singleLine = true,
                 maxLines = 1,
                 colors = TextFieldDefaults.textFieldColors(
@@ -167,7 +180,10 @@ fun RegisterDataEntry(
                 },
                 leadingIcon = {
                     Row(
-                        modifier = Modifier.padding(start = BazzarTheme.spacing.m, end = BazzarTheme.spacing.xs),
+                        modifier = Modifier.padding(
+                            start = BazzarTheme.spacing.m,
+                            end = BazzarTheme.spacing.xs
+                        ),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Image(

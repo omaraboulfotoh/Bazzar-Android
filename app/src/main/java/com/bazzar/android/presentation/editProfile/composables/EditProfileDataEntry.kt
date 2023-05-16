@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
@@ -32,6 +33,8 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
@@ -63,7 +66,7 @@ fun EditProfileDataEntry(
                 color = BazzarTheme.colors.white,
             )
         }
-        Column(modifier = Modifier.padding(top= 16.dp, bottom = 88.dp)) {
+        Column(modifier = Modifier.padding(top = 16.dp, bottom = 88.dp)) {
             Text(
                 text = stringResource(id = R.string.user_name),
                 style = MaterialTheme.typography.subtitle2.copy(
@@ -81,6 +84,10 @@ fun EditProfileDataEntry(
                         shape = RoundedCornerShape(32.5.dp),
                     )
                     .padding(vertical = 4.dp),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next
+                ),
                 singleLine = true,
                 maxLines = 1,
                 colors = TextFieldDefaults.textFieldColors(
@@ -121,6 +128,10 @@ fun EditProfileDataEntry(
                         shape = RoundedCornerShape(32.5.dp),
                     )
                     .padding(vertical = 4.dp),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Done
+                ),
                 singleLine = true,
                 maxLines = 1,
                 shape = RoundedCornerShape(32.5.dp),
@@ -189,7 +200,10 @@ fun EditProfileDataEntry(
                 },
                 leadingIcon = {
                     Row(
-                        modifier = Modifier.padding(start = BazzarTheme.spacing.m, end = BazzarTheme.spacing.xs),
+                        modifier = Modifier.padding(
+                            start = BazzarTheme.spacing.m,
+                            end = BazzarTheme.spacing.xs
+                        ),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Image(
