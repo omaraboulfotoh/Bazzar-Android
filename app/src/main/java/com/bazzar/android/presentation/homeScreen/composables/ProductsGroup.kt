@@ -15,11 +15,18 @@ import com.bazzar.android.presentation.theme.BazzarTheme
 fun ProductsGroup(
     headerTitle: String,
     productsList: List<Product>,
-    onProductClicked: (Int) -> Unit
-) {
+    onProductClicked: (Int) -> Unit,
+    onShowAllClicked: () -> Unit = {},
+    showViewAll: Boolean = true,
+
+    ) {
 
     // title
-    HeaderTextWithViewAll(text = headerTitle)
+    HeaderTextWithViewAll(
+        text = headerTitle,
+        showViewAll = showViewAll,
+        onShowAllClicked = onShowAllClicked
+    )
     // space
     Spacer(modifier = Modifier.height(BazzarTheme.spacing.m))
     // products list

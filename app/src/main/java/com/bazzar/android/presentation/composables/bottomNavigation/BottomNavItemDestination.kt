@@ -28,7 +28,7 @@ sealed class BottomNavItemDestination(
             R.string.categories,
             R.drawable.ic_category,
             R.drawable.ic_category_selected,
-            CategoryScreenDestination
+            CategoryScreenDestination() as DirectionDestination
         )
 
     object Bazzars :

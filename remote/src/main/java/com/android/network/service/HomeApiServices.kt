@@ -86,7 +86,7 @@ interface HomeApiServices {
     suspend fun createOrder(@Body body: LoadCheckoutRequest): Response<BaseWrapper<CreateOrderModel>>
 
     @GET("AllBzarz")
-    suspend fun getAllBazars(): Response<BaseWrapper<List<Bazar>>>
+    suspend fun getAllBazars(): Response<BaseWrapper<List<BazaarModel>>>
 
 }
 

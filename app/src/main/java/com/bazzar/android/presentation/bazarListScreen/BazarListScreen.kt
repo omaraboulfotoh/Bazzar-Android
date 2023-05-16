@@ -3,9 +3,6 @@ package com.bazzar.android.presentation.bazarListScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.android.model.home.Category
-import com.android.model.home.toBrand
-import com.android.model.home.toCategory
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.bazarListScreen.composables.BazarListScreenContent
@@ -28,13 +25,13 @@ fun BazarListScreen(
     viewModel.sideEffect { effect ->
         when (effect) {
             is BazarListContract.Effect.Navigation.GoToBazarDetailsScreen -> {
-                navigator.navigate(BazarDetailScreenDestination(
-                    category = effect.bazar.toCategory(),
-                    brand = effect.bazar.toBrand().copy(id = null, title = null)
-                ))
+                navigator.navigate(
+                    BazarDetailScreenDestination(
+                        bazaar = effect.bazar
+                    )
+                )
             }
         }
     }
-
     BazarListScreenContent(state) { viewModel.setEvent(it) }
 }

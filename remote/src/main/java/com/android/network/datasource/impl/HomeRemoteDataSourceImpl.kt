@@ -72,6 +72,6 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
 
     override suspend fun getOrdersHistory() = apiServices.getOrdersHistory()
 
-    override suspend fun getAllBazars(): Response<BaseWrapper<List<Bazar>>> =
+    override suspend fun getAllBazars(): Response<BaseWrapper<List<BazaarModel>>> =
         apiServices.getAllBazars()
 }

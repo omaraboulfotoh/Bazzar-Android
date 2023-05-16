@@ -171,6 +171,7 @@
     <string name="talk_to_us">Talk to us</string>
     <string name="recent_search">Recent Search</string>
     <string name="top_rated_products">Top Rated Products</string>
+    <string name="get_it">Get It</string>
     <string name="location">Location</string>
     <string name="confirm_Location">Confirm Location</string>
 </resources>

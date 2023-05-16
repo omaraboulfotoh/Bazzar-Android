@@ -16,6 +16,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun CategoryScreen(
     viewModel: CategoriesViewModel = hiltViewModel(),
     navigator: DestinationsNavigator,
+    showCategories: Boolean = true
 ) {
 
     // get state
@@ -36,6 +37,6 @@ fun CategoryScreen(
         }
     }
     // init logic
-    viewModel.init()
+    viewModel.init(showCategories)
     CategoryScreenContent(state = state) { viewModel.setEvent(it) }
 }

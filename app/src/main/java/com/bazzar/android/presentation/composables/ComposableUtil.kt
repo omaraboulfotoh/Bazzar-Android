@@ -24,8 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.android.model.home.BzarzModel
-import com.android.model.home.HomeSlider
+import com.android.model.home.BazaarModel
 import com.bazzar.android.R
 import com.bazzar.android.presentation.theme.BazzarTheme
 
@@ -92,7 +91,11 @@ fun SemiCircleImageView(imagePath: String, text: String) {
 }
 
 @Composable
-fun HeaderTextWithViewAll(text: String, showViewAll: Boolean = false) {
+fun HeaderTextWithViewAll(
+    text: String,
+    showViewAll: Boolean = true,
+    onShowAllClicked: () -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -111,6 +114,9 @@ fun HeaderTextWithViewAll(text: String, showViewAll: Boolean = false) {
         )
         if (showViewAll)
             Text(
+                modifier = Modifier.clickable {
+                    onShowAllClicked()
+                },
                 text = stringResource(id = R.string.home_screen_view_all),
                 style = MaterialTheme.typography.caption.copy(
                     fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
@@ -122,7 +128,7 @@ fun HeaderTextWithViewAll(text: String, showViewAll: Boolean = false) {
 
 @Composable
 fun CustomLazyRow(
-    imageList: List<BzarzModel>?,
+    imageList: List<BazaarModel>?,
     customIV: @Composable (image: String, text: String) -> Unit,
     topPadding: Dp,
     spaceBetweenItems: Dp

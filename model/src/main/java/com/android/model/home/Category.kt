@@ -33,7 +33,7 @@ data class ProductSection(
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-data class BzarzModel(
+data class BazaarModel(
     @Json(name = "id")
     val id: Int? = null,
     @Json(name = "name")

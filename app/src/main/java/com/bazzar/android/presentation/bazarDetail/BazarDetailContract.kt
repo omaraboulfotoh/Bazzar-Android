@@ -1,7 +1,6 @@
 package com.bazzar.android.presentation.bazarDetail
 
-import com.android.model.home.Brand
-import com.android.model.home.Category
+import com.android.model.home.BazaarModel
 import com.android.model.home.Product
 import com.android.model.request.SearchProductRequest
 import com.bazzar.android.presentation.base.ViewEvent
@@ -11,12 +10,8 @@ import com.bazzar.android.presentation.base.ViewState
 class BazarDetailContract {
     data class State(
         val productList: List<Product>? = emptyList(),
-        val brand: Brand? = null,
+        val bazaar: BazaarModel? = null,
         val searchRequest: SearchProductRequest = SearchProductRequest(),
-        val category: Category? = null,
-        val subCategoryList: List<Category>? = emptyList(),
-        val isSearchClicked: Boolean = false,
-        val productScreenTitle: String = "",
     ) : ViewState
 
     sealed class Event : ViewEvent {

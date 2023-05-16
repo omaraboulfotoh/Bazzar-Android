@@ -27,10 +27,14 @@ import com.bazzar.android.presentation.theme.BazzarTheme
 
 fun LazyListScope.FeaturedBrands(
     brandsList: List<Brand>,
-    onBrandClicked: (Int) -> Unit
+    onBrandClicked: (Int) -> Unit,
+    onShowAllClicked: () -> Unit
 ) {
     item {
-        HeaderTextWithViewAll(text = stringResource(id = R.string.home_screen_featured_brands))
+        HeaderTextWithViewAll(
+            text = stringResource(id = R.string.home_screen_featured_brands),
+            onShowAllClicked = onShowAllClicked
+        )
     }
     item {
         LazyRow(

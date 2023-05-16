@@ -52,7 +52,8 @@ fun SearchScreenContent(state: State, onSendEvent: (Event) -> Unit) {
                 ProductsGroup(
                     headerTitle = stringResource(id = R.string.top_rated_products),
                     productsList = state.productList!!,
-                    onProductClicked = { onSendEvent(Event.OnProductClicked(it)) }
+                    onProductClicked = { onSendEvent(Event.OnProductClicked(it)) },
+                    showViewAll = false
                 )
             }
         }

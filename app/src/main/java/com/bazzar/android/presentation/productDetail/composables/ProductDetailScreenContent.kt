@@ -100,7 +100,8 @@ fun ProductDetailScreenContent(
                         onProductClicked = { itemIndex ->
                             onSendEvent(Event.OnRelatedItemClicked(itemIndex))
 
-                        })
+                        }, showViewAll = false
+                    )
                 }
                 item {
                     Spacer(modifier = Modifier.height(BazzarTheme.spacing.m))
