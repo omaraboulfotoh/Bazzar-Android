@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.productDetail.composables
+package com.bazzar.android.presentation.composables
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -105,6 +105,7 @@ fun SuccessAddedToCart(
                         text = stringResource(id = R.string.continue_shopping),
                         style = BazzarTheme.typography.body2Bold,
                         color = BazzarTheme.colors.white,
+                        fontSize = 13.sp,
                     )
                 }
                 Row(
@@ -122,6 +123,7 @@ fun SuccessAddedToCart(
                         text = stringResource(id = R.string.visit_cart),
                         style = BazzarTheme.typography.body2Bold,
                         color = BazzarTheme.colors.primaryButtonColor,
+                        fontSize = 13.sp,
                         textAlign = TextAlign.Center
                     )
                     Icon(

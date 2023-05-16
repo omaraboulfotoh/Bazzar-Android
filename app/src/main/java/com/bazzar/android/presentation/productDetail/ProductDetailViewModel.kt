@@ -41,16 +41,30 @@ class ProductDetailViewModel @Inject constructor(
             is ProductDetailContract.Event.OnBuyNowClicked -> addToCart()
             is ProductDetailContract.Event.OnContinueShoppingClicked -> setState { copy(showSuccessAddedToCart = false) }
             is ProductDetailContract.Event.OnTackToUsClicked -> setEffect { ProductDetailContract.Effect.Navigation.GoToTalkToUs }
+            is ProductDetailContract.Event.OnImageClicked -> handleOnImageClicked(event.index)
             // state
             is ProductDetailContract.Event.OnColorItemSelected -> updateColor(event.colorIndex)
             is ProductDetailContract.Event.OnSizeItemSelected -> updateSizeAndItemId(event.sizeIndex)
-            ProductDetailContract.Event.OnSeeMoreClicked -> setState { copy(isTextExpanded = isTextExpanded.not()) }
+            is ProductDetailContract.Event.OnSeeMoreClicked -> setState { copy(isTextExpanded = isTextExpanded.not()) }
         }
     }
 
     private fun openSelectedProduct(itemIndex: Int) {
         val product = currentState.productDetail?.relatedItems.orEmpty()[itemIndex]
         setEffect { ProductDetailContract.Effect.Navigation.GoToOpenProduct(product) }
+    }
+
+    private fun handleOnImageClicked(index: Int) {
+        val imagePaths = currentState.selectedColoredImagesList.toMutableList()
+        val clickedImage = imagePaths[index]
+        imagePaths.removeAt(index)
+        imagePaths.add(0, clickedImage)
+        setEffect {
+            ProductDetailContract.Effect.Navigation.GoToImageViewer(
+                imagePathList = imagePaths,
+                product = currentState.productDetail
+            )
+        }
     }
 
     private fun addToCart() {

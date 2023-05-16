@@ -26,6 +26,7 @@ import com.google.accompanist.pager.rememberPagerState
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun IndicatorImageSlider(
+    modifier: Modifier = Modifier,
     imagePathList: List<String>,
     showNewBadge: Boolean,
     showExclusiveBadge: Boolean,
@@ -33,7 +34,7 @@ fun IndicatorImageSlider(
     discount: Double? = 0.0,
     onBackClicked: () -> Unit,
     onShareClicked: () -> Unit,
-    modifier: Modifier = Modifier,
+    onImageClicked: (index: Int) -> Unit,
 ) {
     val pagerState = rememberPagerState()
     Card(
@@ -76,11 +77,13 @@ fun IndicatorImageSlider(
 
                 ) { page ->
                     RemoteImage(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clickable { onImageClicked(page) },
                         imageUrl = (imagePathList[page]),
                         contentScale = ContentScale.Crop,
                         background = BazzarTheme.colors.white,
                         withShimmer = true,
-                        modifier = Modifier.fillMaxSize()
                     )
                 }
 

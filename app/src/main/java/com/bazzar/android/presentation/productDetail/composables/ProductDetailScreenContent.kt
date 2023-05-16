@@ -19,7 +19,9 @@ import com.bazzar.android.common.advancedShadow
 import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.common.toPriceFormat
+import com.bazzar.android.presentation.composables.BuyItem
 import com.bazzar.android.presentation.composables.IndicatorImageSlider
+import com.bazzar.android.presentation.composables.SuccessAddedToCart
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.homeScreen.composables.ProductsGroup
 import com.bazzar.android.presentation.productDetail.ProductDetailContract.Event
@@ -51,12 +53,10 @@ fun ProductDetailScreenContent(
                         showExclusiveBadge = state.productDetail?.isExclusive.orFalse(),
                         showDiscountBadge = state.productDetail?.discountPercentage != null,
                         discount = state.productDetail?.discountPercentage,
-                        onBackClicked = {
-                            onSendEvent(Event.OnBackIconClicked)
-                        },
-                        onShareClicked = {
-                            onSendEvent(Event.OnShareClicked)
-                        })
+                        onBackClicked = { onSendEvent(Event.OnBackIconClicked) },
+                        onShareClicked = { onSendEvent(Event.OnShareClicked) },
+                        onImageClicked = { onSendEvent(Event.OnImageClicked(it)) }
+                    )
                 }
                 item {
                     BrandSection(productTitle = state.productDetail?.title.orEmpty(),
