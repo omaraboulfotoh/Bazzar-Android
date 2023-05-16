@@ -172,4 +172,6 @@
     <string name="talk_to_us">تحدث معنا</string>
     <string name="recent_search">عمليات البحث الاخيرة</string>
     <string name="top_rated_products">المنتجات الأعلى تقييما</string>
+    <string name="location">الموقع</string>
+    <string name="confirm_Location">تأكيد الموقع</string>
 </resources>
