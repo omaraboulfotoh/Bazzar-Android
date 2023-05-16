@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -169,6 +170,7 @@ fun ConfirmationMessageDialog(
 fun AdDialog(
     imagePath: String? = null,
     onDismiss: () -> Unit = { },
+    onPositive: () -> Unit = {}
 ) {
 
     var showDialog by rememberSaveable { mutableStateOf(true) }
@@ -220,13 +222,14 @@ fun AdDialog(
                         imageUrl = imagePath,
                         contentScale = ContentScale.FillBounds
                     )
-                    PrimaryButton(modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .padding(BazzarTheme.spacing.m)
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(24.dp)),
-                        text = "Get It",
-                        onClick = dismiss
+                    PrimaryButton(
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(BazzarTheme.spacing.m)
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(24.dp)),
+                        text = stringResource(id = R.string.get_it),
+                        onClick = onPositive
                     )
                 }
             }

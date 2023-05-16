@@ -89,15 +89,15 @@ class CategoriesViewModel @Inject constructor(
         }
     }
 
-    fun init() {
+    fun init(showCategories: Boolean) {
         if (isInitialized.not()) {
-            loadData()
+            loadData(showCategories)
 
             isInitialized = true
         }
     }
 
-    private fun loadData() = executeCatching({
+    private fun loadData(showCategories: Boolean) = executeCatching({
 
         homeUseCase.getAllCategories().collect { categoriesResponse ->
             when (categoriesResponse) {
@@ -117,6 +117,7 @@ class CategoriesViewModel @Inject constructor(
                                         categoryList = categoriesResponse.data,
                                         mainCategorisesList = categoriesResponse.data.orEmpty()
                                             .filter { it.parentId == null },
+                                        showCategories = showCategories,
                                         brandList = brandList,
                                         brandListToShow = brandList?.toList()
                                     )

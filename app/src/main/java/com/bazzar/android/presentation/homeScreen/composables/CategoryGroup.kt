@@ -30,11 +30,15 @@ import com.bazzar.android.presentation.composables.RemoteImageCard
 
 fun LazyListScope.CategoryGroup(
     categoryList: List<Category>,
-    onCategoryClicked: (Int) -> Unit
+    onCategoryClicked: (Int) -> Unit,
+    onShowAllClicked: () -> Unit
 ) {
 
     item {
-        HeaderTextWithViewAll(text = stringResource(id = R.string.home_featured_category))
+        HeaderTextWithViewAll(
+            text = stringResource(id = R.string.home_featured_category),
+            onShowAllClicked = onShowAllClicked
+        )
     }
     gridItems(
         count = categoryList.size,

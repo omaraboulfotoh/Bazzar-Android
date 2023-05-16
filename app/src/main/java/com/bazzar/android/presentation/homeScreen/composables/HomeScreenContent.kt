@@ -44,14 +44,19 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
                         onSendEvent(HomeContract.Event.OnSliderClicked(0, it))
                     })
             }
-            item {
-                FeaturedBazzarSlider(slides2 = state.featuredBazzars.orEmpty())
-            }
-            if (state.featuredCategories.isNullOrEmpty()
-                    .not()
-            ) CategoryGroup(state.featuredCategories.orEmpty(), onCategoryClicked = {
-                onSendEvent(HomeContract.Event.OnCategoryClicked(it))
-            })
+            if (state.featuredBazzars.isNullOrEmpty().not())
+                item {
+                    FeaturedBazaarSlider(slides2 = state.featuredBazzars.orEmpty(),
+                        onShowAllClicked = {
+                            onSendEvent(HomeContract.Event.OnShowAllBazaars)
+                        })
+                }
+            if (state.featuredCategories.isNullOrEmpty().not())
+                CategoryGroup(state.featuredCategories.orEmpty(), onCategoryClicked = {
+                    onSendEvent(HomeContract.Event.OnCategoryClicked(it))
+                }, onShowAllClicked = {
+                    onSendEvent(HomeContract.Event.OnShowAllCategories)
+                })
 
             state.categoryItems.orEmpty().forEachIndexed { index, productSection ->
                 item {
@@ -59,6 +64,9 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
                         headerTitle = stringResource(id = R.string.home_screen_products_group),
                         onProductClicked = { itemId ->
                             onSendEvent(HomeContract.Event.OnProductClicked(itemId, index))
+                        },
+                        onShowAllClicked = {
+                            onSendEvent(HomeContract.Event.OnShowAllProducts(index))
                         })
                 }
             }
@@ -70,11 +78,12 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
                         onSendEvent(HomeContract.Event.OnSliderClicked(1, it))
                     })
             }
-            if (state.featuredBrands.isNullOrEmpty()
-                    .not()
-            ) FeaturedBrands(state.featuredBrands.orEmpty(), onBrandClicked = {
-                onSendEvent(HomeContract.Event.OnBrandClicked(it))
-            })
+            if (state.featuredBrands.isNullOrEmpty().not())
+                FeaturedBrands(state.featuredBrands.orEmpty(), onBrandClicked = {
+                    onSendEvent(HomeContract.Event.OnBrandClicked(it))
+                }, onShowAllClicked = {
+                    onSendEvent(HomeContract.Event.OnShowAllBrands)
+                })
 
             item {
                 Spacer(modifier = Modifier.height(BazzarTheme.spacing.xs))
@@ -83,7 +92,10 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
 
         AdDialog(
             imagePath = state.ads?.firstOrNull()?.imagePath,
-            onDismiss = { }
+            onDismiss = { },
+            onPositive = {
+                onSendEvent(HomeContract.Event.OnAdClicked)
+            }
         )
     }
 }

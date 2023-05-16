@@ -27,7 +27,8 @@ import com.bazzar.android.presentation.theme.Shapes
 
 @Composable
 fun BazarDetailScreenContent(
-    state: BazarDetailContract.State, onSendEvent: (BazarDetailContract.Event) -> Unit,
+    state: BazarDetailContract.State,
+    onSendEvent: (BazarDetailContract.Event) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -37,12 +38,10 @@ fun BazarDetailScreenContent(
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
     ) {
-        BazzarAppBar(
-            title = state.productScreenTitle,
-            onNavigationClick = { onSendEvent(BazarDetailContract.Event.OnBackIconClicked) }
-        )
+        BazzarAppBar(title = state.bazaar?.name.orEmpty(),
+            onNavigationClick = { onSendEvent(BazarDetailContract.Event.OnBackIconClicked) })
         // show brands
-        if (state.brand != null) {
+        if (state.bazaar != null) {
             Box(
                 Modifier
                     .fillMaxWidth()
@@ -50,8 +49,7 @@ fun BazarDetailScreenContent(
                     .padding(horizontal = BazzarTheme.spacing.m)
             ) {
                 BrandImage(
-                    state.brand,
-                    modifier = Modifier
+                    state.bazaar.imagePath, modifier = Modifier
                         .fillMaxSize()
                         .clip(Shapes.large)
                 )

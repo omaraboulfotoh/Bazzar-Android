@@ -34,6 +34,6 @@ interface HomeRepo {
 
     suspend fun createOrder(request: LoadCheckoutRequest): Flow<Result<CreateOrderModel>>
 
-    suspend fun getAllBazars(): Flow<Result<List<Bazar>>>
+    suspend fun getAllBazars(): Flow<Result<List<BazaarModel>>>
 
 }

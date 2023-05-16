@@ -17,14 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.android.model.home.Bazar
+import com.android.model.home.BazaarModel
 import com.bazzar.android.presentation.composables.RemoteImage
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
 fun BazarListItem(
     modifier: Modifier = Modifier,
-    item: Bazar,
+    item: BazaarModel,
     onClick: () -> Unit
 ) {
     Row(

@@ -3,7 +3,7 @@ package com.android.network.domain.repos.impl
 import android.util.Log
 import androidx.annotation.WorkerThread
 import com.android.model.home.Area
-import com.android.model.home.Bazar
+import com.android.model.home.BazaarModel
 import com.android.model.home.Brand
 import com.android.model.home.Category
 import com.android.model.home.Checkout
@@ -330,7 +330,7 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
-    override suspend fun getAllBazars(): Flow<Result<List<Bazar>>> =
+    override suspend fun getAllBazars(): Flow<Result<List<BazaarModel>>> =
         flow {
             try {
                 homeRemoteDataSource.getAllBazars().let {

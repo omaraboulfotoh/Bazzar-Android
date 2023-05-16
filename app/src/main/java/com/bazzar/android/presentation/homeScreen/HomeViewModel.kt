@@ -1,5 +1,8 @@
 package com.bazzar.android.presentation.homeScreen
 
+import com.android.model.home.Brand
+import com.android.model.home.Category
+import com.android.model.home.Product
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.presentation.app.IGlobalState
@@ -27,6 +30,7 @@ class HomeViewModel @Inject constructor(
                 event.sliderIndex,
                 event.sliderItemIndex
             )
+
             is HomeContract.Event.OnSearchClicked -> setEffect { HomeContract.Effect.Navigation.GoToSearch }
             is HomeContract.Event.OnBrandClicked -> handleBrandClicked(event.index)
             is HomeContract.Event.OnCategoryClicked -> handleCategoryClicked(event.index)
@@ -34,6 +38,55 @@ class HomeViewModel @Inject constructor(
                 event.index,
                 event.sectionIndex
             )
+
+            HomeContract.Event.OnAdClicked -> handleAdClicked()
+            HomeContract.Event.OnShowAllBazaars -> setEffect { HomeContract.Effect.Navigation.GoToBazaarsList }
+            HomeContract.Event.OnShowAllBrands -> navigateToCategoryTab(false)
+            HomeContract.Event.OnShowAllCategories -> navigateToCategoryTab(true)
+            is HomeContract.Event.OnShowAllProducts -> handleProductNavigation(event.index)
+            is HomeContract.Event.OnBazaarClicked -> navigateToBazaar(event.index)
+        }
+    }
+
+    private fun navigateToBazaar(index: Int) {
+        val bazaar = currentState.featuredBazzars.orEmpty()[index]
+        setEffect { HomeContract.Effect.Navigation.GoToBazaarDetails(bazaar) }
+    }
+
+    private fun handleProductNavigation(index: Int) {
+        val sectionItem = currentState.categoryItems.orEmpty()[index]
+        val category = Category(id = sectionItem.categoryId, title = sectionItem.title)
+        setEffect { HomeContract.Effect.Navigation.GoToCategoryProductsList(category) }
+    }
+
+    private fun navigateToCategoryTab(showCategory: Boolean) {
+        setEffect {
+            HomeContract.Effect.Navigation.GoToCategoriesScreen(
+                showCategory = showCategory
+            )
+        }
+    }
+
+    private fun handleAdClicked() {
+        val selectedItem = currentState.ads.orEmpty().firstOrNull() ?: return
+        when {
+            selectedItem.itemId != null -> {
+                setEffect {
+                    HomeContract.Effect.Navigation.GoToProductDetails(Product(id = selectedItem.itemId))
+                }
+            }
+
+            selectedItem.brandId != null -> {
+                setEffect {
+                    HomeContract.Effect.Navigation.GoToBrandProductsList(Brand(id = selectedItem.brandId))
+                }
+            }
+
+            selectedItem.categoryId != null -> {
+                setEffect {
+                    HomeContract.Effect.Navigation.GoToCategoryProductsList(Category(id = selectedItem.categoryId))
+                }
+            }
         }
     }
 
@@ -56,7 +109,25 @@ class HomeViewModel @Inject constructor(
         val sliderList =
             (if (sliderIndex == 0) currentState.slides1 else currentState.slides2) ?: return
         val selectedItem = sliderList[sliderItemIndex]
-        setEffect { HomeContract.Effect.Navigation.GoToSliderPage(selectedItem) }
+        when {
+            selectedItem.itemId != null -> {
+                setEffect {
+                    HomeContract.Effect.Navigation.GoToProductDetails(Product(id = selectedItem.itemId))
+                }
+            }
+
+            selectedItem.brandId != null -> {
+                setEffect {
+                    HomeContract.Effect.Navigation.GoToBrandProductsList(Brand(id = selectedItem.brandId))
+                }
+            }
+
+            selectedItem.categoryId != null -> {
+                setEffect {
+                    HomeContract.Effect.Navigation.GoToCategoryProductsList(Category(id = selectedItem.categoryId))
+                }
+            }
+        }
     }
 
     fun init() {

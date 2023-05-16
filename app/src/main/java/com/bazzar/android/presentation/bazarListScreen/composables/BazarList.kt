@@ -7,14 +7,14 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.android.model.home.Bazar
+import com.android.model.home.BazaarModel
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
 fun BazarList(
     modifier: Modifier = Modifier,
-    bazarList: List<Bazar>? = emptyList(),
-    onBazarItemClick: (bazar: Bazar) -> Unit,
+    bazarList: List<BazaarModel> = emptyList(),
+    onBazarItemClick: (bazar: BazaarModel) -> Unit,
 ) {
     LazyVerticalGrid(
         modifier = modifier,
@@ -22,10 +22,8 @@ fun BazarList(
         contentPadding = PaddingValues(BazzarTheme.spacing.m),
         verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
     ) {
-        if (bazarList.isNullOrEmpty().not()) {
-            items(bazarList!!) { item ->
-                BazarListItem(item = item) { onBazarItemClick.invoke(item) }
-            }
+        items(bazarList) { item ->
+            BazarListItem(item = item) { onBazarItemClick.invoke(item) }
         }
     }
 }

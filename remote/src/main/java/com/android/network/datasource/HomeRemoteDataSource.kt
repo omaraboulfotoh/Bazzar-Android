@@ -19,7 +19,11 @@ interface HomeRemoteDataSource {
     suspend fun register(request: UserRegisterRequest): Response<BaseWrapper<UserData>>
     suspend fun editProfile(request: UserRegisterRequest): Response<BaseWrapper<EditProfileResponse>>
     suspend fun deleteAccount(): Response<BaseWrapper<Boolean>>
-    suspend fun changePassword(currentPassword: String, newPassword: String): Response<BaseWrapper<Boolean>>
+    suspend fun changePassword(
+        currentPassword: String,
+        newPassword: String
+    ): Response<BaseWrapper<Boolean>>
+
     suspend fun login(request: UserLoginRequest): Response<BaseWrapper<UserData>>
     suspend fun verifyOtp(request: VerifyOtpRequest): Response<BaseWrapper<UserData>>
     suspend fun resendOtp(userId: Int): Response<BaseWrapper<String>>
@@ -31,6 +35,6 @@ interface HomeRemoteDataSource {
     suspend fun getOrdersHistory(): Response<BaseWrapper<List<OrderHistory>>>
     suspend fun loadCheckout(request: LoadCheckoutRequest): Response<BaseWrapper<CheckoutModel>>
     suspend fun createOrder(request: LoadCheckoutRequest): Response<BaseWrapper<CreateOrderModel>>
-    suspend fun getAllBazars(): Response<BaseWrapper<List<Bazar>>>
+    suspend fun getAllBazars(): Response<BaseWrapper<List<BazaarModel>>>
 
 }

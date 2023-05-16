@@ -2,8 +2,7 @@ package com.bazzar.android.presentation.bazarDetail
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.android.model.home.Brand
-import com.android.model.home.Category
+import com.android.model.home.BazaarModel
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.bazarDetail.composables.BazarDetailScreenContent
@@ -16,8 +15,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun BazarDetailScreen(
     viewModel: BazarDetailViewModel = hiltViewModel(),
     navigator: DestinationsNavigator,
-    brand: Brand? = null,
-    category: Category? = null,
+    bazaar : BazaarModel
 ) {
     // get state
     val state = viewModel.viewState()
@@ -35,7 +33,7 @@ fun BazarDetailScreen(
         }
     }
     // init logic
-    viewModel.init(brand, category)
+    viewModel.init(bazaar)
 
     BazarDetailScreenContent(state = state) { viewModel.setEvent(it) }
 }
