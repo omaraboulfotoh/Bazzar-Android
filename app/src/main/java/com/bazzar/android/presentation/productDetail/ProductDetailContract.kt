@@ -24,6 +24,7 @@ class ProductDetailContract {
         //state
         data class OnColorItemSelected(val colorIndex: Int) : Event()
         data class OnSizeItemSelected(val sizeIndex: Int) : Event()
+        data class OnImageClicked(val index: Int) : Event()
 
         //navigation
         object OnContinueShoppingClicked : Event()
@@ -43,6 +44,7 @@ class ProductDetailContract {
             object GoToCart : Navigation()
             object GoToBack : Navigation()
             object GoToTalkToUs : Navigation()
+            data class GoToImageViewer(val imagePathList: List<String>, val product: Product?) : Navigation()
             data class GoToProductBrandList(val brand: Brand) : Navigation()
             data class GoToOpenProduct(val product: Product) : Navigation()
         }
