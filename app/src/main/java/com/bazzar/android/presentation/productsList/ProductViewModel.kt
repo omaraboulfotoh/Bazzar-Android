@@ -67,17 +67,6 @@ class ProductViewModel @Inject constructor(
     fun init(brand: Brand?, category: Category?, searchTerm: String?) {
 
         if (isInitialized.not()) {
-            if (searchTerm.isNullOrEmpty().not()) {
-                val searchTermRequest = SearchProductRequest(searchKey = searchTerm)
-                setState {
-                    copy(
-                        productScreenTitle = searchTerm!!,
-                        searchRequest = searchTermRequest,
-                    )
-                }
-                loadProductData(searchTermRequest)
-                return
-            }
             var request = SearchProductRequest(categoryId = category?.id)
 
             // if the screen opened from categories get the sub-list and adding first one as all
@@ -103,10 +92,14 @@ class ProductViewModel @Inject constructor(
             updatedBrand?.id?.let {
                 request = request.copy(brandList = listOf(it))
             }
+            searchTerm?.let {
+                request = request.copy(searchKey = searchTerm)
+            }
 
             val title = when {
                 (updatedCategory != null) -> updatedCategory.title.orEmpty()
                 (updatedBrand != null) -> updatedBrand.title.orEmpty()
+                (searchTerm.isNullOrEmpty().not()) -> searchTerm.orEmpty()
                 else -> ""
             }
             setState {
