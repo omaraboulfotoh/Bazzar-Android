@@ -89,14 +89,14 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
                 Spacer(modifier = Modifier.height(BazzarTheme.spacing.xs))
             }
         }
-
-        AdDialog(
-            imagePath = state.ads?.firstOrNull()?.imagePath,
-            onDismiss = { },
-            onPositive = {
-                onSendEvent(HomeContract.Event.OnAdClicked)
-            }
-        )
+        if (state.adShown.not())
+            AdDialog(
+                imagePath = state.ads?.firstOrNull()?.imagePath,
+                onDismiss = { onSendEvent(HomeContract.Event.OnAdDismissed)},
+                onPositive = {
+                    onSendEvent(HomeContract.Event.OnAdClicked)
+                }
+            )
     }
 }
 

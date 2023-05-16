@@ -31,7 +31,10 @@ class ProductViewModel @Inject constructor(
         when (event) {
             is ProductContract.Event.OnSubCategoryClicked -> onSubCategorySelected(event.categoryIndex)
             ProductContract.Event.OnBackIconClicked -> setEffect { ProductContract.Effect.Navigation.GoToBack }
-            ProductContract.Event.OnSearchClicked -> { setEffect { ProductContract.Effect.Navigation.GoToSearch } }
+            ProductContract.Event.OnSearchClicked -> {
+                setEffect { ProductContract.Effect.Navigation.GoToSearch }
+            }
+
             is ProductContract.Event.OnProductClicked -> navigateToProductDetails(event.itemIndex)
         }
     }
@@ -82,31 +85,37 @@ class ProductViewModel @Inject constructor(
                 prefersManager.getCategoryList().orEmpty().filter { it.parentId == _category.id }
                     .toMutableList()
             }
-            if (subSubCategoriesList.isNullOrEmpty().not() && category != null) {
+            val updatedCategory =
+                prefersManager.getCategoryList().orEmpty().firstOrNull { it.id == category?.id }
+            if (subSubCategoriesList.isNullOrEmpty().not() && updatedCategory != null) {
                 subSubCategoriesList?.add(
                     0,
-                    category.copy(
+                    updatedCategory.copy(
                         title = resourceProvider.getString(R.string.all),
                         isSelected = true
                     )
                 )
             }
-            val title = when {
-                (category != null) -> category.title.orEmpty()
-                (brand != null) -> brand.title.orEmpty()
-                else -> ""
-            }
+
             // if screen opened form brands
-            brand?.id?.let {
+            val updatedBrand =
+                prefersManager.getBrandList().orEmpty().firstOrNull { it.id == brand?.id }
+            updatedBrand?.id?.let {
                 request = request.copy(brandList = listOf(it))
+            }
+
+            val title = when {
+                (updatedCategory != null) -> updatedCategory.title.orEmpty()
+                (updatedBrand != null) -> updatedBrand.title.orEmpty()
+                else -> ""
             }
             setState {
                 copy(
                     productScreenTitle = title,
                     searchRequest = request,
                     subCategoryList = subSubCategoriesList,
-                    brand = brand,
-                    category = category
+                    brand = updatedBrand,
+                    category = updatedCategory
                 )
             }
             loadProductData(request)

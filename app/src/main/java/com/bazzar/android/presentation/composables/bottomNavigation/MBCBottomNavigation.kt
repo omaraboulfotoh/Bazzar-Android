@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -37,7 +39,7 @@ fun MBCBottomNavigation(
         BottomNavItemDestination.Profile
     )
 
-    val currentDestination = navController.appCurrentDestinationAsState().value
+    val selectedDestination = remember { mutableStateOf(BottomNavItemDestination.Home.direction) }
     BottomNavigation(
         modifier = modifier,
         backgroundColor = BazzarTheme.colors.white,
@@ -46,12 +48,12 @@ fun MBCBottomNavigation(
     ) {
         Column(modifier = Modifier, verticalArrangement = Arrangement.Top) {}
         items.forEach { navItem ->
-            val isSelected = navItem.direction == currentDestination
-
+            val isSelected = navItem.direction == selectedDestination.value
             BottomNavigationItem(
                 modifier = Modifier.padding(bottom = BazzarTheme.spacing.m),
                 selected = isSelected,
                 onClick = {
+                    selectedDestination.value = navItem.direction
                     onTabSelected(navItem.tapIndex)
                     navController.onNavItemClick(navItem)
                 },

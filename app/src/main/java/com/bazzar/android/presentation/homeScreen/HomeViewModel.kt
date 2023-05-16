@@ -45,7 +45,12 @@ class HomeViewModel @Inject constructor(
             HomeContract.Event.OnShowAllCategories -> navigateToCategoryTab(true)
             is HomeContract.Event.OnShowAllProducts -> handleProductNavigation(event.index)
             is HomeContract.Event.OnBazaarClicked -> navigateToBazaar(event.index)
+            HomeContract.Event.OnAdDismissed -> handleAdDismiss()
         }
+    }
+
+    private fun handleAdDismiss() {
+        setState { copy(adShown = true) }
     }
 
     private fun navigateToBazaar(index: Int) {
@@ -68,6 +73,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun handleAdClicked() {
+        handleAdDismiss()
         val selectedItem = currentState.ads.orEmpty().firstOrNull() ?: return
         when {
             selectedItem.itemId != null -> {

@@ -21,6 +21,7 @@ class HomeContract {
         val featuredBrands: List<Brand>? = emptyList(),
         val featuredBazzars: List<BazaarModel>? = emptyList(),
         val categoryItems: List<ProductSection>? = emptyList(),
+        val adShown: Boolean = false,
     ) : ViewState
 
     sealed class Event : ViewEvent {
@@ -30,6 +31,7 @@ class HomeContract {
         data class OnCategoryClicked(val index: Int) : Event()
         data class OnProductClicked(val index: Int, val sectionIndex: Int) : Event()
         object OnAdClicked : Event()
+        object OnAdDismissed : Event()
         object OnSearchClicked : Event()
         object OnShowAllCategories : Event()
         object OnShowAllBrands : Event()
