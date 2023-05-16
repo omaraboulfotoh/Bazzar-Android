@@ -62,8 +62,8 @@ fun ProductDetailScreenContent(
                     BrandSection(productTitle = state.productDetail?.title.orEmpty(),
                         brandName = state.productDetail?.brandTitle.orEmpty(),
                         brandImagePath = state.productDetail?.brandImagePath.orEmpty(),
-                        newPrice = state.productDetail?.price?.toString(),
-                        oldPrice = state.productDetail?.oldPrice.orZero().toPriceFormat(),
+                        newPrice = state.selectedItemDetail?.price?.toString(),
+                        oldPrice = state.selectedItemDetail?.oldPrice.orZero().toPriceFormat(),
                         onBrandClicked = {
                             onSendEvent(Event.OnSeeMoreBrandClicked)
                         })
@@ -95,7 +95,8 @@ fun ProductDetailScreenContent(
                     Spacer(modifier = Modifier.height(BazzarTheme.spacing.xs))
 
                     // products list
-                    ProductsGroup(productsList = state.productDetail?.relatedItems.orEmpty(),
+                    ProductsGroup(
+                        productsList = state.productDetail?.relatedItems.orEmpty(),
                         headerTitle = stringResource(id = R.string.related_product),
                         onProductClicked = { itemIndex ->
                             onSendEvent(Event.OnRelatedItemClicked(itemIndex))

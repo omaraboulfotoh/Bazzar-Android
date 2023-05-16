@@ -188,7 +188,7 @@ fun ProductCartItem(
                             )
                         ) {
                             append(
-                                product?.price.toString().nullIfEmpty()
+                                product?.selectedItemDetails?.price.toString().nullIfEmpty()
                                     ?: stringResource(R.string.zero_price)
                             )
                         }

@@ -46,7 +46,10 @@ fun SuccessAddedToCart(
     onVisitCardClick: () -> Unit,
 ) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.success_animation))
-    val progress by animateLottieCompositionAsState(composition, iterations = LottieConstants.IterateForever)
+    val progress by animateLottieCompositionAsState(
+        composition,
+        iterations = LottieConstants.IterateForever
+    )
 
     AnimatedVisibility(
         modifier = modifier,
@@ -61,7 +64,7 @@ fun SuccessAddedToCart(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 4.dp)
+                .padding(all = BazzarTheme.spacing.xs)
                 .background(
                     color = BazzarTheme.colors.primaryButtonColor, shape = RoundedCornerShape(24.dp)
                 )
@@ -128,8 +131,7 @@ fun SuccessAddedToCart(
                     )
                     Icon(
                         modifier = Modifier
-                            .size(24.dp)
-                            .padding(bottom = 4.dp),
+                            .size(24.dp),
                         painter = painterResource(id = R.drawable.ic_cart_icon),
                         contentDescription = "",
                         tint = BazzarTheme.colors.primaryButtonColor,

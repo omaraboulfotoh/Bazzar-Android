@@ -35,11 +35,17 @@ class ProductDetailViewModel @Inject constructor(
             // navigation
             is ProductDetailContract.Event.OnBackIconClicked -> setEffect { ProductDetailContract.Effect.Navigation.GoToBack }
             is ProductDetailContract.Event.OnShareClicked -> shareProduct()
-            is ProductDetailContract.Event.OnVisitYourCartClicked -> setEffect { ProductDetailContract.Effect.Navigation.GoToCart }
+            is ProductDetailContract.Event.OnVisitYourCartClicked -> {
+                setState { copy(showSuccessAddedToCart = false) }
+                setEffect { ProductDetailContract.Effect.Navigation.GoToCart }
+            }
+
             is ProductDetailContract.Event.OnSeeMoreBrandClicked -> navigateToBrandItems()
             is ProductDetailContract.Event.OnRelatedItemClicked -> openSelectedProduct(event.itemIndex)
             is ProductDetailContract.Event.OnBuyNowClicked -> addToCart()
-            is ProductDetailContract.Event.OnContinueShoppingClicked -> setState { copy(showSuccessAddedToCart = false) }
+            is ProductDetailContract.Event.OnContinueShoppingClicked ->
+                setState { copy(showSuccessAddedToCart = false) }
+
             is ProductDetailContract.Event.OnTackToUsClicked -> setEffect { ProductDetailContract.Effect.Navigation.GoToTalkToUs }
             is ProductDetailContract.Event.OnImageClicked -> handleOnImageClicked(event.index)
             // state
@@ -79,7 +85,7 @@ class ProductDetailViewModel @Inject constructor(
         val brand = Brand(
             id = currentState.productDetail?.brandId,
             title = currentState.productDetail?.brandTitle,
-            imagePath = currentState.productDetail?.imagePath,
+            imagePath = currentState.productDetail?.brandImagePath,
         )
 
         // navigate to brands products list
@@ -118,9 +124,11 @@ class ProductDetailViewModel @Inject constructor(
             copy(
                 sizeTitleList = updatedSizedList,
                 selectedItemDetail = updatedSizedList.firstOrNull(),
-                productDetail = currentState.productDetail?.copy(selectedItemDetails = selectedItemDetail?.copy(
-                    quantity = 1
-                ))
+                productDetail = currentState.productDetail?.copy(
+                    selectedItemDetails = selectedItemDetail?.copy(
+                        quantity = 1
+                    )
+                )
             )
         }
     }
@@ -139,7 +147,7 @@ class ProductDetailViewModel @Inject constructor(
                 is Result.Loading -> {}
                 is Result.Success -> {
                     val productDetail = productDetailResponse.data
-                    val selectedItemDetail = productDetail?.itemDetails?.first()
+                    val selectedItemDetail = productDetail?.itemDetails?.first()?.copy(quantity = 1)
                     val colorsIdsList =
                         productDetail?.itemDetails.orEmpty().map { it.colorId }.toSet().toList()
                     val colorsList = getColorsList(colorsIdsList, productDetail)
