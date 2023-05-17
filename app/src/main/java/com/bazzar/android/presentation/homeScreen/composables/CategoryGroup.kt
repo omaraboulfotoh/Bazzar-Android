@@ -26,7 +26,6 @@ import com.bazzar.android.R
 import com.bazzar.android.presentation.common.gridItems
 import com.bazzar.android.presentation.composables.HeaderTextWithViewAll
 import com.bazzar.android.presentation.composables.RemoteImage
-import com.bazzar.android.presentation.composables.RemoteImageCard
 
 fun LazyListScope.CategoryGroup(
     categoryList: List<Category>,

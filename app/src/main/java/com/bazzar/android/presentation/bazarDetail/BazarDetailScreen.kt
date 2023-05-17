@@ -15,7 +15,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun BazarDetailScreen(
     viewModel: BazarDetailViewModel = hiltViewModel(),
     navigator: DestinationsNavigator,
-    bazaar : BazaarModel
+    bazaar: BazaarModel
 ) {
     // get state
     val state = viewModel.viewState()
@@ -30,6 +30,8 @@ fun BazarDetailScreen(
             }
             // category, brand
             is BazarDetailContract.Effect.Navigation.GoToBack -> navigator.navigateUp()
+            is BazarDetailContract.Effect.OnShareBazaar -> {
+            }
         }
     }
     // init logic

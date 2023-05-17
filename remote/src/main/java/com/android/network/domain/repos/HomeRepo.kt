@@ -7,6 +7,7 @@ import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
 import com.android.model.request.VerifyOtpRequest
 import com.android.model.responses.base.BaseWrapper
+import com.android.model.responses.base.BazaarDetailsResponse
 import com.android.network.states.Result
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
@@ -35,5 +36,6 @@ interface HomeRepo {
     suspend fun createOrder(request: LoadCheckoutRequest): Flow<Result<CreateOrderModel>>
 
     suspend fun getAllBazars(): Flow<Result<List<BazaarModel>>>
+    suspend fun getBazaarDetails(bazaarId: Int): Flow<Result<BazaarDetailsResponse>>
 
 }

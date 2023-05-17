@@ -7,6 +7,7 @@ import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
 import com.android.model.request.VerifyOtpRequest
 import com.android.model.responses.base.BaseWrapper
+import com.android.model.responses.base.BazaarDetailsResponse
 import com.android.network.datasource.HomeRemoteDataSource
 import com.android.network.service.HomeApiServices
 import retrofit2.Response
@@ -74,4 +75,6 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
 
     override suspend fun getAllBazars(): Response<BaseWrapper<List<BazaarModel>>> =
         apiServices.getAllBazars()
+
+    override suspend fun getBazaarDetails(bazaarId: Int) = apiServices.getBazaarDetails(bazaarId)
 }

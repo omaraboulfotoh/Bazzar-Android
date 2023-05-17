@@ -41,9 +41,13 @@ import com.bazzar.android.presentation.theme.BazzarTheme
 import com.bazzar.android.presentation.theme.Shapes
 
 @Composable
-fun ProductItem(product: Product, onItemClicked: (Int) -> Unit) {
+fun ProductItem(
+    product: Product,
+    modifier: Modifier = Modifier,
+    onItemClicked: (Int) -> Unit,
+) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .height(334.dp)
             .width(164.dp)
             .clickable { onItemClicked(product.id.orZero()) },
@@ -75,17 +79,15 @@ fun ProductItem(product: Product, onItemClicked: (Int) -> Unit) {
                         .clip(RoundedCornerShape(topStart = 0.dp, topEnd = 0.dp))
                 )
                 // new badge
-                if (product.isNew.orFalse())
-                    NewBadgeView(
-                        modifier = Modifier
-                            .align(Alignment.BottomEnd)
-                            .size(28.dp)
-                    )
+                if (product.isNew.orFalse()) NewBadgeView(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .size(28.dp)
+                )
 
                 // draw the item for discount and exclusive if exist
                 Column(
-                    modifier = Modifier
-                        .align(Alignment.TopStart)
+                    modifier = Modifier.align(Alignment.TopStart)
                 ) {
 
                     // check for discount
@@ -93,8 +95,12 @@ fun ProductItem(product: Product, onItemClicked: (Int) -> Unit) {
                         DiscountView(modifier = Modifier.size(width = 70.dp, height = 24.dp), it)
                     }
                     // check for exclusive
-                    if (product.isExclusive.orFalse())
-                        ExclusiveView(modifier = Modifier.size(width = 70.dp, height = 24.dp))
+                    if (product.isExclusive.orFalse()) ExclusiveView(
+                        modifier = Modifier.size(
+                            width = 70.dp,
+                            height = 24.dp
+                        )
+                    )
                 }
                 // todo check if sold-out
             }
@@ -118,8 +124,7 @@ fun ProductItem(product: Product, onItemClicked: (Int) -> Unit) {
                 SectionTitle(
                     text = product.brandTitle.orEmpty(),
                     maxLines = 1,
-                    modifier = Modifier
-                        .align(Alignment.Start),
+                    modifier = Modifier.align(Alignment.Start),
                     style = BazzarTheme.typography.body2
                 )
 
@@ -129,9 +134,7 @@ fun ProductItem(product: Product, onItemClicked: (Int) -> Unit) {
 
                 // price view
                 Text(
-                    modifier = Modifier.align(Alignment.Start),
-                    text =
-                    buildAnnotatedString {
+                    modifier = Modifier.align(Alignment.Start), text = buildAnnotatedString {
                         withStyle(
                             style = SpanStyle(fontFamily = FontFamily(Font(R.font.montserrat_bold)))
                         ) {
@@ -146,21 +149,18 @@ fun ProductItem(product: Product, onItemClicked: (Int) -> Unit) {
                         ) {
                             append(stringResource(id = R.string.home_screen_product_price))
                         }
-                    },
-                    color = if (product.discountPercentage.orZero() > 0) {
+                    }, color = if (product.discountPercentage.orZero() > 0) {
                         BazzarTheme.colors.stroke
                     } else {
                         BazzarTheme.colors.black
-                    },
-                    style = BazzarTheme.typography.body2Bold
+                    }, style = BazzarTheme.typography.body2Bold
                 )
 
                 // if have discount should show the new price
                 if (product.discountPercentage.orZero() > 0) {
                     Text(
                         modifier = Modifier.align(Alignment.Start),
-                        text =
-                        buildAnnotatedString {
+                        text = buildAnnotatedString {
                             withStyle(
                                 style = SpanStyle(fontFamily = FontFamily(Font(R.font.montserrat_bold)))
                             ) {

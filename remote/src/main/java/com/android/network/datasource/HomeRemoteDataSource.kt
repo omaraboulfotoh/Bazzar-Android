@@ -8,6 +8,7 @@ import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
 import com.android.model.request.VerifyOtpRequest
 import com.android.model.responses.base.BaseWrapper
+import com.android.model.responses.base.BazaarDetailsResponse
 import retrofit2.Response
 
 interface HomeRemoteDataSource {
@@ -36,5 +37,6 @@ interface HomeRemoteDataSource {
     suspend fun loadCheckout(request: LoadCheckoutRequest): Response<BaseWrapper<CheckoutModel>>
     suspend fun createOrder(request: LoadCheckoutRequest): Response<BaseWrapper<CreateOrderModel>>
     suspend fun getAllBazars(): Response<BaseWrapper<List<BazaarModel>>>
+    suspend fun getBazaarDetails(bazaarId: Int): Response<BaseWrapper<BazaarDetailsResponse>>
 
 }

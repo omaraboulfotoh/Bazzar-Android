@@ -23,13 +23,16 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
     suspend fun deleteAccount() = homeRepo.deleteAccount()
     suspend fun changePassword(currentPassword: String, newPassword: String) =
         homeRepo.changePassword(currentPassword = currentPassword, newPassword = newPassword)
+
     suspend fun login(userLoginRequest: UserLoginRequest) = homeRepo.login(userLoginRequest)
     suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest) = homeRepo.verifyOtp(verifyOtpRequest)
     suspend fun resendOtp(userId: Int) = homeRepo.resendOtp(userId)
     suspend fun getAllAddresses() = homeRepo.getAllAddresses()
     suspend fun addUserAddress(userAddress: UserAddress) = homeRepo.addUserAddress(userAddress)
     suspend fun getAllAreas() = homeRepo.getAllAreas()
-    suspend fun updateUserAddress(userAddress: UserAddress) = homeRepo.updateUserAddress(userAddress)
+    suspend fun updateUserAddress(userAddress: UserAddress) =
+        homeRepo.updateUserAddress(userAddress)
+
     suspend fun loadCheckout(checkout: Checkout) = homeRepo.loadCheckout(checkout)
     suspend fun getOrdersHistory() = homeRepo.getOrdersHistory()
     suspend fun loadCheckout(request: LoadCheckoutRequest) =
@@ -39,4 +42,5 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
         homeRepo.createOrder(request)
 
     suspend fun getAllBazars() = homeRepo.getAllBazars()
+    suspend fun getBazaarDetails(bazaarId: Int) = homeRepo.getBazaarDetails(bazaarId)
 }

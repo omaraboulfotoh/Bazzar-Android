@@ -6,6 +6,7 @@ import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserRegisterRequest
 import com.android.model.request.VerifyOtpRequest
 import com.android.model.responses.base.BaseWrapper
+import com.android.model.responses.base.BazaarDetailsResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -87,6 +88,9 @@ interface HomeApiServices {
 
     @GET("AllBzarz")
     suspend fun getAllBazars(): Response<BaseWrapper<List<BazaarModel>>>
+
+    @GET("GetBzarDetails")
+    suspend fun getBazaarDetails(@Query("MarketerId") MarketerId: Int): Response<BaseWrapper<BazaarDetailsResponse>>
 
 }
 

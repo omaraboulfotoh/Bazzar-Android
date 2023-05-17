@@ -20,6 +20,7 @@ import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
 import com.android.model.request.VerifyOtpRequest
+import com.android.model.responses.base.BazaarDetailsResponse
 import com.android.network.datasource.HomeRemoteDataSource
 import com.android.network.domain.repos.HomeRepo
 import com.android.network.states.Result
@@ -352,6 +353,23 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             } catch (throwable: Throwable) {
                 Log.e("Error", "getAllBazars: ", throwable)
                 emit(Result.Error(listOf(), throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun getBazaarDetails(bazaarId: Int): Flow<Result<BazaarDetailsResponse>> =
+        flow {
+            try {
+                homeRemoteDataSource.getBazaarDetails(bazaarId).let {
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            it.body()?.data ?: BazaarDetailsResponse()
+                        )
+                    )
+                    else emit(Result.Error(BazaarDetailsResponse(), "error will be handled"))
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "getAllBazars: ", throwable)
+                emit(Result.Error(BazaarDetailsResponse(), throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 }
