@@ -7,7 +7,11 @@ import com.bazzar.android.presentation.composables.RemoteImageCard
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
-fun BrandImage(imagePath: String?, modifier: Modifier) {
+fun BrandImage(
+    imagePath: String?,
+    modifier: Modifier,
+    contentScale: ContentScale = ContentScale.FillWidth
+) {
     RemoteImageCard(
         imageUrl = imagePath,
         contentScale = ContentScale.FillWidth,

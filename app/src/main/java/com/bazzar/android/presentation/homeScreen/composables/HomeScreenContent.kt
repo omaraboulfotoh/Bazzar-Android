@@ -63,13 +63,14 @@ fun HomeScreenContent(state: State, onSendEvent: (Event) -> Unit) {
             state.categoryItems.orEmpty().forEachIndexed { index, productSection ->
                 item {
                     ProductsGroup(productsList = productSection.items.orEmpty(),
-                        headerTitle = stringResource(id = R.string.home_screen_products_group),
+                        headerTitle = productSection.title.orEmpty(),
                         onProductClicked = { itemId ->
                             onSendEvent(Event.OnProductClicked(itemId, index))
                         },
                         onShowAllClicked = {
                             onSendEvent(Event.OnShowAllProducts(index))
                         })
+                    Spacer(modifier = Modifier.height(BazzarTheme.spacing.s))
                 }
             }
 
