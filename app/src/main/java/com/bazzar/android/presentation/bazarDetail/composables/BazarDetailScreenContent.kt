@@ -1,12 +1,16 @@
 package com.bazzar.android.presentation.bazarDetail.composables
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -58,7 +63,35 @@ fun BazarDetailScreenContent(
         verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
     ) {
         BazzarAppBar(title = state.bazaar?.name.orEmpty(),
-            onNavigationClick = { onSendEvent(BazarDetailContract.Event.OnBackIconClicked) })
+            onNavigationClick = { onSendEvent(BazarDetailContract.Event.OnBackIconClicked) },
+            actions = {
+                Row(
+                    modifier = Modifier.wrapContentSize(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Box(modifier = Modifier
+                        .defaultMinSize(minWidth = 40.dp, minHeight = 40.dp)
+                        .clickable { onSendEvent(BazarDetailContract.Event.OnShareCLicked) }) {
+                        Icon(
+                            modifier = Modifier.align(Alignment.CenterEnd),
+                            painter = painterResource(id = R.drawable.ic_share),
+                            contentDescription = null,
+                            tint = colorResource(id = R.color.prussian_blue)
+                        )
+                    }
+                    Box(modifier = Modifier
+                        .defaultMinSize(minWidth = 40.dp, minHeight = 40.dp)
+                        .clickable { onSendEvent(BazarDetailContract.Event.OnFavouriteClicked) }) {
+                        Image(
+                            modifier = Modifier.align(Alignment.CenterEnd),
+                            painter = painterResource(id = if (state.isFavourite) R.drawable.ic_fav_active else R.drawable.ic_fav),
+                            contentDescription = null,
+                        )
+                    }
+                }
+
+            })
         // show brands
         LazyColumn(
             modifier = Modifier.weight(1f),

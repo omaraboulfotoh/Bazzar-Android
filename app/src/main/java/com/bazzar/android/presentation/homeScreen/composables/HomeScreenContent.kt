@@ -51,6 +51,8 @@ fun HomeScreenContent(state: State, onSendEvent: (Event) -> Unit) {
                     FeaturedBazaarSlider(slides2 = state.featuredBazzars.orEmpty(),
                         onShowAllClicked = {
                             onSendEvent(Event.OnShowAllBazaars)
+                        }, onBazaarClicked = {
+                            onSendEvent(Event.OnBazaarClicked(it))
                         })
                 }
             if (state.featuredCategories.isNullOrEmpty().not())

@@ -3,7 +3,9 @@ package com.bazzar.android.presentation.composables
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -42,9 +44,9 @@ fun Indicator(selected: Boolean, onClick: () -> Unit) {
 }
 
 @Composable
-fun SemiCircleImageView(imagePath: String, text: String) {
+fun SemiCircleImageView(imagePath: String, text: String,modifier: Modifier) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .width(136.dp)
             .height(215.dp)
             .clip(
@@ -129,19 +131,22 @@ fun HeaderTextWithViewAll(
 @Composable
 fun CustomLazyRow(
     imageList: List<BazaarModel>?,
-    customIV: @Composable (image: String, text: String) -> Unit,
+    customIV: @Composable (image: String, text: String, modifier: Modifier) -> Unit,
     topPadding: Dp,
-    spaceBetweenItems: Dp
+    spaceBetweenItems: Dp,
+    onClick: (Int) -> Unit
 ) {
-    androidx.compose.foundation.lazy.LazyRow(
+    LazyRow(
         modifier = Modifier
             .padding(top = topPadding)
             .wrapContentWidth(),
         horizontalArrangement = Arrangement.spacedBy(spaceBetweenItems),
         contentPadding = PaddingValues(horizontal = spaceBetweenItems)
     ) {
-        items(imageList!!) {
-            customIV(it.imagePath!!, it.name!!)
+        itemsIndexed(imageList!!) { index, item ->
+            customIV(item.imagePath!!, item.name!!, Modifier.clickable {
+                onClick(index)
+            })
         }
     }
 }

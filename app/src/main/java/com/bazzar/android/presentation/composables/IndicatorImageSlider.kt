@@ -51,18 +51,19 @@ fun IndicatorImageSlider(
             verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.s)
 
         ) {
-            BazzarAppBar(onNavigationClick = { onBackClicked() }, actions = {
-                Box(modifier = Modifier
-                    .defaultMinSize(minWidth = 50.dp, minHeight = 50.dp)
-                    .clickable { onShareClicked() }) {
-                    Icon(
-                        modifier = Modifier.align(Alignment.CenterEnd),
-                        painter = painterResource(id = R.drawable.ic_share),
-                        contentDescription = null,
-                        tint = colorResource(id = R.color.prussian_blue)
-                    )
-                }
-            })
+            BazzarAppBar(onNavigationClick = { onBackClicked() },
+                actions = {
+                    Box(modifier = Modifier
+                        .defaultMinSize(minWidth = 50.dp, minHeight = 50.dp)
+                        .clickable { onShareClicked() }) {
+                        Icon(
+                            modifier = Modifier.align(Alignment.CenterEnd),
+                            painter = painterResource(id = R.drawable.ic_share),
+                            contentDescription = null,
+                            tint = colorResource(id = R.color.prussian_blue)
+                        )
+                    }
+                })
             Box(
                 modifier = Modifier
                     .fillMaxWidth()

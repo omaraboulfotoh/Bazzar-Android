@@ -13,7 +13,8 @@ import com.bazzar.android.presentation.theme.BazzarTheme
 @Composable
 fun FeaturedBazaarSlider(
     slides2: List<BazaarModel>,
-    onShowAllClicked: () -> Unit
+    onShowAllClicked: () -> Unit,
+    onBazaarClicked: (Int) -> Unit,
 ) {
     HeaderTextWithViewAll(
         text = stringResource(id = R.string.home_screen_featured_bzarz),
@@ -21,14 +22,17 @@ fun FeaturedBazaarSlider(
     )
     CustomLazyRow(
         imageList = slides2,
-        customIV = { imagePath, text ->
+        customIV = { imagePath, text, modifier ->
             Column {
                 SemiCircleImageView(
-                    imagePath = imagePath, text = text
+                    imagePath = imagePath,
+                    text = text,
+                    modifier = modifier
                 )
             }
         },
         topPadding = BazzarTheme.spacing.m,
-        spaceBetweenItems = BazzarTheme.spacing.m
+        spaceBetweenItems = BazzarTheme.spacing.m,
+        onClick = onBazaarClicked
     )
 }
