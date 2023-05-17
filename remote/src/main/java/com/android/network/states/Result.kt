@@ -3,6 +3,7 @@ package com.android.network.states
 sealed class Result<T>(
     var data: T? = null,
     var message: String? = null,
+    val hasMoreData: Boolean? = null,
     var errors: Map<String, String>? = null,
 ) : IResult<T> {
     class Success<T>(data: T) : Result<T>(data)

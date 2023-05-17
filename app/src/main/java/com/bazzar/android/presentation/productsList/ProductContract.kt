@@ -15,6 +15,10 @@ class ProductContract {
         val searchRequest: SearchProductRequest = SearchProductRequest(),
         val category: Category? = null,
         val subCategoryList: List<Category>? = emptyList(),
+        val listPaging: Int? = 1,
+        val hasMore: Boolean = false,
+        val showEmptyView: Boolean = false,
+        val isLoadingMore: Boolean = true,
         val isSearchClicked: Boolean = false,
         val productScreenTitle: String = "",
     ) : ViewState
@@ -24,6 +28,7 @@ class ProductContract {
         data class OnProductClicked(val itemIndex: Int) : Event()
         object OnBackIconClicked : Event()
         object OnSearchClicked : Event()
+        object ReachedListEnd : Event()
     }
 
     sealed class Effect : ViewSideEffect {

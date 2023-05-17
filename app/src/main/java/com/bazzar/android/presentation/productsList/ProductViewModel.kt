@@ -7,6 +7,7 @@ import com.android.model.request.SearchProductRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.R
+import com.bazzar.android.common.orFalse
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.utils.IResourceProvider
@@ -36,6 +37,7 @@ class ProductViewModel @Inject constructor(
             }
 
             is ProductContract.Event.OnProductClicked -> navigateToProductDetails(event.itemIndex)
+            ProductContract.Event.ReachedListEnd -> loadMoreProducts()
         }
     }
 
@@ -116,6 +118,31 @@ class ProductViewModel @Inject constructor(
         }
     }
 
+    private fun loadMoreProducts() = executeCatching({
+        val updatedRequest =
+            currentState.searchRequest.copy(pageIndex = currentState.searchRequest.pageIndex + 1)
+        setState { copy(isLoadingMore = true) }
+        homeUseCase.getAllProductList(updatedRequest)
+            .collect { productResponse ->
+                when (productResponse) {
+                    is Result.Success -> {
+                        val updatedList = currentState.productList.orEmpty().toMutableList()
+                        updatedList.addAll(productResponse.data.orEmpty())
+                        setState {
+                            copy(
+                                productList = updatedList,
+                                hasMore = productResponse.hasMoreData.orFalse(),
+                                isLoadingMore = false,
+                                searchRequest = updatedRequest
+                            )
+                        }
+                    }
+
+                    else -> {}
+                }
+            }
+    })
+
     private fun loadProductData(request: SearchProductRequest) = executeCatching({
         homeUseCase.getAllProductList(request)
             .collect { productResponse ->
@@ -123,7 +150,13 @@ class ProductViewModel @Inject constructor(
                     is Result.Error -> globalState.error(productResponse.message.orEmpty())
                     is Result.Loading -> globalState.loading(true)
                     is Result.Success -> setState {
-                        copy(productList = productResponse.data)
+                        copy(
+                            productList = productResponse.data,
+                            hasMore = productResponse.hasMoreData.orFalse(),
+                            isLoadingMore = false,
+                            showEmptyView = productResponse.data.orEmpty().isEmpty(),
+                            searchRequest = request
+                        )
                     }
 
                     else -> {}
