@@ -65,7 +65,7 @@ fun AccountItem(
                         color = BazzarTheme.colors.white
                     )
                 ) {
-                    append(if (userData.email.isNotEmpty()) "${userData.email}\n" else "")
+                    append(if (userData.email.orEmpty().isNotEmpty()) "${userData.email}\n" else "")
                 }
                 withStyle(
                     style = SpanStyle(
@@ -74,7 +74,7 @@ fun AccountItem(
                         color = BazzarTheme.colors.white
                     )
                 ) {
-                    append(userData.phone)
+                    append(userData.phone.orEmpty())
                 }
             }
         )

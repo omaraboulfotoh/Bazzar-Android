@@ -173,4 +173,6 @@
     <string name="recent_search">عمليات البحث الاخيرة</string>
     <string name="top_rated_products">المنتجات الأعلى تقييما</string>
     <string name="get_it">Get It</string>
+    <string name="error_text">Something Error Happened</string>
+    <string name="try_again">Try again</string>
 </resources>

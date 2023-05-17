@@ -46,7 +46,13 @@ class HomeViewModel @Inject constructor(
             is HomeContract.Event.OnShowAllProducts -> handleProductNavigation(event.index)
             is HomeContract.Event.OnBazaarClicked -> navigateToBazaar(event.index)
             HomeContract.Event.OnAdDismissed -> handleAdDismiss()
+            HomeContract.Event.OnTryAgainClicked -> handleTryAgain()
         }
+    }
+
+    private fun handleTryAgain() {
+        setState { copy(showError = false) }
+        loadHomeData()
     }
 
     private fun handleAdDismiss() {
@@ -146,7 +152,7 @@ class HomeViewModel @Inject constructor(
     private fun loadHomeData() = executeCatching({
         homeUseCase.getHome().collect {
             when (it) {
-                is Result.Error -> globalState.error(it.message.orEmpty())
+                is Result.Error -> setState { copy(showError = true) }
                 is Result.Loading -> {}
                 is Result.Success -> setState {
                     copy(

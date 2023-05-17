@@ -16,13 +16,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.AdDialog
+import com.bazzar.android.presentation.composables.ErrorView
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.homeScreen.HomeContract
+import com.bazzar.android.presentation.homeScreen.HomeContract.*
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 
 @Composable
-fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Event) -> Unit) {
+fun HomeScreenContent(state: State, onSendEvent: (Event) -> Unit) {
     Box(
         modifier = Modifier
             .background(BazzarTheme.colors.backgroundColor)
@@ -34,28 +36,28 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
             horizontalAlignment = Alignment.Start,
         ) {
             item {
-                HomeHeader(onSearchClicked = { onSendEvent(HomeContract.Event.OnSearchClicked) })
+                HomeHeader(onSearchClicked = { onSendEvent(Event.OnSearchClicked) })
             }
             item {
                 IndicatorHomeImageSlider(imagePathList = state.slides1.orEmpty()
                     .mapNotNull { it.imagePath ?: "" },
                     modifier = Modifier.wrapContentHeight(),
                     onSliderClicked = {
-                        onSendEvent(HomeContract.Event.OnSliderClicked(0, it))
+                        onSendEvent(Event.OnSliderClicked(0, it))
                     })
             }
             if (state.featuredBazzars.isNullOrEmpty().not())
                 item {
                     FeaturedBazaarSlider(slides2 = state.featuredBazzars.orEmpty(),
                         onShowAllClicked = {
-                            onSendEvent(HomeContract.Event.OnShowAllBazaars)
+                            onSendEvent(Event.OnShowAllBazaars)
                         })
                 }
             if (state.featuredCategories.isNullOrEmpty().not())
                 CategoryGroup(state.featuredCategories.orEmpty(), onCategoryClicked = {
-                    onSendEvent(HomeContract.Event.OnCategoryClicked(it))
+                    onSendEvent(Event.OnCategoryClicked(it))
                 }, onShowAllClicked = {
-                    onSendEvent(HomeContract.Event.OnShowAllCategories)
+                    onSendEvent(Event.OnShowAllCategories)
                 })
 
             state.categoryItems.orEmpty().forEachIndexed { index, productSection ->
@@ -63,10 +65,10 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
                     ProductsGroup(productsList = productSection.items.orEmpty(),
                         headerTitle = stringResource(id = R.string.home_screen_products_group),
                         onProductClicked = { itemId ->
-                            onSendEvent(HomeContract.Event.OnProductClicked(itemId, index))
+                            onSendEvent(Event.OnProductClicked(itemId, index))
                         },
                         onShowAllClicked = {
-                            onSendEvent(HomeContract.Event.OnShowAllProducts(index))
+                            onSendEvent(Event.OnShowAllProducts(index))
                         })
                 }
             }
@@ -75,26 +77,31 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
                 IndicatorHomeImageSlider(state.slides2.orEmpty().mapNotNull { it.imagePath ?: "" },
                     modifier = Modifier.wrapContentHeight(),
                     onSliderClicked = {
-                        onSendEvent(HomeContract.Event.OnSliderClicked(1, it))
+                        onSendEvent(Event.OnSliderClicked(1, it))
                     })
             }
             if (state.featuredBrands.isNullOrEmpty().not())
                 FeaturedBrands(state.featuredBrands.orEmpty(), onBrandClicked = {
-                    onSendEvent(HomeContract.Event.OnBrandClicked(it))
+                    onSendEvent(Event.OnBrandClicked(it))
                 }, onShowAllClicked = {
-                    onSendEvent(HomeContract.Event.OnShowAllBrands)
+                    onSendEvent(Event.OnShowAllBrands)
                 })
 
             item {
                 Spacer(modifier = Modifier.height(BazzarTheme.spacing.xs))
             }
         }
+
+        if (state.showError)
+            ErrorView(modifier = Modifier.fillMaxSize(), onTryAgainClicked = {
+                onSendEvent(Event.OnTryAgainClicked)
+            })
         if (state.adShown.not())
             AdDialog(
                 imagePath = state.ads?.firstOrNull()?.imagePath,
-                onDismiss = { onSendEvent(HomeContract.Event.OnAdDismissed)},
+                onDismiss = { onSendEvent(Event.OnAdDismissed) },
                 onPositive = {
-                    onSendEvent(HomeContract.Event.OnAdClicked)
+                    onSendEvent(Event.OnAdClicked)
                 }
             )
     }
@@ -103,5 +110,5 @@ fun HomeScreenContent(state: HomeContract.State, onSendEvent: (HomeContract.Even
 @Preview
 @Composable
 fun PreviewHomeScreenContent() {
-    HomeScreenContent(state = HomeContract.State(), onSendEvent = {})
+    HomeScreenContent(state = State(), onSendEvent = {})
 }
