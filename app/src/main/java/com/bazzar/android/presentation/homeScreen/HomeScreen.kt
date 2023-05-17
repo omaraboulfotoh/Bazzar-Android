@@ -31,9 +31,8 @@ fun HomeScreen(
                 ProductDetailScreenDestination(effect.product)
             )
 
-            is HomeContract.Effect.Navigation.GoToBrandProductsList -> navigator.navigate(
-                ProductScreenDestination(brand = effect.brand)
-            )
+            is HomeContract.Effect.Navigation.GoToBrandProductsList ->
+                navigator.navigate(ProductScreenDestination(brand = effect.brand))
 
             is HomeContract.Effect.Navigation.GoToCategoryProductsList ->
                 navigator.navigate(ProductScreenDestination(category = effect.category))

@@ -116,6 +116,11 @@ fun BazarDetailScreenContent(
                     ProductItem(item, modifier = Modifier.padding(BazzarTheme.spacing.xs)) {
                         onSendEvent(BazarDetailContract.Event.OnProductClicked(index))
                     }
+                    val isLastItem = index == state.productList.orEmpty().lastIndex
+                    if (isLastItem && state.isLoadingMore.not() && state.hasMore) {
+                        onSendEvent(BazarDetailContract.Event.ReachedListEnd)
+                    }
+
                 })
             item {
                 Spacer(modifier = Modifier.height(BazzarTheme.spacing.s))

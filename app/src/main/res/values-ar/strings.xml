@@ -175,4 +175,5 @@
     <string name="get_it">Get It</string>
     <string name="error_text">Something Error Happened</string>
     <string name="try_again">Try again</string>
+    <string name="share_bazzar_text">Checkout this Bzaar product now from this link</string>
 </resources>

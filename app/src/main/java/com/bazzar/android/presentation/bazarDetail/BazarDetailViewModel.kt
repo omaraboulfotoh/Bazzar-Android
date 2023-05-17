@@ -71,7 +71,12 @@ class BazarDetailViewModel @Inject constructor(
     }
 
     private fun shareLink() {
-        setEffect { BazarDetailContract.Effect.OnShareBazaar(currentState.shareLink.orEmpty()) }
+        setEffect {
+            BazarDetailContract.Effect.OnShareBazaar(
+                resourceProvider.getString(R.string.share_bazzar_text),
+                currentState.shareLink.orEmpty()
+            )
+        }
     }
 
     private fun handleFavAction() = executeCatching({

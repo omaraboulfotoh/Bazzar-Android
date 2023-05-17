@@ -47,7 +47,7 @@ class BazarDetailContract {
             object GoToBack : Navigation()
         }
 
-        data class OnShareBazaar(val shareLink: String) : Effect()
+        data class OnShareBazaar(val shareText: String, val shareLink: String) : Effect()
 
     }
 

@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">BZAAARZ</string>
     <string name="error">Error</string>
+    <string name="no_phone_apps_found_on_your_device">No phone apps installed on your device</string>
+    <string name="no_email_apps_found_on_your_device">No email apps installed on your device</string>
+    <string name="can_not_find_a_suitable_app_to_preform_that_action">Can\'t find a suitable app to preform that action</string>
     <string name="got_it">Got it!</string>
     <string name="search">Search…</string>
     <string name="network_error_message">\"No internet connection, please check your connection and try again.\"</string>
@@ -174,4 +177,5 @@
     <string name="get_it">Get It</string>
     <string name="error_text">Something Error Happened</string>
     <string name="try_again">Try again</string>
+    <string name="share_bazzar_text">Checkout this Bzaar product now from this link</string>
 </resources>
