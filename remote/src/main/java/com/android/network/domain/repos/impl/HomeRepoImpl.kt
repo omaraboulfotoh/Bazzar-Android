@@ -91,7 +91,12 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             try {
                 homeRemoteDataSource.getAllProductList(searchProduct).let {
                     if (it.isSuccessful) {
-                        emit(Result.Success(it.body()?.data ?: emptyList()))
+                        emit(
+                            Result.Success(
+                                it.body()?.data ?: emptyList(),
+                                hasMoreData = it.body()?.hasMoreData
+                            )
+                        )
                     } else Result.Error(
                         listOf<Product>(), "error will be handled"
                     )
@@ -147,7 +152,11 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         flow {
             try {
                 homeRemoteDataSource.editProfile(request).let {
-                    if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: EditProfileResponse()))
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            it.body()?.data ?: EditProfileResponse()
+                        )
+                    )
                     else Result.Error(EditProfileResponse(), "error will be handled")
                 }
             } catch (throwable: Throwable) {
@@ -169,7 +178,10 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
-    override suspend fun changePassword(currentPassword: String, newPassword: String): Flow<Result<Boolean>> =
+    override suspend fun changePassword(
+        currentPassword: String,
+        newPassword: String
+    ): Flow<Result<Boolean>> =
         flow {
             try {
                 homeRemoteDataSource.changePassword(currentPassword, newPassword).let {

@@ -57,7 +57,7 @@ class ProductViewModel @Inject constructor(
         }
         // update the search request
         val updatedRequest =
-            currentState.searchRequest.copy(categoryId = selectedCategory.id, pageIndex = 1)
+            currentState.searchRequest.copy(categoryId = selectedCategory.id, pageIndex = 0)
 
         // update the state
         setState { copy(subCategoryList = updatedCategoriesList, searchRequest = updatedRequest) }
