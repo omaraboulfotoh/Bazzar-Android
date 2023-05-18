@@ -30,6 +30,7 @@ class WishListContract {
         sealed class Navigation : Effect() {
             data class GoToProduct(val product: Product) : Navigation()
             data class GoToBazaar(val bazaar: BazaarModel) : Navigation()
+            object GoToBack : Navigation()
         }
 
         data class ScrollPager(val pager: Int) : Effect()
