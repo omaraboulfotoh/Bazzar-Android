@@ -34,8 +34,14 @@ interface HomeRepo {
     suspend fun loadCheckout(request: LoadCheckoutRequest): Flow<Result<CheckoutModel>>
 
     suspend fun createOrder(request: LoadCheckoutRequest): Flow<Result<CreateOrderModel>>
-
     suspend fun getAllBazars(): Flow<Result<List<BazaarModel>>>
     suspend fun getBazaarDetails(bazaarId: Int): Flow<Result<BazaarDetailsResponse>>
+    suspend fun getProductWishList(): Flow<Result<List<Product>>>
+    suspend fun addProductWishList(itemId: Int): Flow<Result<Boolean>>
+    suspend fun deleteProductWishList(itemId: Int): Flow<Result<Boolean>>
+    suspend fun getBazaarsWishList(): Flow<Result<List<BazaarModel>>>
+    suspend fun addBazaarWishList(marketerId: Int): Flow<Result<Boolean>>
+    suspend fun deleteBazaarWishList(marketerId: Int): Flow<Result<Boolean>>
+
 
 }

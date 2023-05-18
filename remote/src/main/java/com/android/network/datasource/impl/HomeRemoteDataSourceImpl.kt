@@ -76,5 +76,23 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun getAllBazars(): Response<BaseWrapper<List<BazaarModel>>> =
         apiServices.getAllBazars()
 
-    override suspend fun getBazaarDetails(bazaarId: Int) = apiServices.getBazaarDetails(bazaarId)
+    override suspend fun getBazaarDetails(bazaarId: Int) =
+        apiServices.getBazaarDetails(bazaarId)
+
+    override suspend fun getProductWishList() =
+        apiServices.getProductWishList()
+
+    override suspend fun addProductWishList(itemId: Int) =
+        apiServices.addProductWishList(itemId)
+
+    override suspend fun deleteProductWishList(itemId: Int) =
+        apiServices.deleteProductWishList(itemId)
+
+    override suspend fun getBazaarsWishList() = apiServices.getBazaarsWishList()
+
+    override suspend fun addBazaarWishList(marketerId: Int) =
+        apiServices.addBazaarWishList(marketerId)
+
+    override suspend fun deleteBazaarWishList(marketerId: Int) =
+        apiServices.deleteBazaarWishList(marketerId)
 }

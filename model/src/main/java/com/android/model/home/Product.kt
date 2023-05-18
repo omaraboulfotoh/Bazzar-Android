@@ -18,6 +18,8 @@ data class Product(
     @Json(name = "categoryId") val categoryId: Int? = null,
     @Json(name = "categoryTitle") val categoryTitle: String? = null,
     @Json(name = "isNew") val isNew: Boolean? = false,
+    @Json(name = "isSoldOut") val isSoldOut: Boolean? = false,
+    @Json(name = "isWishList") val isWishList: Boolean? = false,
     @Json(name = "isExclusive") val isExclusive: Boolean? = null,
     @Json(name = "price") val price: Double? = 0.0,
     @Json(name = "oldPrice") val oldPrice: Double? = null,
@@ -27,7 +29,8 @@ data class Product(
     @Json(name = "relatedItems") val relatedItems: List<Product> = listOf(),
     @Json(name = "categoryImagePath") val categoryImagePath: String? = null,
     @Json(name = "brandImagePath") val brandImagePath: String? = null,
-    @Json(name = "selectedItemDetails") val selectedItemDetails: ItemDetail? = null
+    @Json(name = "selectedItemDetails") val selectedItemDetails: ItemDetail? = null,
+    @Json(name = "shareURL") val shareURL: String? = null,
 ) : Parcelable
 
 

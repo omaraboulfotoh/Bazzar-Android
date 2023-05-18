@@ -9,6 +9,7 @@ import com.android.model.responses.base.BaseWrapper
 import com.android.model.responses.base.BazaarDetailsResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -91,6 +92,25 @@ interface HomeApiServices {
 
     @GET("GetBzarDetails")
     suspend fun getBazaarDetails(@Query("MarketerId") MarketerId: Int): Response<BaseWrapper<BazaarDetailsResponse>>
+
+    @GET("https://api.bzaaarz.com/WishList/LoadMyWishListItems")
+    suspend fun getProductWishList(): Response<BaseWrapper<List<Product>>>
+
+    @POST("https://api.bzaaarz.com/WishList/AddItemToWishList")
+    suspend fun addProductWishList(@Query("ItemId") ItemId: Int): Response<BaseWrapper<Boolean>>
+
+    @DELETE("https://api.bzaaarz.com/WishList/DeleteWishListItem")
+    suspend fun deleteProductWishList(@Query("ItemId") ItemId: Int): Response<BaseWrapper<Boolean>>
+
+    @GET("https://api.bzaaarz.com/WishList/LoadMyWishListMarketers")
+    suspend fun getBazaarsWishList(): Response<BaseWrapper<List<BazaarModel>>>
+
+    @POST("https://api.bzaaarz.com/WishList/AddMarketerToWishList")
+    suspend fun addBazaarWishList(@Query("MarketerId") ItemId: Int): Response<BaseWrapper<Boolean>>
+
+    @DELETE("https://api.bzaaarz.com/WishList/DeleteWishListMarketer")
+    suspend fun deleteBazaarWishList(@Query("MarketerId") ItemId: Int): Response<BaseWrapper<Boolean>>
+
 
 }
 

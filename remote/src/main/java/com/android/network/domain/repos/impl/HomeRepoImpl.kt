@@ -372,4 +372,104 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                 emit(Result.Error(BazaarDetailsResponse(), throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun getProductWishList(): Flow<Result<List<Product>>> =
+        flow {
+            try {
+                homeRemoteDataSource.getProductWishList().let {
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            it.body()?.data ?: listOf()
+                        )
+                    )
+                    else emit(Result.Error(listOf(), "error will be handled"))
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "getAllBazars: ", throwable)
+                emit(Result.Error(listOf(), throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun addProductWishList(itemId: Int): Flow<Result<Boolean>> =
+        flow {
+            try {
+                homeRemoteDataSource.addProductWishList(itemId).let {
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            it.body()?.data ?: false
+                        )
+                    )
+                    else emit(Result.Error(false, "error will be handled"))
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "getAllBazars: ", throwable)
+                emit(Result.Error(false, throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun deleteProductWishList(itemId: Int) = flow {
+        try {
+            homeRemoteDataSource.deleteProductWishList(itemId).let {
+                if (it.isSuccessful) emit(
+                    Result.Success(
+                        it.body()?.data ?: false
+                    )
+                )
+                else emit(Result.Error(false, "error will be handled"))
+            }
+        } catch (throwable: Throwable) {
+            Log.e("Error", "getAllBazars: ", throwable)
+            emit(Result.Error(false, throwable.message))
+        }
+    }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun getBazaarsWishList(): Flow<Result<List<BazaarModel>>> =
+        flow {
+            try {
+                homeRemoteDataSource.getBazaarsWishList().let {
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            it.body()?.data ?: listOf()
+                        )
+                    )
+                    else emit(Result.Error(listOf(), "error will be handled"))
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "getAllBazars: ", throwable)
+                emit(Result.Error(listOf(), throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun addBazaarWishList(marketerId: Int): Flow<Result<Boolean>> = flow {
+        try {
+            homeRemoteDataSource.addBazaarWishList(marketerId).let {
+                if (it.isSuccessful) emit(
+                    Result.Success(
+                        it.body()?.data ?: false
+                    )
+                )
+                else emit(Result.Error(false, "error will be handled"))
+            }
+        } catch (throwable: Throwable) {
+            Log.e("Error", "getAllBazars: ", throwable)
+            emit(Result.Error(false, throwable.message))
+        }
+    }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun deleteBazaarWishList(marketerId: Int): Flow<Result<Boolean>> =
+        flow {
+            try {
+                homeRemoteDataSource.deleteBazaarWishList(marketerId).let {
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            it.body()?.data ?: false
+                        )
+                    )
+                    else emit(Result.Error(false, "error will be handled"))
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "getAllBazars: ", throwable)
+                emit(Result.Error(false, throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 }

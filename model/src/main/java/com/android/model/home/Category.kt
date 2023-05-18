@@ -40,5 +40,9 @@ data class BazaarModel(
     val name: String? = null,
     @Json(name = "imagePath")
     val imagePath: String? = null,
+    @Json(name = "shareURL")
+    val shareURL: String? = null,
+    @Json(name = "isWishList")
+    val isWishList: Boolean? = false,
 ) : Parcelable
 

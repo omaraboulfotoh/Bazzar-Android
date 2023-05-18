@@ -10,6 +10,10 @@ import com.android.model.request.VerifyOtpRequest
 import com.android.model.responses.base.BaseWrapper
 import com.android.model.responses.base.BazaarDetailsResponse
 import retrofit2.Response
+import retrofit2.http.DELETE
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface HomeRemoteDataSource {
     suspend fun getHome(): Response<BaseWrapper<HomeResponse>>
@@ -38,5 +42,12 @@ interface HomeRemoteDataSource {
     suspend fun createOrder(request: LoadCheckoutRequest): Response<BaseWrapper<CreateOrderModel>>
     suspend fun getAllBazars(): Response<BaseWrapper<List<BazaarModel>>>
     suspend fun getBazaarDetails(bazaarId: Int): Response<BaseWrapper<BazaarDetailsResponse>>
+    suspend fun getProductWishList(): Response<BaseWrapper<List<Product>>>
+    suspend fun addProductWishList(itemId: Int): Response<BaseWrapper<Boolean>>
+    suspend fun deleteProductWishList(itemId: Int): Response<BaseWrapper<Boolean>>
+    suspend fun getBazaarsWishList(): Response<BaseWrapper<List<BazaarModel>>>
+    suspend fun addBazaarWishList(marketerId: Int): Response<BaseWrapper<Boolean>>
+    suspend fun deleteBazaarWishList(marketerId: Int): Response<BaseWrapper<Boolean>>
+
 
 }

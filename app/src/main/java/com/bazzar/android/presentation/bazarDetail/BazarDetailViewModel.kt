@@ -45,7 +45,6 @@ class BazarDetailViewModel @Inject constructor(
         }
     }
 
-
     private fun handleSliderAction(sliderItemIndex: Int) {
         val sliderList = currentState.slider
         val selectedItem = sliderList[sliderItemIndex]
@@ -81,9 +80,31 @@ class BazarDetailViewModel @Inject constructor(
 
     private fun handleFavAction() = executeCatching({
         val fav = currentState.isFavourite.not()
+        val bazaarId = currentState.bazaar?.id ?: return@executeCatching
+        if (fav) {
+            homeUseCase.addBazaarWishList(bazaarId)
+                .collect { response ->
+                    when (response) {
+                        is Result.Success -> setState {
+                            copy(isFavourite = response.data.orFalse())
+                        }
 
-        // TODO: will handle the fav call
-    })
+                        else -> {}
+                    }
+                }
+        } else {
+            homeUseCase.deleteBazaarWishList(bazaarId)
+                .collect { response ->
+                    when (response) {
+                        is Result.Success -> setState {
+                            copy(isFavourite = response.data.orFalse().not())
+                        }
+
+                        else -> {}
+                    }
+                }
+        }
+    }, withLoading = false)
 
 
     private fun navigateToProductDetails(itemIndex: Int) {

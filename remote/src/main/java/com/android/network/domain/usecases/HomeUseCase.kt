@@ -7,6 +7,8 @@ import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
 import com.android.model.request.VerifyOtpRequest
 import com.android.network.domain.repos.HomeRepo
+import com.android.network.states.Result
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
@@ -43,4 +45,10 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
 
     suspend fun getAllBazars() = homeRepo.getAllBazars()
     suspend fun getBazaarDetails(bazaarId: Int) = homeRepo.getBazaarDetails(bazaarId)
+    suspend fun getProductWishList() = homeRepo.getProductWishList()
+    suspend fun addProductWishList(itemId: Int) = homeRepo.addProductWishList(itemId)
+    suspend fun deleteProductWishList(itemId: Int) = homeRepo.deleteProductWishList(itemId)
+    suspend fun getBazaarsWishList() = homeRepo.getBazaarsWishList()
+    suspend fun addBazaarWishList(marketerId: Int) = homeRepo.addBazaarWishList(marketerId)
+    suspend fun deleteBazaarWishList(marketerId: Int) = homeRepo.deleteBazaarWishList(marketerId)
 }
