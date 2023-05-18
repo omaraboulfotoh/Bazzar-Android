@@ -41,7 +41,7 @@ class BazarListViewModel @Inject constructor(
             setEffect { Effect.Navigation.GoToLogin }
             return@executeCatching
         }
-        val isFav = bazar.isWishList.orFalse()
+        val isFav = bazar.isWishList.orFalse().not()
         if (isFav) {
             homeUseCase.addProductWishList(bazar.id.orZero())
                 .collect { response ->

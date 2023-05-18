@@ -51,7 +51,7 @@ class ProductViewModel @Inject constructor(
         }
         val list = currentState.productList?.toMutableList() ?: return@executeCatching
         val item = list[itemIndex]
-        val isFav = item.isWishList.orFalse()
+        val isFav = item.isWishList.orFalse().not()
         if (isFav) {
             homeUseCase.addProductWishList(item.id.orZero())
                 .collect { response ->
@@ -130,7 +130,8 @@ class ProductViewModel @Inject constructor(
     ) {
 
         if (isInitialized.not()) {
-            var request = SearchProductRequest(categoryId = category?.id ?: categoryId?.toIntOrNull())
+            var request =
+                SearchProductRequest(categoryId = category?.id ?: categoryId?.toIntOrNull())
 
             // if the screen opened from categories get the sub-list and adding first one as all
             val subSubCategoriesList = category?.let { _category ->

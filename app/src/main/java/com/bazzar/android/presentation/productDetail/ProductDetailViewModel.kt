@@ -63,7 +63,7 @@ class ProductDetailViewModel @Inject constructor(
         val list =
             currentState.productDetail?.relatedItems?.toMutableList() ?: return@executeCatching
         val item = list[itemIndex]
-        val isFav = item.isWishList.orFalse()
+        val isFav = item.isWishList.orFalse().not()
         if (isFav) {
             homeUseCase.addProductWishList(item.id.orZero())
                 .collect { response ->

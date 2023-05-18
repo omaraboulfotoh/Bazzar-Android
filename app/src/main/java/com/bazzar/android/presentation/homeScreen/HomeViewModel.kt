@@ -118,7 +118,7 @@ class HomeViewModel @Inject constructor(
         }
         val list = currentState.categoryItems?.get(sectionIndex)?.items ?: return@executeCatching
         val item = list[index]
-        val isFav = item.isWishList.orFalse()
+        val isFav = item.isWishList.orFalse().not()
         if (isFav) {
             homeUseCase.addProductWishList(item.id.orZero())
                 .collect { response ->
@@ -144,7 +144,7 @@ class HomeViewModel @Inject constructor(
                     }
                 }
         } else {
-            homeUseCase.deleteBazaarWishList(item.id.orZero())
+            homeUseCase.deleteProductWishList(item.id.orZero())
                 .collect { response ->
                     when (response) {
                         is Result.Success -> {
