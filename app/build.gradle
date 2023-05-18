@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-parcelize'
+    id 'com.google.firebase.crashlytics'
     id 'com.google.gms.google-services'
     id 'com.google.devtools.ksp' version '1.7.10-1.0.6'
 }
@@ -60,20 +61,24 @@ android {
             dimension 'default'
             buildConfigField "String", "BASE_URL", "\"https://api.bzaaarz.com/MobileApp/\""
             buildConfigField "String", "IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/original\""
+            buildConfigField "String", "MAP_API_KEY", "\"AIzaSyC432wMYriZAEZh-HZYL3qCMMij3tQ4i3I\""
             buildConfigField "String", "MDB_ID", "\"c9856d0cb57c3f14bf75bdc6c063b8f3\""
             buildConfigField "String", "ABOUT_US", "\"https://bazzargate.com/AboutUs\""
             buildConfigField "String", "CONTACT_US", "\"https://bazzargate.com/ContactUs\""
             buildConfigField "String", "TERMS_AND_CONDITIONS", "\"https://bazzargate.com/Assets/Files/CustomersTermsConditions.pdf\""
+            applicationId "com.bazzargate.bazar"
             versionNameSuffix "-dev"
         }
         prod {
             dimension 'default'
             buildConfigField "String", "BASE_URL", "\"https://api.bzaaarz.com/MobileApp/\""
             buildConfigField "String", "IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/original\""
+            buildConfigField "String", "MAP_API_KEY", "\"AIzaSyC432wMYriZAEZh-HZYL3qCMMij3tQ4i3I\""
             buildConfigField "String", "MDB_ID", "\"c9856d0cb57c3f14bf75bdc6c063b8f3\""
             buildConfigField "String", "ABOUT_US", "\"https://bazzargate.com/AboutUs\""
             buildConfigField "String", "CONTACT_US", "\"https://bazzargate.com/ContactUs\""
             buildConfigField "String", "TERMS_AND_CONDITIONS", "\"https://bazzargate.com/Assets/Files/CustomersTermsConditions.pdf\""
+            applicationId "com.bazzar.android"
             versionNameSuffix "-prod"
         }
     }
@@ -156,6 +161,16 @@ dependencies {
     implementation Dependencies.DATE_TIME
     implementation Dependencies.WEB_BROWSER
 
+    // Timber
+    implementation(Dependencies.timber)
+
+    // Firebase
+    implementation platform(Dependencies.firebase_bom)
+    implementation(Dependencies.firebaseAnalytics)
+    implementation(Dependencies.firebaseCrashlytics)
+    implementation(Dependencies.firebaseMessaging)
+    implementation(Dependencies.firebaseDynamicLinks)
+
     //Unit Testing
     testImplementation(Dependencies.junit4)
     testImplementation(Dependencies.junitExtensionsKtx)
@@ -200,6 +215,9 @@ dependencies {
     implementation Dependencies.HILT
     implementation Dependencies.COMPOSE_VIEW_MODEL
     implementation Dependencies.lottieCompose
+    implementation Dependencies.googleMapCompose
+    implementation Dependencies.googleMapComposeUtils
+    implementation Dependencies.googleMapPlaces
 }
 
 kapt {

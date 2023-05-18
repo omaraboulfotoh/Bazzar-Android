@@ -32,11 +32,11 @@ class AddressBookViewModel @Inject constructor(
             }
 
             is AddressBookContract.Event.OnEditAddressClicked -> {
-                setEffect { AddressBookContract.Effect.Navigation.GoToEditAddress(event.userAddress) }
+                setEffect { AddressBookContract.Effect.Navigation.GoToLocation(event.userAddress) }
             }
 
             is AddressBookContract.Event.OnAddAddressClicked -> {
-                setEffect { AddressBookContract.Effect.Navigation.GoToAddressScreen }
+                setEffect { AddressBookContract.Effect.Navigation.GoToLocation() }
             }
         }
     }

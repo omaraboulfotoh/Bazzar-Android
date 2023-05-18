@@ -11,6 +11,8 @@ object ClassPaths {
     const val daggerHiltGradlePlugin =
         "com.google.dagger:hilt-android-gradle-plugin:${Versions.daggerHiltVersion}"
     const val googleServices="com.google.gms:google-services:${Versions.googleServicesVersion}"
+    const val crashAnalyticsPlugin =
+        "com.google.firebase:firebase-crashlytics-gradle:${Versions.crashAnalyticsPlugin}"
 }
 
 fun RepositoryHandler.addRepos() {

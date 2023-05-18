@@ -121,10 +121,16 @@ class ProductViewModel @Inject constructor(
         loadProductData(updatedRequest)
     }
 
-    fun init(brand: Brand?, category: Category?, searchTerm: String?) {
+    fun init(
+        brand: Brand?,
+        category: Category?,
+        searchTerm: String?,
+        brandId: String?,
+        categoryId: String?
+    ) {
 
         if (isInitialized.not()) {
-            var request = SearchProductRequest(categoryId = category?.id)
+            var request = SearchProductRequest(categoryId = category?.id ?: categoryId?.toIntOrNull())
 
             // if the screen opened from categories get the sub-list and adding first one as all
             val subSubCategoriesList = category?.let { _category ->

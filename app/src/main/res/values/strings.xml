@@ -178,4 +178,8 @@
     <string name="error_text">Something Error Happened</string>
     <string name="try_again">Try again</string>
     <string name="share_bazzar_text">Checkout this Bzaar product now from this link</string>
+    <string name="location">Location</string>
+    <string name="confirm_Location">Confirm Location</string>
+    <string name="search_location">search Location</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
 </resources>

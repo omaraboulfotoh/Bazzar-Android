@@ -59,8 +59,8 @@ class AddressViewModel @Inject constructor(
         }
     }
 
-    fun init(userAddress: UserAddress?) = executeCatching({
-        setState { copy(userAddress = userAddress, isEditAddress = userAddress != null) }
+    fun init(userAddress: UserAddress) = executeCatching({
+        setState { copy(userAddress = userAddress, isEditAddress = userAddress.areaId != null) }
         homeUseCase.getAllAreas()
             .collect { areasResponse ->
                 when (areasResponse) {
@@ -71,7 +71,7 @@ class AddressViewModel @Inject constructor(
                         val governments = allGovernmentsAndAreas.filter { it.parentId == null }
                         val areas = allGovernmentsAndAreas.filter { it.parentId != null }
                         val selectedArea =
-                            if(userAddress == null) null
+                            if(userAddress.areaId == null) null
                             else areas.find { it.id == userAddress.areaId }
                         val selectedGovernment =
                             if(selectedArea == null) null
@@ -83,11 +83,11 @@ class AddressViewModel @Inject constructor(
                                 areas = areas,
                                 selectedGovernment = selectedGovernment,
                                 selectedArea = selectedArea,
-                                streetName = userAddress?.streetName,
-                                houseNumber = userAddress?.houseNumber,
-                                flatNumber = userAddress?.flatNumber,
-                                notes = userAddress?.addressNotes,
-                                toggleEnabled = userAddress?.isDefault == true
+                                streetName = userAddress.streetName,
+                                houseNumber = userAddress.houseNumber,
+                                flatNumber = userAddress.flatNumber,
+                                notes = userAddress.addressNotes,
+                                toggleEnabled = userAddress.isDefault == true
                             )
                         }
                     }
@@ -96,7 +96,7 @@ class AddressViewModel @Inject constructor(
     })
 
     private fun addOrEditAddress() = executeCatching({
-        val userAddress = (currentState.userAddress ?: UserAddress()).copy(
+        val userAddress = currentState.userAddress.copy(
             areaId = currentState.selectedArea?.id,
             streetName = currentState.streetName,
             houseNumber = currentState.houseNumber,

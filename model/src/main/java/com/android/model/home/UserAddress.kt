@@ -22,6 +22,10 @@ data class UserAddress(
     var addressDescription: String? = null,
     @Json(name = "addressNotes")
     var addressNotes: String? = null,
+    @Json(name = "latitude")
+    var latitude: String? = null,
+    @Json(name = "longitude")
+    var longitude: String? = null,
     @Json(name = "isDefault")
     var isDefault: Boolean? = null
 ) : Parcelable

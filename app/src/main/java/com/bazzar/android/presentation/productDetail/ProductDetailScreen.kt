@@ -7,6 +7,7 @@ import com.android.model.home.Product
 import com.bazzar.android.common.buildUrlIntent
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
+import com.bazzar.android.presentation.DeepLinkConstants.PRODUCT_DETAILS_DEEP_LINK
 import com.bazzar.android.presentation.SocialMedia
 import com.bazzar.android.presentation.destinations.CartScreenDestination
 import com.bazzar.android.presentation.destinations.ImageViewerScreenDestination
@@ -14,15 +15,17 @@ import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.bazzar.android.presentation.destinations.ProductScreenDestination
 import com.bazzar.android.presentation.productDetail.composables.ProductDetailScreenContent
+import com.ramcosta.composedestinations.annotation.DeepLink
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@Destination
 @Composable
+@Destination(deepLinks = [DeepLink(uriPattern = "$PRODUCT_DETAILS_DEEP_LINK/{itemId}")])
 fun ProductDetailScreen(
     viewModel: ProductDetailViewModel = hiltViewModel(),
     navigator: DestinationsNavigator,
-    product: Product
+    product: Product? = null,
+    itemId: String? = null,
 ) {
 
     // context
@@ -66,7 +69,7 @@ fun ProductDetailScreen(
         }
     }
     // init logic
-    viewModel.init(product)
+    viewModel.init(product, itemId)
     ProductDetailScreenContent(state = state) { viewModel.setEvent(it) }
 }
 

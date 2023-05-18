@@ -21,8 +21,7 @@ class AddressBookContract {
 
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
-            data class GoToEditAddress(val userAddress: UserAddress) : Navigation()
-            object GoToAddressScreen : Navigation()
+            data class GoToLocation(val userAddress: UserAddress? = null) : Navigation()
             object GoToBack : Navigation()
         }
     }

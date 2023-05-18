@@ -109,10 +109,11 @@ object Dependencies {
 
     //Firebase
     const val firebase_bom = "com.google.firebase:firebase-bom:${Versions.firebaseBomVersion}"
+    const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
     const val firebaseAuth = "com.google.firebase:firebase-auth-ktx"
-    const val firebaseDyamicLinks = "com.google.firebase:firebase-dynamic-links-ktx"
+    const val firebaseDynamicLinks = "com.google.firebase:firebase-dynamic-links-ktx"
     const val firebaseMessaging = "com.google.firebase:firebase-messaging-ktx"
-    val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
+    const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
 
     // utils
     const val timber = "com.jakewharton.timber:timber:${Versions.timber_version}"
@@ -154,6 +155,9 @@ object Dependencies {
     const val CONSTRAINT_LAYOUT =
         "androidx.constraintlayout:constraintlayout-compose:${Versions.Android.CONSTRAINT_LAYOUT}"
     const val MATERIAL3 = "androidx.compose.material3:material3:${Versions.Android.MATERIAL3}"
+    const val googleMapCompose = "com.google.maps.android:maps-compose:${Versions.GOOGLE_MAP}"
+    const val googleMapPlaces = "com.google.android.libraries.places:places:${Versions.GOOGLE_MAP_PLACES}"
+    const val googleMapComposeUtils = "com.google.maps.android:maps-compose-utils:${Versions.GOOGLE_MAP_UTILS}"
 
     // Navigation
     const val COMPOSE =
