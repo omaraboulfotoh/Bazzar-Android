@@ -44,6 +44,9 @@ interface HomeApiServices {
     @POST("Register")
     suspend fun register(@Body request: UserRegisterRequest): Response<BaseWrapper<UserData>>
 
+    @POST("UpdateFcmToken")
+    suspend fun updateFcmToken(@Query("fcmToken") fcmToke: String): Response<BaseWrapper<*>>
+
     @POST("EditProfile")
     suspend fun editProfile(@Body request: UserRegisterRequest): Response<BaseWrapper<EditProfileResponse>>
 

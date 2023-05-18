@@ -74,6 +74,10 @@ class OtpViewModel @Inject constructor(
                     is Result.Error -> globalState.error(otpResponse.message.orEmpty())
                     is Result.Loading -> globalState.loading(true)
                     is Result.Success -> {
+                        // send fcm token to the api
+                        sharedPrefersManager.getFcmToken()?.let {
+                            homeUseCase.updateFcmToken(it)
+                        }
                         val userData = otpResponse.data!!
                         sharedPrefersManager.saveToken(userData.accessToken)
                         sharedPrefersManager.saveUserData(userData)

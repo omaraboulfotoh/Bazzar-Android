@@ -22,6 +22,7 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
 
     suspend fun getAllProductDetails(productId: Int) = homeRepo.getAllProductDetails(productId)
     suspend fun register(request: UserRegisterRequest) = homeRepo.register(request)
+    suspend fun updateFcmToken(token: String) = homeRepo.updateFcmToken(token)
     suspend fun editProfile(request: UserRegisterRequest) = homeRepo.editProfile(request)
     suspend fun deleteAccount() = homeRepo.deleteAccount()
     suspend fun changePassword(currentPassword: String, newPassword: String) =
