@@ -174,4 +174,6 @@
     <string name="get_it">Get It</string>
     <string name="location">Location</string>
     <string name="confirm_Location">Confirm Location</string>
+    <string name="search_location">search Location</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
 </resources>

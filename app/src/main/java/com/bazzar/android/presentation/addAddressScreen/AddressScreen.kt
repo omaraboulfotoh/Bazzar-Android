@@ -19,7 +19,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun AddressScreen(
     viewModel: AddressViewModel = hiltViewModel(),
     navigator: DestinationsNavigator,
-    userAddress: UserAddress? = null,
+    userAddress: UserAddress = UserAddress(),
 ) {
 
     // get state
@@ -40,7 +40,7 @@ fun AddressScreen(
     }
     AddressScreenContent(
         title =
-        if (userAddress == null) stringResource(id = R.string.add_new_address)
+        if (userAddress.areaId == null) stringResource(id = R.string.add_new_address)
         else stringResource(id = R.string.edit_user_address),
         state = state
     ) {

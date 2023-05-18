@@ -7,9 +7,7 @@ import com.android.model.home.ItemImages
 import com.android.model.home.Product
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
-import com.bazzar.android.R
 import com.bazzar.android.common.orZero
-import com.bazzar.android.presentation.app.ConfirmationDialogParams
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.utils.IResourceProvider
@@ -39,7 +37,12 @@ class ProductDetailViewModel @Inject constructor(
             is ProductDetailContract.Event.OnSeeMoreBrandClicked -> navigateToBrandItems()
             is ProductDetailContract.Event.OnRelatedItemClicked -> openSelectedProduct(event.itemIndex)
             is ProductDetailContract.Event.OnBuyNowClicked -> addToCart()
-            is ProductDetailContract.Event.OnContinueShoppingClicked -> setState { copy(showSuccessAddedToCart = false) }
+            is ProductDetailContract.Event.OnContinueShoppingClicked -> setState {
+                copy(
+                    showSuccessAddedToCart = false
+                )
+            }
+
             is ProductDetailContract.Event.OnTackToUsClicked -> setEffect { ProductDetailContract.Effect.Navigation.GoToTalkToUs }
             is ProductDetailContract.Event.OnImageClicked -> handleOnImageClicked(event.index)
             // state
@@ -118,16 +121,18 @@ class ProductDetailViewModel @Inject constructor(
             copy(
                 sizeTitleList = updatedSizedList,
                 selectedItemDetail = updatedSizedList.firstOrNull(),
-                productDetail = currentState.productDetail?.copy(selectedItemDetails = selectedItemDetail?.copy(
-                    quantity = 1
-                ))
+                productDetail = currentState.productDetail?.copy(
+                    selectedItemDetails = selectedItemDetail?.copy(
+                        quantity = 1
+                    )
+                )
             )
         }
     }
 
-    fun init(product: Product) {
+    fun init(product: Product?, itemId: String?) {
         if (isInitialized.not()) {
-            loadProductData(product.id.orZero())
+            loadProductData(product?.id ?: itemId?.toIntOrNull() ?: 0)
             isInitialized = true
         }
     }
@@ -170,7 +175,7 @@ class ProductDetailViewModel @Inject constructor(
         productDetail: Product?
     ): MutableList<ItemImages> {
         val list = mutableListOf<ItemImages>()
-        productDetail?.let { productDetail ->
+        productDetail?.let {
             colorsIdsList.forEach { colorId ->
                 list.add(productDetail.itemImages.firstOrNull { it.colorId == colorId }
                     ?: ItemImages(

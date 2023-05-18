@@ -14,6 +14,58 @@
       },
       "oauth_client": [
         {
+          "client_id": "547169141811-hvt4hhfqoe1g5cjetjk2md7bjfkkk45g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bazzar.android",
+            "certificate_hash": "2d5e99e9bbfb3e0f6de10cd2e43fd77130343a4c"
+          }
+        },
+        {
+          "client_id": "547169141811-b8st5dj18l52eod4tjkhgha4f4rk8sm7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC432wMYriZAEZh-HZYL3qCMMij3tQ4i3I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "547169141811-b8st5dj18l52eod4tjkhgha4f4rk8sm7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "547169141811-4c6vkna8pqvta8daqm5pmvq0d0o44bac.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bazzargate.bazar"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:547169141811:android:7f1491a39b0c9a05e88f46",
+        "android_client_info": {
+          "package_name": "com.bazzargate.bazar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "547169141811-rr3pmkvpcogfriipg8b7jlvvcnmmjpjh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bazzargate.bazar",
+            "certificate_hash": "2d5e99e9bbfb3e0f6de10cd2e43fd77130343a4c"
+          }
+        },
+        {
           "client_id": "547169141811-b8st5dj18l52eod4tjkhgha4f4rk8sm7.apps.googleusercontent.com",
           "client_type": 3
         }

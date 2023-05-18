@@ -175,4 +175,5 @@
     <string name="get_it">Get It</string>
     <string name="location">الموقع</string>
     <string name="confirm_Location">تأكيد الموقع</string>
+    <string name="search_location">البحث عن موقع</string>
 </resources>

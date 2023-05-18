@@ -9,7 +9,7 @@ import com.bazzar.android.presentation.base.ViewState
 class AddressContract {
 
     data class State(
-        val userAddress: UserAddress? = null,
+        val userAddress: UserAddress = UserAddress(),
         val allGovernmentsAndAreas: List<Area> = emptyList(),
         val governments: List<Area> = emptyList(),
         val areas: List<Area> = emptyList(),

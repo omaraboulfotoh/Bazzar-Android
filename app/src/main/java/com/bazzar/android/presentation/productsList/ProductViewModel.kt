@@ -61,7 +61,13 @@ class ProductViewModel @Inject constructor(
         loadProductData(updatedRequest)
     }
 
-    fun init(brand: Brand?, category: Category?, searchTerm: String?) {
+    fun init(
+        brand: Brand?,
+        category: Category?,
+        searchTerm: String?,
+        brandId: String?,
+        categoryId: String?
+    ) {
 
         if (isInitialized.not()) {
             if (searchTerm.isNullOrEmpty().not()) {
@@ -75,7 +81,7 @@ class ProductViewModel @Inject constructor(
                 loadProductData(searchTermRequest)
                 return
             }
-            var request = SearchProductRequest(categoryId = category?.id)
+            var request = SearchProductRequest(categoryId = category?.id ?: categoryId?.toIntOrNull())
 
             // if the screen opened from categories get the sub-list and adding first one as all
             val subSubCategoriesList = category?.let { _category ->
@@ -97,7 +103,7 @@ class ProductViewModel @Inject constructor(
                 else -> ""
             }
             // if screen opened form brands
-            brand?.id?.let {
+            (brand?.id ?: brandId?.toIntOrNull())?.let {
                 request = request.copy(brandList = listOf(it))
             }
             setState {

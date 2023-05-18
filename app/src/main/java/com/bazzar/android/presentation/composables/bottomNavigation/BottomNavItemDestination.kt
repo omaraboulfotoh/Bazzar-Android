@@ -5,13 +5,14 @@ import androidx.annotation.StringRes
 import com.bazzar.android.R
 import com.bazzar.android.presentation.destinations.*
 import com.bazzar.android.presentation.main.MainContract
+import com.ramcosta.composedestinations.spec.Direction
 
 sealed class BottomNavItemDestination(
     @StringRes val tapIndex: Int,
     @StringRes val title: Int,
     @DrawableRes val vectorRes: Int,
     @DrawableRes val vectorResSelected: Int,
-    val direction: DirectionDestination,
+    val direction: Direction,
 ) {
     object Home :
         BottomNavItemDestination(
@@ -28,7 +29,7 @@ sealed class BottomNavItemDestination(
             R.string.categories,
             R.drawable.ic_category,
             R.drawable.ic_category_selected,
-            CategoryScreenDestination() as DirectionDestination
+            CategoryScreenDestination()
         )
 
     object Bazzars :

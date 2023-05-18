@@ -6,20 +6,30 @@ import com.android.model.home.Brand
 import com.android.model.home.Category
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
+import com.bazzar.android.presentation.DeepLinkConstants.BRAND_PRODUCT_LIST_DEEP_LINK
+import com.bazzar.android.presentation.DeepLinkConstants.CATEGORY_PRODUCT_LIST_DEEP_LINK
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.bazzar.android.presentation.destinations.SearchScreenDestination
 import com.bazzar.android.presentation.productsList.composables.ProductScreenContent
+import com.ramcosta.composedestinations.annotation.DeepLink
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@Destination
 @Composable
+@Destination(
+    deepLinks = [
+        DeepLink(uriPattern = "$BRAND_PRODUCT_LIST_DEEP_LINK/{brandId}"),
+        DeepLink(uriPattern = "$CATEGORY_PRODUCT_LIST_DEEP_LINK/{categoryId}"),
+    ]
+)
 fun ProductScreen(
     viewModel: ProductViewModel = hiltViewModel(),
     navigator: DestinationsNavigator,
     brand: Brand? = null,
     category: Category? = null,
-    searchTerm: String? = null
+    searchTerm: String? = null,
+    brandId: String? = null,
+    categoryId: String? = null,
 ) {
     // get state
     val state = viewModel.viewState()
@@ -39,7 +49,13 @@ fun ProductScreen(
         }
     }
     // init logic
-    viewModel.init(brand, category, searchTerm)
+    viewModel.init(
+        brand = brand,
+        category = category,
+        searchTerm = searchTerm,
+        brandId = brandId,
+        categoryId = categoryId
+    )
 
     ProductScreenContent(state = state) { viewModel.setEvent(it) }
 }

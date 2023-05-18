@@ -1,23 +1,37 @@
 package com.bazzar.android.presentation.locationScreen
 
+import android.location.Address
 import com.android.model.home.UserAddress
+import com.bazzar.android.presentation.MapLatLngConstants
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
 import com.bazzar.android.presentation.base.ViewState
+import com.google.android.gms.maps.model.LatLng
 
 class LocationContract {
     data class State(
-        val userAddress: UserAddress? = null
+        val userAddress: UserAddress = UserAddress(),
+        val geoCoderAddress: Address? = null,
+        val startLatLng: LatLng = MapLatLngConstants.KUWAIT_CITY_LAT_LAN,
+        val currentLatLng: LatLng = MapLatLngConstants.KUWAIT_CITY_LAT_LAN,
+        val searchTerm: String? = null,
+        val isUserLocationEnabled: Boolean = false,
+        val columnScrollingEnabled: Boolean = true,
     ) : ViewState
 
     sealed class Event : ViewEvent {
-        data class OnConfirmLocationClicked(val userAddress: UserAddress) : Event()
+        data class OnColumnScrollingEnabledChanged(val value: Boolean) : Event()
+        data class OnLatLngChanged(val latLng: LatLng) : Event()
+        data class OnSearchTermChanged(val term: String) : Event()
+        object OnPermissionGranted : Event()
+        object OnPermissionDenied : Event()
+        object OnConfirmLocationClicked : Event()
         object OnBackClicked : Event()
     }
 
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
-            data class GoToEditOrAddAddress(val userAddress: UserAddress) : Navigation()
+            data class GoToAddEditAddress(val userAddress: UserAddress) : Navigation()
             object GoBack : Navigation()
         }
     }

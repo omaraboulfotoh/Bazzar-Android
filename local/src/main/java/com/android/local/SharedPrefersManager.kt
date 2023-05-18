@@ -119,6 +119,16 @@ class SharedPrefersManager @Inject constructor(private val sharedPreferences: Sh
         )
     }
 
+    fun saveFcmToken(fcmToken: String) {
+        sharedPreferences.edit().apply {
+            putString(Constants.sharedPreference_fcm_token, fcmToken)
+        }.commit()
+    }
+
+    fun getFcmToken(): String? {
+        return sharedPreferences.getString(Constants.sharedPreference_fcm_token, null)
+    }
+
     companion object {
         const val LANGUAGE_AR = "ar"
         const val LANGUAGE_EN = "en"

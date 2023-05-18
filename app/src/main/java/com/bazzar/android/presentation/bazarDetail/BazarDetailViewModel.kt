@@ -28,7 +28,7 @@ class BazarDetailViewModel @Inject constructor(
     override fun handleEvents(event: BazarDetailContract.Event) {
         when (event) {
             is BazarDetailContract.Event.OnSubCategoryClicked -> onSubCategorySelected(event.categoryIndex)
-            BazarDetailContract.Event.OnBackIconClicked -> BazarDetailContract.Effect.Navigation.GoToBack
+            BazarDetailContract.Event.OnBackIconClicked -> { setEffect { BazarDetailContract.Effect.Navigation.GoToBack } }
             BazarDetailContract.Event.OnSearchClicked -> {}
             is BazarDetailContract.Event.OnProductClicked -> navigateToProductDetails(event.itemIndex)
         }
