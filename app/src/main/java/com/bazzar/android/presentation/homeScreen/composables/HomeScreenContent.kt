@@ -102,7 +102,7 @@ fun HomeScreenContent(state: State, onSendEvent: (Event) -> Unit) {
             ErrorView(modifier = Modifier.fillMaxSize(), onTryAgainClicked = {
                 onSendEvent(Event.OnTryAgainClicked)
             })
-        if (1 != 1)
+        if (state.adShown.not())
             AdDialog(
                 imagePath = state.ads?.firstOrNull()?.imagePath,
                 onDismiss = { onSendEvent(Event.OnAdDismissed) },
