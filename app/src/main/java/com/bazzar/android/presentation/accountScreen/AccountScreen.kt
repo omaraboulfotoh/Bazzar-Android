@@ -18,6 +18,7 @@ import com.bazzar.android.presentation.destinations.EditProfileScreenDestination
 import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.destinations.MainScreenDestination
 import com.bazzar.android.presentation.destinations.OrdersHistoryScreenDestination
+import com.bazzar.android.presentation.destinations.WishListScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -84,6 +85,8 @@ fun AccountScreen(
             }
 
             AccountContract.Effect.Navigation.OnRestartApp -> MainActivity.restartApp(activity)
+            AccountContract.Effect.Navigation.GoToWishList ->
+                navigator.navigate(WishListScreenDestination)
         }
     }
     viewModel.initState()

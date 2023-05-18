@@ -3,8 +3,11 @@ package com.bazzar.android.presentation.ordersHistory
 import com.android.local.SharedPrefersManager
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
+import com.bazzar.android.R
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.utils.IResourceProvider
+import com.bazzar.android.utils.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -13,6 +16,7 @@ class OrdersHistoryViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
     private val prefersManager: SharedPrefersManager,
+    private val resourceProvider: IResourceProvider
 ) :
     BaseViewModel<OrdersHistoryContract.Event, OrdersHistoryContract.State, OrdersHistoryContract.Effect>(
         globalState
@@ -23,7 +27,8 @@ class OrdersHistoryViewModel @Inject constructor(
         when (event) {
             is OrdersHistoryContract.Event.OnBackIconClicked ->
                 setEffect { OrdersHistoryContract.Effect.Navigation.GoToBack }
-            else -> { }
+
+            else -> {}
         }
     }
 
@@ -31,7 +36,6 @@ class OrdersHistoryViewModel @Inject constructor(
         homeUseCase.getOrdersHistory()
             .collect { ordersResult ->
                 when (ordersResult) {
-                    is Result.Error -> globalState.error(ordersResult.message.orEmpty())
                     is Result.Loading -> globalState.loading(true)
                     is Result.Success -> {
                         setState {
@@ -39,10 +43,16 @@ class OrdersHistoryViewModel @Inject constructor(
                                 orderList = ordersResult.data.orEmpty(),
                                 selectedTimeCategoryIndex = 0,
                                 orderListPerTime = ordersResult.data.orEmpty(),
-                                timeCategoryList = listOf("All", "Last Week", "Last Month")
+                                timeCategoryList = listOf(
+                                    resourceProvider.getString(R.string.all),
+                                    resourceProvider.getString(R.string.last_week),
+                                    resourceProvider.getString(R.string.last_month)
+                                )
                             )
                         }
                     }
+
+                    else -> {}
                 }
             }
     })

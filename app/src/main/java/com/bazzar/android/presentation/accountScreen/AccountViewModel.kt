@@ -45,7 +45,9 @@ class AccountViewModel @Inject constructor(
             is Event.OnLogOutClicked -> showLogoutDialog()
             is Event.OnDeleteMyAccountClicked -> showDeleteAccountDialog()
             is Event.OnLanguageClicked -> changeLanguage()
-            else -> {}
+            Event.OnJoinUsClicked -> {}
+            Event.OnRewardCenterClicked -> {}
+            Event.OnWishListClicked -> setEffect { Effect.Navigation.GoToWishList }
         }
     }
 

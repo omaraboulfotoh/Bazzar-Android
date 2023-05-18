@@ -40,7 +40,7 @@
     <string name="sold_by">مباع بواسطة:</string>
     <string name="product_description">وصف المنتج</string>
     <string name="terms_and_condition">شروط وأحكام BZAAARZ وسياسة الخصوصية</string>
-    <string name="bazzar">Bazzar</string>
+    <string name="bazzar">Bzarz</string>
     <string name="login">تسجيل الدخول</string>
     <string name="Create_new_account">إنشاء حساب جديد</string>
     <string name="Continue_as_a_guest">تابع كضيف</string>
@@ -179,4 +179,8 @@
     <string name="location">الموقع</string>
     <string name="confirm_Location">تأكيد الموقع</string>
     <string name="search_location">البحث عن موقع</string>
+    <string name="last_week">Last Week</string>
+    <string name="last_month">Last Month</string>
+    <string name="wish_list">WishList</string>
+    <string name="products">Products\n</string>
 </resources>

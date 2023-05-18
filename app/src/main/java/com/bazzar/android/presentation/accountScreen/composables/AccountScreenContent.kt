@@ -92,6 +92,14 @@ fun AccountScreenContent(
                     onClick = { onSendEvent(AccountContract.Event.OnAddressesClicked) }
                 )
             }
+            item {
+                BarItem(
+                    modifier = Modifier.padding(top = 24.dp),
+                    title = stringResource(id = R.string.wish_list),
+                    iconPainter = painterResource(id = R.drawable.ic_fav),
+                    onClick = { onSendEvent(AccountContract.Event.OnWishListClicked) }
+                )
+            }
         }
         item {
             BarItem(

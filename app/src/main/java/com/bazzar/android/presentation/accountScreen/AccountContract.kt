@@ -34,6 +34,7 @@ class AccountContract {
         sealed class Navigation : Effect() {
             data class GoToEditProfile(val userData: UserData) : Navigation()
             object GoToOrdersHistory : Navigation()
+            object GoToWishList : Navigation()
             object GoToRegistration : Navigation()
             object GoToAddressBook : Navigation()
             object GoToHome : Navigation()
