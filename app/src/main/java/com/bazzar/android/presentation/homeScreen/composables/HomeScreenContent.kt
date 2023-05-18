@@ -69,6 +69,9 @@ fun HomeScreenContent(state: State, onSendEvent: (Event) -> Unit) {
                         onProductClicked = { itemId ->
                             onSendEvent(Event.OnProductClicked(itemId, index))
                         },
+                        onProductFavClicked = { itemId ->
+                            onSendEvent(Event.OnProductFavClicked(itemId, index))
+                        },
                         onShowAllClicked = {
                             onSendEvent(Event.OnShowAllProducts(index))
                         })

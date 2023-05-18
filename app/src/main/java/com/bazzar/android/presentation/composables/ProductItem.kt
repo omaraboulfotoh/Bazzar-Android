@@ -1,11 +1,13 @@
 package com.bazzar.android.presentation.composables
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,6 +25,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -34,17 +37,19 @@ import com.android.model.home.Product
 import com.bazzar.android.R
 import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
+import com.bazzar.android.presentation.bazarDetail.BazarDetailContract
 import com.bazzar.android.presentation.productsList.composables.DiscountView
 import com.bazzar.android.presentation.productsList.composables.ExclusiveView
 import com.bazzar.android.presentation.productsList.composables.NewBadgeView
+import com.bazzar.android.presentation.productsList.composables.SoldOutView
 import com.bazzar.android.presentation.theme.BazzarTheme
-import com.bazzar.android.presentation.theme.Shapes
 
 @Composable
 fun ProductItem(
     product: Product,
     modifier: Modifier = Modifier,
     onItemClicked: (Int) -> Unit,
+    onFavClicked: (Int) -> Unit
 ) {
     Card(
         modifier = modifier
@@ -75,6 +80,7 @@ fun ProductItem(
                     background = BazzarTheme.colors.white,
                     modifier = Modifier
                         .fillMaxSize()
+                        .padding(top = BazzarTheme.spacing.xl)
                         .align(Alignment.Center)
                         .clip(RoundedCornerShape(topStart = 0.dp, topEnd = 0.dp))
                 )
@@ -95,14 +101,37 @@ fun ProductItem(
                         DiscountView(modifier = Modifier.size(width = 70.dp, height = 24.dp), it)
                     }
                     // check for exclusive
-                    if (product.isExclusive.orFalse()) ExclusiveView(
-                        modifier = Modifier.size(
-                            width = 70.dp,
-                            height = 24.dp
+                    if (product.isExclusive.orFalse())
+                        ExclusiveView(
+                            modifier = Modifier.size(
+                                width = 70.dp,
+                                height = 24.dp
+                            )
                         )
+                }
+                if (product.isSoldOut.orFalse()) {
+                    SoldOutView(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .align(Alignment.Center)
+                            .height(32.dp)
                     )
                 }
-                // todo check if sold-out
+                Box(modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(BazzarTheme.spacing.xxs)
+                    .defaultMinSize(minWidth = 40.dp, minHeight = 40.dp)
+                    .clickable { onFavClicked(product.id.orZero()) }) {
+                    Image(
+                        modifier = Modifier.align(Alignment.Center),
+                        painter = painterResource(
+                            id = if (product.isWishList.orFalse())
+                                R.drawable.ic_fav_active else R.drawable.ic_fav_product
+                        ),
+                        contentDescription = null,
+                    )
+                }
+
             }
 
             Column(

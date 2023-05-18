@@ -34,6 +34,7 @@ class ProductDetailContract {
         object OnSeeMoreBrandClicked : Event()
         object OnSeeMoreClicked : Event()
         data class OnRelatedItemClicked(val itemIndex: Int) : Event()
+        data class OnRelatedItemFavClicked(val itemIndex: Int) : Event()
         object OnBuyNowClicked : Event()
         object OnTackToUsClicked : Event()
     }
@@ -42,6 +43,7 @@ class ProductDetailContract {
         data class ShareProduct(val product: Product) : Effect()
         sealed class Navigation : Effect() {
             object GoToCart : Navigation()
+            object GoToLogin : Navigation()
             object GoToBack : Navigation()
             object GoToTalkToUs : Navigation()
             data class GoToImageViewer(val imagePathList: List<String>, val product: Product?) : Navigation()

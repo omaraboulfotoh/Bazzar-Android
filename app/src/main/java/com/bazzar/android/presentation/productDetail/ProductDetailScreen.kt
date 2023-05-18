@@ -10,6 +10,7 @@ import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.SocialMedia
 import com.bazzar.android.presentation.destinations.CartScreenDestination
 import com.bazzar.android.presentation.destinations.ImageViewerScreenDestination
+import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.bazzar.android.presentation.destinations.ProductScreenDestination
 import com.bazzar.android.presentation.productDetail.composables.ProductDetailScreenContent
@@ -52,12 +53,16 @@ fun ProductDetailScreen(
 
             is ProductDetailContract.Effect.Navigation.GoToOpenProduct ->
                 navigator.navigate(ProductDetailScreenDestination(product = effect.product))
+
             is ProductDetailContract.Effect.Navigation.GoToTalkToUs -> {
                 buildUrlIntent(SocialMedia.WHATS_APP).apply {
                     context.startActivity(this)
                 }
 
             }
+
+            ProductDetailContract.Effect.Navigation.GoToLogin ->
+                navigator.navigate(LoginScreenDestination)
         }
     }
     // init logic

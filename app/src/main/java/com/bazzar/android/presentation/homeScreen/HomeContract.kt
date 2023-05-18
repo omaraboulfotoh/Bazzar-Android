@@ -31,6 +31,7 @@ class HomeContract {
         data class OnBazaarClicked(val index: Int) : Event()
         data class OnCategoryClicked(val index: Int) : Event()
         data class OnProductClicked(val index: Int, val sectionIndex: Int) : Event()
+        data class OnProductFavClicked(val index: Int, val sectionIndex: Int) : Event()
         object OnAdClicked : Event()
         object OnTryAgainClicked : Event()
         object OnAdDismissed : Event()
@@ -50,6 +51,7 @@ class HomeContract {
             data class GoToCategoriesScreen(val showCategory: Boolean) : Navigation()
             data class GoToBazaarDetails(val bazaar: BazaarModel) : Navigation()
             object GoToBazaarsList : Navigation()
+            object GoToLogin : Navigation()
             object GoToSearch : Navigation()
         }
     }

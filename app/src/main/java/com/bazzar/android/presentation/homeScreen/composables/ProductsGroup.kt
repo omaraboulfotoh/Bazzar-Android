@@ -16,6 +16,7 @@ fun ProductsGroup(
     headerTitle: String,
     productsList: List<Product>,
     onProductClicked: (Int) -> Unit,
+    onProductFavClicked: (Int) -> Unit,
     onShowAllClicked: () -> Unit = {},
     showViewAll: Boolean = true,
 
@@ -39,8 +40,11 @@ fun ProductsGroup(
     ) {
 
         itemsIndexed(productsList) { index, product ->
-            ProductItem(product,
-                onItemClicked = { onProductClicked(index) })
+            ProductItem(
+                product,
+                onItemClicked = { onProductClicked(index) },
+                onFavClicked = { onProductFavClicked(index) }
+            )
         }
     }
 }

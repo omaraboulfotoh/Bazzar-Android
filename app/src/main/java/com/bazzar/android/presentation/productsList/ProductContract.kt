@@ -26,6 +26,7 @@ class ProductContract {
     sealed class Event : ViewEvent {
         data class OnSubCategoryClicked(val categoryIndex: Int) : Event()
         data class OnProductClicked(val itemIndex: Int) : Event()
+        data class OnProductFavClicked(val itemIndex: Int) : Event()
         object OnBackIconClicked : Event()
         object OnSearchClicked : Event()
         object ReachedListEnd : Event()
@@ -35,6 +36,7 @@ class ProductContract {
         sealed class Navigation : Effect() {
             data class GoToProductDetailPage(val product: Product) : Navigation()
             object GoToSearch : Navigation()
+            object GoToLogin : Navigation()
             object GoToBack : Navigation()
         }
 

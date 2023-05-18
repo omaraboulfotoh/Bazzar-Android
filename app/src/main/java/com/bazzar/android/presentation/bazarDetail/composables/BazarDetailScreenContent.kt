@@ -135,9 +135,14 @@ fun BazarDetailScreenContent(
                 horizontalArrangement = Arrangement.Start,
                 itemContent = { index ->
                     val item = state.productList.orEmpty()[index]
-                    ProductItem(item, modifier = Modifier.padding(BazzarTheme.spacing.xs)) {
-                        onSendEvent(BazarDetailContract.Event.OnProductClicked(index))
-                    }
+                    ProductItem(
+                        item,
+                        modifier = Modifier.padding(BazzarTheme.spacing.xs),
+                        onItemClicked = {
+                            onSendEvent(BazarDetailContract.Event.OnProductClicked(index))
+                        }, onFavClicked = {
+                            onSendEvent(BazarDetailContract.Event.OnProductClicked(index))
+                        })
                     val isLastItem = index == state.productList.orEmpty().lastIndex
                     if (isLastItem && state.isLoadingMore.not() && state.hasMore) {
                         onSendEvent(BazarDetailContract.Event.ReachedListEnd)

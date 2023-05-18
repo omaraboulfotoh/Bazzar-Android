@@ -13,7 +13,7 @@ import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
-import com.bazzar.android.presentation.homeScreen.HomeContract
+import com.bazzar.android.presentation.productDetail.ProductDetailContract
 import com.bazzar.android.utils.IResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -22,8 +22,8 @@ import javax.inject.Inject
 class BazarDetailViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
-    private val prefersManager: SharedPrefersManager,
     private val resourceProvider: IResourceProvider,
+    private val sharedPrefersManager: SharedPrefersManager,
 ) :
     BaseViewModel<BazarDetailContract.Event, BazarDetailContract.State, BazarDetailContract.Effect>(
         globalState
@@ -42,8 +42,61 @@ class BazarDetailViewModel @Inject constructor(
             BazarDetailContract.Event.ReachedListEnd -> loadMoreProducts()
             is BazarDetailContract.Event.OnSliderClicked -> handleSliderAction(event.sliderItemIndex)
             is BazarDetailContract.Event.OnSearchTermChanged -> {}
+            is BazarDetailContract.Event.OnProductFavClicked -> handleProductFav(event.itemIndex)
         }
     }
+
+    private fun handleProductFav(itemIndex: Int) = executeCatching({
+        if (sharedPrefersManager.isUserLongedIn().not()) {
+            setEffect { BazarDetailContract.Effect.Navigation.GoToLogin }
+            return@executeCatching
+        }
+        val list = currentState.productList?.toMutableList() ?: return@executeCatching
+        val item = list[itemIndex]
+        val isFav = item.isWishList.orFalse()
+        if (isFav) {
+            homeUseCase.addProductWishList(item.id.orZero())
+                .collect { response ->
+                    when (response) {
+                        is Result.Success -> {
+                            val updatedList = list.mapIndexed { index, product ->
+                                if (index == itemIndex) {
+                                    product.copy(isWishList = response.data.orFalse())
+                                } else {
+                                    product
+                                }
+                            }
+                            setState {
+                                copy(productList = updatedList)
+                            }
+                        }
+
+                        else -> {}
+                    }
+                }
+        } else {
+            homeUseCase.deleteBazaarWishList(item.id.orZero())
+                .collect { response ->
+                    when (response) {
+                        is Result.Success -> {
+                            val updatedList = list.mapIndexed { index, product ->
+                                if (index == itemIndex) {
+                                    product.copy(isWishList = response.data.orFalse().not())
+                                } else {
+                                    product
+                                }
+                            }
+                            setState {
+                                copy(productList = updatedList)
+                            }
+                        }
+
+                        else -> {}
+                    }
+                }
+        }
+
+    }, withLoading = false)
 
     private fun handleSliderAction(sliderItemIndex: Int) {
         val sliderList = currentState.slider

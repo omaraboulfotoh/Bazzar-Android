@@ -8,6 +8,7 @@ import com.bazzar.android.presentation.bazarListScreen.BazarListScreen
 import com.bazzar.android.presentation.destinations.BazarDetailScreenDestination
 import com.bazzar.android.presentation.destinations.BazarListScreenDestination
 import com.bazzar.android.presentation.destinations.CategoryScreenDestination
+import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.bazzar.android.presentation.destinations.ProductScreenDestination
 import com.bazzar.android.presentation.destinations.SearchScreenDestination
@@ -49,6 +50,9 @@ fun HomeScreen(
             is HomeContract.Effect.Navigation.GoToCategoriesScreen -> navigator.navigate(
                 CategoryScreenDestination(showCategories = effect.showCategory)
             )
+
+            HomeContract.Effect.Navigation.GoToLogin ->
+                navigator.navigate(LoginScreenDestination)
         }
     }
     // init logic

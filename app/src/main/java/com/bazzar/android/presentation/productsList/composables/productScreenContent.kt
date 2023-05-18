@@ -120,9 +120,11 @@ fun ProductScreenContent(
                 horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs),
             ) {
                 itemsIndexed(state.productList.orEmpty()) { index, item ->
-                    ProductItem(item) {
+                    ProductItem(item, onItemClicked = {
                         onSendEvent(ProductContract.Event.OnProductClicked(index))
-                    }
+                    }, onFavClicked = {
+                        onSendEvent(ProductContract.Event.OnProductFavClicked(index))
+                    })
 
                     val isLastItem = index == state.productList.orEmpty().lastIndex
                     if (isLastItem && state.isLoadingMore.not() && state.hasMore) {

@@ -1,18 +1,23 @@
 package com.bazzar.android.presentation.homeScreen
 
+import com.android.local.SharedPrefersManager
 import com.android.model.home.Brand
 import com.android.model.home.Category
 import com.android.model.home.Product
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
+import com.bazzar.android.common.orFalse
+import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.presentation.productDetail.ProductDetailContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     globalState: IGlobalState,
+    private val sharedPrefersManager: SharedPrefersManager,
     private val homeUseCase: HomeUseCase,
 ) :
     BaseViewModel<HomeContract.Event, HomeContract.State, HomeContract.Effect>(
@@ -47,6 +52,10 @@ class HomeViewModel @Inject constructor(
             is HomeContract.Event.OnBazaarClicked -> navigateToBazaar(event.index)
             HomeContract.Event.OnAdDismissed -> handleAdDismiss()
             HomeContract.Event.OnTryAgainClicked -> handleTryAgain()
+            is HomeContract.Event.OnProductFavClicked -> onProductFavClicked(
+                event.index,
+                event.sectionIndex
+            )
         }
     }
 
@@ -101,6 +110,66 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    private fun onProductFavClicked(index: Int, sectionIndex: Int) = executeCatching({
+        if (sharedPrefersManager.isUserLongedIn().not()) {
+            setEffect { HomeContract.Effect.Navigation.GoToLogin }
+            return@executeCatching
+        }
+        val list = currentState.categoryItems?.get(sectionIndex)?.items ?: return@executeCatching
+        val item = list[index]
+        val isFav = item.isWishList.orFalse()
+        if (isFav) {
+            homeUseCase.addProductWishList(item.id.orZero())
+                .collect { response ->
+                    when (response) {
+                        is Result.Success -> {
+                            val updatedList = list.mapIndexed { mapIndex, product ->
+                                if (mapIndex == index) {
+                                    product.copy(isWishList = response.data.orFalse())
+                                } else {
+                                    product
+                                }
+                            }
+                            val updatedCategories =
+                                currentState.categoryItems.orEmpty().toMutableList()
+                            updatedCategories[sectionIndex] =
+                                updatedCategories[sectionIndex].copy(items = updatedList)
+                            setState {
+                                copy(categoryItems = updatedCategories)
+                            }
+                        }
+
+                        else -> {}
+                    }
+                }
+        } else {
+            homeUseCase.deleteBazaarWishList(item.id.orZero())
+                .collect { response ->
+                    when (response) {
+                        is Result.Success -> {
+                            val updatedList = list.mapIndexed { mapIndex, product ->
+                                if (mapIndex == index) {
+                                    product.copy(isWishList = response.data.orFalse().not())
+                                } else {
+                                    product
+                                }
+                            }
+                            val updatedCategories =
+                                currentState.categoryItems.orEmpty().toMutableList()
+                            updatedCategories[sectionIndex] =
+                                updatedCategories[sectionIndex].copy(items = updatedList)
+                            setState {
+                                copy(categoryItems = updatedCategories)
+                            }
+                        }
+
+                        else -> {}
+                    }
+                }
+        }
+
+    }, withLoading = false)
 
     private fun onProductClicked(index: Int, sectionIndex: Int) {
         val product = currentState.categoryItems?.get(sectionIndex)?.items?.get(index) ?: return

@@ -8,6 +8,7 @@ import com.android.model.home.Product
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.R
+import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.ConfirmationDialogParams
 import com.bazzar.android.presentation.app.IGlobalState
@@ -52,8 +53,62 @@ class ProductDetailViewModel @Inject constructor(
             is ProductDetailContract.Event.OnColorItemSelected -> updateColor(event.colorIndex)
             is ProductDetailContract.Event.OnSizeItemSelected -> updateSizeAndItemId(event.sizeIndex)
             is ProductDetailContract.Event.OnSeeMoreClicked -> setState { copy(isTextExpanded = isTextExpanded.not()) }
+            is ProductDetailContract.Event.OnRelatedItemFavClicked -> handleItemFav(event.itemIndex)
         }
     }
+
+    private fun handleItemFav(itemIndex: Int) = executeCatching({
+        if (sharedPrefersManager.isUserLongedIn().not()) {
+            setEffect { ProductDetailContract.Effect.Navigation.GoToLogin }
+            return@executeCatching
+        }
+        val list =
+            currentState.productDetail?.relatedItems?.toMutableList() ?: return@executeCatching
+        val item = list[itemIndex]
+        val isFav = item.isWishList.orFalse()
+        if (isFav) {
+            homeUseCase.addProductWishList(item.id.orZero())
+                .collect { response ->
+                    when (response) {
+                        is Result.Success -> {
+                            val updatedList = list.mapIndexed { index, product ->
+                                if (index == itemIndex) {
+                                    product.copy(isWishList = response.data.orFalse())
+                                } else {
+                                    product
+                                }
+                            }
+                            setState {
+                                copy(productDetail = currentState.productDetail?.copy(relatedItems = updatedList))
+                            }
+                        }
+
+                        else -> {}
+                    }
+                }
+        } else {
+            homeUseCase.deleteBazaarWishList(item.id.orZero())
+                .collect { response ->
+                    when (response) {
+                        is Result.Success -> {
+                            val updatedList = list.mapIndexed { index, product ->
+                                if (index == itemIndex) {
+                                    product.copy(isWishList = response.data.orFalse().not())
+                                } else {
+                                    product
+                                }
+                            }
+                            setState {
+                                copy(productDetail = currentState.productDetail?.copy(relatedItems = updatedList))
+                            }
+                        }
+
+                        else -> {}
+                    }
+                }
+        }
+
+    }, withLoading = false)
 
     private fun openSelectedProduct(itemIndex: Int) {
         val product = currentState.productDetail?.relatedItems.orEmpty()[itemIndex]

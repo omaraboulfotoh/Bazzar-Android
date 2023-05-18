@@ -3,6 +3,7 @@ package com.bazzar.android.presentation.productsList.composables
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -93,7 +94,7 @@ fun SoldOutView(modifier: Modifier = Modifier) {
         )
         MessageBody(
             modifier = Modifier
-                .fillMaxSize()
+                .wrapContentSize()
                 .align(Alignment.Center),
             text = stringResource(id = R.string.soldout),
             color = BazzarTheme.colors.white,

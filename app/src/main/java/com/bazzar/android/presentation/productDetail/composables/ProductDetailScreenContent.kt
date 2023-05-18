@@ -101,6 +101,10 @@ fun ProductDetailScreenContent(
                         onProductClicked = { itemIndex ->
                             onSendEvent(Event.OnRelatedItemClicked(itemIndex))
 
+                        },
+                        onProductFavClicked = { itemIndex ->
+                            onSendEvent(Event.OnRelatedItemFavClicked(itemIndex))
+
                         }, showViewAll = false
                     )
                 }

@@ -32,6 +32,8 @@ class BazarDetailContract {
         data class OnSearchTermChanged(val searchTerm: String) : Event()
         data class OnSliderClicked(val sliderItemIndex: Int) : Event()
         data class OnProductClicked(val itemIndex: Int) : Event()
+        data class OnProductFavClicked(val itemIndex: Int) : Event()
+
         object OnBackIconClicked : Event()
         object OnShareCLicked : Event()
         object OnFavouriteClicked : Event()
@@ -40,11 +42,11 @@ class BazarDetailContract {
 
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
-
             data class GoToProductDetails(val product: Product) : Navigation()
             data class GoToBrandProductsList(val brand: Brand) : Navigation()
             data class GoToCategoryProductsList(val category: Category) : Navigation()
             object GoToBack : Navigation()
+            object GoToLogin : Navigation()
         }
 
         data class OnShareBazaar(val shareText: String, val shareLink: String) : Effect()
