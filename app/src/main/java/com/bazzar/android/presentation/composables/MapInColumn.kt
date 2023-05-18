@@ -42,7 +42,12 @@ import com.google.maps.android.compose.rememberCameraPositionState
 fun MapInColumn(
     modifier: Modifier = Modifier,
     googleMapModifier: Modifier = Modifier,
-    isUserLocationEnabled: Boolean,
+    startLatLng: LatLng,
+    isUserLocationEnabled: Boolean = true,
+    scrollGesturesEnabled: Boolean = true,
+    zoomGesturesEnabled: Boolean = true,
+    rotationGesturesEnabled: Boolean = true,
+    tiltGesturesEnabled: Boolean = true,
     compassEnabled: Boolean = false,
     mapToolbarEnabled: Boolean = false,
     zoomControlsEnabled: Boolean = true,
@@ -51,11 +56,10 @@ fun MapInColumn(
     searchTerm: String? = null,
     onSearchTermChanged: (String) -> Unit = { },
     startingZoom: Float = 14f,
-    startLatLng: LatLng,
     latLngBoundsForCameraTarget: LatLngBounds = MapLatLngConstants.KUWAIT_LAT_LNG_BOUNDS,
-    onColumnScrollingEnabledChanged: (Boolean) -> Unit,
-    onLatLngChanged: (latLang: LatLng) -> Unit,
-    onMapLoaded: () -> Unit,
+    onColumnScrollingEnabledChanged: (Boolean) -> Unit = { },
+    onLatLngChanged: (latLang: LatLng) -> Unit = { },
+    onMapLoaded: () -> Unit = { },
 ) {
 
     val uiSettings by remember(key1 = isUserLocationEnabled) {
@@ -65,7 +69,11 @@ fun MapInColumn(
                 mapToolbarEnabled = mapToolbarEnabled,
                 myLocationButtonEnabled = isUserLocationEnabled,
                 zoomControlsEnabled = zoomControlsEnabled,
-                indoorLevelPickerEnabled = indoorLevelPickerEnabled
+                indoorLevelPickerEnabled = indoorLevelPickerEnabled,
+                scrollGesturesEnabled = scrollGesturesEnabled,
+                zoomGesturesEnabled = zoomGesturesEnabled,
+                rotationGesturesEnabled = rotationGesturesEnabled,
+                tiltGesturesEnabled = tiltGesturesEnabled,
             )
         )
     }

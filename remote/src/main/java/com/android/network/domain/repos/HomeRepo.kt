@@ -6,11 +6,9 @@ import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
 import com.android.model.request.VerifyOtpRequest
-import com.android.model.responses.base.BaseWrapper
 import com.android.model.responses.base.BazaarDetailsResponse
 import com.android.network.states.Result
 import kotlinx.coroutines.flow.Flow
-import retrofit2.Response
 
 interface HomeRepo {
     suspend fun getHome(): Flow<Result<HomeResponse>>
@@ -19,6 +17,7 @@ interface HomeRepo {
     suspend fun getAllProductList(searchProduct: SearchProductRequest): Flow<Result<List<Product>>>
     suspend fun getAllProductDetails(productId: Int): Flow<Result<Product>>
     suspend fun register(request: UserRegisterRequest): Flow<Result<UserData>>
+    suspend fun updateFcmToken(fcmToken: String): Flow<Result<*>>
     suspend fun editProfile(request: UserRegisterRequest): Flow<Result<EditProfileResponse>>
     suspend fun deleteAccount(): Flow<Result<Boolean>>
     suspend fun changePassword(currentPassword: String, newPassword: String): Flow<Result<Boolean>>
