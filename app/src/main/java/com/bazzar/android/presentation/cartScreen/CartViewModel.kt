@@ -27,17 +27,22 @@ class CartViewModel @Inject constructor(
     override fun handleEvents(event: CartContract.Event) {
         when (event) {
             CartContract.Event.OnCheckout -> handleCheckout()
-            is CartContract.Event.OnDeleteItem ->
-                handleItemAction(event.index, ItemOperation.DELETE)
+            is CartContract.Event.OnDeleteItem -> handleItemAction(
+                event.index,
+                ItemOperation.DELETE
+            )
 
-            is CartContract.Event.OnMinusItem ->
-                handleItemAction(event.index, ItemOperation.MINUS_ONE)
+            is CartContract.Event.OnMinusItem -> handleItemAction(
+                event.index,
+                ItemOperation.MINUS_ONE
+            )
 
-            is CartContract.Event.OnPlusItem ->
-                handleItemAction(event.index, ItemOperation.ADD_ONE)
+            is CartContract.Event.OnPlusItem -> handleItemAction(event.index, ItemOperation.ADD_ONE)
 
-            is CartContract.Event.OnProductClicked ->
-                handleItemAction(event.index, ItemOperation.CLICK)
+            is CartContract.Event.OnProductClicked -> handleItemAction(
+                event.index,
+                ItemOperation.CLICK
+            )
         }
     }
 
@@ -77,58 +82,63 @@ class CartViewModel @Inject constructor(
 
     fun init() {
         if (isInitialized.not()) {
-            val productsList = sharedPrefersManager.getProductList().orEmpty()
-            handleCartInfo(productsList)
+            loadCart()
             isInitialized = true
         }
     }
 
+    private fun loadCart() = executeCatching({
+        homeUseCase.loadCart().collect { response ->
+            when (response) {
+                is Result.Error -> {
+                    setState { copy(showEmptyCart = true) }
+                }
+
+                is Result.Success -> {
+                    handleCartInfo(response.data.orEmpty())
+                }
+
+                else -> {}
+            }
+
+        }
+    })
+
     private fun handleCartInfo(productsList: List<Product>) {
-        val totalCount =
-            productsList.sumOf { it.selectedItemDetails?.quantity.orZero() }
+        val totalCount = productsList.sumOf { it.qty.orZero() }
         val totalAmount =
-            productsList.sumOf { it.selectedItemDetails?.quantity.orZero() * it.selectedItemDetails?.price.orZero() }
+            productsList.sumOf { it.qty.orZero() * it.price.orZero() }
         setState {
             copy(
                 productCartList = productsList,
                 counterItem = totalCount,
-                totalCartAMount = totalAmount
+                totalCartAMount = totalAmount,
+                showEmptyCart = productsList.isEmpty()
             )
         }
     }
 }
 
-private fun MutableList<Product>.plusOne(itemIndex: Int) =
-    mapIndexed { index, product ->
-        if (itemIndex == index) {
-            product.copy(
-                selectedItemDetails =
-                product.selectedItemDetails?.copy(
-                    quantity =
-                    product.selectedItemDetails?.quantity.orZero() + 1
-                )
+private fun MutableList<Product>.plusOne(itemIndex: Int) = mapIndexed { index, product ->
+    if (itemIndex == index) {
+        product.copy(
+            selectedItemDetails = product.selectedItemDetails?.copy(
+                quantity = product.selectedItemDetails?.quantity.orZero() + 1
             )
-        } else
-            product
-    }
+        )
+    } else product
+}
 
-private fun MutableList<Product>.MinusOne(itemIndex: Int) =
-    mapIndexed { index, product ->
-        if (itemIndex == index) {
-            product.copy(
-                selectedItemDetails =
-                product.selectedItemDetails?.copy(
-                    quantity =
-                    product.selectedItemDetails?.quantity.orZero() - 1
-                )
+private fun MutableList<Product>.MinusOne(itemIndex: Int) = mapIndexed { index, product ->
+    if (itemIndex == index) {
+        product.copy(
+            selectedItemDetails = product.selectedItemDetails?.copy(
+                quantity = product.selectedItemDetails?.quantity.orZero() - 1
             )
-        } else
-            product
-    }
+        )
+    } else product
+}
 
 enum class ItemOperation {
-    ADD_ONE,
-    MINUS_ONE,
-    DELETE,
-    CLICK
+    ADD_ONE, MINUS_ONE, DELETE, CLICK
 }

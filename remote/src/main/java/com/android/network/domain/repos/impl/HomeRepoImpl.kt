@@ -15,6 +15,7 @@ import com.android.model.home.Product
 import com.android.model.home.UserAddress
 import com.android.model.home.UserData
 import com.android.model.home.OrderHistory
+import com.android.model.request.AddToCartRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
@@ -472,4 +473,76 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                 emit(Result.Error(false, throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun addToCart(addToCartRequest: AddToCartRequest): Flow<Result<Boolean>> =
+        flow {
+            try {
+                homeRemoteDataSource.addToCart(addToCartRequest).let {
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            it.body()?.data ?: false
+                        )
+                    )
+                    else emit(Result.Error(false, "error will be handled"))
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "getAllBazars: ", throwable)
+                emit(Result.Error(false, throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun deleteFromCart(itemDetailId: Int): Flow<Result<Boolean>> =
+        flow {
+            try {
+                homeRemoteDataSource.deleteFromCart(itemDetailId).let {
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            it.body()?.data ?: false
+                        )
+                    )
+                    else emit(Result.Error(false, "error will be handled"))
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "getAllBazars: ", throwable)
+                emit(Result.Error(false, throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun loadCart(): Flow<Result<List<Product>>> =
+        flow {
+            try {
+                homeRemoteDataSource.loadCart().let {
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            it.body()?.data ?: listOf()
+                        )
+                    )
+                    else emit(Result.Error(listOf(), "error will be handled"))
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "getAllBazars: ", throwable)
+                emit(Result.Error(listOf(), throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun updateCartQuantity(
+        itemDetailId: Int,
+        qty: Int
+    ): Flow<Result<List<Product>>> =
+        flow {
+            try {
+                homeRemoteDataSource.updateCartQuantity(itemDetailId, qty).let {
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            it.body()?.data ?: listOf()
+                        )
+                    )
+                    else emit(Result.Error(listOf(), "error will be handled"))
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "getAllBazars: ", throwable)
+                emit(Result.Error(listOf(), throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
 }

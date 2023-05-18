@@ -9,6 +9,7 @@ import kotlinx.android.parcel.Parcelize
 @JsonClass(generateAdapter = true)
 data class Product(
     @Json(name = "id") val id: Int? = null,
+    @Json(name = "itemDetailId") val itemDetailId: Int? = null,
     @Json(name = "title") val title: String? = null,
     @Json(name = "description") val description: String? = null,
     @Json(name = "displayOrder") val displayOrder: Int? = null,
@@ -31,6 +32,13 @@ data class Product(
     @Json(name = "brandImagePath") val brandImagePath: String? = null,
     @Json(name = "selectedItemDetails") val selectedItemDetails: ItemDetail? = null,
     @Json(name = "shareURL") val shareURL: String? = null,
+    @Json(name = "colorId") val colorId: Int? = null,
+    @Json(name = "colorTitle") val colorTitle: String? = null,
+    @Json(name = "sizeId") val sizeId: Int? = null,
+    @Json(name = "sizeTitle") val sizeTitle: String? = null,
+    @Json(name = "isAvailable") val isAvailable: Boolean? = true,
+    @Json(name = "itemBalance") val itemBalance: Int? = null,
+    @Json(name = "qty") val qty: Int? = null,
 ) : Parcelable
 
 

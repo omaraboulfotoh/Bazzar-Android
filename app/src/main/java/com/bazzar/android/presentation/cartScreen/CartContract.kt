@@ -9,6 +9,7 @@ class CartContract {
 
     data class State(
         val productCartList: List<Product>? = emptyList(),
+        val showEmptyCart: Boolean = false,
         val counterItem: Int? = null,
         val totalCartAMount: Double = 0.0,
     ) : ViewState

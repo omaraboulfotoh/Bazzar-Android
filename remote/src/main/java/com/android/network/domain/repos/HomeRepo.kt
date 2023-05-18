@@ -1,6 +1,7 @@
 package com.android.network.domain.repos
 
 import com.android.model.home.*
+import com.android.model.request.AddToCartRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
@@ -42,6 +43,16 @@ interface HomeRepo {
     suspend fun getBazaarsWishList(): Flow<Result<List<BazaarModel>>>
     suspend fun addBazaarWishList(marketerId: Int): Flow<Result<Boolean>>
     suspend fun deleteBazaarWishList(marketerId: Int): Flow<Result<Boolean>>
+
+    suspend fun addToCart(addToCartRequest: AddToCartRequest): Flow<Result<Boolean>>
+
+    suspend fun deleteFromCart(itemDetailId: Int): Flow<Result<Boolean>>
+
+    suspend fun loadCart(): Flow<Result<List<Product>>>
+    suspend fun updateCartQuantity(
+        itemDetailId: Int,
+        qty: Int
+    ): Flow<Result<List<Product>>>
 
 
 }

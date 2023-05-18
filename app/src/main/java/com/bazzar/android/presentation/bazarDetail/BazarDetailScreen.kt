@@ -31,7 +31,8 @@ fun BazarDetailScreen(
             is BazarDetailContract.Effect.Navigation.GoToProductDetails -> {
                 navigator.navigate(
                     ProductDetailScreenDestination(
-                        product = effect.product
+                        product = effect.product,
+                        bazaar = bazaar
                     )
                 )
             }

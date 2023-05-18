@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.productDetail
 
+import com.android.model.home.BazaarModel
 import com.android.model.home.Brand
 import com.android.model.home.ItemDetail
 import com.android.model.home.ItemImages
@@ -18,6 +19,7 @@ class ProductDetailContract {
         val rating: Float? = 0f,
         val isTextExpanded: Boolean = false,
         val showSuccessAddedToCart: Boolean = false,
+        val bazaar: BazaarModel? = null
     ) : ViewState
 
     sealed class Event : ViewEvent {
@@ -46,7 +48,9 @@ class ProductDetailContract {
             object GoToLogin : Navigation()
             object GoToBack : Navigation()
             object GoToTalkToUs : Navigation()
-            data class GoToImageViewer(val imagePathList: List<String>, val product: Product?) : Navigation()
+            data class GoToImageViewer(val imagePathList: List<String>, val product: Product?) :
+                Navigation()
+
             data class GoToProductBrandList(val brand: Brand) : Navigation()
             data class GoToOpenProduct(val product: Product) : Navigation()
         }

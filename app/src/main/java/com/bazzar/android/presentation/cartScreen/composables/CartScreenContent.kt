@@ -60,15 +60,18 @@ fun CartScreenContent(
             ) {
                 state.productCartList?.let {
                     itemsIndexed(it) { index, product ->
-                        ProductCartItem(product, onItemClicked = {
-                            onSendEvent(CartContract.Event.OnProductClicked(index))
-                        }, onDeleteClicked = {
-                            onSendEvent(CartContract.Event.OnDeleteItem(index))
-                        }, onMinusClicked = {
-                            onSendEvent(CartContract.Event.OnMinusItem(index))
-                        }, onPlusClicked = {
-                            onSendEvent(CartContract.Event.OnPlusItem(index))
-                        })
+                        ProductCartItem(
+                            modifier = Modifier.padding(vertical = BazzarTheme.spacing.xs),
+                            product = product,
+                            onItemClicked = {
+                                onSendEvent(CartContract.Event.OnProductClicked(index))
+                            }, onDeleteClicked = {
+                                onSendEvent(CartContract.Event.OnDeleteItem(index))
+                            }, onMinusClicked = {
+                                onSendEvent(CartContract.Event.OnMinusItem(index))
+                            }, onPlusClicked = {
+                                onSendEvent(CartContract.Event.OnPlusItem(index))
+                            })
                     }
                 }
             }

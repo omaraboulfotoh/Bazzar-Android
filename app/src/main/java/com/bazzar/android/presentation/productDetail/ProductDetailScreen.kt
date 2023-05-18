@@ -3,6 +3,7 @@ package com.bazzar.android.presentation.productDetail
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.android.model.home.BazaarModel
 import com.android.model.home.Product
 import com.bazzar.android.common.buildUrlIntent
 import com.bazzar.android.common.sideEffect
@@ -26,6 +27,7 @@ fun ProductDetailScreen(
     navigator: DestinationsNavigator,
     product: Product? = null,
     itemId: String? = null,
+    bazaar: BazaarModel? = null,
 ) {
 
     // context
@@ -69,7 +71,7 @@ fun ProductDetailScreen(
         }
     }
     // init logic
-    viewModel.init(product, itemId)
+    viewModel.init(product, itemId, bazaar)
     ProductDetailScreenContent(state = state) { viewModel.setEvent(it) }
 }
 

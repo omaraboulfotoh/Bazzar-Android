@@ -1,19 +1,21 @@
 package com.bazzar.android.presentation.productDetail
 
 import com.android.local.SharedPrefersManager
+import com.android.model.home.BazaarModel
 import com.android.model.home.Brand
 import com.android.model.home.ItemDetail
 import com.android.model.home.ItemImages
 import com.android.model.home.Product
+import com.android.model.request.AddToCartRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
-import com.bazzar.android.R
 import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.utils.IResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @HiltViewModel
@@ -43,8 +45,12 @@ class ProductDetailViewModel @Inject constructor(
             is ProductDetailContract.Event.OnSeeMoreBrandClicked -> navigateToBrandItems()
             is ProductDetailContract.Event.OnRelatedItemClicked -> openSelectedProduct(event.itemIndex)
             is ProductDetailContract.Event.OnBuyNowClicked -> addToCart()
-            is ProductDetailContract.Event.OnContinueShoppingClicked ->
-                setState { copy(showSuccessAddedToCart = false) }
+            is ProductDetailContract.Event.OnContinueShoppingClicked -> setState {
+                copy(
+                    showSuccessAddedToCart = false
+                )
+            }
+
             is ProductDetailContract.Event.OnTackToUsClicked -> setEffect { ProductDetailContract.Effect.Navigation.GoToTalkToUs }
             is ProductDetailContract.Event.OnImageClicked -> handleOnImageClicked(event.index)
             // state
@@ -65,45 +71,43 @@ class ProductDetailViewModel @Inject constructor(
         val item = list[itemIndex]
         val isFav = item.isWishList.orFalse().not()
         if (isFav) {
-            homeUseCase.addProductWishList(item.id.orZero())
-                .collect { response ->
-                    when (response) {
-                        is Result.Success -> {
-                            val updatedList = list.mapIndexed { index, product ->
-                                if (index == itemIndex) {
-                                    product.copy(isWishList = response.data.orFalse())
-                                } else {
-                                    product
-                                }
-                            }
-                            setState {
-                                copy(productDetail = currentState.productDetail?.copy(relatedItems = updatedList))
+            homeUseCase.addProductWishList(item.id.orZero()).collect { response ->
+                when (response) {
+                    is Result.Success -> {
+                        val updatedList = list.mapIndexed { index, product ->
+                            if (index == itemIndex) {
+                                product.copy(isWishList = response.data.orFalse())
+                            } else {
+                                product
                             }
                         }
-
-                        else -> {}
+                        setState {
+                            copy(productDetail = currentState.productDetail?.copy(relatedItems = updatedList))
+                        }
                     }
+
+                    else -> {}
                 }
+            }
         } else {
-            homeUseCase.deleteBazaarWishList(item.id.orZero())
-                .collect { response ->
-                    when (response) {
-                        is Result.Success -> {
-                            val updatedList = list.mapIndexed { index, product ->
-                                if (index == itemIndex) {
-                                    product.copy(isWishList = response.data.orFalse().not())
-                                } else {
-                                    product
-                                }
-                            }
-                            setState {
-                                copy(productDetail = currentState.productDetail?.copy(relatedItems = updatedList))
+            homeUseCase.deleteBazaarWishList(item.id.orZero()).collect { response ->
+                when (response) {
+                    is Result.Success -> {
+                        val updatedList = list.mapIndexed { index, product ->
+                            if (index == itemIndex) {
+                                product.copy(isWishList = response.data.orFalse().not())
+                            } else {
+                                product
                             }
                         }
-
-                        else -> {}
+                        setState {
+                            copy(productDetail = currentState.productDetail?.copy(relatedItems = updatedList))
+                        }
                     }
+
+                    else -> {}
                 }
+            }
         }
 
     }, withLoading = false)
@@ -120,19 +124,29 @@ class ProductDetailViewModel @Inject constructor(
         imagePaths.add(0, clickedImage)
         setEffect {
             ProductDetailContract.Effect.Navigation.GoToImageViewer(
-                imagePathList = imagePaths,
-                product = currentState.productDetail
+                imagePathList = imagePaths, product = currentState.productDetail
             )
         }
     }
 
-    private fun addToCart() {
-        val cartItems = sharedPrefersManager.getProductList().orEmpty().toMutableList()
-        val item = currentState.productDetail ?: return
-        cartItems.add(item)
-        sharedPrefersManager.saveProductList(cartItems)
-        setState { copy(showSuccessAddedToCart = true) }
-    }
+    private fun addToCart() = executeCatching({
+        val itemDetail = currentState.productDetail?.selectedItemDetails ?: return@executeCatching
+        homeUseCase.addToCart(
+            AddToCartRequest(
+                itemDetailId = itemDetail.id.orZero(),
+                marketerId = currentState.bazaar?.id
+            )
+        ).collect { response ->
+            when (response) {
+                is Result.Error -> globalState.error(response.message.orEmpty())
+                is Result.Success -> {
+                    setState { copy(showSuccessAddedToCart = true) }
+                }
+
+                else -> {}
+            }
+        }
+    })
 
     private fun navigateToBrandItems() {
         val brand = Brand(
@@ -186,14 +200,14 @@ class ProductDetailViewModel @Inject constructor(
         }
     }
 
-    fun init(product: Product?, itemId: String?) {
+    fun init(product: Product?, itemId: String?, bazaar: BazaarModel?) {
         if (isInitialized.not()) {
-            loadProductData(product?.id ?: itemId?.toIntOrNull() ?: 0)
+            loadProductData(product?.id ?: itemId?.toIntOrNull() ?: 0, bazaar)
             isInitialized = true
         }
     }
 
-    private fun loadProductData(productId: Int) = executeCatching({
+    private fun loadProductData(productId: Int, bazaar: BazaarModel?) = executeCatching({
         homeUseCase.getAllProductDetails(productId).collect { productDetailResponse ->
             when (productDetailResponse) {
                 is Result.Error -> globalState.error(productDetailResponse.message.orEmpty())
@@ -216,7 +230,8 @@ class ProductDetailViewModel @Inject constructor(
                             selectedItemDetail = selectedItemDetail,
                             selectedColoredImagesList = selectedImagedList,
                             sizeTitleList = selectedTitleList,
-                            colorsList = colorsList
+                            colorsList = colorsList,
+                            bazaar = bazaar
                         )
                     }
                 }
@@ -227,8 +242,7 @@ class ProductDetailViewModel @Inject constructor(
     })
 
     private fun getColorsList(
-        colorsIdsList: List<Int?>,
-        productDetail: Product?
+        colorsIdsList: List<Int?>, productDetail: Product?
     ): MutableList<ItemImages> {
         val list = mutableListOf<ItemImages>()
         productDetail?.let {
@@ -249,10 +263,8 @@ class ProductDetailViewModel @Inject constructor(
             .mapNotNull { it.imagePath }
 
     private fun filterSizeWithColorIdsList(
-        colorId: Int,
-        productDetail: Product?
-    ): List<ItemDetail> =
-        productDetail?.itemDetails?.filter { it.colorId == colorId }.orEmpty()
+        colorId: Int, productDetail: Product?
+    ): List<ItemDetail> = productDetail?.itemDetails?.filter { it.colorId == colorId }.orEmpty()
 }
 
 

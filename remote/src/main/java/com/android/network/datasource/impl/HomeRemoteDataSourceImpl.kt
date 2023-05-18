@@ -1,6 +1,7 @@
 package com.android.network.datasource.impl
 
 import com.android.model.home.*
+import com.android.model.request.AddToCartRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
@@ -95,4 +96,15 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
 
     override suspend fun deleteBazaarWishList(marketerId: Int) =
         apiServices.deleteBazaarWishList(marketerId)
+
+    override suspend fun addToCart(addToCartRequest: AddToCartRequest) =
+        apiServices.addToCart(addToCartRequest)
+
+    override suspend fun deleteFromCart(itemDetailId: Int) =
+        apiServices.deleteFromCart(itemDetailId)
+
+    override suspend fun loadCart() = apiServices.loadCart()
+
+    override suspend fun updateCartQuantity(itemDetailId: Int, qty: Int) =
+        apiServices.updateCartQuantity(itemDetailId, qty)
 }

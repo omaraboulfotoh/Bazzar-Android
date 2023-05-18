@@ -1,6 +1,7 @@
 package com.android.network.domain.usecases
 
 import com.android.model.home.*
+import com.android.model.request.AddToCartRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
@@ -51,4 +52,10 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
     suspend fun getBazaarsWishList() = homeRepo.getBazaarsWishList()
     suspend fun addBazaarWishList(marketerId: Int) = homeRepo.addBazaarWishList(marketerId)
     suspend fun deleteBazaarWishList(marketerId: Int) = homeRepo.deleteBazaarWishList(marketerId)
+    suspend fun addToCart(addToCartRequest: AddToCartRequest) = homeRepo.addToCart(addToCartRequest)
+    suspend fun deleteFromCart(itemDetailId: Int) = homeRepo.deleteFromCart(itemDetailId)
+    suspend fun loadCart() = homeRepo.loadCart()
+    suspend fun updateCartQuantity(itemDetailId: Int, qty: Int) =
+        homeRepo.updateCartQuantity(itemDetailId, qty)
+
 }

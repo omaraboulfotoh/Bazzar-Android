@@ -36,14 +36,15 @@ import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
 fun ProductCartItem(
-    product: Product? = null,
+    product: Product,
     onMinusClicked: () -> Unit,
     onPlusClicked: () -> Unit,
     onDeleteClicked: () -> Unit,
     onItemClicked: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(145.dp)
             .clip(RoundedCornerShape(20.dp))
@@ -63,7 +64,7 @@ fun ProductCartItem(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 RemoteImageCard(
-                    imageUrl = product?.imagePath,
+                    imageUrl = product.imagePath,
                     modifier = Modifier.size(88.dp),
                     withShimmer = true
                 )
@@ -78,7 +79,7 @@ fun ProductCartItem(
                         contentDescription = null
                     )
                     Text(
-                        text = product?.selectedItemDetails?.quantity.orZero().toString(),
+                        text = product.qty.orZero().toString(),
                         style = MaterialTheme.typography.overline.copy(
                             color = colorResource(id = R.color.prussian_blue),
                             fontFamily = FontFamily(Font(R.font.montserrat_bold))
@@ -104,14 +105,14 @@ fun ProductCartItem(
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     maxLines = 1,
-                    text = product?.brandTitle.orEmpty(),
+                    text = product.brandTitle.orEmpty(),
                     style = MaterialTheme.typography.subtitle2.copy(
                         fontFamily = FontFamily(Font(R.font.montserrat_bold))
                     )
                 )
 
                 Text(
-                    text = product?.title.orEmpty(),
+                    text = product.title.orEmpty(),
                     style = MaterialTheme.typography.subtitle2.copy(
                         fontFamily = FontFamily(Font(R.font.montserrat_regular))
                     ),
@@ -135,7 +136,7 @@ fun ProductCartItem(
                                 fontSize = 14.sp
                             )
                         ) {
-                            append(product?.selectedItemDetails?.colorTitle.orEmpty())
+                            append(product.colorTitle.orEmpty())
                         }
                     }, modifier = Modifier.fillMaxWidth()
                 )
@@ -156,7 +157,7 @@ fun ProductCartItem(
                                 fontSize = 14.sp
                             )
                         ) {
-                            append(product?.selectedItemDetails?.sizeTitle.orEmpty())
+                            append(product.sizeTitle.orEmpty())
                         }
                     }, style = MaterialTheme.typography.subtitle2.copy(
 
@@ -188,7 +189,7 @@ fun ProductCartItem(
                             )
                         ) {
                             append(
-                                product?.selectedItemDetails?.price.toString().nullIfEmpty()
+                                product.price.toString().nullIfEmpty()
                                     ?: stringResource(R.string.zero_price)
                             )
                         }

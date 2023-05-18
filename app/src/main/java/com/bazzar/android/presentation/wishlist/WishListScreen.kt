@@ -51,6 +51,8 @@ fun WishListScreen(
             is WishListContract.Effect.ScrollPager -> coroutinesScope.launch {
                 pagerState.animateScrollToPage(effect.pager)
             }
+
+            WishListContract.Effect.Navigation.GoToBack -> navigator.navigateUp()
         }
     }
 
