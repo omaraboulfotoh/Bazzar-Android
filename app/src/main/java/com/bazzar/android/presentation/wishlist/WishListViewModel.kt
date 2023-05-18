@@ -42,8 +42,8 @@ class WishListViewModel @Inject constructor(
 
     private fun handlePageChanged(pageIndex: Int) {
         // Load tab quotes if not loaded yet
-        when (pageIndex) {
-        }
+        setState { copy(currentPage = pageIndex) }
+        setEffect { WishListContract.Effect.ScrollPager(pageIndex) }
     }
 
     private fun loadWishList() = executeCatching({

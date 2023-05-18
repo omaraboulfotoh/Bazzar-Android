@@ -99,6 +99,8 @@ data class AbsTypography(
         ),
     val body2Bold: TextStyle =
         body2.copy(fontWeight = FontWeight.Bold),
+    val body2SemiBold: TextStyle =
+        body2.copy(fontWeight = FontWeight.SemiBold),
     val body2Medium: TextStyle =
         body2.copy(fontWeight = FontWeight.Medium),
 

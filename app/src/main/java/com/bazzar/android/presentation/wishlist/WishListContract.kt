@@ -13,6 +13,7 @@ class WishListContract {
         val bazaarList: List<BazaarModel>? = emptyList(),
         val showEmptyBazaars: Boolean = false,
         val showEmptyProducts: Boolean = false,
+        val currentPage: Int = 0
     ) : ViewState
 
     sealed class Event : ViewEvent {
@@ -30,6 +31,8 @@ class WishListContract {
             data class GoToProduct(val product: Product) : Navigation()
             data class GoToBazaar(val bazaar: BazaarModel) : Navigation()
         }
+
+        data class ScrollPager(val pager: Int) : Effect()
     }
 
 }

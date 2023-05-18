@@ -33,12 +33,12 @@ import kotlinx.coroutines.launch
 fun WishListPagerTabs(
     tabTitles: List<String>,
     pagerState: PagerState,
+    currentPage: Int = 0,
     onTabClicked: ((Int) -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
 
     // Main objects
-    val coroutinesScope = rememberCoroutineScope()
 
     // Prepare required width & height calculations
     var layoutSize by remember { mutableStateOf(IntSize.Zero) }
@@ -79,11 +79,9 @@ fun WishListPagerTabs(
             tabTitles.forEachIndexed { index, title ->
                 PagerTabItem(
                     title = title,
-                    isSelected = index == pagerState.currentPage,
+                    isSelected = index == currentPage,
                     modifier = Modifier.weight(1f),
                     onClick = {
-                        // Change pager page
-                        coroutinesScope.launch { pagerState.animateScrollToPage(index) }
                         // Notify the listener
                         onTabClicked?.invoke(index)
                     }

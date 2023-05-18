@@ -62,6 +62,7 @@ fun BazzarAppBar(
             text = title,
             isUpperCase = true,
             color = navigationIconTint,
+            style = BazzarTheme.typography.subtitle1Bold,
             textAlign = TextAlign.Center
         )
 

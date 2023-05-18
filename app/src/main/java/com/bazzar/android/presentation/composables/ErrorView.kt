@@ -52,12 +52,16 @@ fun ErrorView(modifier: Modifier = Modifier, onTryAgainClicked: () -> Unit) {
         }
 
         // try again button
-        Box(Modifier.fillMaxWidth()) {
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(all = BazzarTheme.spacing.m)
+        ) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(65.dp)
-                    .padding(all = BazzarTheme.spacing.m)
                     .clip(RoundedCornerShape(32.5.dp))
                     .background(colorResource(id = R.color.prussian_blue))
                     .align(Alignment.BottomCenter)
