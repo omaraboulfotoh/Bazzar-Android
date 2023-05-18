@@ -67,6 +67,7 @@ fun LocationScreenContent(
                 isUserLocationEnabled = state.isUserLocationEnabled,
                 startLatLng = state.startLatLng,
                 searchTerm = state.searchTerm,
+                mapToolbarEnabled = false,
                 onColumnScrollingEnabledChanged = {
                     onSendEvent(
                         Event.OnColumnScrollingEnabledChanged(
@@ -75,7 +76,6 @@ fun LocationScreenContent(
                     )
                 },
                 onSearchTermChanged = { onSendEvent(Event.OnSearchTermChanged(it)) },
-                onMapLoaded = { },
                 onLatLngChanged = { onSendEvent(Event.OnLatLngChanged(it)) }
             )
             LocationInfo(

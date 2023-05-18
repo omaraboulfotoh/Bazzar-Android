@@ -149,6 +149,26 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
+    override suspend fun updateFcmToken(fcmToken: String) =
+        flow {
+            try {
+                homeRemoteDataSource.updateFcmToken(fcmToken).let {
+                    if (it.isSuccessful) {
+                        emit(Result.Success(it.body()?.data))
+                    } else Result.Error(
+                        null, "error will be handled"
+                    )
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "updateFcmToken: ", throwable)
+                emit(
+                    Result.Error(
+                        null, throwable.message
+                    )
+                )
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
     override suspend fun editProfile(request: UserRegisterRequest): Flow<Result<EditProfileResponse>> =
         flow {
             try {

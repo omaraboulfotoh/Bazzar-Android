@@ -7,7 +7,6 @@ import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
 import com.android.model.request.VerifyOtpRequest
 import com.android.model.responses.base.BaseWrapper
-import com.android.model.responses.base.BazaarDetailsResponse
 import com.android.network.datasource.HomeRemoteDataSource
 import com.android.network.service.HomeApiServices
 import retrofit2.Response
@@ -19,14 +18,16 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun getHome() = apiServices.getHome()
     override suspend fun getAllCategories() = apiServices.getAllCategories()
     override suspend fun getAllBrands() = apiServices.getAllBrands()
-    override suspend fun getAllProductList(searchProduct: SearchProductRequest) =
-        apiServices.getAllProductList(searchProduct)
+    override suspend fun getAllProductList(searchProductRequest: SearchProductRequest) =
+        apiServices.getAllProductList(searchProductRequest)
 
     override suspend fun getAllProductDetails(productId: Int) =
         apiServices.getAllProductDetails(productId)
 
     override suspend fun register(request: UserRegisterRequest) =
         apiServices.register(request)
+
+    override suspend fun updateFcmToken(fcmToken: String) = apiServices.updateFcmToken(fcmToken)
 
     override suspend fun editProfile(request: UserRegisterRequest): Response<BaseWrapper<EditProfileResponse>> =
         apiServices.editProfile(request)

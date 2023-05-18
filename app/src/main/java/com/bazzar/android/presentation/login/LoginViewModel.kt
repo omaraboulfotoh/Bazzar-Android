@@ -43,6 +43,10 @@ class LoginViewModel @Inject constructor(
                 is Result.Error -> globalState.error(loginResponse.message.orEmpty())
                 is Result.Loading -> globalState.loading(true)
                 is Result.Success -> {
+                    // update fcm token on the api
+                    sharedPrefersManager.getFcmToken()?.let {
+                        homeUseCase.updateFcmToken(it)
+                    }
                     sharedPrefersManager.saveToken(loginResponse.data?.accessToken)
                     sharedPrefersManager.saveUserData(loginResponse.data!!)
                     setEffect { LoginContract.Effect.Navigation.GoBack }

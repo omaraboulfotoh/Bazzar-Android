@@ -8,12 +8,16 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class UserAddress(
+    @Json(name = "userId")
+    var userId: Int? = null,
     @Json(name = "id")
     var id: Int? = null,
     @Json(name = "areaId")
     var areaId: Int? = null,
     @Json(name = "streetName")
     var streetName: String? = null,
+    @Json(name = "block")
+    var block: String? = null,
     @Json(name = "houseNumber")
     var houseNumber: String? = null,
     @Json(name = "flatNumber")
@@ -27,5 +31,7 @@ data class UserAddress(
     @Json(name = "longitude")
     var longitude: String? = null,
     @Json(name = "isDefault")
-    var isDefault: Boolean? = null
+    var isDefault: Boolean? = null,
+    @Json(name = "isDeleted")
+    var isDeleted: Boolean? = null,
 ) : Parcelable

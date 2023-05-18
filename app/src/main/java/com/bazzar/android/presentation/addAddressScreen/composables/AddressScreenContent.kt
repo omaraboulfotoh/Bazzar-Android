@@ -1,7 +1,10 @@
 package com.bazzar.android.presentation.addAddressScreen.composables
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -29,7 +32,6 @@ fun AddressScreenContent(
             .fillMaxSize()
             .background(BazzarTheme.colors.white),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
     ) {
         BazzarAppBar(
             title = title,
@@ -43,15 +45,16 @@ fun AddressScreenContent(
             selectedGovernment = state.selectedGovernment,
             selectedArea = state.selectedArea,
             streetName = state.streetName,
-            jaddah = state.jaddah,
+            block = state.block,
             houseNumber = state.houseNumber,
             flatNumber = state.flatNumber,
             notes = state.notes,
+            userLatLng = state.userLatLng,
             toggleEnabled = state.toggleEnabled,
             onSelectGovernment = { onSendEvent(AddressContract.Event.OnGovernmentSelected(it)) },
             onSelectArea =  { onSendEvent(AddressContract.Event.OnAreaSelected(it)) },
             onStreetNameChangec = { onSendEvent(AddressContract.Event.OnStreetNameChanged(it)) },
-            onJaddahChanged = { onSendEvent(AddressContract.Event.OnJaddahChanged(it)) },
+            onBlockChanged = { onSendEvent(AddressContract.Event.OnBlockChanged(it)) },
             onHouseNumberChanged = { onSendEvent(AddressContract.Event.OnHouseNumberChanged(it)) },
             onFlatNumberChanged = { onSendEvent(AddressContract.Event.OnFlatNumberChanged(it)) },
             onNotesChanged = { onSendEvent(AddressContract.Event.OnNotesChanged(it)) },

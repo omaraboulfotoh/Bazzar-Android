@@ -5,8 +5,10 @@ import com.android.model.home.Area
 import com.android.model.home.UserAddress
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
+import com.bazzar.android.presentation.MapLatLngConstants
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -22,7 +24,7 @@ class AddressViewModel @Inject constructor(
         when (event) {
             is AddressContract.Event.OnFlatNumberChanged -> setState { copy(flatNumber = event.flatNumber) }
             is AddressContract.Event.OnHouseNumberChanged -> setState { copy(houseNumber = event.houseNumber) }
-            is AddressContract.Event.OnJaddahChanged -> setState { copy(jaddah = event.jaddah) }
+            is AddressContract.Event.OnBlockChanged -> setState { copy(block = event.block) }
             is AddressContract.Event.OnNotesChanged -> setState { copy(notes = event.notes) }
             is AddressContract.Event.OnStreetNameChanged -> setState { copy(streetName = event.streetName) }
             is AddressContract.Event.OnToggleChanged -> setState { copy(toggleEnabled = event.togelEnabled) }
@@ -60,7 +62,6 @@ class AddressViewModel @Inject constructor(
     }
 
     fun init(userAddress: UserAddress) = executeCatching({
-        setState { copy(userAddress = userAddress, isEditAddress = userAddress.areaId != null) }
         homeUseCase.getAllAreas()
             .collect { areasResponse ->
                 when (areasResponse) {
@@ -70,20 +71,33 @@ class AddressViewModel @Inject constructor(
                         val allGovernmentsAndAreas = areasResponse.data.orEmpty()
                         val governments = allGovernmentsAndAreas.filter { it.parentId == null }
                         val areas = allGovernmentsAndAreas.filter { it.parentId != null }
+
                         val selectedArea =
                             if(userAddress.areaId == null) null
                             else areas.find { it.id == userAddress.areaId }
+
                         val selectedGovernment =
                             if(selectedArea == null) null
                             else governments.find { it.id == selectedArea.parentId }
+
+                        val userLatLng =
+                            if (userAddress.latitude?.toDoubleOrNull() != null && userAddress.longitude?.toDoubleOrNull() != null)
+                                LatLng(userAddress.latitude!!.toDouble(), userAddress.longitude!!.toDouble())
+                            else
+                                MapLatLngConstants.KUWAIT_CITY_LAT_LAN
+
                         setState {
                             copy(
+                                userAddress = userAddress,
+                                isEditAddress = userAddress.areaId != null,
+                                userLatLng = userLatLng,
                                 allGovernmentsAndAreas = allGovernmentsAndAreas,
                                 governments = governments,
                                 areas = areas,
                                 selectedGovernment = selectedGovernment,
                                 selectedArea = selectedArea,
                                 streetName = userAddress.streetName,
+                                block = userAddress.block,
                                 houseNumber = userAddress.houseNumber,
                                 flatNumber = userAddress.flatNumber,
                                 notes = userAddress.addressNotes,
@@ -96,13 +110,20 @@ class AddressViewModel @Inject constructor(
     })
 
     private fun addOrEditAddress() = executeCatching({
+        val userId = prefersManager.getUserData()?.id
         val userAddress = currentState.userAddress.copy(
+            id = currentState.userAddress.id,
+            userId = currentState.userAddress.userId ?: userId,
             areaId = currentState.selectedArea?.id,
             streetName = currentState.streetName,
+            block = currentState.block,
             houseNumber = currentState.houseNumber,
             flatNumber = currentState.flatNumber,
             addressNotes = currentState.notes,
             isDefault = currentState.toggleEnabled,
+            latitude = currentState.userAddress.latitude,
+            longitude = currentState.userAddress.longitude,
+            isDeleted = false,
         )
 
         val flowTarget =
@@ -113,7 +134,7 @@ class AddressViewModel @Inject constructor(
             when (response) {
                 is Result.Error -> globalState.error(response.message.orEmpty())
                 is Result.Loading -> globalState.loading(true)
-                is Result.Success -> { setEffect { AddressContract.Effect.Navigation.GoToHomeScreen } }
+                is Result.Success -> { setEffect { AddressContract.Effect.Navigation.ReturnToAddressBook } }
             }
         }
     })
