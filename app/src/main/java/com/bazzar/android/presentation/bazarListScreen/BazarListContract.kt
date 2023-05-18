@@ -16,11 +16,13 @@ class BazarListContract {
     sealed class Event : ViewEvent {
         data class OnSearchTermChanged(val searchTerm: String) : Event()
         data class OnBazarItemClicked(val bazar: BazaarModel) : Event()
+        data class OnBazarItemFavClicked(val bazar: BazaarModel) : Event()
     }
 
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
             data class GoToBazarDetailsScreen(val bazar: BazaarModel) : Navigation()
+            object GoToLogin : Navigation()
         }
     }
 }

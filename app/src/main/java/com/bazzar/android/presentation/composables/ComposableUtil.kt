@@ -48,13 +48,13 @@ fun SemiCircleImageView(imagePath: String, text: String,modifier: Modifier) {
     Box(
         modifier = modifier
             .width(136.dp)
-            .height(215.dp)
+            .height(200.dp)
             .clip(
                 RoundedCornerShape(
                     topStart = 68.dp,
                     topEnd = 68.dp,
-                    bottomStart = 22.dp,
-                    bottomEnd = 22.dp
+                    bottomStart = 12.dp,
+                    bottomEnd = 12.dp
                 )
             )
             .background(colorResource(id = R.color.prussian_blue))

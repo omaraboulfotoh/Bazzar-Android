@@ -115,6 +115,7 @@ fun ProductItem(
                             .fillMaxSize()
                             .align(Alignment.Center)
                             .height(32.dp)
+                            .padding(horizontal = BazzarTheme.spacing.xs)
                     )
                 }
                 Box(modifier = Modifier
@@ -131,7 +132,6 @@ fun ProductItem(
                         contentDescription = null,
                     )
                 }
-
             }
 
             Column(

@@ -63,9 +63,12 @@ fun BazarListScreenContent(
                 .weight(1f)
                 .background(color = BazzarTheme.colors.backgroundColor)
                 .padding(bottom = BottomNavigationHeight),
-            bazarList = state.availableBazars.orEmpty()
-        ) {
-            onSendEvent(BazarListContract.Event.OnBazarItemClicked(it))
-        }
+            bazarList = state.availableBazars.orEmpty(),
+            onBazarItemFavClick = {
+                onSendEvent(BazarListContract.Event.OnBazarItemFavClicked(it))
+            }, onBazarItemClick = {
+                onSendEvent(BazarListContract.Event.OnBazarItemClicked(it))
+            }
+        )
     }
 }

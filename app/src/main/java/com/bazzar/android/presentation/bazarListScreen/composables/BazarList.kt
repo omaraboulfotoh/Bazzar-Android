@@ -15,6 +15,7 @@ fun BazarList(
     modifier: Modifier = Modifier,
     bazarList: List<BazaarModel> = emptyList(),
     onBazarItemClick: (bazar: BazaarModel) -> Unit,
+    onBazarItemFavClick: (bazar: BazaarModel) -> Unit,
 ) {
     LazyVerticalGrid(
         modifier = modifier,
@@ -23,7 +24,9 @@ fun BazarList(
         verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
     ) {
         items(bazarList) { item ->
-            BazarListItem(item = item) { onBazarItemClick.invoke(item) }
+            BazarListItem(item = item,
+                onClick = { onBazarItemClick.invoke(item) },
+                onFavClicked = { onBazarItemFavClick(item) })
         }
     }
 }
