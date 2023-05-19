@@ -37,10 +37,8 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
     suspend fun updateUserAddress(userAddress: UserAddress) =
         homeRepo.updateUserAddress(userAddress)
 
-    suspend fun loadCheckout(checkout: Checkout) = homeRepo.loadCheckout(checkout)
     suspend fun getOrdersHistory() = homeRepo.getOrdersHistory()
-    suspend fun loadCheckout(request: LoadCheckoutRequest) =
-        homeRepo.loadCheckout(request)
+    suspend fun loadCheckout(request: LoadCheckoutRequest) = homeRepo.loadCheckout(request)
 
     suspend fun createOrder(request: LoadCheckoutRequest) =
         homeRepo.createOrder(request)

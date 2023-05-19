@@ -1,11 +1,13 @@
 package com.bazzar.android.presentation.composables
 
+import android.view.RoundedCorner
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedButton
@@ -32,7 +34,7 @@ fun PrimaryButton(
 ) {
     Button(
         onClick = onClick,
-        shape = Shapes.medium,
+        shape = RoundedCornerShape(BazzarTheme.spacing.l),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = background,
             disabledBackgroundColor = disabledBackground
@@ -63,9 +65,9 @@ fun PrimaryOutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier.fillMaxWidth(),
     enabled: Boolean = true,
-    stroke: Color = BazzarTheme.colors.white,
+    stroke: Color = BazzarTheme.colors.primaryButtonColor,
     color: Color = BazzarTheme.colors.secondaryText,
-    background: Color = BazzarTheme.colors.primaryButtonColor,
+    background: Color = BazzarTheme.colors.transparentColor,
     icon: ImageVector? = null,
     style: TextStyle = BazzarTheme.typography.body2Bold,
 ) {
@@ -73,7 +75,7 @@ fun PrimaryOutlinedButton(
     OutlinedButton(
         modifier = modifier.defaultMinSize(minHeight = 46.dp),
         onClick = onClick,
-        shape = Shapes.medium,
+        shape = RoundedCornerShape(BazzarTheme.spacing.l),
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = background,

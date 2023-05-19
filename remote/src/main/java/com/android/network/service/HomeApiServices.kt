@@ -78,9 +78,6 @@ interface HomeApiServices {
     @GET("AllAreas")
     suspend fun getAllAreas(): Response<BaseWrapper<List<Area>>>
 
-    @POST("LoadCheckout")
-    suspend fun loadCheckout(@Body checkout: Checkout): Response<BaseWrapper<Any>>
-
     @POST("OrderHistory")
     suspend fun getOrdersHistory(): Response<BaseWrapper<List<OrderHistory>>>
 
@@ -127,7 +124,7 @@ interface HomeApiServices {
     suspend fun updateCartQuantity(
         @Query("ItemDetailId") itemDetailId: Int,
         @Query("Qty") qty: Int
-    ): Response<BaseWrapper<List<Product>>>
+    ): Response<BaseWrapper<Boolean>>
 
 
 }

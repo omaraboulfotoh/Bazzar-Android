@@ -61,9 +61,6 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
 
     override suspend fun getAllAreas() = apiServices.getAllAreas()
 
-    override suspend fun loadCheckout(checkout: Checkout) =
-        apiServices.loadCheckout(checkout)
-
     override suspend fun loadCheckout(
         request: LoadCheckoutRequest
     ): Response<BaseWrapper<CheckoutModel>> = apiServices.loadCheckout(body = request)

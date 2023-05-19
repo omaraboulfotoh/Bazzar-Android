@@ -1,6 +1,5 @@
 package com.bazzar.android.presentation.cartScreen.composables
 
-import android.media.metrics.Event
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -65,7 +63,8 @@ fun CartScreenContent(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = BazzarTheme.spacing.m),
+                    .padding(horizontal = BazzarTheme.spacing.m)
+                    .padding(bottom = BazzarTheme.spacing.xs),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
             ) {
@@ -113,6 +112,7 @@ fun CartScreenContent(
                 }
             }
         } else {
+            Spacer(modifier = Modifier.height(BazzarTheme.spacing.m))
             Image(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_empty_cart),
                 contentDescription = "ic_empty_cart"
@@ -120,14 +120,17 @@ fun CartScreenContent(
             SectionTitle(
                 modifier = Modifier.alpha(0.5f),
                 textAlign = TextAlign.Center,
+                color = BazzarTheme.colors.primaryButtonColor,
                 text = stringResource(id = R.string.empty_cart)
             )
+            Spacer(modifier = Modifier.height(1.dp))
             PrimaryOutlinedButton(
+                modifier = Modifier.width(176.dp),
                 text = stringResource(id = R.string.start_shopping_now),
-                stroke = BazzarTheme.colors.primaryButtonColor,
                 color = BazzarTheme.colors.primaryButtonColor,
                 style = BazzarTheme.typography.captionBold,
                 onClick = { onSendEvent(CartContract.Event.OnShoppingClicked) })
+
             if (state.showWishList) {
                 Spacer(modifier = Modifier.height(1.dp))
                 Box(

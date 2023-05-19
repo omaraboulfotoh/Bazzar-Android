@@ -59,7 +59,7 @@ fun DefaultMessageDialog(
                     text = title,
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
-                    color = BazzarTheme.colors.primaryButtonColor
+                    color = BazzarTheme.colors.primaryText
                 )
 
                 MessageBody(
@@ -100,7 +100,7 @@ fun ConfirmationMessageDialog(
     negativeButtonText: String,
     onNegative: () -> Unit,
     onPositive: () -> Unit,
-    backgroundColor: Color = MaterialTheme.colors.background,
+    backgroundColor: Color = BazzarTheme.colors.primaryButtonColor,
     icon: ImageVector? = null,
 ) {
     Dialog(onDismissRequest = onNegative) {
@@ -121,6 +121,7 @@ fun ConfirmationMessageDialog(
                 )
 
                 MessageBody(
+                    color = BazzarTheme.colors.primaryText,
                     text = body,
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -142,6 +143,7 @@ fun ConfirmationMessageDialog(
                         PrimaryOutlinedButton(
                             stroke = BazzarTheme.colors.white,
                             text = negativeButtonText,
+                            color = BazzarTheme.colors.primaryText,
                             onClick = onNegative
                         )
                     }

@@ -321,10 +321,6 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         }
     }.onStart { emit(Result.Loading(listOf())) }.flowOn(Dispatchers.IO)
 
-    override suspend fun loadCheckout(checkout: Checkout): Flow<Result<Any>> {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun loadCheckout(request: LoadCheckoutRequest): Flow<Result<CheckoutModel>> =
         flow {
             try {
@@ -548,20 +544,19 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
     override suspend fun updateCartQuantity(
         itemDetailId: Int,
         qty: Int
-    ): Flow<Result<List<Product>>> =
+    ): Flow<Result<Boolean>> =
         flow {
             try {
                 homeRemoteDataSource.updateCartQuantity(itemDetailId, qty).let {
-                    if (it.isSuccessful) emit(
-                        Result.Success(
-                            it.body()?.data ?: listOf()
-                        )
-                    )
-                    else emit(Result.Error(listOf(), "error will be handled"))
+                    if (it.isSuccessful) {
+                        emit(Result.Success(it.body()?.data ?: false))
+                    } else {
+                        emit(Result.Error(false, "error will be handled"))
+                    }
                 }
             } catch (throwable: Throwable) {
                 Log.e("Error", "getAllBazars: ", throwable)
-                emit(Result.Error(listOf(), throwable.message))
+                emit(Result.Error(false, throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 

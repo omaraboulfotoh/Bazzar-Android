@@ -2,7 +2,6 @@ package com.android.network.datasource
 
 import com.android.model.home.*
 import com.android.model.request.AddToCartRequest
-import com.android.model.request.CartItemRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
@@ -11,11 +10,6 @@ import com.android.model.request.VerifyOtpRequest
 import com.android.model.responses.base.BaseWrapper
 import com.android.model.responses.base.BazaarDetailsResponse
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
 
 interface HomeRemoteDataSource {
     suspend fun getHome(): Response<BaseWrapper<HomeResponse>>
@@ -39,7 +33,6 @@ interface HomeRemoteDataSource {
     suspend fun addUserAddress(userAddress: UserAddress): Response<BaseWrapper<UserAddress>>
     suspend fun updateUserAddress(userAddress: UserAddress): Response<BaseWrapper<UserAddress>>
     suspend fun getAllAreas(): Response<BaseWrapper<List<Area>>>
-    suspend fun loadCheckout(checkout: Checkout): Response<BaseWrapper<Any>>
     suspend fun getOrdersHistory(): Response<BaseWrapper<List<OrderHistory>>>
     suspend fun loadCheckout(request: LoadCheckoutRequest): Response<BaseWrapper<CheckoutModel>>
     suspend fun createOrder(request: LoadCheckoutRequest): Response<BaseWrapper<CreateOrderModel>>
@@ -51,16 +44,10 @@ interface HomeRemoteDataSource {
     suspend fun getBazaarsWishList(): Response<BaseWrapper<List<BazaarModel>>>
     suspend fun addBazaarWishList(marketerId: Int): Response<BaseWrapper<Boolean>>
     suspend fun deleteBazaarWishList(marketerId: Int): Response<BaseWrapper<Boolean>>
-
     suspend fun addToCart(addToCartRequest: AddToCartRequest): Response<BaseWrapper<Boolean>>
-
     suspend fun deleteFromCart(itemDetailId: Int): Response<BaseWrapper<Boolean>>
-
     suspend fun loadCart(): Response<BaseWrapper<List<Product>>>
-    suspend fun updateCartQuantity(
-        itemDetailId: Int,
-        qty: Int
-    ): Response<BaseWrapper<List<Product>>>
+    suspend fun updateCartQuantity(itemDetailId: Int, qty: Int): Response<BaseWrapper<Boolean>>
 
 
 }
