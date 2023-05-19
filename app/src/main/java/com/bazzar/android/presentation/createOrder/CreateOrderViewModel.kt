@@ -38,7 +38,7 @@ class CreateOrderViewModel @Inject constructor(
     }
 
     private fun submitPromoCode() {
-        val promoCode = currentState.promoCode.orEmpty()
+        val promoCode = currentState.promoCode.orEmpty().trim()
         if (promoCode.isEmpty().not()) {
             loadCheckout(currentState.address!!, promoCode = promoCode)
         }
@@ -63,7 +63,8 @@ class CreateOrderViewModel @Inject constructor(
         homeUseCase.loadCheckout(
             LoadCheckoutRequest(
                 userAddressId = address.id.orZero(),
-                promotionCode = promoCode
+                promotionCode = promoCode,
+                orderNotes = currentState.additionalNotes
             )
         )
             .collect { response ->
@@ -82,7 +83,8 @@ class CreateOrderViewModel @Inject constructor(
                                 shipping = response.data?.shipping.orZero(),
                                 subTotal = response.data?.subTotal.orZero(),
                                 discount = response.data?.discount.orZero(),
-                                promoCode = ""
+                                promoCode = null,
+                                orderPromoCode = promoCode
                             )
                         }
                     }
@@ -102,8 +104,10 @@ class CreateOrderViewModel @Inject constructor(
         homeUseCase.createOrder(
             LoadCheckoutRequest(
                 userAddressId = currentState.address?.id.orZero(),
+                promotionCode = currentState.orderPromoCode,
                 paymentMethodId = currentState.paymentMethodList.orEmpty()
-                    .firstOrNull { it.isSelected == true }?.id.orZero()
+                    .firstOrNull { it.isSelected == true }?.id.orZero(),
+                orderNotes = currentState.additionalNotes
             )
         ).collect { response ->
             when (response) {

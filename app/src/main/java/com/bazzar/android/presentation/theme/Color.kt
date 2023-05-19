@@ -55,7 +55,7 @@ data class AbsColors(
     val white: Color = COLOR_WHITE,
     val indicatorGrey: Color = COLOR_DARK_GREY,
     val placeholder: Color = COLOR_DARK_GREY,
-    val borderColor: Color = COLOR_DARK_GREY,
+    val borderColor: Color = COLOR_DARK_SILVER,
     val pickerHeader: Color = COLOR_BLACK,
     val pickerContent: Color = COLOR_BLACK,
     val pickerOption: Color = COLOR_WHITE,
@@ -67,7 +67,8 @@ data class AbsColors(
     val spacer: Color = COLOR_LIGHT_SILVER,
     val progressBg: Color = COLOR_NAVY,
     val dividerColor: Color = COLOR_DARK_GREY,
-    val dodgerBlue: Color = COLOR_BLUE
+    val dodgerBlue: Color = COLOR_BLUE,
+    val colorHint: Color = Color(0xff77707A)
 )
 
 val LocalAbsColor = staticCompositionLocalOf { AbsColors() }

@@ -1,15 +1,20 @@
 package com.bazzar.android.presentation.composables
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -18,6 +23,8 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.SolidColor
@@ -25,15 +32,22 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bazzar.android.R
 import com.bazzar.android.presentation.theme.BazzarTheme
 import com.bazzar.android.presentation.theme.Shapes_MediumX
+import kotlinx.coroutines.launch
 
 @Composable
 fun TextInputField(
@@ -305,4 +319,91 @@ fun SearchTextInput(
             }
         }
     )
+}
+
+
+@Composable
+fun InlineInputField(
+    modifier: Modifier = Modifier.fillMaxWidth(),
+    text: String,
+    placeholder: String,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction = ImeAction.Done,
+    scrollState: ScrollState = rememberScrollState(),
+    insideLazyColumn: Boolean = false,
+    lazyState: LazyListState? = null,
+    columnThreShold: Int = 5,
+    focused: Boolean = false,
+    capitalization: KeyboardCapitalization = KeyboardCapitalization.Sentences,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    onValueChange: (String) -> Unit,
+) {
+    val focusRequester = remember { FocusRequester() }
+    val coroutineScope = rememberCoroutineScope()
+    var lineCount by remember {
+        mutableStateOf(1)
+    }
+    val lineHeight = BazzarTheme.typography.subtitle1.lineHeight.value * 4
+
+    var textFieldValueState by remember {
+        mutableStateOf(
+            TextFieldValue(
+                text = text, selection = TextRange(text.length)
+            )
+        )
+    }
+    if (textFieldValueState.text != text) {
+        textFieldValueState = TextFieldValue(
+            text = text, selection = TextRange(text.length)
+        )
+    }
+
+    BasicTextField(
+        modifier = modifier.padding(BazzarTheme.spacing.m),
+        value = textFieldValueState,
+        onValueChange = {
+            textFieldValueState = it
+            onValueChange(it.text)
+        },
+        onTextLayout = { textLayoutResult: TextLayoutResult ->
+            val currentLinesCount = textLayoutResult.lineCount
+            if (currentLinesCount > columnThreShold) {
+                if (lineCount < currentLinesCount) {
+                    lineCount = currentLinesCount
+                    coroutineScope.launch {
+                        if (insideLazyColumn.not()) scrollState.scrollBy(lineHeight)
+                        else lazyState?.scrollBy(lineHeight)
+                    }
+                }
+            }
+        },
+        textStyle = BazzarTheme.typography.body2.copy(
+            color = BazzarTheme.colors.secondaryText
+        ),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType, imeAction = imeAction, capitalization = capitalization
+        ),
+        keyboardActions = keyboardActions,
+        decorationBox = { innerTextField ->
+            innerTextField()
+            if (text.isEmpty()) {
+                Row(
+                    Modifier, verticalAlignment = Alignment.Top
+                ) {
+                    Subtitle(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        textAlign = TextAlign.Start,
+                        text = placeholder,
+                        style = BazzarTheme.typography.caption.copy(
+                            color = BazzarTheme.colors.colorHint
+                        )
+                    )
+                }
+            }
+        },
+    )
+    if (focused) LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 }

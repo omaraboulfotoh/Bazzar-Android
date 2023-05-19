@@ -3,15 +3,19 @@ package com.bazzar.android.presentation.composables
 import android.view.RoundedCorner
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
@@ -49,16 +53,18 @@ fun PrimaryButton(
             .alpha(if (enabled) 1f else 0.5f),
         enabled = enabled
     ) {
-        MessageBodyBold(
-            text = text.uppercase(),
-            color = if (enabled) textColor else textColorDisabled,
-            style = BazzarTheme.typography.body2Bold
-        )
-        icon?.let {
-            Image(imageVector = icon, contentDescription = "")
-            Spacer(modifier = Modifier.width(BazzarTheme.spacing.spacerMini))
+        Box(modifier = Modifier
+            .wrapContentSize()
+            .align(Alignment.CenterVertically)) {
+            MessageBodyBold(
+                modifier = Modifier
+                    .wrapContentSize()
+                    .align(Alignment.Center),
+                text = text.uppercase(),
+                color = if (enabled) textColor else textColorDisabled,
+                style = BazzarTheme.typography.body2Bold
+            )
         }
-
     }
 }
 

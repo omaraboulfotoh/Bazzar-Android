@@ -203,7 +203,7 @@ fun ProductWishList(
                                 )
                             ) {
                                 append(
-                                    product.selectedItemDetails?.oldPrice.toString().nullIfEmpty()
+                                    product.price.toString().nullIfEmpty()
                                         ?: stringResource(R.string.zero_price)
                                 )
                             }
@@ -229,7 +229,7 @@ fun ProductWishList(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(28.dp),
+                    .height(24.dp),
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {

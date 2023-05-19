@@ -1,6 +1,7 @@
 package com.bazzar.android.presentation.createOrder.composables
 
 import android.widget.EditText
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,16 +27,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.common.toPriceFormat
+import com.bazzar.android.presentation.checkOutScreen.CheckOutContract
 import com.bazzar.android.presentation.checkOutScreen.composables.AddressItem
 import com.bazzar.android.presentation.composables.BazzarAppBar
+import com.bazzar.android.presentation.composables.InlineInputField
 import com.bazzar.android.presentation.composables.PrimaryButton
 import com.bazzar.android.presentation.composables.RemoteImage
 import com.bazzar.android.presentation.composables.Subtitle
@@ -44,6 +50,7 @@ import com.bazzar.android.presentation.composables.bottomNavigation.BottomNaviga
 import com.bazzar.android.presentation.createOrder.CreateOrderContract.Event
 import com.bazzar.android.presentation.createOrder.CreateOrderContract.State
 import com.bazzar.android.presentation.theme.BazzarTheme
+import com.bazzar.android.presentation.theme.Shapes
 
 @Composable
 fun CreateOrderScreenContent(
@@ -83,7 +90,10 @@ fun CreateOrderScreenContent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(BazzarTheme.colors.white)
-                        .padding(BazzarTheme.spacing.m),
+                        .padding(
+                            vertical = BazzarTheme.spacing.m,
+                            horizontal = BazzarTheme.spacing.xs
+                        ),
                     verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.s),
                     horizontalAlignment = Alignment.Start
                 ) {
@@ -95,7 +105,9 @@ fun CreateOrderScreenContent(
                     )
 
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = BazzarTheme.spacing.xs),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
@@ -113,7 +125,9 @@ fun CreateOrderScreenContent(
                         )
                     }
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = BazzarTheme.spacing.xs),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
@@ -140,30 +154,40 @@ fun CreateOrderScreenContent(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
+                                .defaultMinSize(minHeight = 33.dp)
                                 .background(Color(0xffFFD9E3)),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Title(
-                                modifier = Modifier.wrapContentSize(),
+                                modifier = Modifier
+                                    .wrapContentSize()
+                                    .padding(start = BazzarTheme.spacing.xs),
                                 text = stringResource(id = R.string.discount),
-                                style = BazzarTheme.typography.body2Bold,
+                                style = BazzarTheme.typography.body2,
                                 color = BazzarTheme.colors.discountText
                             )
                             Title(
-                                modifier = Modifier.wrapContentSize(),
-                                text = "${state.totalPrice.toPriceFormat()} KD",
-                                style = BazzarTheme.typography.body2Bold,
+                                modifier = Modifier
+                                    .wrapContentSize()
+                                    .padding(end = BazzarTheme.spacing.xs),
+                                text = "${state.discount.toPriceFormat()} KD",
+                                style = BazzarTheme.typography.body2,
                                 color = BazzarTheme.colors.discountText
                             )
                         }
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+
+                            .padding(horizontal = BazzarTheme.spacing.xs),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Title(
-                            modifier = Modifier.wrapContentSize(),
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .padding(start = BazzarTheme.spacing.m),
                             text = stringResource(id = R.string.total),
                             style = BazzarTheme.typography.body2Bold,
                             color = BazzarTheme.colors.primaryButtonColor
@@ -279,8 +303,48 @@ fun CreateOrderScreenContent(
                         )
                     }
                 }
-                Spacer(modifier = Modifier.height(BazzarTheme.spacing.xl))
+                // addtional notes
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(BazzarTheme.colors.white)
+                        .padding(BazzarTheme.spacing.m),
+                    verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Image(
+                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_notes),
+                            contentDescription = "ic_notes"
+                        )
+                        Subtitle(
+                            modifier = Modifier.wrapContentSize(),
+                            text = stringResource(id = R.string.addtional_notes),
+                            style = BazzarTheme.typography.body2Bold,
+                            color = BazzarTheme.colors.primaryButtonColor
+                        )
+                    }
+
+                    InlineInputField(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .height(100.dp)
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(Color(0xFFF7F7F7)),
+                        text = state.additionalNotes.orEmpty(),
+                        onValueChange = {
+                            onSendEvent(Event.OnNotesChanged(it))
+                        },
+                        insideLazyColumn = true,
+                        placeholder = stringResource(id = R.string.addtional_notes_placeholder)
+                    )
+                }
+                Spacer(modifier = Modifier.height(BazzarTheme.spacing.xxl))
             }
+
             PrimaryButton(
                 modifier = Modifier
                     .fillMaxWidth()

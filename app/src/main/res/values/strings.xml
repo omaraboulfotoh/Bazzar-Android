@@ -163,7 +163,7 @@
     <string name="sub_total">SubTotal</string>
     <string name="shipping">Delivery Charges</string>
     <string name="total">Total</string>
-    <string name="place_order">Place Your Order\n</string>
+    <string name="place_order">Place Your Order</string>
     <string name="payment_method">Payment Method</string>
     <string name="search_by_bzar_name">Search by bzar name</string>
     <string name="invalid_email">Invalid Email</string>
@@ -186,7 +186,7 @@
     <string name="last_week">Last Week</string>
     <string name="last_month">Last Month</string>
     <string name="wish_list">WishList</string>
-    <string name="products">Products\n</string>
+    <string name="products">Products</string>
     <string name="delete_item">Delete Item</string>
     <string name="delete_item_desc">Are you sure you want to delete this item ?</string>
     <string name="empty_cart">Your Cart Still Empty</string>
@@ -197,4 +197,6 @@
     <string name="promo_code_placeholder">Enter Coupon Code</string>
     <string name="discount">DISCOUNT</string>
     <string name="payment_falid">Payment Faild</string>
+    <string name="addtional_notes">Additional instructions</string>
+    <string name="addtional_notes_placeholder">Type any thing you would like to tell us related to your order.</string>
 </resources>

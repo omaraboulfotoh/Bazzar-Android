@@ -194,4 +194,6 @@
     <string name="promo_code_placeholder">Enter Coupon Code</string>
     <string name="discount">DISCOUNT</string>
     <string name="payment_falid">Payment Faild</string>
+    <string name="addtional_notes">Additional instructions</string>
+    <string name="addtional_notes_placeholder">Type any thing you would like to tell us related to your order.</string>
 </resources>
