@@ -16,7 +16,6 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateOrderViewModel @Inject constructor(
     globalState: IGlobalState,
-    private val sharedPrefersManager: SharedPrefersManager,
     private val homeUseCase: HomeUseCase
 ) : BaseViewModel<CreateOrderContract.Event, CreateOrderContract.State, CreateOrderContract.Effect>(
     globalState
@@ -37,7 +36,6 @@ class CreateOrderViewModel @Inject constructor(
 
     private fun handlePaymentSuccess(status: Boolean) {
         if (status) {
-            sharedPrefersManager.saveProductList(emptyList())
             setEffect { CreateOrderContract.Effect.Navigation.GoToSuccessScreen }
         } else {
             globalState.error("Payment Failure")
@@ -52,15 +50,8 @@ class CreateOrderViewModel @Inject constructor(
     }
 
     private fun loadCheckout(address: UserAddress) = executeCatching({
-        val products = sharedPrefersManager.getProductList().orEmpty()
-        val cartItems = products.map {
-            CartItemRequest(
-                it.selectedItemDetails?.id.orZero(),
-                it.selectedItemDetails?.quantity.orZero()
-            )
-        }
         homeUseCase.loadCheckout(
-            LoadCheckoutRequest(userAddressId = address.id.orZero(), cartItems = cartItems)
+            LoadCheckoutRequest(userAddressId = address.id.orZero())
         )
             .collect { response ->
                 when (response) {
@@ -73,7 +64,6 @@ class CreateOrderViewModel @Inject constructor(
                         setState {
                             copy(
                                 address = address,
-                                productCartList = products,
                                 paymentMethodList = paymentMethodList,
                                 totalPrice = response.data?.totalPrice.orZero(),
                                 shipping = response.data?.shipping.orZero(),
@@ -94,17 +84,9 @@ class CreateOrderViewModel @Inject constructor(
 
     private fun callCreateOrder() = executeCatching({
 
-        val products = sharedPrefersManager.getProductList().orEmpty()
-        val cartItems = products.map {
-            CartItemRequest(
-                it.selectedItemDetails?.id.orZero(),
-                it.selectedItemDetails?.quantity.orZero()
-            )
-        }
         homeUseCase.createOrder(
             LoadCheckoutRequest(
                 userAddressId = currentState.address?.id.orZero(),
-                cartItems = cartItems,
                 paymentMethodId = currentState.paymentMethodList.orEmpty()
                     .firstOrNull { it.isSelected == true }?.id.orZero()
             )

@@ -12,8 +12,6 @@ data class LoadCheckoutRequest(
     val userAddressId: Int = 0,
     @Json(name = "paymentMethodId")
     val paymentMethodId: Int? = null,
-    @Json(name = "cartItems")
-    val cartItems: List<CartItemRequest>,
     @Json(name = "orderNotes")
     val orderNotes: String = "",
 ) : Parcelable

@@ -9,7 +9,6 @@ import com.bazzar.android.presentation.base.ViewState
 
 class CreateOrderContract {
     data class State(
-        val productCartList: List<Product>? = emptyList(),
         val address: UserAddress? = null,
         val paymentMethodList: List<PaymentMethod>? = emptyList(),
         val subTotal: Double = 0.0,
