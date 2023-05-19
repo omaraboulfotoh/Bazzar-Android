@@ -17,6 +17,7 @@ class ProductDetailContract {
         val sizeTitleList: List<ItemDetail> = listOf(),
         val colorsList: List<ItemImages> = listOf(),
         val rating: Float? = 0f,
+        val isFavourite: Boolean = false,
         val isTextExpanded: Boolean = false,
         val showSuccessAddedToCart: Boolean = false,
         val bazaar: BazaarModel? = null
@@ -33,6 +34,7 @@ class ProductDetailContract {
         object OnVisitYourCartClicked : Event()
         object OnBackIconClicked : Event()
         object OnShareClicked : Event()
+        object OnFavClicked : Event()
         object OnSeeMoreBrandClicked : Event()
         object OnSeeMoreClicked : Event()
         data class OnRelatedItemClicked(val itemIndex: Int) : Event()

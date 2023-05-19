@@ -13,6 +13,7 @@ import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.presentation.bazarDetail.BazarDetailContract
 import com.bazzar.android.utils.IResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -58,8 +59,42 @@ class ProductDetailViewModel @Inject constructor(
             is ProductDetailContract.Event.OnSizeItemSelected -> updateSizeAndItemId(event.sizeIndex)
             is ProductDetailContract.Event.OnSeeMoreClicked -> setState { copy(isTextExpanded = isTextExpanded.not()) }
             is ProductDetailContract.Event.OnRelatedItemFavClicked -> handleItemFav(event.itemIndex)
+            ProductDetailContract.Event.OnFavClicked -> handleProductFav()
         }
     }
+
+    private fun handleProductFav() = executeCatching({
+        if (sharedPrefersManager.isUserLongedIn().not()) {
+            setEffect { ProductDetailContract.Effect.Navigation.GoToLogin }
+            return@executeCatching
+        }
+        val fav = currentState.isFavourite.not()
+        val itemId = currentState.productDetail?.id ?: return@executeCatching
+        if (fav) {
+            homeUseCase.addProductWishList(itemId)
+                .collect { response ->
+                    when (response) {
+                        is Result.Success -> setState {
+                            copy(isFavourite = response.data.orFalse())
+                        }
+
+                        else -> {}
+                    }
+                }
+        } else {
+            homeUseCase.deleteProductWishList(itemId)
+                .collect { response ->
+                    when (response) {
+                        is Result.Success -> setState {
+                            copy(isFavourite = response.data.orFalse().not())
+                        }
+
+                        else -> {}
+                    }
+                }
+        }
+    }, withLoading = false)
+
 
     private fun handleItemFav(itemIndex: Int) = executeCatching({
         if (sharedPrefersManager.isUserLongedIn().not()) {
@@ -130,6 +165,10 @@ class ProductDetailViewModel @Inject constructor(
     }
 
     private fun addToCart() = executeCatching({
+        if (sharedPrefersManager.isUserLongedIn().not()) {
+            setEffect { ProductDetailContract.Effect.Navigation.GoToLogin }
+            return@executeCatching
+        }
         val itemDetail = currentState.productDetail?.selectedItemDetails ?: return@executeCatching
         homeUseCase.addToCart(
             AddToCartRequest(
@@ -231,7 +270,8 @@ class ProductDetailViewModel @Inject constructor(
                             selectedColoredImagesList = selectedImagedList,
                             sizeTitleList = selectedTitleList,
                             colorsList = colorsList,
-                            bazaar = bazaar
+                            bazaar = bazaar,
+                            isFavourite = productDetail?.isWishList.orFalse()
                         )
                     }
                 }

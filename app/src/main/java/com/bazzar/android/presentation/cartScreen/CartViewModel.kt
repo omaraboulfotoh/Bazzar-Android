@@ -1,10 +1,7 @@
 package com.bazzar.android.presentation.cartScreen
 
 import com.android.local.SharedPrefersManager
-import com.android.model.home.BazaarModel
 import com.android.model.home.Product
-import com.android.model.request.CartItemRequest
-import com.android.model.request.LoadCheckoutRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.R
@@ -13,13 +10,9 @@ import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.ConfirmationDialogParams
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
-import com.bazzar.android.presentation.productDetail.ProductDetailContract
 import com.bazzar.android.utils.IResourceProvider
-import com.bazzar.android.utils.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
-
 
 @HiltViewModel
 class CartViewModel @Inject constructor(
@@ -96,7 +89,6 @@ class CartViewModel @Inject constructor(
                 setEffect { CartContract.Effect.Navigation.GoToProduct(item) }
             }
         }
-        sharedPrefersManager.saveProductList(productsList)
     }
 
     private fun deleteItem(itemDetailId: Int) = executeCatching({

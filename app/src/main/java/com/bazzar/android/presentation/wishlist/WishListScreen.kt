@@ -16,6 +16,7 @@ import com.bazzar.android.R
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.composables.BazzarAppBar
+import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.destinations.BazarDetailScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.bazzar.android.presentation.theme.BazzarTheme
@@ -71,7 +72,9 @@ fun WishListScreen(
 
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = BottomNavigationHeight),
         horizontalAlignment = Alignment.Start
     ) {
         BazzarAppBar(title = stringResource(id = R.string.wish_list), onNavigationClick = {

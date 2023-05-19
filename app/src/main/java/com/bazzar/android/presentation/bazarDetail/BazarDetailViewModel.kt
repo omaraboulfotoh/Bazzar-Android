@@ -132,6 +132,11 @@ class BazarDetailViewModel @Inject constructor(
     }
 
     private fun handleFavAction() = executeCatching({
+        if (sharedPrefersManager.isUserLongedIn().not()) {
+            setEffect { BazarDetailContract.Effect.Navigation.GoToLogin }
+            return@executeCatching
+        }
+
         val fav = currentState.isFavourite.not()
         val bazaarId = currentState.bazaar?.id ?: return@executeCatching
         if (fav) {

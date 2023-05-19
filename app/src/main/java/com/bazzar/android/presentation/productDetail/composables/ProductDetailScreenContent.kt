@@ -50,11 +50,13 @@ fun ProductDetailScreenContent(
                     IndicatorImageSlider(
                         imagePathList = state.selectedColoredImagesList,
                         showNewBadge = state.productDetail?.isNew.orFalse(),
+                        isFav = state.isFavourite,
                         showExclusiveBadge = state.productDetail?.isExclusive.orFalse(),
                         showDiscountBadge = state.productDetail?.discountPercentage != null,
                         discount = state.productDetail?.discountPercentage,
                         onBackClicked = { onSendEvent(Event.OnBackIconClicked) },
                         onShareClicked = { onSendEvent(Event.OnShareClicked) },
+                        onFavClick = { onSendEvent(Event.OnFavClicked) },
                         onImageClicked = { onSendEvent(Event.OnImageClicked(it)) }
                     )
                 }

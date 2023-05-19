@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.composables
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -13,6 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.common.orZero
+import com.bazzar.android.presentation.bazarDetail.BazarDetailContract
 import com.bazzar.android.presentation.productsList.composables.DiscountView
 import com.bazzar.android.presentation.productsList.composables.ExclusiveView
 import com.bazzar.android.presentation.productsList.composables.NewBadgeView
@@ -29,11 +31,13 @@ fun IndicatorImageSlider(
     modifier: Modifier = Modifier,
     imagePathList: List<String>,
     showNewBadge: Boolean,
+    isFav: Boolean,
     showExclusiveBadge: Boolean,
     showDiscountBadge: Boolean = false,
     discount: Double? = 0.0,
     onBackClicked: () -> Unit,
     onShareClicked: () -> Unit,
+    onFavClick: () -> Unit,
     onImageClicked: (index: Int) -> Unit,
 ) {
     val pagerState = rememberPagerState()
@@ -53,15 +57,30 @@ fun IndicatorImageSlider(
         ) {
             BazzarAppBar(onNavigationClick = { onBackClicked() },
                 actions = {
-                    Box(modifier = Modifier
-                        .defaultMinSize(minWidth = 50.dp, minHeight = 50.dp)
-                        .clickable { onShareClicked() }) {
-                        Icon(
-                            modifier = Modifier.align(Alignment.CenterEnd),
-                            painter = painterResource(id = R.drawable.ic_share),
-                            contentDescription = null,
-                            tint = colorResource(id = R.color.prussian_blue)
-                        )
+                    Row(
+                        modifier = Modifier.wrapContentSize(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        Box(modifier = Modifier
+                            .defaultMinSize(minWidth = 40.dp, minHeight = 40.dp)
+                            .clickable { onShareClicked() }) {
+                            Icon(
+                                modifier = Modifier.align(Alignment.CenterEnd),
+                                painter = painterResource(id = R.drawable.ic_share),
+                                contentDescription = null,
+                                tint = colorResource(id = R.color.prussian_blue)
+                            )
+                        }
+                        Box(modifier = Modifier
+                            .defaultMinSize(minWidth = 40.dp, minHeight = 40.dp)
+                            .clickable { onFavClick() }) {
+                            Image(
+                                modifier = Modifier.align(Alignment.CenterEnd),
+                                painter = painterResource(id = if (isFav) R.drawable.ic_fav_active else R.drawable.ic_fav),
+                                contentDescription = null,
+                            )
+                        }
                     }
                 })
             Box(

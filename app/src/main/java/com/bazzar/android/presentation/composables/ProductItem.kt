@@ -120,7 +120,6 @@ fun ProductItem(
                 }
                 Box(modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .padding(BazzarTheme.spacing.xxs)
                     .defaultMinSize(minWidth = 40.dp, minHeight = 40.dp)
                     .clickable { onFavClicked(product.id.orZero()) }) {
                     Image(
