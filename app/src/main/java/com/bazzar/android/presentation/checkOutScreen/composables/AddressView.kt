@@ -2,6 +2,7 @@ package com.bazzar.android.presentation.checkOutScreen.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,9 +35,8 @@ import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
 fun AddressView(
-    selectedAddress: UserAddress?,
-    onAddNewAddressClicked: () -> Unit,
-    onContinueClicked: () -> Unit,
+    selectedAddress: UserAddress,
+    onChangeAddressClicked: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -45,77 +45,48 @@ fun AddressView(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
     ) {
-
-        selectedAddress?.let {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = stringResource(id = R.string.default_address),
-                    style = MaterialTheme.typography.subtitle2.copy(
-                        color = colorResource(id = R.color.prussian_blue),
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
-                    ),
-                )
-                Box(
-                    modifier = Modifier
-                        .padding(start = 77.dp)
-                        .width(148.dp)
-                        .defaultMinSize(minHeight = 32.dp)
-                        .wrapContentHeight()
-                        .clip(RoundedCornerShape(16.dp))
-                        .background(colorResource(id = R.color.prussian_blue))
-                        .border(
-                            1.dp,
-                            shape = RoundedCornerShape(16.dp),
-                            color = colorResource(id = R.color.deep_sky_blue)
-                        ), contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.change_default_address),
-                        style = MaterialTheme.typography.overline.copy(
-                            fontFamily = FontFamily(Font(R.font.montserrat_bold)),
-                            color = colorResource(id = R.color.white),
-                            fontWeight = FontWeight(1)
-                        ),
-                        textAlign = TextAlign.Center
-                    )
-                }
-
-            }
-            AddressItem(
-                address = selectedAddress,
-                onEditAddressClick = { },
-                onSetAsDefaultClick = { },
-                onDeleteAddress = { }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = stringResource(id = R.string.default_address),
+                style = MaterialTheme.typography.subtitle2.copy(
+                    color = colorResource(id = R.color.prussian_blue),
+                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                ),
             )
-        }
-        PrimaryButton(
-            text = stringResource(id = R.string.add_new_address),
-            onClick = {onAddNewAddressClicked},
-            textColor = colorResource(id = R.color.prussian_blue),
-            background = Color.Unspecified,
-            modifier = Modifier
-                .padding(top = 61.dp)
-                .height(65.dp)
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(32.5.dp))
-                .border(
-                    1.dp,
-                    colorResource(id = R.color.prussian_blue),
-                    shape = RoundedCornerShape(32.5.dp)
+            Box(
+                modifier = Modifier
+                    .padding(start = 77.dp)
+                    .width(148.dp)
+                    .defaultMinSize(minHeight = 32.dp)
+                    .wrapContentHeight()
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(colorResource(id = R.color.prussian_blue))
+                    .border(
+                        1.dp,
+                        shape = RoundedCornerShape(16.dp),
+                        color = colorResource(id = R.color.deep_sky_blue)
+                    )
+                    .clickable {
+                        onChangeAddressClicked()
+                    }, contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(id = R.string.change_default_address),
+                    style = MaterialTheme.typography.overline.copy(
+                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        color = colorResource(id = R.color.white),
+                        fontWeight = FontWeight(1)
+                    ),
+                    textAlign = TextAlign.Center
                 )
-        )
-        PrimaryButton(
-            text = stringResource(id = R.string.continue_to_pay),
-            onClick = { onContinueClicked() },
-            textColor = Color.White,
-            background = colorResource(id = R.color.prussian_blue),
-            modifier = Modifier
-                .padding(top = 191.dp)
-                .height(65.dp)
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(32.5.dp))
-        )
+            }
 
+        }
+
+        AddressItem(address = selectedAddress,
+            onEditAddressClick = { },
+            onSetAsDefaultClick = { },
+            onDeleteAddress = { })
     }
 }
 

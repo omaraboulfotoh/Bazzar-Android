@@ -190,4 +190,5 @@
     <string name="delete_item_desc">Are you sure you want to delete this item ?</string>
     <string name="empty_cart">Your Cart Still Empty</string>
     <string name="start_shopping_now">Start Shopping Now</string>
+    <string name="you_dont_have_address">You haven\'t saved any address</string>
 </resources>

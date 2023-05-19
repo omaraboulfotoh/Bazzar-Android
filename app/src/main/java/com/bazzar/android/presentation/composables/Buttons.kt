@@ -13,6 +13,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
@@ -43,7 +44,9 @@ fun PrimaryButton(
             defaultElevation = 0.dp,
             pressedElevation = 0.dp
         ),
-        modifier = modifier.defaultMinSize(minHeight = 46.dp),
+        modifier = modifier
+            .defaultMinSize(minHeight = 46.dp)
+            .alpha(if (enabled) 1f else 0.5f),
         enabled = enabled
     ) {
         MessageBodyBold(

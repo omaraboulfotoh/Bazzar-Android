@@ -27,6 +27,7 @@ class CheckOutViewModel @Inject constructor(
             Event.OnAddNewAddressClicked -> setEffect { Effect.Navigation.GoToAddNewAddress }
             Event.OnContinueClicked -> navigateToCheckout()
             Event.OnBackClicked -> setEffect { Effect.Navigation.GoBAck }
+            Event.OnChangeAddressClicked -> setEffect { Effect.Navigation.GoToAddressList }
         }
     }
 
@@ -49,6 +50,7 @@ class CheckOutViewModel @Inject constructor(
                 is Result.Loading -> globalState.loading(true)
                 is Result.Success -> {
                     val selectedAddress = it.data.orEmpty().firstOrNull { it.isDefault.orFalse() }
+                        ?: it.data.orEmpty().firstOrNull()
                     setState { copy(selectedAddress = selectedAddress) }
                 }
             }

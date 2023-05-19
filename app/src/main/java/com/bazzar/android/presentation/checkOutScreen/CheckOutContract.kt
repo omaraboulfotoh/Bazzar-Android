@@ -14,12 +14,14 @@ class CheckOutContract {
         object OnContinueClicked : Event()
         object OnBackClicked : Event()
         object OnAddNewAddressClicked : Event()
+        object OnChangeAddressClicked : Event()
     }
 
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
             object GoBAck : Navigation()
             object GoToAddNewAddress : Navigation()
+            object GoToAddressList : Navigation()
             data class GoToCheckout(val selectedAddress: UserAddress) : Navigation()
         }
     }
