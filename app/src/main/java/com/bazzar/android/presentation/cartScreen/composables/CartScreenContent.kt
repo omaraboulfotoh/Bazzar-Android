@@ -74,9 +74,7 @@ fun CartScreenContent(
                 // rest of floating design
                 Box(modifier = Modifier.weight(1f)) {
                     LazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(bottom = 65.dp)
+                        modifier = Modifier.fillMaxSize()
                     ) {
                         state.productCartList?.let {
                             itemsIndexed(it) { index, product ->
@@ -92,6 +90,9 @@ fun CartScreenContent(
                                     }, onPlusClicked = {
                                         onSendEvent(CartContract.Event.OnPlusItem(index))
                                     })
+                                if (index == state.productCartList.lastIndex) {
+                                    Spacer(modifier = Modifier.height(65.dp))
+                                }
                             }
                         }
                     }
@@ -163,11 +164,10 @@ fun CartScreenContent(
                                 onSendEvent(CartContract.Event.OnFavProductClicked(index))
                             },
                             onFavClicked = {
-                                onSendEvent(
-                                    CartContract.Event.OnProductFavClicked(
-                                        index
-                                    )
-                                )
+                                onSendEvent(CartContract.Event.OnProductFavClicked(index))
+                            },
+                            onAddToCartClicked = {
+                                onSendEvent(CartContract.Event.OnProductAddToCartClicked(index))
                             }
                         )
                     }

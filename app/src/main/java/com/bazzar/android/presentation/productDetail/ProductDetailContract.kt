@@ -39,6 +39,7 @@ class ProductDetailContract {
         object OnSeeMoreClicked : Event()
         data class OnRelatedItemClicked(val itemIndex: Int) : Event()
         data class OnRelatedItemFavClicked(val itemIndex: Int) : Event()
+        data class OnProductAddToCartClicked(val itemIndex: Int) : Event()
         object OnBuyNowClicked : Event()
         object OnTackToUsClicked : Event()
     }

@@ -2,6 +2,7 @@ package com.bazzar.android.presentation.cartScreen
 
 import com.android.local.SharedPrefersManager
 import com.android.model.home.Product
+import com.android.model.request.AddToCartRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.R
@@ -10,6 +11,7 @@ import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.ConfirmationDialogParams
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.presentation.bazarDetail.BazarDetailContract
 import com.bazzar.android.utils.IResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -48,8 +50,47 @@ class CartViewModel @Inject constructor(
             is CartContract.Event.OnProductFavClicked -> handleItemFav(event.index)
             CartContract.Event.OnShoppingClicked -> setEffect { CartContract.Effect.Navigation.GoToHome }
             is CartContract.Event.OnFavProductClicked -> handleFavNavigation(event.index)
+            is CartContract.Event.OnProductAddToCartClicked -> addProductToCart(event.index)
         }
     }
+
+
+    private fun addProductToCart(itemIndex: Int) = executeCatching({
+        if (sharedPrefersManager.isUserLongedIn().not()) {
+            setEffect { CartContract.Effect.Navigation.GoToLogin }
+            return@executeCatching
+        }
+        val itemDetail = currentState.productWishList?.get(itemIndex) ?: return@executeCatching
+
+        homeUseCase.getAllProductDetails(itemDetail.id.orZero()).collect { response ->
+            when (response) {
+                is Result.Success -> {
+                    val product = response.data!!
+                    if (product.itemDetails.size > 1) {
+                        setEffect { CartContract.Effect.Navigation.GoToProduct(product = product) }
+                    } else if (product.itemDetails.size == 1) {
+                        homeUseCase.addToCart(
+                            AddToCartRequest(
+                                itemDetailId = product.itemDetails.first().id.orZero()
+                            )
+                        ).collect { response ->
+                            when (response) {
+                                is Result.Error -> globalState.error(response.message.orEmpty())
+                                is Result.Success -> {
+                                    loadCart()
+                                }
+
+                                else -> {}
+                            }
+                        }
+                    }
+                }
+
+                else -> {}
+            }
+        }
+    })
+
 
     private fun handleFavNavigation(index: Int) {
         val productsList = currentState.productWishList.orEmpty().toMutableList()
@@ -120,10 +161,7 @@ class CartViewModel @Inject constructor(
     }
 
     fun init() {
-        if (isInitialized.not()) {
-            loadCart()
-            isInitialized = true
-        }
+        loadCart()
     }
 
     private fun loadCart() = executeCatching({

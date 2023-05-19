@@ -142,6 +142,9 @@ fun BazarDetailScreenContent(
                             onSendEvent(BazarDetailContract.Event.OnProductClicked(index))
                         }, onFavClicked = {
                             onSendEvent(BazarDetailContract.Event.OnProductClicked(index))
+                        }, onAddToCartClicked = {
+                            onSendEvent(BazarDetailContract.Event.OnProductAddToCartClicked(index))
+
                         })
                     val isLastItem = index == state.productList.orEmpty().lastIndex
                     if (isLastItem && state.isLoadingMore.not() && state.hasMore) {

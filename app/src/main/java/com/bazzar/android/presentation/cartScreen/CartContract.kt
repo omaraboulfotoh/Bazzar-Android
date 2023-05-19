@@ -24,6 +24,7 @@ class CartContract {
         data class OnMinusItem(val index: Int) : Event()
         data class OnProductClicked(val index: Int) : Event()
         data class OnProductFavClicked(val index: Int) : Event()
+        data class OnProductAddToCartClicked(val index: Int) : Event()
         data class OnFavProductClicked(val index: Int) : Event()
     }
 

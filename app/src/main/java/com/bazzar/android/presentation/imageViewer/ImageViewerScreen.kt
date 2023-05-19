@@ -8,6 +8,7 @@ import com.android.model.home.Product
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.destinations.CartScreenDestination
+import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.imageViewer.composables.ImageViewerScreenContent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -26,11 +27,12 @@ fun ImageViewerScreen(
 
     viewModel.sideEffect { effect ->
         when (effect) {
-            is ImageViewerContract.Effect.Navigation.GoToCart -> navigator.navigate(
-                CartScreenDestination
-            )
+            is ImageViewerContract.Effect.Navigation.GoToCart ->
+                navigator.navigate(CartScreenDestination)
 
             is ImageViewerContract.Effect.Navigation.GoBack -> navigator.navigateUp()
+            ImageViewerContract.Effect.Navigation.GoToLogin ->
+                navigator.navigate(LoginScreenDestination)
         }
     }
 

@@ -74,6 +74,9 @@ fun HomeScreenContent(state: State, onSendEvent: (Event) -> Unit) {
                         },
                         onShowAllClicked = {
                             onSendEvent(Event.OnShowAllProducts(index))
+                        },
+                        OnProductAddToCartClicked = { itemId ->
+                            onSendEvent(Event.OnProductAddToCartClicked(itemId, index))
                         })
                     Spacer(modifier = Modifier.height(BazzarTheme.spacing.s))
                 }

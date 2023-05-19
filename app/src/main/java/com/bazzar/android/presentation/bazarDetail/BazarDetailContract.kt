@@ -23,6 +23,7 @@ class BazarDetailContract {
         val hasMore: Boolean = false,
         val showEmptyView: Boolean = false,
         val isLoadingMore: Boolean = true,
+        val showSuccessAddedToCart: Boolean = false,
         val searchTerm: String? = null,
         val searchRequest: SearchProductRequest = SearchProductRequest(),
     ) : ViewState
@@ -33,7 +34,7 @@ class BazarDetailContract {
         data class OnSliderClicked(val sliderItemIndex: Int) : Event()
         data class OnProductClicked(val itemIndex: Int) : Event()
         data class OnProductFavClicked(val itemIndex: Int) : Event()
-
+        data class OnProductAddToCartClicked(val itemIndex: Int) : Event()
         object OnBackIconClicked : Event()
         object OnShareCLicked : Event()
         object OnFavouriteClicked : Event()

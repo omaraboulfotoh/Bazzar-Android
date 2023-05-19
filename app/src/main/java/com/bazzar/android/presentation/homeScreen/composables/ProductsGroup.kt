@@ -17,6 +17,7 @@ fun ProductsGroup(
     productsList: List<Product>,
     onProductClicked: (Int) -> Unit,
     onProductFavClicked: (Int) -> Unit,
+    OnProductAddToCartClicked: (Int) -> Unit,
     onShowAllClicked: () -> Unit = {},
     showViewAll: Boolean = true,
 
@@ -43,7 +44,8 @@ fun ProductsGroup(
             ProductItem(
                 product,
                 onItemClicked = { onProductClicked(index) },
-                onFavClicked = { onProductFavClicked(index) }
+                onFavClicked = { onProductFavClicked(index) },
+                onAddToCartClicked = { OnProductAddToCartClicked(index) },
             )
         }
     }

@@ -132,6 +132,8 @@ fun ProductScreenContent(
                             onSendEvent(ProductContract.Event.OnProductClicked(index))
                         }, onFavClicked = {
                             onSendEvent(ProductContract.Event.OnProductFavClicked(index))
+                        }, onAddToCartClicked = {
+                            onSendEvent(ProductContract.Event.OnProductAddToCartClicked(index))
                         })
 
                         val isLastItem = index == state.productList.orEmpty().lastIndex

@@ -26,6 +26,7 @@ class ImageViewerContract {
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
             object GoToCart : Navigation()
+            object GoToLogin : Navigation()
             object GoBack : Navigation()
         }
     }

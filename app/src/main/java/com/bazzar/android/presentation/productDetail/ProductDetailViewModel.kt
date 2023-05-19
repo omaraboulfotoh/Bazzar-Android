@@ -60,8 +60,48 @@ class ProductDetailViewModel @Inject constructor(
             is ProductDetailContract.Event.OnSeeMoreClicked -> setState { copy(isTextExpanded = isTextExpanded.not()) }
             is ProductDetailContract.Event.OnRelatedItemFavClicked -> handleItemFav(event.itemIndex)
             ProductDetailContract.Event.OnFavClicked -> handleProductFav()
+            is ProductDetailContract.Event.OnProductAddToCartClicked -> addProductToCart(event.itemIndex)
         }
     }
+
+
+    private fun addProductToCart(itemIndex: Int) = executeCatching({
+        if (sharedPrefersManager.isUserLongedIn().not()) {
+            setEffect { ProductDetailContract.Effect.Navigation.GoToLogin }
+            return@executeCatching
+        }
+        val itemDetail =
+            currentState.productDetail?.relatedItems?.get(itemIndex) ?: return@executeCatching
+
+        homeUseCase.getAllProductDetails(itemDetail.id.orZero()).collect { response ->
+            when (response) {
+                is Result.Success -> {
+                    val product = response.data!!
+                    if (product.itemDetails.size > 1) {
+                        setEffect { ProductDetailContract.Effect.Navigation.GoToOpenProduct(product = product) }
+                    } else if (product.itemDetails.size == 1) {
+                        homeUseCase.addToCart(
+                            AddToCartRequest(
+                                itemDetailId = product.itemDetails.first().id.orZero(),
+                                marketerId = currentState.bazaar?.id
+                            )
+                        ).collect { response ->
+                            when (response) {
+                                is Result.Error -> globalState.error(response.message.orEmpty())
+                                is Result.Success -> {
+                                    setState { copy(showSuccessAddedToCart = true) }
+                                }
+
+                                else -> {}
+                            }
+                        }
+                    }
+                }
+
+                else -> {}
+            }
+        }
+    })
 
     private fun handleProductFav() = executeCatching({
         if (sharedPrefersManager.isUserLongedIn().not()) {
@@ -209,7 +249,6 @@ class ProductDetailViewModel @Inject constructor(
 
     private fun updateSizeAndItemId(sizeIndex: Int) {
         val selectedItemDetail = currentState.sizeTitleList[sizeIndex]
-
         setState {
             copy(
                 selectedItemDetail = selectedItemDetail,

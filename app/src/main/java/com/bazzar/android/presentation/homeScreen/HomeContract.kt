@@ -22,6 +22,7 @@ class HomeContract {
         val featuredBazzars: List<BazaarModel>? = emptyList(),
         val categoryItems: List<ProductSection>? = emptyList(),
         val adShown: Boolean = false,
+        val showSuccessAddedToCart: Boolean = false,
         val showError: Boolean = false,
     ) : ViewState
 
@@ -32,6 +33,7 @@ class HomeContract {
         data class OnCategoryClicked(val index: Int) : Event()
         data class OnProductClicked(val index: Int, val sectionIndex: Int) : Event()
         data class OnProductFavClicked(val index: Int, val sectionIndex: Int) : Event()
+        data class OnProductAddToCartClicked(val index: Int, val sectionIndex: Int) : Event()
         object OnAdClicked : Event()
         object OnTryAgainClicked : Event()
         object OnAdDismissed : Event()

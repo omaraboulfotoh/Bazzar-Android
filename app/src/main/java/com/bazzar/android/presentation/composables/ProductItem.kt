@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
@@ -49,7 +50,8 @@ fun ProductItem(
     product: Product,
     modifier: Modifier = Modifier,
     onItemClicked: (Int) -> Unit,
-    onFavClicked: (Int) -> Unit
+    onFavClicked: (Int) -> Unit,
+    onAddToCartClicked: (Int) -> Unit
 ) {
     Card(
         modifier = modifier
@@ -159,50 +161,70 @@ fun ProductItem(
                 // the space from title to bottom price
                 Spacer(modifier = Modifier.weight(1f))
 
-
                 // price view
-                Text(
-                    modifier = Modifier.align(Alignment.Start), text = buildAnnotatedString {
-                        withStyle(
-                            style = SpanStyle(fontFamily = FontFamily(Font(R.font.montserrat_bold)))
-                        ) {
-                            append(
-                                if (product.discountPercentage.orZero() > 0) {
-                                    product.oldPrice.toString()
-                                } else product.price.toString()
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column {
+                        Text(
+                            modifier = Modifier.align(Alignment.Start),
+                            text = buildAnnotatedString {
+                                withStyle(
+                                    style = SpanStyle(fontFamily = FontFamily(Font(R.font.montserrat_bold)))
+                                ) {
+                                    append(
+                                        if (product.discountPercentage.orZero() > 0) {
+                                            product.oldPrice.toString()
+                                        } else product.price.toString()
+                                    )
+                                }
+                                withStyle(
+                                    style = SpanStyle(fontFamily = FontFamily(Font(R.font.montserrat_regular)))
+                                ) {
+                                    append(stringResource(id = R.string.home_screen_product_price))
+                                }
+                            }, color = if (product.discountPercentage.orZero() > 0) {
+                                BazzarTheme.colors.stroke
+                            } else {
+                                BazzarTheme.colors.black
+                            }, style = BazzarTheme.typography.body2Bold
+                        )
+
+                        // if have discount should show the new price
+                        if (product.discountPercentage.orZero() > 0) {
+                            Text(
+                                modifier = Modifier.align(Alignment.Start),
+                                text = buildAnnotatedString {
+                                    withStyle(
+                                        style = SpanStyle(fontFamily = FontFamily(Font(R.font.montserrat_bold)))
+                                    ) {
+                                        append(product.price.toString())
+                                    }
+                                    withStyle(
+                                        style = SpanStyle(fontFamily = FontFamily(Font(R.font.montserrat_regular)))
+                                    ) {
+                                        append(stringResource(id = R.string.home_screen_product_price))
+                                    }
+                                },
+                                color = BazzarTheme.colors.discountText,
+                                style = BazzarTheme.typography.body2Bold
                             )
                         }
-                        withStyle(
-                            style = SpanStyle(fontFamily = FontFamily(Font(R.font.montserrat_regular)))
-                        ) {
-                            append(stringResource(id = R.string.home_screen_product_price))
-                        }
-                    }, color = if (product.discountPercentage.orZero() > 0) {
-                        BazzarTheme.colors.stroke
-                    } else {
-                        BazzarTheme.colors.black
-                    }, style = BazzarTheme.typography.body2Bold
-                )
+                    }
+                    Image(
+                        modifier = Modifier
+                            .size(28.dp)
+                            .clickable {
+                                onAddToCartClicked(product.id.orZero())
+                            },
 
-                // if have discount should show the new price
-                if (product.discountPercentage.orZero() > 0) {
-                    Text(
-                        modifier = Modifier.align(Alignment.Start),
-                        text = buildAnnotatedString {
-                            withStyle(
-                                style = SpanStyle(fontFamily = FontFamily(Font(R.font.montserrat_bold)))
-                            ) {
-                                append(product.price.toString())
-                            }
-                            withStyle(
-                                style = SpanStyle(fontFamily = FontFamily(Font(R.font.montserrat_regular)))
-                            ) {
-                                append(stringResource(id = R.string.home_screen_product_price))
-                            }
-                        },
-                        color = BazzarTheme.colors.discountText,
-                        style = BazzarTheme.typography.body2Bold
+                        painter = painterResource(id = R.drawable.ic_add_to_cart),
+                        contentScale = ContentScale.Fit,
+                        contentDescription = "ic_add_to_cart"
                     )
+
                 }
                 // bottom space
                 Spacer(modifier = Modifier.height(BazzarTheme.spacing.s))

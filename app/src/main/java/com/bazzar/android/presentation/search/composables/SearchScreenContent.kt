@@ -54,6 +54,7 @@ fun SearchScreenContent(state: State, onSendEvent: (Event) -> Unit) {
                     productsList = state.productList!!,
                     onProductClicked = { onSendEvent(Event.OnProductClicked(it)) },
                     onProductFavClicked = { },
+                    OnProductAddToCartClicked = {},
                     showViewAll = false
                 )
             }

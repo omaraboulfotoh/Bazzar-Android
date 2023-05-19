@@ -102,11 +102,11 @@ fun ProductDetailScreenContent(
                         headerTitle = stringResource(id = R.string.related_product),
                         onProductClicked = { itemIndex ->
                             onSendEvent(Event.OnRelatedItemClicked(itemIndex))
-
                         },
                         onProductFavClicked = { itemIndex ->
                             onSendEvent(Event.OnRelatedItemFavClicked(itemIndex))
-
+                        }, OnProductAddToCartClicked = {itemIndex ->
+                            onSendEvent(Event.OnProductAddToCartClicked(itemIndex))
                         }, showViewAll = false
                     )
                 }

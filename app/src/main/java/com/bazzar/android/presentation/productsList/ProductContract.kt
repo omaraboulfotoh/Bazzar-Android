@@ -28,12 +28,14 @@ class ProductContract {
         val showSortDialog: Boolean = false,
         val showFilterDialog: Boolean = false,
         val numOfSelectedFilter: Int = 0,
+        val showSuccessAddedToCart: Boolean = false
     ) : ViewState
 
     sealed class Event : ViewEvent {
         data class OnSubCategoryClicked(val categoryIndex: Int) : Event()
         data class OnProductClicked(val itemIndex: Int) : Event()
         data class OnProductFavClicked(val itemIndex: Int) : Event()
+        data class OnProductAddToCartClicked(val itemIndex: Int) : Event()
         data class OnSortItemSelected(val sortItem: SortItem) : Event()
         object OnApplySortClicked : Event()
         object OnSortClicked : Event()

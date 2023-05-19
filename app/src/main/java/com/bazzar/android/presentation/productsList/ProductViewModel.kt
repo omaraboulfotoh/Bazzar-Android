@@ -3,6 +3,7 @@ package com.bazzar.android.presentation.productsList
 import com.android.local.SharedPrefersManager
 import com.android.model.home.Brand
 import com.android.model.home.Category
+import com.android.model.request.AddToCartRequest
 import com.android.model.request.SearchProductRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
@@ -11,6 +12,7 @@ import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.presentation.bazarDetail.BazarDetailContract
 import com.bazzar.android.presentation.productDetail.ProductDetailContract
 import com.bazzar.android.utils.IResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -63,8 +65,46 @@ class ProductViewModel @Inject constructor(
             }
 
             is ProductContract.Event.OnSortItemSelected -> setState { copy(selectedSortItem = event.sortItem) }
+            is ProductContract.Event.OnProductAddToCartClicked -> addProductToCart(event.itemIndex)
         }
     }
+
+    private fun addProductToCart(itemIndex: Int) = executeCatching({
+        if (prefersManager.isUserLongedIn().not()) {
+            setEffect { ProductContract.Effect.Navigation.GoToLogin }
+            return@executeCatching
+        }
+        val itemDetail = currentState.productList?.get(itemIndex) ?: return@executeCatching
+
+        homeUseCase.getAllProductDetails(itemDetail.id.orZero()).collect { response ->
+            when (response) {
+                is Result.Success -> {
+                    val product = response.data!!
+                    if (product.itemDetails.size > 1) {
+                        setEffect { ProductContract.Effect.Navigation.GoToProductDetailPage(product = product) }
+                    } else if (product.itemDetails.size == 1) {
+                        homeUseCase.addToCart(
+                            AddToCartRequest(
+                                itemDetailId = product.itemDetails.first().id.orZero()
+                            )
+                        ).collect { response ->
+                            when (response) {
+                                is Result.Error -> globalState.error(response.message.orEmpty())
+                                is Result.Success -> {
+                                    setState { copy(showSuccessAddedToCart = true) }
+                                }
+
+                                else -> {}
+                            }
+                        }
+                    }
+                }
+
+                else -> {}
+            }
+        }
+    })
+
 
     private fun handleProductFav(itemIndex: Int) = executeCatching({
         if (prefersManager.isUserLongedIn().not()) {

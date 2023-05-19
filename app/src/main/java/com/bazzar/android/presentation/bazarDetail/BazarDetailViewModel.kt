@@ -5,6 +5,7 @@ import com.android.model.home.BazaarModel
 import com.android.model.home.Brand
 import com.android.model.home.Category
 import com.android.model.home.Product
+import com.android.model.request.AddToCartRequest
 import com.android.model.request.SearchProductRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
@@ -24,10 +25,9 @@ class BazarDetailViewModel @Inject constructor(
     private val homeUseCase: HomeUseCase,
     private val resourceProvider: IResourceProvider,
     private val sharedPrefersManager: SharedPrefersManager,
-) :
-    BaseViewModel<BazarDetailContract.Event, BazarDetailContract.State, BazarDetailContract.Effect>(
-        globalState
-    ) {
+) : BaseViewModel<BazarDetailContract.Event, BazarDetailContract.State, BazarDetailContract.Effect>(
+    globalState
+) {
 
     private var isInitialized = false
     override fun setInitialState() = BazarDetailContract.State()
@@ -43,8 +43,46 @@ class BazarDetailViewModel @Inject constructor(
             is BazarDetailContract.Event.OnSliderClicked -> handleSliderAction(event.sliderItemIndex)
             is BazarDetailContract.Event.OnSearchTermChanged -> {}
             is BazarDetailContract.Event.OnProductFavClicked -> handleProductFav(event.itemIndex)
+            is BazarDetailContract.Event.OnProductAddToCartClicked -> addProductToCart(event.itemIndex)
         }
     }
+
+    private fun addProductToCart(itemIndex: Int) = executeCatching({
+        if (sharedPrefersManager.isUserLongedIn().not()) {
+            setEffect { BazarDetailContract.Effect.Navigation.GoToLogin }
+            return@executeCatching
+        }
+        val itemDetail = currentState.productList?.get(itemIndex) ?: return@executeCatching
+
+        homeUseCase.getAllProductDetails(itemDetail.id.orZero()).collect { response ->
+            when (response) {
+                is Result.Success -> {
+                    val product = response.data!!
+                    if (product.itemDetails.size > 1) {
+                        setEffect { BazarDetailContract.Effect.Navigation.GoToProductDetails(product = product) }
+                    } else if (product.itemDetails.size == 1) {
+                        homeUseCase.addToCart(
+                            AddToCartRequest(
+                                itemDetailId = product.itemDetails.first().id.orZero(),
+                                marketerId = currentState.bazaar?.id
+                            )
+                        ).collect { response ->
+                            when (response) {
+                                is Result.Error -> globalState.error(response.message.orEmpty())
+                                is Result.Success -> {
+                                    setState { copy(showSuccessAddedToCart = true) }
+                                }
+
+                                else -> {}
+                            }
+                        }
+                    }
+                }
+
+                else -> {}
+            }
+        }
+    })
 
     private fun handleProductFav(itemIndex: Int) = executeCatching({
         if (sharedPrefersManager.isUserLongedIn().not()) {
@@ -55,45 +93,43 @@ class BazarDetailViewModel @Inject constructor(
         val item = list[itemIndex]
         val isFav = item.isWishList.orFalse().not()
         if (isFav.not()) {
-            homeUseCase.addProductWishList(item.id.orZero())
-                .collect { response ->
-                    when (response) {
-                        is Result.Success -> {
-                            val updatedList = list.mapIndexed { index, product ->
-                                if (index == itemIndex) {
-                                    product.copy(isWishList = response.data.orFalse())
-                                } else {
-                                    product
-                                }
-                            }
-                            setState {
-                                copy(productList = updatedList)
+            homeUseCase.addProductWishList(item.id.orZero()).collect { response ->
+                when (response) {
+                    is Result.Success -> {
+                        val updatedList = list.mapIndexed { index, product ->
+                            if (index == itemIndex) {
+                                product.copy(isWishList = response.data.orFalse())
+                            } else {
+                                product
                             }
                         }
-
-                        else -> {}
+                        setState {
+                            copy(productList = updatedList)
+                        }
                     }
+
+                    else -> {}
                 }
+            }
         } else {
-            homeUseCase.deleteBazaarWishList(item.id.orZero())
-                .collect { response ->
-                    when (response) {
-                        is Result.Success -> {
-                            val updatedList = list.mapIndexed { index, product ->
-                                if (index == itemIndex) {
-                                    product.copy(isWishList = response.data.orFalse().not())
-                                } else {
-                                    product
-                                }
-                            }
-                            setState {
-                                copy(productList = updatedList)
+            homeUseCase.deleteBazaarWishList(item.id.orZero()).collect { response ->
+                when (response) {
+                    is Result.Success -> {
+                        val updatedList = list.mapIndexed { index, product ->
+                            if (index == itemIndex) {
+                                product.copy(isWishList = response.data.orFalse().not())
+                            } else {
+                                product
                             }
                         }
-
-                        else -> {}
+                        setState {
+                            copy(productList = updatedList)
+                        }
                     }
+
+                    else -> {}
                 }
+            }
         }
 
     }, withLoading = false)
@@ -140,27 +176,25 @@ class BazarDetailViewModel @Inject constructor(
         val fav = currentState.isFavourite.not()
         val bazaarId = currentState.bazaar?.id ?: return@executeCatching
         if (fav) {
-            homeUseCase.addBazaarWishList(bazaarId)
-                .collect { response ->
-                    when (response) {
-                        is Result.Success -> setState {
-                            copy(isFavourite = response.data.orFalse())
-                        }
-
-                        else -> {}
+            homeUseCase.addBazaarWishList(bazaarId).collect { response ->
+                when (response) {
+                    is Result.Success -> setState {
+                        copy(isFavourite = response.data.orFalse())
                     }
+
+                    else -> {}
                 }
+            }
         } else {
-            homeUseCase.deleteBazaarWishList(bazaarId)
-                .collect { response ->
-                    when (response) {
-                        is Result.Success -> setState {
-                            copy(isFavourite = response.data.orFalse().not())
-                        }
-
-                        else -> {}
+            homeUseCase.deleteBazaarWishList(bazaarId).collect { response ->
+                when (response) {
+                    is Result.Success -> setState {
+                        copy(isFavourite = response.data.orFalse().not())
                     }
+
+                    else -> {}
                 }
+            }
         }
     }, withLoading = false)
 
@@ -196,8 +230,7 @@ class BazarDetailViewModel @Inject constructor(
             val request = SearchProductRequest(marketerId = bazaar.id)
             setState {
                 copy(
-                    searchRequest = request,
-                    bazaar = bazaar
+                    searchRequest = request, bazaar = bazaar
                 )
             }
             getBazzarDetails(bazaar.id.orZero())
@@ -207,77 +240,71 @@ class BazarDetailViewModel @Inject constructor(
     }
 
     private fun getBazzarDetails(bazaarId: Int) = executeCatching({
-        homeUseCase.getBazaarDetails(bazaarId)
-            .collect { response ->
-                when (response) {
-                    is Result.Error -> globalState.error(response.message.orEmpty())
-                    is Result.Success -> setState {
-                        val data = response.data
-                        val categoriesList = data?.categoryList.orEmpty().toMutableList()
-                        categoriesList.add(
-                            0,
-                            Category(
-                                null,
-                                resourceProvider.getString(R.string.all),
-                                isSelected = true
-                            )
+        homeUseCase.getBazaarDetails(bazaarId).collect { response ->
+            when (response) {
+                is Result.Error -> globalState.error(response.message.orEmpty())
+                is Result.Success -> setState {
+                    val data = response.data
+                    val categoriesList = data?.categoryList.orEmpty().toMutableList()
+                    categoriesList.add(
+                        0, Category(
+                            null, resourceProvider.getString(R.string.all), isSelected = true
                         )
-                        copy(
-                            isFavourite = data?.isWishList.orFalse(),
-                            categoriesList = categoriesList,
-                            slider = data?.slider.orEmpty(),
-                            shareLink = data?.shareURL.orEmpty()
-                        )
-                    }
-
-                    else -> {}
+                    )
+                    copy(
+                        isFavourite = data?.isWishList.orFalse(),
+                        categoriesList = categoriesList,
+                        slider = data?.slider.orEmpty(),
+                        shareLink = data?.shareURL.orEmpty()
+                    )
                 }
+
+                else -> {}
             }
+        }
     })
 
     private fun loadMoreProducts() = executeCatching({
         val updatedRequest =
             currentState.searchRequest.copy(pageIndex = currentState.searchRequest.pageIndex + 1)
         setState { copy(isLoadingMore = true) }
-        homeUseCase.getAllProductList(updatedRequest)
-            .collect { productResponse ->
-                when (productResponse) {
-                    is Result.Success -> {
-                        val updatedList = currentState.productList.orEmpty().toMutableList()
-                        updatedList.addAll(productResponse.data.orEmpty())
-                        setState {
-                            copy(
-                                productList = updatedList,
-                                hasMore = productResponse.hasMoreData.orFalse(),
-                                isLoadingMore = false,
-                                searchRequest = updatedRequest
-                            )
-                        }
+        homeUseCase.getAllProductList(updatedRequest).collect { productResponse ->
+            when (productResponse) {
+                is Result.Success -> {
+                    val updatedList = currentState.productList.orEmpty().toMutableList()
+                    updatedList.addAll(productResponse.data.orEmpty())
+                    setState {
+                        copy(
+                            productList = updatedList,
+                            hasMore = productResponse.hasMoreData.orFalse(),
+                            isLoadingMore = false,
+                            searchRequest = updatedRequest
+                        )
                     }
-
-                    else -> {}
                 }
+
+                else -> {}
             }
+        }
     })
 
     private fun loadProductData(request: SearchProductRequest) = executeCatching({
-        homeUseCase.getAllProductList(request)
-            .collect { productResponse ->
-                when (productResponse) {
-                    is Result.Error -> globalState.error(productResponse.message.orEmpty())
-                    is Result.Loading -> globalState.loading(true)
-                    is Result.Success -> setState {
-                        copy(
-                            productList = productResponse.data,
-                            hasMore = productResponse.hasMoreData.orFalse(),
-                            isLoadingMore = false,
-                            searchRequest = request
-                        )
-                    }
-
-                    else -> {}
+        homeUseCase.getAllProductList(request).collect { productResponse ->
+            when (productResponse) {
+                is Result.Error -> globalState.error(productResponse.message.orEmpty())
+                is Result.Loading -> globalState.loading(true)
+                is Result.Success -> setState {
+                    copy(
+                        productList = productResponse.data,
+                        hasMore = productResponse.hasMoreData.orFalse(),
+                        isLoadingMore = false,
+                        searchRequest = request
+                    )
                 }
+
+                else -> {}
             }
+        }
     })
 }
 

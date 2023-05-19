@@ -4,12 +4,14 @@ import com.android.local.SharedPrefersManager
 import com.android.model.home.Brand
 import com.android.model.home.Category
 import com.android.model.home.Product
+import com.android.model.request.AddToCartRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.presentation.bazarDetail.BazarDetailContract
 import com.bazzar.android.presentation.productDetail.ProductDetailContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -25,9 +27,7 @@ class HomeViewModel @Inject constructor(
     ) {
 
     private var isInitialized = false
-    override fun setInitialState(): HomeContract.State {
-        return HomeContract.State()
-    }
+    override fun setInitialState() = HomeContract.State()
 
     override fun handleEvents(event: HomeContract.Event) {
         when (event) {
@@ -56,8 +56,51 @@ class HomeViewModel @Inject constructor(
                 event.index,
                 event.sectionIndex
             )
+
+            is HomeContract.Event.OnProductAddToCartClicked -> addProductToCart(
+                event.index,
+                event.sectionIndex
+            )
         }
     }
+
+    private fun addProductToCart(itemIndex: Int, sectionIndex: Int) = executeCatching({
+        if (sharedPrefersManager.isUserLongedIn().not()) {
+            setEffect { HomeContract.Effect.Navigation.GoToLogin }
+            return@executeCatching
+        }
+        val list = currentState.categoryItems?.get(sectionIndex)?.items ?: return@executeCatching
+        val itemDetail = list[itemIndex]
+
+        homeUseCase.getAllProductDetails(itemDetail.id.orZero()).collect { response ->
+            when (response) {
+                is Result.Success -> {
+                    val product = response.data!!
+                    if (product.itemDetails.size > 1) {
+                        setEffect { HomeContract.Effect.Navigation.GoToProductDetails(product = product) }
+                    } else if (product.itemDetails.size == 1) {
+                        homeUseCase.addToCart(
+                            AddToCartRequest(
+                                itemDetailId = product.itemDetails.first().id.orZero()
+                            )
+                        ).collect { response ->
+                            when (response) {
+                                is Result.Error -> globalState.error(response.message.orEmpty())
+                                is Result.Success -> {
+                                    setState { copy(showSuccessAddedToCart = true) }
+                                }
+
+                                else -> {}
+                            }
+                        }
+                    }
+                }
+
+                else -> {}
+            }
+        }
+    })
+
 
     private fun handleTryAgain() {
         setState { copy(showError = false) }

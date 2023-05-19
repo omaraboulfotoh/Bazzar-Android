@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.imageViewer
 
+import com.android.local.SharedPrefersManager
 import com.android.model.home.BazaarModel
 import com.android.model.home.Product
 import com.android.model.request.AddToCartRequest
@@ -11,6 +12,7 @@ import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.presentation.imageViewer.ImageViewerContract.Effect
 import com.bazzar.android.presentation.imageViewer.ImageViewerContract.Event
 import com.bazzar.android.presentation.imageViewer.ImageViewerContract.State
+import com.bazzar.android.presentation.productsList.ProductContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -18,6 +20,7 @@ import javax.inject.Inject
 class ImageViewerViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
+    private val sharedPrefersManager: SharedPrefersManager
 ) : BaseViewModel<Event, State, Effect>(
     globalState
 ) {
@@ -41,6 +44,11 @@ class ImageViewerViewModel @Inject constructor(
     }
 
     private fun addToCart() = executeCatching({
+        if (sharedPrefersManager.isUserLongedIn().not()) {
+            setEffect { Effect.Navigation.GoToLogin }
+            return@executeCatching
+        }
+
         val itemDetail = currentState.product?.selectedItemDetails ?: return@executeCatching
         homeUseCase.addToCart(
             AddToCartRequest(
