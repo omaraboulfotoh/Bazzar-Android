@@ -30,6 +30,7 @@ import com.bazzar.android.presentation.composables.PrimaryButton
 import com.bazzar.android.presentation.composables.PrimaryOutlinedButton
 import com.bazzar.android.presentation.composables.SectionTitle
 import com.bazzar.android.presentation.composables.Subtitle
+import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
@@ -41,7 +42,7 @@ fun CheckOutScreenContent(
         modifier = Modifier
             .fillMaxSize()
             .background(BazzarTheme.colors.backgroundColor)
-            .padding(bottom = BazzarTheme.spacing.m),
+            .padding(bottom = BottomNavigationHeight),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
     ) {
@@ -96,8 +97,10 @@ fun CheckOutScreenContent(
             textColor = Color.White,
             enabled = state.selectedAddress != null,
             modifier = Modifier
+                .padding(horizontal = BazzarTheme.spacing.m)
                 .height(65.dp)
                 .fillMaxWidth()
         )
+        Spacer(modifier = Modifier.height(1.dp))
     }
 }

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -56,9 +57,8 @@ fun AddressView(
             Box(
                 modifier = Modifier
                     .padding(start = 77.dp)
-                    .width(148.dp)
-                    .defaultMinSize(minHeight = 32.dp)
-                    .wrapContentHeight()
+                    .wrapContentWidth()
+                    .height(32.dp)
                     .clip(RoundedCornerShape(16.dp))
                     .background(colorResource(id = R.color.prussian_blue))
                     .border(
