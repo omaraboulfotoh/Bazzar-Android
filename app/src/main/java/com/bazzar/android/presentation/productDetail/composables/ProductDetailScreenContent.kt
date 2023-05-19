@@ -122,18 +122,19 @@ fun ProductDetailScreenContent(
                     modifier = Modifier.align(Alignment.End),
                     onClick = { onSendEvent(Event.OnTackToUsClicked) }
                 )
-                BuyItem(
-                    modifier = Modifier
-                        .align(Alignment.End)
-                        .advancedShadow(
-                            cornersRadius = 33.dp,
-                            shadowBlurRadius = 15.dp,
-                            alpha = 0.5f,
-                            offsetX = 5.dp,
-                            offsetY = 5.dp,
-                        ),
-                    onBuyNowClicked = { onSendEvent(Event.OnBuyNowClicked) }
-                )
+                if (state.productDetail?.isSoldOut.orFalse().not())
+                    BuyItem(
+                        modifier = Modifier
+                            .align(Alignment.End)
+                            .advancedShadow(
+                                cornersRadius = 33.dp,
+                                shadowBlurRadius = 15.dp,
+                                alpha = 0.5f,
+                                offsetX = 5.dp,
+                                offsetY = 5.dp,
+                            ),
+                        onBuyNowClicked = { onSendEvent(Event.OnBuyNowClicked) }
+                    )
             }
             SuccessAddedToCart(
                 modifier = Modifier.align(Alignment.BottomCenter),

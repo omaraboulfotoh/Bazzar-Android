@@ -7,6 +7,7 @@ import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.cartScreen.composables.CartScreenContent
 import com.bazzar.android.presentation.destinations.AddressBookScreenDestination
 import com.bazzar.android.presentation.destinations.CheckOutScreenDestination
+import com.bazzar.android.presentation.destinations.HomeScreenDestination
 import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
@@ -32,6 +33,8 @@ fun CartScreen(
 
             CartContract.Effect.Navigation.GoToSelectAddress ->
                 navigator.navigate(CheckOutScreenDestination)
+
+            CartContract.Effect.Navigation.GoToHome -> navigator.navigate(HomeScreenDestination)
         }
     }
     // init logic

@@ -1,14 +1,21 @@
 package com.bazzar.android.presentation.cartScreen
 
 import com.android.local.SharedPrefersManager
+import com.android.model.home.BazaarModel
 import com.android.model.home.Product
 import com.android.model.request.CartItemRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
+import com.bazzar.android.R
+import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
+import com.bazzar.android.presentation.app.ConfirmationDialogParams
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.presentation.productDetail.ProductDetailContract
+import com.bazzar.android.utils.IResourceProvider
+import com.bazzar.android.utils.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
@@ -18,6 +25,7 @@ import javax.inject.Inject
 class CartViewModel @Inject constructor(
     globalState: IGlobalState,
     private val sharedPrefersManager: SharedPrefersManager,
+    private val resourceProvider: IResourceProvider,
     private val homeUseCase: HomeUseCase
 ) : BaseViewModel<CartContract.Event, CartContract.State, CartContract.Effect>(globalState) {
 
@@ -43,6 +51,9 @@ class CartViewModel @Inject constructor(
                 event.index,
                 ItemOperation.CLICK
             )
+
+            is CartContract.Event.OnProductFavClicked -> handleItemFav(event.index)
+            CartContract.Event.OnShoppingClicked -> setEffect { CartContract.Effect.Navigation.GoToHome }
         }
     }
 
@@ -50,19 +61,28 @@ class CartViewModel @Inject constructor(
         val productsList = currentState.productCartList.orEmpty().toMutableList()
         val item = productsList[itemIndex]
         when (action) {
-            ItemOperation.ADD_ONE -> if (item.selectedItemDetails?.itemBalance.orZero() > item.selectedItemDetails?.quantity.orZero()) {
-                handleCartInfo(productsList.plusOne(itemIndex))
+            ItemOperation.ADD_ONE -> if (item.itemBalance.orZero() > item.qty.orZero()) {
+                updateItem(item.itemDetailId.orZero(), item.qty.orZero().plus(1))
             }
 
-            ItemOperation.MINUS_ONE -> if (item.selectedItemDetails?.quantity.orZero() > 1) {
-                handleCartInfo(productsList.plusOne(itemIndex))
+            ItemOperation.MINUS_ONE -> if (item.qty.orZero() > 1) {
+                updateItem(item.itemDetailId.orZero(), item.qty.orZero().minus(1))
             } else {
                 handleItemAction(itemIndex, ItemOperation.DELETE)
             }
 
             ItemOperation.DELETE -> {
-                productsList.removeAt(itemIndex)
-                handleCartInfo(productsList)
+                globalState.confirmationDialog(
+                    params = ConfirmationDialogParams(
+                        title = resourceProvider.getString(R.string.delete_item),
+                        description = resourceProvider.getString(R.string.delete_item_desc),
+                        positiveButtonTitle = resourceProvider.getString(R.string.delete),
+                        negativeButtonTitle = resourceProvider.getString(R.string.cancel),
+                        onPositive = {
+                            deleteItem(item.itemDetailId.orZero())
+                        },
+                    )
+                )
             }
 
             ItemOperation.CLICK -> {
@@ -71,6 +91,26 @@ class CartViewModel @Inject constructor(
         }
         sharedPrefersManager.saveProductList(productsList)
     }
+
+    private fun deleteItem(itemDetailId: Int) = executeCatching({
+        homeUseCase.deleteFromCart(itemDetailId).collect { response ->
+            when (response) {
+                is Result.Error -> globalState.error(response.message.orEmpty())
+                is Result.Success -> loadCart()
+                else -> {}
+            }
+        }
+    })
+
+    private fun updateItem(itemDetailId: Int, qty: Int) = executeCatching({
+        homeUseCase.updateCartQuantity(itemDetailId, qty).collect { response ->
+            when (response) {
+                is Result.Error -> globalState.error(response.message.orEmpty())
+                is Result.Success -> loadCart()
+                else -> {}
+            }
+        }
+    })
 
     private fun handleCheckout() {
         if (sharedPrefersManager.isUserLongedIn()) {
@@ -92,6 +132,10 @@ class CartViewModel @Inject constructor(
             when (response) {
                 is Result.Error -> {
                     setState { copy(showEmptyCart = true) }
+
+                    if (sharedPrefersManager.isUserLongedIn()) {
+                        loadWishList()
+                    }
                 }
 
                 is Result.Success -> {
@@ -116,27 +160,73 @@ class CartViewModel @Inject constructor(
                 showEmptyCart = productsList.isEmpty()
             )
         }
+        if (productsList.isEmpty() && sharedPrefersManager.isUserLongedIn()) {
+            loadWishList()
+        }
     }
-}
 
-private fun MutableList<Product>.plusOne(itemIndex: Int) = mapIndexed { index, product ->
-    if (itemIndex == index) {
-        product.copy(
-            selectedItemDetails = product.selectedItemDetails?.copy(
-                quantity = product.selectedItemDetails?.quantity.orZero() + 1
-            )
-        )
-    } else product
-}
+    private fun loadWishList() = executeCatching({
+        homeUseCase.getProductWishList().collect { productWishListResponse ->
+            when (productWishListResponse) {
+                is Result.Success -> {
+                    setState {
+                        copy(
+                            productWishList = productWishListResponse.data.orEmpty(),
+                            showWishList = productWishListResponse.data.orEmpty().isEmpty()
+                        )
+                    }
+                }
 
-private fun MutableList<Product>.MinusOne(itemIndex: Int) = mapIndexed { index, product ->
-    if (itemIndex == index) {
-        product.copy(
-            selectedItemDetails = product.selectedItemDetails?.copy(
-                quantity = product.selectedItemDetails?.quantity.orZero() - 1
-            )
-        )
-    } else product
+                else -> {}
+            }
+        }
+    })
+
+    private fun handleItemFav(itemIndex: Int) = executeCatching({
+        val list = currentState.productWishList?.toMutableList() ?: return@executeCatching
+        val item = list[itemIndex]
+        val isFav = item.isWishList.orFalse().not()
+        if (isFav) {
+            homeUseCase.addProductWishList(item.id.orZero()).collect { response ->
+                when (response) {
+                    is Result.Success -> {
+                        val updatedList = list.mapIndexed { index, product ->
+                            if (index == itemIndex) {
+                                product.copy(isWishList = response.data.orFalse())
+                            } else {
+                                product
+                            }
+                        }
+                        setState {
+                            copy(productWishList = updatedList)
+                        }
+                    }
+
+                    else -> {}
+                }
+            }
+        } else {
+            homeUseCase.deleteBazaarWishList(item.id.orZero()).collect { response ->
+                when (response) {
+                    is Result.Success -> {
+                        val updatedList = list.mapIndexed { index, product ->
+                            if (index == itemIndex) {
+                                product.copy(isWishList = response.data.orFalse().not())
+                            } else {
+                                product
+                            }
+                        }
+                        setState {
+                            copy(productWishList = updatedList)
+                        }
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+
+    }, withLoading = false)
 }
 
 enum class ItemOperation {

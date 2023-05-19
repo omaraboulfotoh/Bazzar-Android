@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.presentation.theme.BazzarTheme
 import com.bazzar.android.presentation.theme.Shapes
@@ -66,6 +67,7 @@ fun PrimaryOutlinedButton(
     color: Color = BazzarTheme.colors.secondaryText,
     background: Color = BazzarTheme.colors.primaryButtonColor,
     icon: ImageVector? = null,
+    style: TextStyle = BazzarTheme.typography.body2Bold,
 ) {
 
     OutlinedButton(
@@ -90,7 +92,7 @@ fun PrimaryOutlinedButton(
 
         MessageBody(
             text = text,
-            style = BazzarTheme.typography.subtitle1SemiBold,
+            style = style,
             color = color
         )
     }

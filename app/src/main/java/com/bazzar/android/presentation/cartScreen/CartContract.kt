@@ -9,6 +9,8 @@ class CartContract {
 
     data class State(
         val productCartList: List<Product>? = emptyList(),
+        val productWishList: List<Product>? = emptyList(),
+        val showWishList: Boolean = false,
         val showEmptyCart: Boolean = false,
         val counterItem: Int? = null,
         val totalCartAMount: Double = 0.0,
@@ -16,16 +18,19 @@ class CartContract {
 
     sealed class Event : ViewEvent {
         object OnCheckout : Event()
+        object OnShoppingClicked : Event()
         data class OnDeleteItem(val index: Int) : Event()
         data class OnPlusItem(val index: Int) : Event()
         data class OnMinusItem(val index: Int) : Event()
         data class OnProductClicked(val index: Int) : Event()
+        data class OnProductFavClicked(val index: Int) : Event()
     }
 
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
             data class GoToProduct(val product: Product) : Navigation()
             object GoToLogin : Navigation()
+            object GoToHome : Navigation()
             object GoToSelectAddress : Navigation()
         }
     }
