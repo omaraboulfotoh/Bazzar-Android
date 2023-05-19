@@ -38,7 +38,7 @@ import com.bazzar.android.presentation.theme.Shapes_MediumX
 @Composable
 fun TextInputField(
     text: String,
-    label: String,
+    label: String? = null,
     placeholder: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier.fillMaxWidth(),
@@ -50,8 +50,8 @@ fun TextInputField(
     backgroundColor: Color = Color.Transparent,
     borderFocusColor: Color = BazzarTheme.colors.borderColor,
     borderUnFocusColor: Color = BazzarTheme.colors.borderColor,
-    textStyle: TextStyle = BazzarTheme.typography.subtitle1,
-    placeHolderStyle: TextStyle = BazzarTheme.typography.subtitle1,
+    textStyle: TextStyle = BazzarTheme.typography.body2,
+    placeHolderStyle: TextStyle = BazzarTheme.typography.body2,
     placeholderColor: Color = BazzarTheme.colors.placeholder,
     labelColor: Color = textColor,
     cursorColor: Color = textColor,
@@ -63,10 +63,11 @@ fun TextInputField(
 ) {
 
     Column {
-        DescriptionBody(text = label, color = labelColor)
+        label?.let {
+            DescriptionBody(text = label, color = labelColor)
 
-        Spacer(modifier = Modifier.height(BazzarTheme.spacing.xs))
-
+            Spacer(modifier = Modifier.height(BazzarTheme.spacing.xs))
+        }
         OutlinedTextField(
             value = text,
             textStyle = textStyle,
@@ -155,7 +156,8 @@ fun <T> PickerTextInputField(
     PreviewItem: @Composable (RowScope.(item: T) -> Unit)? = null,
 ) {
 
-    val screenWidth = LocalContext.current.resources.displayMetrics.widthPixels.dp / LocalDensity.current.density
+    val screenWidth =
+        LocalContext.current.resources.displayMetrics.widthPixels.dp / LocalDensity.current.density
     var isDropdownExpanded by remember { mutableStateOf(false) }
 
     fun collapse() {
@@ -230,19 +232,28 @@ fun <T> PickerTextInputField(
                 expanded = isDropdownExpanded,
                 onDismissRequest = { collapse() },
                 content = {
-                    LazyColumn(modifier = Modifier
-                        .size(width = screenWidth, height = 200.dp)
-                        .heightIn(min = 200.dp)
-                        .padding(BazzarTheme.spacing.m)
-                        .border(width = 1.dp, color = BazzarTheme.colors.stroke, shape = Shapes_MediumX)
-                        .padding(BazzarTheme.spacing.m),
+                    LazyColumn(
+                        modifier = Modifier
+                            .size(width = screenWidth, height = 200.dp)
+                            .heightIn(min = 200.dp)
+                            .padding(BazzarTheme.spacing.m)
+                            .border(
+                                width = 1.dp,
+                                color = BazzarTheme.colors.stroke,
+                                shape = Shapes_MediumX
+                            )
+                            .padding(BazzarTheme.spacing.m),
                     ) {
                         itemsIndexed(pickerItems) { index, item ->
                             PickerItemView(item) {
                                 onItemSelection.invoke(item)
                                 collapse()
                             }
-                            if (index != pickerItems.lastIndex) Spacer(modifier = Modifier.height(itemSpacer))
+                            if (index != pickerItems.lastIndex) Spacer(
+                                modifier = Modifier.height(
+                                    itemSpacer
+                                )
+                            )
                         }
                     }
                 }

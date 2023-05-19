@@ -31,6 +31,8 @@ class CreateOrderViewModel @Inject constructor(
             is CreateOrderContract.Event.OnNotesChanged -> setState { copy(additionalNotes = event.notes) }
             CreateOrderContract.Event.OnBackClicked -> setEffect { CreateOrderContract.Effect.Navigation.GoBack }
             is CreateOrderContract.Event.OnPaymentCallBack -> handlePaymentSuccess(event.status)
+            is CreateOrderContract.Event.OnPromoCodeChanged -> {}
+            CreateOrderContract.Event.OnPromoCodeSubmit -> {}
         }
     }
 

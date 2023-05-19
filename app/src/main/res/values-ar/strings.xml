@@ -190,4 +190,7 @@
     <string name="start_shopping_now">ابدأ التسوق الأن</string>
     <string name="you_dont_have_address">ليس لديك اي عنوان</string>
     <string name="apply">تطبيق</string>
+    <string name="coupon_code">Coupon Code</string>
+    <string name="promo_code_placeholder">Enter Coupon Code</string>
+    <string name="discount">DISCOUNT</string>
 </resources>

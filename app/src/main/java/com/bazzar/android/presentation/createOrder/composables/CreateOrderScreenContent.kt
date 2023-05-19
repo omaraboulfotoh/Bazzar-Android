@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.createOrder.composables
 
+import android.widget.EditText
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.RadioButton
@@ -22,18 +24,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.common.orFalse
+import com.bazzar.android.common.orZero
 import com.bazzar.android.common.toPriceFormat
 import com.bazzar.android.presentation.checkOutScreen.composables.AddressItem
 import com.bazzar.android.presentation.composables.BazzarAppBar
 import com.bazzar.android.presentation.composables.PrimaryButton
 import com.bazzar.android.presentation.composables.RemoteImage
 import com.bazzar.android.presentation.composables.Subtitle
+import com.bazzar.android.presentation.composables.TextInputField
 import com.bazzar.android.presentation.composables.Title
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.createOrder.CreateOrderContract.Event
@@ -131,6 +136,27 @@ fun CreateOrderScreenContent(
                             .height(1.dp),
                         color = BazzarTheme.colors.stroke
                     )
+                    if (state.discount > 0)
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(Color(0xffFFD9E3)),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Title(
+                                modifier = Modifier.wrapContentSize(),
+                                text = stringResource(id = R.string.discount),
+                                style = BazzarTheme.typography.body2Bold,
+                                color = BazzarTheme.colors.discountText
+                            )
+                            Title(
+                                modifier = Modifier.wrapContentSize(),
+                                text = "${state.totalPrice.toPriceFormat()} KD",
+                                style = BazzarTheme.typography.body2Bold,
+                                color = BazzarTheme.colors.discountText
+                            )
+                        }
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
@@ -150,6 +176,39 @@ fun CreateOrderScreenContent(
                         )
                     }
                 }
+                // promo code
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(BazzarTheme.colors.white)
+                        .padding(BazzarTheme.spacing.m),
+                    verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    Subtitle(
+                        modifier = Modifier.wrapContentSize(),
+                        text = stringResource(id = R.string.coupon_code),
+                        style = BazzarTheme.typography.body2Bold,
+                        color = BazzarTheme.colors.primaryButtonColor
+                    )
+                    TextInputField(
+                        text = state.promoCode.orEmpty(),
+                        onValueChange = {
+                            onSendEvent(Event.OnPromoCodeChanged(it))
+                        },
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                onSendEvent(Event.OnPromoCodeSubmit)
+                            }
+                        ),
+                        placeholderColor = BazzarTheme.colors.primaryButtonColor,
+                        textColor = BazzarTheme.colors.primaryButtonColor,
+                        placeHolderStyle = BazzarTheme.typography.body2Bold,
+                        textStyle = BazzarTheme.typography.body2Bold,
+                        placeholder = stringResource(id = R.string.promo_code_placeholder)
+                    )
+                }
+
                 // payment Methods
                 Column(
                     modifier = Modifier

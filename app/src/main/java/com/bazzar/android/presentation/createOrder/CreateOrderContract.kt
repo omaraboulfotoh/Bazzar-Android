@@ -14,7 +14,9 @@ class CreateOrderContract {
         val subTotal: Double = 0.0,
         val shipping: Double = 0.0,
         val totalPrice: Double = 0.0,
+        val discount: Double = 0.0,
         val additionalNotes: String? = null,
+        val promoCode: String? = null,
     ) : ViewState
 
     sealed class Event : ViewEvent {
@@ -23,6 +25,8 @@ class CreateOrderContract {
         data class OnPaymentMethodClicked(val index: Int) : Event()
         data class OnPaymentCallBack(val status: Boolean) : Event()
         data class OnNotesChanged(val notes: String) : Event()
+        data class OnPromoCodeChanged(val notes: String) : Event()
+        object OnPromoCodeSubmit : Event()
     }
 
     sealed class Effect : ViewSideEffect {
