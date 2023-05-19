@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -67,8 +68,7 @@ fun CreateOrderScreenContent(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(scrollState)
-                    .background(BazzarTheme.colors.backgroundColor)
-                    .padding(bottom = 65.dp),
+                    .background(BazzarTheme.colors.backgroundColor),
                 verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
                 horizontalAlignment = Alignment.Start
             ) {
@@ -213,31 +213,24 @@ fun CreateOrderScreenContent(
                     )
                     state.address?.let {
                         AddressItem(
-                            address = it, onSetAsDefaultClick = {}, onEditAddressClick = {}, onDeleteAddress = { }
+                            address = it,
+                            onSetAsDefaultClick = {},
+                            onEditAddressClick = {},
+                            onDeleteAddress = { }
                         )
                     }
                 }
-
-
+                Spacer(modifier = Modifier.height(BazzarTheme.spacing.xl))
             }
-            Box(
+            PrimaryButton(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .padding(BazzarTheme.spacing.m)
-            ) {
-                PrimaryButton(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(65.dp)
-                        .align(Alignment.Center)
-                        .clip(RoundedCornerShape(32.5.dp))
-                        .background(colorResource(id = R.color.prussian_blue))
-                        .align(Alignment.BottomCenter),
-                    text = stringResource(id = R.string.place_order),
-                    textColor = colorResource(id = R.color.white),
-                    onClick = { onSendEvent(Event.OnCreateOrderClicked) })
-            }
+                    .padding(horizontal = BazzarTheme.spacing.l)
+                    .height(65.dp)
+                    .align(Alignment.BottomCenter),
+                text = stringResource(id = R.string.place_order),
+                textColor = colorResource(id = R.color.white),
+                onClick = { onSendEvent(Event.OnCreateOrderClicked) })
         }
     }
 

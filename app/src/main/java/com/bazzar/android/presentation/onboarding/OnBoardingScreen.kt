@@ -5,6 +5,7 @@ package com.bazzar.android.presentation.onboarding
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,6 +24,7 @@ import com.bazzar.android.common.sideEffect
 import com.bazzar.android.presentation.composables.PrimaryButton
 import com.bazzar.android.presentation.destinations.HomeScreenDestination
 import com.bazzar.android.presentation.destinations.MainScreenDestination
+import com.bazzar.android.presentation.theme.BazzarTheme
 import com.bazzar.android.presentation.theme.COLOR_BLUE
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -46,17 +48,20 @@ fun OnBoardingScreen(
         }
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = BazzarTheme.spacing.l)
+    ) {
         HorizontalPager(
             count = items.size,
             state = pageState,
             modifier = Modifier
-                .fillMaxHeight(0.8f)
+                .weight(9f)
                 .fillMaxWidth()
         ) { page ->
             OnBoardingItem(items = items[page])
         }
-
         Row(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
@@ -65,11 +70,13 @@ fun OnBoardingScreen(
             Indicators(items.size, pageState.currentPage)
         }
 
+        Spacer(modifier = Modifier.weight(1f))
+
         if (pageState.currentPage == items.size - 1) {
             PrimaryButton(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(BazzarTheme.spacing.m),
                 text = stringResource(R.string.onboarding_start),
                 onClick = {
                     viewModel.setEvent(OnBoardingContract.Event.OnSkipClicked)
@@ -83,7 +90,7 @@ fun OnBoardingScreen(
                 fontWeight = FontWeight.Bold,
                 text = stringResource(R.string.onboarding_skip),
                 modifier = Modifier
-                    .padding(end = 16.dp, top = 16.dp)
+                    .padding(BazzarTheme.spacing.m)
                     .align(Alignment.End)
                     .clickable {
                         viewModel.setEvent(OnBoardingContract.Event.OnSkipClicked)

@@ -2,6 +2,7 @@ package com.android.network.datasource.impl
 
 import com.android.model.home.*
 import com.android.model.request.AddToCartRequest
+import com.android.model.request.ChangePasswordRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
@@ -12,7 +13,6 @@ import com.android.network.datasource.HomeRemoteDataSource
 import com.android.network.service.HomeApiServices
 import retrofit2.Response
 import javax.inject.Inject
-
 
 class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: HomeApiServices) :
     HomeRemoteDataSource {
@@ -42,10 +42,11 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun changePassword(
         currentPassword: String,
         newPassword: String
-    ): Response<BaseWrapper<Boolean>> = apiServices.changePassword(currentPassword, newPassword)
+    ): Response<BaseWrapper<Boolean>> =
+        apiServices.changePassword(ChangePasswordRequest(currentPassword, newPassword))
 
     override suspend fun login(userLoginRequest: UserLoginRequest) =
-        apiServices.login(userLoginRequest.Phone, userLoginRequest.Password)
+        apiServices.login(userLoginRequest)
 
     override suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest) =
         apiServices.verifyOtp(verifyOtpRequest)

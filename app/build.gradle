@@ -59,7 +59,7 @@ android {
     productFlavors {
         dev {
             dimension 'default'
-            buildConfigField "String", "BASE_URL", "\"https://api.bzaaarz.com/MobileApp/\""
+            buildConfigField "String", "BASE_URL", "\"https://api.bazzargate.com/\""
             buildConfigField "String", "IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/original\""
             buildConfigField "String", "MAP_API_KEY", "\"AIzaSyC432wMYriZAEZh-HZYL3qCMMij3tQ4i3I\""
             buildConfigField "String", "MDB_ID", "\"c9856d0cb57c3f14bf75bdc6c063b8f3\""

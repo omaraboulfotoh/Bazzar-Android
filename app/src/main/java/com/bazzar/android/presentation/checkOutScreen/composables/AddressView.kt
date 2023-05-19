@@ -71,6 +71,7 @@ fun AddressView(
                     }, contentAlignment = Alignment.Center
             ) {
                 Text(
+                    modifier = Modifier.padding(horizontal = BazzarTheme.spacing.s),
                     text = stringResource(id = R.string.change_default_address),
                     style = MaterialTheme.typography.overline.copy(
                         fontFamily = FontFamily(Font(R.font.montserrat_bold)),
