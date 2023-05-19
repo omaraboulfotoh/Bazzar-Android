@@ -13,15 +13,7 @@ data class LoadCheckoutRequest(
     @Json(name = "paymentMethodId")
     val paymentMethodId: Int? = null,
     @Json(name = "orderNotes")
-    val orderNotes: String = "",
-) : Parcelable
-
-
-@Parcelize
-@JsonClass(generateAdapter = true)
-data class CartItemRequest(
-    @Json(name = "itemDetailId")
-    val itemDetailId: Int,
-    @Json(name = "qty")
-    val qty: Int,
+    val orderNotes: String? = "",
+    @Json(name = "promotionCode")
+    val promotionCode: String? = null,
 ) : Parcelable

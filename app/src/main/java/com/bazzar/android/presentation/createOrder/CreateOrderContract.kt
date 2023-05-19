@@ -25,7 +25,7 @@ class CreateOrderContract {
         data class OnPaymentMethodClicked(val index: Int) : Event()
         data class OnPaymentCallBack(val status: Boolean) : Event()
         data class OnNotesChanged(val notes: String) : Event()
-        data class OnPromoCodeChanged(val notes: String) : Event()
+        data class OnPromoCodeChanged(val promoCode: String) : Event()
         object OnPromoCodeSubmit : Event()
     }
 

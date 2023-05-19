@@ -1,14 +1,14 @@
 package com.bazzar.android.presentation.createOrder
 
-import com.android.local.SharedPrefersManager
 import com.android.model.home.UserAddress
-import com.android.model.request.CartItemRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
+import com.bazzar.android.R
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.utils.IResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -16,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateOrderViewModel @Inject constructor(
     globalState: IGlobalState,
-    private val homeUseCase: HomeUseCase
+    private val homeUseCase: HomeUseCase,
+    private val resourceProvider: IResourceProvider
 ) : BaseViewModel<CreateOrderContract.Event, CreateOrderContract.State, CreateOrderContract.Effect>(
     globalState
 ) {
@@ -31,8 +32,15 @@ class CreateOrderViewModel @Inject constructor(
             is CreateOrderContract.Event.OnNotesChanged -> setState { copy(additionalNotes = event.notes) }
             CreateOrderContract.Event.OnBackClicked -> setEffect { CreateOrderContract.Effect.Navigation.GoBack }
             is CreateOrderContract.Event.OnPaymentCallBack -> handlePaymentSuccess(event.status)
-            is CreateOrderContract.Event.OnPromoCodeChanged -> {}
-            CreateOrderContract.Event.OnPromoCodeSubmit -> {}
+            is CreateOrderContract.Event.OnPromoCodeChanged -> setState { copy(promoCode = event.promoCode) }
+            CreateOrderContract.Event.OnPromoCodeSubmit -> submitPromoCode()
+        }
+    }
+
+    private fun submitPromoCode() {
+        val promoCode = currentState.promoCode.orEmpty()
+        if (promoCode.isEmpty().not()) {
+            loadCheckout(currentState.address!!, promoCode = promoCode)
         }
     }
 
@@ -40,7 +48,7 @@ class CreateOrderViewModel @Inject constructor(
         if (status) {
             setEffect { CreateOrderContract.Effect.Navigation.GoToSuccessScreen }
         } else {
-            globalState.error("Payment Failure")
+            globalState.error(resourceProvider.getString(R.string.payment_falid))
         }
     }
 
@@ -51,9 +59,12 @@ class CreateOrderViewModel @Inject constructor(
         }
     }
 
-    private fun loadCheckout(address: UserAddress) = executeCatching({
+    private fun loadCheckout(address: UserAddress, promoCode: String? = null) = executeCatching({
         homeUseCase.loadCheckout(
-            LoadCheckoutRequest(userAddressId = address.id.orZero())
+            LoadCheckoutRequest(
+                userAddressId = address.id.orZero(),
+                promotionCode = promoCode
+            )
         )
             .collect { response ->
                 when (response) {
@@ -70,6 +81,8 @@ class CreateOrderViewModel @Inject constructor(
                                 totalPrice = response.data?.totalPrice.orZero(),
                                 shipping = response.data?.shipping.orZero(),
                                 subTotal = response.data?.subTotal.orZero(),
+                                discount = response.data?.discount.orZero(),
+                                promoCode = ""
                             )
                         }
                     }

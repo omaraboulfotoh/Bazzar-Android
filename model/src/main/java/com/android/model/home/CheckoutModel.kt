@@ -12,6 +12,7 @@ data class CheckoutModel(
     @Json(name = "userAddressId") val userAddressId: Int? = null,
     @Json(name = "subTotal") val subTotal: Double? = null,
     @Json(name = "shipping") val shipping: Double? = null,
+    @Json(name = "discount") val discount: Double? = null,
     @Json(name = "totalPrice") val totalPrice: Double? = null,
     @Json(name = "allItemsAvailable") val allItemsAvailable: Boolean? = null,
     @Json(name = "paymentMethods") val paymentMethods: List<PaymentMethod>? = null,

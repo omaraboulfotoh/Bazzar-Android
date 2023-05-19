@@ -193,4 +193,5 @@
     <string name="coupon_code">Coupon Code</string>
     <string name="promo_code_placeholder">Enter Coupon Code</string>
     <string name="discount">DISCOUNT</string>
+    <string name="payment_falid">Payment Faild</string>
 </resources>
