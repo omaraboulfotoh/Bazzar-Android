@@ -112,7 +112,7 @@ class BazarDetailViewModel @Inject constructor(
                 }
             }
         } else {
-            homeUseCase.deleteBazaarWishList(item.id.orZero()).collect { response ->
+            homeUseCase.deleteProductWishList(item.id.orZero()).collect { response ->
                 when (response) {
                     is Result.Success -> {
                         val updatedList = list.mapIndexed { index, product ->

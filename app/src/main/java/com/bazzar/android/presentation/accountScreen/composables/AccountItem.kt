@@ -60,21 +60,21 @@ fun AccountItem(
             text = buildAnnotatedString {
                 withStyle(
                     style = SpanStyle(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
-                        fontSize = 14.sp,
-                        color = BazzarTheme.colors.white
-                    )
-                ) {
-                    append(if (userData.email.orEmpty().isNotEmpty()) "${userData.email}\n" else "")
-                }
-                withStyle(
-                    style = SpanStyle(
                         fontFamily = FontFamily(Font(R.font.montserrat_regular)),
                         fontSize = 14.sp,
                         color = BazzarTheme.colors.white
                     )
                 ) {
-                    append(userData.phone.orEmpty())
+                    append(userData.name.orEmpty())
+                }
+                withStyle(
+                    style = SpanStyle(
+                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        fontSize = 14.sp,
+                        color = BazzarTheme.colors.white
+                    )
+                ) {
+                    append(if (userData.email.orEmpty().isNotEmpty()) "\n${userData.email}" else "")
                 }
             }
         )

@@ -43,7 +43,7 @@ class BazarListViewModel @Inject constructor(
         }
         val isFav = bazar.isWishList.orFalse().not()
         if (isFav) {
-            homeUseCase.addProductWishList(bazar.id.orZero())
+            homeUseCase.addBazaarWishList(bazar.id.orZero())
                 .collect { response ->
                     when (response) {
                         is Result.Success -> {

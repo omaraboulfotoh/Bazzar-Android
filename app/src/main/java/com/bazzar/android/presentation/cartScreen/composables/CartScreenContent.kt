@@ -17,7 +17,9 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,16 +46,19 @@ import com.bazzar.android.presentation.theme.BazzarTheme
 fun CartScreenContent(
     state: CartContract.State, onSendEvent: (CartContract.Event) -> Unit
 ) {
+
+    val scrollState = rememberScrollState()
+    val defaultModifier = Modifier
+        .fillMaxSize()
+        .background(BazzarTheme.colors.backgroundColor)
+        .padding(bottom = BottomNavigationHeight)
+
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(BazzarTheme.colors.backgroundColor)
-            .padding(bottom = BottomNavigationHeight),
+        modifier = if (state.showEmptyCart.not())
+            defaultModifier else defaultModifier.verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
     ) {
-
-
         // top bar
         EmptyMbcAppBar(title = stringResource(id = R.string.cart))
 
@@ -113,7 +118,7 @@ fun CartScreenContent(
                 }
             }
         } else {
-            Spacer(modifier = Modifier.height(BazzarTheme.spacing.m))
+            Spacer(modifier = Modifier.height(BazzarTheme.spacing.s))
             Image(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_empty_cart),
                 contentDescription = "ic_empty_cart"

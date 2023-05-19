@@ -135,7 +135,7 @@ class ProductViewModel @Inject constructor(
                     }
                 }
         } else {
-            homeUseCase.deleteBazaarWishList(item.id.orZero())
+            homeUseCase.deleteProductWishList(item.id.orZero())
                 .collect { response ->
                     when (response) {
                         is Result.Success -> {

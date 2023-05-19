@@ -9,9 +9,11 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -21,6 +23,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bazzar.android.R
@@ -51,14 +54,16 @@ fun OtpInteraction(
                 ),
                 textAlign = TextAlign.Center
             )
-            OtpTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 56.dp),
-                otpCount = otpCount,
-                onOtpTextChange = onOtpTextChanged,
-                otpText = otp
-            )
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                OtpTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 56.dp),
+                    otpCount = otpCount,
+                    onOtpTextChange = onOtpTextChanged,
+                    otpText = otp
+                )
+            }
             ClickableText(
                 modifier = Modifier
                     .padding(top = 32.dp)

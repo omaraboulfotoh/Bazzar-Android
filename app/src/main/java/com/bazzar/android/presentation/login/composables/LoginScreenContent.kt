@@ -8,9 +8,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
@@ -37,21 +40,23 @@ fun LoginScreenContent(
             modifier = Modifier,
             onAction = { onSendEvent(LoginContract.Event.OnContinueAsAGuest) })
 
-        InputMobileNumber(
-            phone = state.mobileNumber.orEmpty(),
-            onPhoneChanged = {
-                onSendEvent(LoginContract.Event.OnPhoneChanged(it))
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = BazzarTheme.spacing.xs)
-                .border(
-                    width = 1.dp,
-                    color = BazzarTheme.colors.primaryButtonTextColorDisabled,
-                    shape = RoundedCornerShape(32.5.dp),
-                )
-                .padding(vertical = 4.dp),
-        )
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+            InputMobileNumber(
+                phone = state.mobileNumber.orEmpty(),
+                onPhoneChanged = {
+                    onSendEvent(LoginContract.Event.OnPhoneChanged(it))
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = BazzarTheme.spacing.xs)
+                    .border(
+                        width = 1.dp,
+                        color = BazzarTheme.colors.primaryButtonTextColorDisabled,
+                        shape = RoundedCornerShape(32.5.dp),
+                    )
+                    .padding(vertical = 4.dp),
+            )
+        }
         InputPassword(
             modifier = Modifier
                 .fillMaxWidth()
