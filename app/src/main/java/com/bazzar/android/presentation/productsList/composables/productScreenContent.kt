@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -40,107 +39,122 @@ import com.bazzar.android.presentation.theme.Shapes
 fun ProductScreenContent(
     state: ProductContract.State, onSendEvent: (ProductContract.Event) -> Unit,
 ) {
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(BazzarTheme.colors.backgroundColor)
-            .padding(bottom = BottomNavigationHeight),
-        horizontalAlignment = Alignment.Start,
-        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
+            .padding(bottom = BottomNavigationHeight)
     ) {
-        BazzarAppBar(title = state.productScreenTitle,
-            onNavigationClick = {
-                onSendEvent(ProductContract.Event.OnBackIconClicked)
-            },
-            actions = {
-                Box(
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
+        ) {
+            BazzarAppBar(title = state.productScreenTitle,
+                onNavigationClick = {
+                    onSendEvent(ProductContract.Event.OnBackIconClicked)
+                },
+                actions = {
+                    Box(
+                        modifier = Modifier
+                            .defaultMinSize(minWidth = 50.dp, minHeight = 50.dp)
+                            .clickable {
+                                onSendEvent(ProductContract.Event.OnSearchClicked)
+                            }
+                    ) {
+                        Icon(
+                            modifier = Modifier.align(Alignment.CenterEnd),
+                            painter = painterResource(id = R.drawable.search_icon),
+                            contentDescription = null,
+                            tint = colorResource(id = R.color.prussian_blue)
+                        )
+                    }
+                })
+            // show subCategories
+            if (state.subCategoryList.isNullOrEmpty().not()) {
+                SubCategorySlider(
                     modifier = Modifier
-                        .defaultMinSize(minWidth = 50.dp, minHeight = 50.dp)
-                        .clickable {
-                            onSendEvent(ProductContract.Event.OnSearchClicked)
-                        }
-                ) {
-                    Icon(
-                        modifier = Modifier.align(Alignment.CenterEnd),
-                        painter = painterResource(id = R.drawable.search_icon),
-                        contentDescription = null,
-                        tint = colorResource(id = R.color.prussian_blue)
-                    )
-                }
-            })
-        // show subCategories
-        if (state.subCategoryList.isNullOrEmpty().not()) {
-            SubCategorySlider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(94.dp),
-                subCategoryList = state.subCategoryList.orEmpty(),
-                onClickSubCategory = { categoryIndex ->
-                    onSendEvent(
-                        ProductContract.Event.OnSubCategoryClicked(categoryIndex)
-                    )
-                }
+                        .fillMaxWidth()
+                        .height(94.dp),
+                    subCategoryList = state.subCategoryList.orEmpty(),
+                    onClickSubCategory = { categoryIndex ->
+                        onSendEvent(
+                            ProductContract.Event.OnSubCategoryClicked(categoryIndex)
+                        )
+                    }
+                )
+            }
+            SortFilterBar(
+                numOfProducts = state.productList?.size,
+                numOfSelectedFilters = state.numOfSelectedFilter,
+                onFilterClicked = { onSendEvent(ProductContract.Event.OnFilterClicked) },
+                onSortClicked = { onSendEvent(ProductContract.Event.OnSortClicked) },
             )
-        }
-        // show brands
-        if (state.brand != null) {
-            Box(
-                Modifier
-                    .fillMaxWidth()
-                    .height(150.dp)
-                    .padding(horizontal = BazzarTheme.spacing.m)
-            ) {
-                BrandImage(
-                    state.brand.imagePath,
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(Shapes.large)
-                )
+            // show brands
+            if (state.brand != null) {
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(150.dp)
+                        .padding(horizontal = BazzarTheme.spacing.m)
+                ) {
+                    BrandImage(
+                        state.brand.imagePath,
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(Shapes.large)
+                    )
+                }
             }
-        }
 
-        // list items
-        if (state.showEmptyView) {
-            Box(modifier = Modifier.weight(1f)) {
-                Image(
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .align(Alignment.Center),
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_empty_view),
-                    contentDescription = "ic_empty_view"
-                )
-            }
-        } else {
-            LazyVerticalGrid(
-                modifier = Modifier.weight(1f),
-                columns = GridCells.Fixed(2),
-                contentPadding = PaddingValues(BazzarTheme.spacing.m),
-                verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs),
-                horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs),
-            ) {
-                itemsIndexed(state.productList.orEmpty()) { index, item ->
-                    ProductItem(item, onItemClicked = {
-                        onSendEvent(ProductContract.Event.OnProductClicked(index))
-                    }, onFavClicked = {
-                        onSendEvent(ProductContract.Event.OnProductFavClicked(index))
-                    })
+            // list items
+            if (state.showEmptyView) {
+                Box(modifier = Modifier.weight(1f)) {
+                    Image(
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .align(Alignment.Center),
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_empty_view),
+                        contentDescription = "ic_empty_view"
+                    )
+                }
+            } else {
+                LazyVerticalGrid(
+                    modifier = Modifier.weight(1f),
+                    columns = GridCells.Fixed(2),
+                    contentPadding = PaddingValues(BazzarTheme.spacing.m),
+                    verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs),
+                    horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs),
+                ) {
+                    itemsIndexed(state.productList.orEmpty()) { index, item ->
+                        ProductItem(item, onItemClicked = {
+                            onSendEvent(ProductContract.Event.OnProductClicked(index))
+                        }, onFavClicked = {
+                            onSendEvent(ProductContract.Event.OnProductFavClicked(index))
+                        })
 
-                    val isLastItem = index == state.productList.orEmpty().lastIndex
-                    if (isLastItem && state.isLoadingMore.not() && state.hasMore) {
-                        onSendEvent(ProductContract.Event.ReachedListEnd)
+                        val isLastItem = index == state.productList.orEmpty().lastIndex
+                        if (isLastItem && state.isLoadingMore.not() && state.hasMore) {
+                            onSendEvent(ProductContract.Event.ReachedListEnd)
+                        }
                     }
                 }
             }
         }
+
+        SortDialog(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = BazzarTheme.spacing.m)
+                .padding(bottom = BazzarTheme.spacing.m)
+                .align(Alignment.BottomCenter),
+            show = state.showSortDialog,
+            sortingList = state.sortFilter?.sortingList ?: listOf(),
+            selectedSortItem = state.selectedSortItem,
+            onDismiss = { onSendEvent(ProductContract.Event.OnDismissSortDialogClicked) },
+            onSelectSortItem = { onSendEvent(ProductContract.Event.OnSortItemSelected(it)) },
+            onApply = { onSendEvent(ProductContract.Event.OnApplySortClicked) }
+        )
     }
 }
-
-
-
-
-
-
-
-
-

@@ -17,6 +17,7 @@ interface HomeRepo {
     suspend fun getAllBrands(): Flow<Result<List<Brand>>>
     suspend fun getAllProductList(searchProduct: SearchProductRequest): Flow<Result<List<Product>>>
     suspend fun getAllProductDetails(productId: Int): Flow<Result<Product>>
+    suspend fun loadFiltersAndSorting(queryMap: Map<String, String>): Flow<Result<SortFilter>>
     suspend fun register(request: UserRegisterRequest): Flow<Result<UserData>>
     suspend fun updateFcmToken(fcmToken: String): Flow<Result<*>>
     suspend fun editProfile(request: UserRegisterRequest): Flow<Result<EditProfileResponse>>

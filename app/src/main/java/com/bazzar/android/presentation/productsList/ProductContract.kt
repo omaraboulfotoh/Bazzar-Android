@@ -3,6 +3,8 @@ package com.bazzar.android.presentation.productsList
 import com.android.model.home.Brand
 import com.android.model.home.Category
 import com.android.model.home.Product
+import com.android.model.home.SortFilter
+import com.android.model.home.SortItem
 import com.android.model.request.SearchProductRequest
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
@@ -15,18 +17,29 @@ class ProductContract {
         val searchRequest: SearchProductRequest = SearchProductRequest(),
         val category: Category? = null,
         val subCategoryList: List<Category>? = emptyList(),
+        val selectedSortItem: SortItem? = null,
+        val sortFilter: SortFilter? = null,
         val listPaging: Int? = 1,
         val hasMore: Boolean = false,
         val showEmptyView: Boolean = false,
         val isLoadingMore: Boolean = true,
         val isSearchClicked: Boolean = false,
         val productScreenTitle: String = "",
+        val showSortDialog: Boolean = false,
+        val showFilterDialog: Boolean = false,
+        val numOfSelectedFilter: Int = 0,
     ) : ViewState
 
     sealed class Event : ViewEvent {
         data class OnSubCategoryClicked(val categoryIndex: Int) : Event()
         data class OnProductClicked(val itemIndex: Int) : Event()
         data class OnProductFavClicked(val itemIndex: Int) : Event()
+        data class OnSortItemSelected(val sortItem: SortItem) : Event()
+        object OnApplySortClicked : Event()
+        object OnSortClicked : Event()
+        object OnFilterClicked : Event()
+        object OnDismissSortDialogClicked : Event()
+        object OnDismissFilterDialogClicked : Event()
         object OnBackIconClicked : Event()
         object OnSearchClicked : Event()
         object ReachedListEnd : Event()

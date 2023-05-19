@@ -15,6 +15,7 @@ import com.android.model.home.Product
 import com.android.model.home.UserAddress
 import com.android.model.home.UserData
 import com.android.model.home.OrderHistory
+import com.android.model.home.SortFilter
 import com.android.model.request.AddToCartRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
@@ -130,6 +131,19 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             )
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun loadFiltersAndSorting(queryMap: Map<String, String>) =
+        flow {
+            try {
+                homeRemoteDataSource.loadFiltersAndSorting(queryMap).let {
+                    if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: SortFilter()))
+                    else Result.Error(SortFilter(), "error will be handled")
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "loadFiltersAndSorting: ", throwable)
+                emit(Result.Error(SortFilter(), throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
     override suspend fun register(request: UserRegisterRequest) = flow {
         try {
