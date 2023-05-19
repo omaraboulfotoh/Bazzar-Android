@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.imageViewer
 
+import com.android.model.home.BazaarModel
 import com.android.model.home.Product
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
@@ -11,6 +12,7 @@ class ImageViewerContract {
         val product: Product? = null,
         val currentIndicatorIndex: Int = 0,
         val showSuccessAddedToCart: Boolean = false,
+        val bazaar: BazaarModel? = null
     ) : ViewState
 
     sealed class Event : ViewEvent {

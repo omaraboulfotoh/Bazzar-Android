@@ -33,7 +33,7 @@ fun ImageViewerSlider(
         RemoteImage(
             modifier = Modifier.fillMaxSize(),
             imageUrl = imagePathList[page],
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Fit,
             background = BazzarTheme.colors.white,
             withShimmer = true,
         )

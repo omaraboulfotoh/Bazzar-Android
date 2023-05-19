@@ -52,7 +52,8 @@ fun ProductDetailScreen(
                 navigator.navigate(
                     ImageViewerScreenDestination(
                         imagePathsList = ArrayList(effect.imagePathList),
-                        product = effect.product
+                        product = effect.product,
+                        bazaar = bazaar
                     )
                 )
 

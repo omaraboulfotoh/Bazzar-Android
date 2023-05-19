@@ -1,19 +1,23 @@
 package com.bazzar.android.presentation.imageViewer
 
-import com.android.local.SharedPrefersManager
+import com.android.model.home.BazaarModel
 import com.android.model.home.Product
+import com.android.model.request.AddToCartRequest
+import com.android.network.domain.usecases.HomeUseCase
+import com.android.network.states.Result
+import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
-import com.bazzar.android.presentation.imageViewer.ImageViewerContract.State
-import com.bazzar.android.presentation.imageViewer.ImageViewerContract.Event
 import com.bazzar.android.presentation.imageViewer.ImageViewerContract.Effect
+import com.bazzar.android.presentation.imageViewer.ImageViewerContract.Event
+import com.bazzar.android.presentation.imageViewer.ImageViewerContract.State
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class ImageViewerViewModel @Inject constructor(
     globalState: IGlobalState,
-    private val sharedPrefersManager: SharedPrefersManager,
+    private val homeUseCase: HomeUseCase,
 ) : BaseViewModel<Event, State, Effect>(
     globalState
 ) {
@@ -36,20 +40,32 @@ class ImageViewerViewModel @Inject constructor(
         }
     }
 
-    private fun addToCart() {
-        val cartItems = sharedPrefersManager.getProductList().orEmpty().toMutableList()
-        val item = currentState.product ?: return
-        cartItems.add(item)
-        sharedPrefersManager.saveProductList(cartItems)
-        setState { copy(showSuccessAddedToCart = true) }
-    }
+    private fun addToCart() = executeCatching({
+        val itemDetail = currentState.product?.selectedItemDetails ?: return@executeCatching
+        homeUseCase.addToCart(
+            AddToCartRequest(
+                itemDetailId = itemDetail.id.orZero(),
+                marketerId = currentState.bazaar?.id
+            )
+        ).collect { response ->
+            when (response) {
+                is Result.Error -> globalState.error(response.message.orEmpty())
+                is Result.Success -> {
+                    setState { copy(showSuccessAddedToCart = true) }
+                }
 
-    fun init(imagePathsList: List<String>, product: Product?) {
+                else -> {}
+            }
+        }
+    })
+
+    fun init(imagePathsList: List<String>, product: Product?, bazaar: BazaarModel?) {
         setState {
             copy(
                 imagePathsList = imagePathsList,
                 currentIndicatorIndex = 0,
-                product = product
+                product = product,
+                bazaar = bazaar
             )
         }
     }

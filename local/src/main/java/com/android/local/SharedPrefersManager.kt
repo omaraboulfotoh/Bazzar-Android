@@ -46,20 +46,6 @@ class SharedPrefersManager @Inject constructor(private val sharedPreferences: Sh
         )
     }
 
-    fun saveProductList(productList: List<Product>?) {
-        sharedPreferences.edit().apply {
-            putString(Constants.sharedPreference_product_list, Gson().toJson(productList))
-        }.commit()
-    }
-
-    fun getProductList(): List<Product>? {
-        return Gson().fromJson(
-            sharedPreferences.getString(
-                Constants.sharedPreference_product_list, null
-            ), object : TypeToken<List<Product>>() {}.type
-        )
-    }
-
     fun saveCategoryList(categoryList: List<Category>?) {
         sharedPreferences.edit().apply {
             putString(Constants.sharedPreference_category_list, Gson().toJson(categoryList))
