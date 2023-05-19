@@ -159,7 +159,9 @@ fun CartScreenContent(
                     itemsIndexed(state.productWishList.orEmpty()) { index, product ->
                         ProductItem(
                             product,
-                            onItemClicked = { onSendEvent(CartContract.Event.OnProductClicked(index)) },
+                            onItemClicked = {
+                                onSendEvent(CartContract.Event.OnFavProductClicked(index))
+                            },
                             onFavClicked = {
                                 onSendEvent(
                                     CartContract.Event.OnProductFavClicked(

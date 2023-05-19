@@ -99,9 +99,13 @@ fun HomeScreenContent(state: State, onSendEvent: (Event) -> Unit) {
         }
 
         if (state.showError)
-            ErrorView(modifier = Modifier.fillMaxSize(), onTryAgainClicked = {
-                onSendEvent(Event.OnTryAgainClicked)
-            })
+            ErrorView(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = BottomNavigationHeight),
+                onTryAgainClicked = {
+                    onSendEvent(Event.OnTryAgainClicked)
+                })
 //        if (state.adShown.not())
         if (1 != 1)
             AdDialog(

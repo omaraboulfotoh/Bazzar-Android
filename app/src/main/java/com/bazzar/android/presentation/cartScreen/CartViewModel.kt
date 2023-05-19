@@ -54,7 +54,14 @@ class CartViewModel @Inject constructor(
 
             is CartContract.Event.OnProductFavClicked -> handleItemFav(event.index)
             CartContract.Event.OnShoppingClicked -> setEffect { CartContract.Effect.Navigation.GoToHome }
+            is CartContract.Event.OnFavProductClicked -> handleFavNavigation(event.index)
         }
+    }
+
+    private fun handleFavNavigation(index: Int) {
+        val productsList = currentState.productWishList.orEmpty().toMutableList()
+        val item = productsList[index]
+        setEffect { CartContract.Effect.Navigation.GoToProduct(item) }
     }
 
     private fun handleItemAction(itemIndex: Int, action: ItemOperation) {
@@ -172,7 +179,7 @@ class CartViewModel @Inject constructor(
                     setState {
                         copy(
                             productWishList = productWishListResponse.data.orEmpty(),
-                            showWishList = productWishListResponse.data.orEmpty().isEmpty()
+                            showWishList = productWishListResponse.data.orEmpty().isEmpty().not()
                         )
                     }
                 }
