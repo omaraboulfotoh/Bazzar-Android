@@ -132,7 +132,7 @@ interface HomeApiServices {
     @GET("Cart/LoadMyCart")
     suspend fun loadCart(): Response<BaseWrapper<List<Product>>>
 
-    @GET("Cart/ClearCart")
+    @POST("Cart/ClearCart")
     suspend fun clearCart(): Response<BaseWrapper<Boolean>>
 
     @POST("Cart/UpdateCartQty")

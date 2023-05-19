@@ -10,7 +10,9 @@ import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.utils.IResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -47,17 +49,10 @@ class CreateOrderViewModel @Inject constructor(
 
     private fun handlePaymentSuccess(status: Boolean) = executeCatching({
         if (status) {
-            homeUseCase.clearCart().collect {
-                when (it) {
-                    is Result.Success -> {
-                        setEffect { CreateOrderContract.Effect.Navigation.GoToSuccessScreen }
-                    }
-
-                    else -> {
-                        setEffect { CreateOrderContract.Effect.Navigation.GoToSuccessScreen }
-                    }
-                }
+            GlobalScope.launch {
+                homeUseCase.clearCart().collect {}
             }
+            setEffect { CreateOrderContract.Effect.Navigation.GoToSuccessScreen }
         } else {
             globalState.error(resourceProvider.getString(R.string.payment_falid))
         }
