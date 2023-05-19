@@ -47,6 +47,7 @@ interface HomeRemoteDataSource {
     suspend fun deleteBazaarWishList(marketerId: Int): Response<BaseWrapper<Boolean>>
     suspend fun addToCart(addToCartRequest: AddToCartRequest): Response<BaseWrapper<Boolean>>
     suspend fun deleteFromCart(itemDetailId: Int): Response<BaseWrapper<Boolean>>
+    suspend fun clearCart(): Response<BaseWrapper<Boolean>>
     suspend fun loadCart(): Response<BaseWrapper<List<Product>>>
     suspend fun updateCartQuantity(itemDetailId: Int, qty: Int): Response<BaseWrapper<Boolean>>
 

@@ -132,6 +132,9 @@ interface HomeApiServices {
     @GET("Cart/LoadMyCart")
     suspend fun loadCart(): Response<BaseWrapper<List<Product>>>
 
+    @GET("Cart/ClearCart")
+    suspend fun clearCart(): Response<BaseWrapper<Boolean>>
+
     @POST("Cart/UpdateCartQty")
     suspend fun updateCartQuantity(
         @Query("ItemDetailId") itemDetailId: Int, @Query("Qty") qty: Int

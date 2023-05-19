@@ -555,6 +555,23 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
+    override suspend fun clearCart(): Flow<Result<Boolean>> =
+        flow {
+            try {
+                homeRemoteDataSource.clearCart().let {
+                    if (it.isSuccessful) {
+                        emit(Result.Success(it.body()?.data ?: false))
+                    } else {
+                        emit(Result.Error(false, "error will be handled"))
+                    }
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "getAllBazars: ", throwable)
+                emit(Result.Error(false, throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+
     override suspend fun updateCartQuantity(
         itemDetailId: Int,
         qty: Int

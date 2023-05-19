@@ -48,9 +48,9 @@ fun WebViewScreen(
                     super.doUpdateVisitedHistory(view, url, isReload)
                     url?.let {
                         if (it.contains("PaymentSuccess")) {
-                            resultNavigator.navigateBack(true)
+                            resultNavigator.navigateBack(result = true)
                         } else if (it.contains("PaymentCanceled")) {
-                            resultNavigator.navigateBack(false)
+                            resultNavigator.navigateBack(result = false)
                         }
                     }
                 }
