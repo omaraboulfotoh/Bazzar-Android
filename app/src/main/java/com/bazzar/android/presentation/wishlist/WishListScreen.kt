@@ -52,7 +52,7 @@ fun WishListScreen(
                 pagerState.animateScrollToPage(effect.pager)
             }
 
-            WishListContract.Effect.Navigation.GoToBack -> navigator.navigateUp()
+            is WishListContract.Effect.Navigation.GoToBack -> navigator.navigateUp()
         }
     }
 

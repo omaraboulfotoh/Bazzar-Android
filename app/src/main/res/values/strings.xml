@@ -36,6 +36,7 @@
     <string name="profile">Profile</string>
     <string name="sort">Sort</string>
     <string name="filter">Filter</string>
+    <string name="sorting">Sorting</string>
     <string name="product_bazar_category">BAZAR category</string>
     <string name="see_more">See More</string>
     <string name="related_product">Related Product</string>
@@ -191,4 +192,5 @@
     <string name="empty_cart">Your Cart Still Empty</string>
     <string name="start_shopping_now">Start Shopping Now</string>
     <string name="you_dont_have_address">You haven\'t saved any address</string>
+    <string name="apply">Apply</string>
 </resources>

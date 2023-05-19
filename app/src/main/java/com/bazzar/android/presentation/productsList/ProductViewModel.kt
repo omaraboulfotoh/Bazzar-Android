@@ -33,14 +33,36 @@ class ProductViewModel @Inject constructor(
     override fun handleEvents(event: ProductContract.Event) {
         when (event) {
             is ProductContract.Event.OnSubCategoryClicked -> onSubCategorySelected(event.categoryIndex)
-            ProductContract.Event.OnBackIconClicked -> setEffect { ProductContract.Effect.Navigation.GoToBack }
-            ProductContract.Event.OnSearchClicked -> {
+            is ProductContract.Event.OnBackIconClicked -> setEffect { ProductContract.Effect.Navigation.GoToBack }
+            is ProductContract.Event.OnSearchClicked -> {
                 setEffect { ProductContract.Effect.Navigation.GoToSearch }
             }
 
             is ProductContract.Event.OnProductClicked -> navigateToProductDetails(event.itemIndex)
             ProductContract.Event.ReachedListEnd -> loadMoreProducts()
             is ProductContract.Event.OnProductFavClicked -> handleProductFav(event.itemIndex)
+            is ProductContract.Event.OnDismissFilterDialogClicked -> {
+                setState { copy(showFilterDialog = false) }
+            }
+
+            is ProductContract.Event.OnDismissSortDialogClicked -> {
+                setState { copy(showSortDialog = false) }
+            }
+
+            is ProductContract.Event.OnFilterClicked -> {
+                setState { copy(showFilterDialog = true) }
+            }
+
+            is ProductContract.Event.OnSortClicked -> {
+                setState { copy(showSortDialog = true) }
+            }
+
+            is ProductContract.Event.OnApplySortClicked -> {
+                setState { copy(showSortDialog = false) }
+                loadProductData(currentState.searchRequest.copy(sorting = currentState.selectedSortItem?.sortKey))
+            }
+
+            is ProductContract.Event.OnSortItemSelected -> setState { copy(selectedSortItem = event.sortItem) }
         }
     }
 
@@ -176,6 +198,14 @@ class ProductViewModel @Inject constructor(
                 )
             }
             loadProductData(request)
+
+            val sortFiltersQueryMap: Map<String, String> = when {
+                category?.id != null -> mapOf("CategoryId" to "${category.id}")
+                categoryId?.toIntOrNull() != null -> mapOf("CategoryId" to "${categoryId.toInt()}")
+                brand?.id != null -> mapOf("BrandId" to "${brand.id}")
+                else -> mapOf()
+            }
+            loadFiltersAndSorting(sortFiltersQueryMap, searchTerm)
             isInitialized = true
         }
     }
@@ -224,6 +254,42 @@ class ProductViewModel @Inject constructor(
                     else -> {}
                 }
             }
+    })
+
+    private fun loadFiltersAndSorting(
+        queryMap: Map<String, String>,
+        searchTerm: String? = null
+    ) = executeCatching({
+        // if it coming from search screen we haven't an id either for category id or brand id
+        if (searchTerm.isNullOrEmpty().not()) {
+            homeUseCase.getAllProductList(SearchProductRequest(searchKey = searchTerm))
+                .collect { productResponse ->
+                    when (productResponse) {
+                        is Result.Success -> {
+                            productResponse.data?.firstOrNull()?.categoryId?.let {
+                                val searchTermQueryMap = mapOf("CategoryId" to "$it")
+                                homeUseCase.loadFiltersAndSorting(searchTermQueryMap)
+                                    .collect { sortFilterResponse ->
+                                        when (sortFilterResponse) {
+                                            is Result.Success -> setState { copy(sortFilter = sortFilterResponse.data) }
+                                            else -> {}
+                                        }
+                                    }
+                            }
+                        }
+
+                        else -> {}
+                    }
+                }
+        } else {
+            homeUseCase.loadFiltersAndSorting(queryMap)
+                .collect { sortFilterResponse ->
+                    when (sortFilterResponse) {
+                        is Result.Success -> setState { copy(sortFilter = sortFilterResponse.data) }
+                        else -> {}
+                    }
+                }
+        }
     })
 }
 

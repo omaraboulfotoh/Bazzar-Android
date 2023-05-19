@@ -25,6 +25,9 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun getAllProductDetails(productId: Int) =
         apiServices.getAllProductDetails(productId)
 
+    override suspend fun loadFiltersAndSorting(queryMap: Map<String, String>) =
+        apiServices.loadFiltersAndSorting(queryMap)
+
     override suspend fun register(request: UserRegisterRequest) =
         apiServices.register(request)
 

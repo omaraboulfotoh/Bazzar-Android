@@ -17,6 +17,7 @@ interface HomeRemoteDataSource {
     suspend fun getAllBrands(): Response<BaseWrapper<List<Brand>>>
     suspend fun getAllProductList(searchProductRequest: SearchProductRequest): Response<BaseWrapper<List<Product>>>
     suspend fun getAllProductDetails(productId: Int): Response<BaseWrapper<Product>>
+    suspend fun loadFiltersAndSorting(queryMap: Map<String, String>): Response<BaseWrapper<SortFilter>>
     suspend fun register(request: UserRegisterRequest): Response<BaseWrapper<UserData>>
     suspend fun updateFcmToken(fcmToken: String): Response<BaseWrapper<*>>
     suspend fun editProfile(request: UserRegisterRequest): Response<BaseWrapper<EditProfileResponse>>

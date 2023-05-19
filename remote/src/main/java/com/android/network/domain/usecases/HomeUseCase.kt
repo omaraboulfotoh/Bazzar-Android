@@ -21,6 +21,7 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
         homeRepo.getAllProductList(searchProduct)
 
     suspend fun getAllProductDetails(productId: Int) = homeRepo.getAllProductDetails(productId)
+    suspend fun loadFiltersAndSorting(queryMap: Map<String, String>) = homeRepo.loadFiltersAndSorting(queryMap)
     suspend fun register(request: UserRegisterRequest) = homeRepo.register(request)
     suspend fun updateFcmToken(token: String) = homeRepo.updateFcmToken(token)
     suspend fun editProfile(request: UserRegisterRequest) = homeRepo.editProfile(request)

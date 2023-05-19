@@ -109,6 +109,14 @@ data class AbsTypography(
         fontSize = 23.sp,
         fontWeight = FontWeight.Normal
     ),
+    val subtitle3: TextStyle = TextStyle(
+        fontFamily = montserrat,
+        fontSize = 10.sp,
+        fontWeight = FontWeight.Normal,
+        lineHeight = 12.sp,
+    ),
+    val subtitle3SemiBold: TextStyle = subtitle3.copy(fontWeight = FontWeight.SemiBold),
+    val subtitle3Bold: TextStyle = subtitle3.copy(fontWeight = FontWeight.Bold),
     val overline: TextStyle =
         TextStyle(
             fontFamily = montserrat,

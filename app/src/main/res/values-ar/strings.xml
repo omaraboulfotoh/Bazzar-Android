@@ -33,6 +33,7 @@
     <string name="profile">الملف الشخصي</string>
     <string name="sort">الترتيب</string>
     <string name="filter">التصفية</string>
+    <string name="sorting">الترتيب</string>
     <string name="product_bazar_category">فئة BAZAR</string>
     <string name="see_more">شاهد المزيد</string>
     <string name="related_product">المنتجات ذات الصلة</string>
@@ -188,4 +189,5 @@
     <string name="empty_cart">Your Cart Still Empty</string>
     <string name="start_shopping_now">Start Shopping Now</string>
     <string name="you_dont_have_address">You haven\'t saved any address</string>
+    <string name="apply">تطبيق</string>
 </resources>
