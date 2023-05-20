@@ -10,6 +10,7 @@ import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.DeepLinkConstants.PRODUCT_DETAILS_DEEP_LINK
 import com.bazzar.android.presentation.SocialMedia
+import com.bazzar.android.presentation.common.shareText
 import com.bazzar.android.presentation.destinations.CartScreenDestination
 import com.bazzar.android.presentation.destinations.ImageViewerScreenDestination
 import com.bazzar.android.presentation.destinations.LoginScreenDestination
@@ -40,7 +41,9 @@ fun ProductDetailScreen(
     viewModel.sideEffect { effect ->
         when (effect) {
             is ProductDetailContract.Effect.Navigation.GoToBack -> navigator.navigateUp()
-            is ProductDetailContract.Effect.ShareProduct -> {}
+            is ProductDetailContract.Effect.ShareProduct ->
+                context.shareText(effect.shareText, effect.shareLink)
+
             is ProductDetailContract.Effect.Navigation.GoToCart ->
                 navigator.navigate(CartScreenDestination)
 

@@ -176,7 +176,8 @@
     <string name="get_it">احصل عليه</string>
     <string name="error_text">حدث خطأ ما</string>
     <string name="try_again">حاول مرة اخرى</string>
-    <string name="share_bazzar_text">تحقق من منتج البازار هذا الآن من هذا الرابط</string>
+    <string name="share_bazzar_text">تحقق من منتجات البازار هذا الآن من هذا الرابط</string>
+    <string name="share_product_text">تحقق من المنتج هذا الآن من هذا الرابط</string>
     <string name="location">الموقع</string>
     <string name="confirm_Location">تأكيد الموقع</string>
     <string name="search_location">البحث عن موقع</string>

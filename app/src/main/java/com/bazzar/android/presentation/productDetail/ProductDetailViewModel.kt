@@ -9,6 +9,7 @@ import com.android.model.home.Product
 import com.android.model.request.AddToCartRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
+import com.bazzar.android.R
 import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
@@ -240,10 +241,12 @@ class ProductDetailViewModel @Inject constructor(
 
     private fun shareProduct() {
         val product = currentState.productDetail ?: return
-
         // share product
         setEffect {
-            ProductDetailContract.Effect.ShareProduct(product = product)
+            ProductDetailContract.Effect.ShareProduct(
+                shareText = resourceProvider.getString(R.string.share_product_text),
+                shareLink = product.shareURL.orEmpty()
+            )
         }
     }
 

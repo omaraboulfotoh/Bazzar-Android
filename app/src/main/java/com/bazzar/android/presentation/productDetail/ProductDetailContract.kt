@@ -45,7 +45,7 @@ class ProductDetailContract {
     }
 
     sealed class Effect : ViewSideEffect {
-        data class ShareProduct(val product: Product) : Effect()
+        data class ShareProduct(val shareText: String, val shareLink: String) : Effect()
         sealed class Navigation : Effect() {
             object GoToCart : Navigation()
             object GoToLogin : Navigation()
