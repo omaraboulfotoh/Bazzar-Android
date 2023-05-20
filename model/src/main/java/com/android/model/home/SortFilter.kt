@@ -9,20 +9,20 @@ import kotlinx.android.parcel.Parcelize
 @JsonClass(generateAdapter = true)
 data class SortFilter(
     @Json(name = "sortingList")
-    val sortingList: List<SortItem>? = null,
+    val sortingList: List<Sort>? = null,
     @Json(name = "categoryList")
-    val categoryList: List<FilterItem>? = null,
+    val categoryList: List<Filter>? = null,
     @Json(name = "brandList")
-    val brandList: List<SortItem>? = null,
+    val brandList: List<Filter>? = null,
     @Json(name = "colorList")
-    val colorList: List<SortItem>? = null,
+    val colorList: List<Filter>? = null,
     @Json(name = "sizeList")
-    val sizeList: List<SortItem>? = null,
+    val sizeList: List<Filter>? = null,
 ) : Parcelable
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-data class SortItem(
+data class Sort(
     @Json(name = "title")
     val title: String? = null,
     @Json(name = "sortKey")
@@ -31,9 +31,11 @@ data class SortItem(
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-data class FilterItem(
+data class Filter(
     @Json(name = "id")
-    val id: Int? = null,
+    val id: Int = 0,
     @Json(name = "title")
     val title: String? = null,
+    @Json(ignore = true)
+    var isSelected: Boolean = false,
 ) : Parcelable

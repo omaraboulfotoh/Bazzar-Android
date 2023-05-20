@@ -35,7 +35,6 @@ fun LocationScreenContent(
 ) {
 
     LocationPermissionRequester(
-        requestPreciseLocation = false,
         onPermissionGranted = {
             onSendEvent(Event.OnPermissionGranted)
         },

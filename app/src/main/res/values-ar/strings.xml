@@ -34,6 +34,12 @@
     <string name="sort">الترتيب</string>
     <string name="filter">التصفية</string>
     <string name="sorting">الترتيب</string>
+    <string name="filters">التصفيات</string>
+    <string name="filter_price">السعر</string>
+    <string name="filter_category">الفئة</string>
+    <string name="filter_brand">الماركة</string>
+    <string name="filter_color">اللون</string>
+    <string name="filter_size">الحجم</string>
     <string name="product_bazar_category">فئة BAZAR</string>
     <string name="see_more">شاهد المزيد</string>
     <string name="related_product">المنتجات ذات الصلة</string>
@@ -191,6 +197,7 @@
     <string name="start_shopping_now">ابدأ التسوق الأن</string>
     <string name="you_dont_have_address">ليس لديك اي عنوان</string>
     <string name="apply">تطبيق</string>
+    <string name="reset">إعادة ضبط</string>
     <string name="coupon_code">Coupon Code</string>
     <string name="promo_code_placeholder">Enter Coupon Code</string>
     <string name="discount">DISCOUNT</string>

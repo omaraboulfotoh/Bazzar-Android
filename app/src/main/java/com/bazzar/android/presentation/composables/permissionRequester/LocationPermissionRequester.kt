@@ -26,9 +26,7 @@ fun LocationPermissionRequester(
         // Prepare permissions list
         val permissions = buildList {
             add(Manifest.permission.ACCESS_COARSE_LOCATION)
-            if (requestPreciseLocation) add(
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
+            if (requestPreciseLocation) add(Manifest.permission.ACCESS_FINE_LOCATION)
         }
 
         permissionRequester.launch(

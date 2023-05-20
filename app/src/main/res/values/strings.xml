@@ -37,6 +37,12 @@
     <string name="sort">Sort</string>
     <string name="filter">Filter</string>
     <string name="sorting">Sorting</string>
+    <string name="filters">Filters</string>
+    <string name="filter_price">Price</string>
+    <string name="filter_category">Category</string>
+    <string name="filter_brand">Brand</string>
+    <string name="filter_color">Color</string>
+    <string name="filter_size">Size</string>
     <string name="product_bazar_category">BAZAR category</string>
     <string name="see_more">See More</string>
     <string name="related_product">Related Product</string>
@@ -194,6 +200,7 @@
     <string name="start_shopping_now">Start Shopping Now</string>
     <string name="you_dont_have_address">You haven\'t saved any address</string>
     <string name="apply">Apply</string>
+    <string name="reset">Reset</string>
     <string name="coupon_code">Coupon Code</string>
     <string name="promo_code_placeholder">Enter Coupon Code</string>
     <string name="discount">DISCOUNT</string>

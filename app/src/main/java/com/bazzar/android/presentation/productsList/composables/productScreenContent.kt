@@ -155,7 +155,7 @@ fun ProductScreenContent(
                 .align(Alignment.BottomCenter),
             show = state.showSortDialog,
             sortingList = state.sortFilter?.sortingList ?: listOf(),
-            selectedSortItem = state.selectedSortItem,
+            selectedSort = state.selectedSort,
             onDismiss = { onSendEvent(ProductContract.Event.OnDismissSortDialogClicked) },
             onSelectSortItem = { onSendEvent(ProductContract.Event.OnSortItemSelected(it)) },
             onApply = { onSendEvent(ProductContract.Event.OnApplySortClicked) }
@@ -165,6 +165,30 @@ fun ProductScreenContent(
             show = state.showSuccessAddedToCart,
             onContinueShoppingClick = { onSendEvent(ProductContract.Event.OnContinueShoppingClicked) },
             onVisitCardClick = { onSendEvent(ProductContract.Event.OnVisitYourCartClicked) },
+        )
+
+        FilterDialog(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(BazzarTheme.spacing.m),
+            show = state.showFilterDialog,
+            selectedFilterType = state.selectedFilterType,
+            selectedFiltersToShow = state.filterListToShow,
+            numOfSelectedCategoryFilters = state.numOfSelectedCategoryFilters,
+            numOfSelectedBrandFilters = state.numOfSelectedBrandFilters,
+            numOfSelectedColorFilters = state.numOfSelectedColorFilters,
+            numOfSelectedSizeFilters = state.numOfSelectedSizeFilters,
+            minPrice = state.selectedFilterMinPrice ?: 0,
+            maxPrice = state.selectedFilterMaxPrice ?: 1000,
+            onFilterTypeClick = { onSendEvent(ProductContract.Event.OnFilterTypeClicked(it)) },
+            onSelectUnselectFilter = { filter, isSelect ->
+                onSendEvent(ProductContract.Event.OnSelectUnselectFilter(filter, isSelect))
+            },
+            onApply = { onSendEvent(ProductContract.Event.OnApplyFiltersClicked) },
+            onRest = { onSendEvent(ProductContract.Event.OnResetFiltersClicked) },
+            onDismiss = { onSendEvent(ProductContract.Event.OnDismissFilterDialogClicked) },
+            onMinPriceChanged = { onSendEvent(ProductContract.Event.OnMinPriceChanged(it)) },
+            onMaxPriceChanged = { onSendEvent(ProductContract.Event.OnMaxPriceChanged(it)) },
         )
     }
 }

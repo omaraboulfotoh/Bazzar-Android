@@ -26,7 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.android.model.home.SortItem
+import com.android.model.home.Sort
 import com.bazzar.android.R
 import com.bazzar.android.common.advancedShadow
 import com.bazzar.android.presentation.theme.BazzarTheme
@@ -35,10 +35,10 @@ import com.bazzar.android.presentation.theme.BazzarTheme
 fun SortDialog(
     modifier: Modifier = Modifier,
     show: Boolean = false,
-    sortingList: List<SortItem>,
-    selectedSortItem: SortItem?,
+    sortingList: List<Sort>,
+    selectedSort: Sort?,
     onDismiss: () -> Unit,
-    onSelectSortItem: (sortItem: SortItem) -> Unit,
+    onSelectSortItem: (sort: Sort) -> Unit,
     onApply: () -> Unit,
 ) {
 
@@ -91,7 +91,7 @@ fun SortDialog(
                 ) {
                     RadioButton(
                         modifier = Modifier.size(18.dp),
-                        selected = selectedSortItem?.sortKey == item.sortKey,
+                        selected = selectedSort?.sortKey == item.sortKey,
                         onClick = { onSelectSortItem(item) }
                     )
                     Text(
