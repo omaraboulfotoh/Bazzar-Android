@@ -37,10 +37,10 @@ class CheckOutViewModel @Inject constructor(
     }
 
     fun init() {
-        if (isInitialized.not()) {
-            loadAddress()
-            isInitialized = false
-        }
+//        if (isInitialized.not()) {
+        loadAddress()
+//            isInitialized = false
+//    }
     }
 
     private fun loadAddress() = executeCatching({
