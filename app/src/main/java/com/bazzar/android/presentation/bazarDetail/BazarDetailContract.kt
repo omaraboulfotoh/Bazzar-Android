@@ -39,6 +39,8 @@ class BazarDetailContract {
         object OnShareCLicked : Event()
         object OnFavouriteClicked : Event()
         object ReachedListEnd : Event()
+        object OnContinueShoppingClicked : Event()
+        object OnVisitYourCartClicked : Event()
     }
 
     sealed class Effect : ViewSideEffect {
@@ -48,6 +50,7 @@ class BazarDetailContract {
             data class GoToCategoryProductsList(val category: Category) : Navigation()
             object GoToBack : Navigation()
             object GoToLogin : Navigation()
+            object GoToCart : Navigation()
         }
 
         data class OnShareBazaar(val shareText: String, val shareLink: String) : Effect()

@@ -93,7 +93,7 @@ interface HomeApiServices {
 
     // Orders APIs
     @POST("Order/OrderHistory")
-    suspend fun getOrdersHistory(): Response<BaseWrapper<List<OrderHistory>>>
+    suspend fun getOrdersHistory(@Query("LastDaysCount") lastDaysCount: Int): Response<BaseWrapper<List<OrderHistory>>>
 
     @POST("Order/LoadCheckout")
     suspend fun loadCheckout(@Body body: LoadCheckoutRequest): Response<BaseWrapper<CheckoutModel>>

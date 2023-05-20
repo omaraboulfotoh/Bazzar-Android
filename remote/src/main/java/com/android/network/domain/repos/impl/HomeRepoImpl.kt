@@ -348,10 +348,10 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
-    override suspend fun getOrdersHistory(): Flow<Result<List<OrderHistory>>> =
+    override suspend fun getOrdersHistory(lastDaysCount: Int): Flow<Result<List<OrderHistory>>> =
         flow {
             try {
-                homeRemoteDataSource.getOrdersHistory().let {
+                homeRemoteDataSource.getOrdersHistory(lastDaysCount).let {
                     if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: listOf()))
                     else emit(Result.Error(listOf(), "error will be handled"))
                 }

@@ -7,7 +7,8 @@ import com.bazzar.android.presentation.base.ViewState
 
 class CheckOutContract {
     data class State(
-        val selectedAddress: UserAddress? = null
+        val selectedAddress: UserAddress? = null,
+        val addressLoaded: Boolean = false
     ) : ViewState
 
     sealed class Event : ViewEvent {

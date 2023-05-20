@@ -7,6 +7,7 @@ import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.bazarListScreen.BazarListScreen
 import com.bazzar.android.presentation.destinations.BazarDetailScreenDestination
 import com.bazzar.android.presentation.destinations.BazarListScreenDestination
+import com.bazzar.android.presentation.destinations.CartScreenDestination
 import com.bazzar.android.presentation.destinations.CategoryScreenDestination
 import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
@@ -53,6 +54,9 @@ fun HomeScreen(
 
             HomeContract.Effect.Navigation.GoToLogin ->
                 navigator.navigate(LoginScreenDestination)
+
+            HomeContract.Effect.Navigation.GoToCart ->
+                navigator.navigate(CartScreenDestination)
         }
     }
     // init logic

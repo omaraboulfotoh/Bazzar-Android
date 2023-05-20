@@ -66,6 +66,11 @@ class ProductViewModel @Inject constructor(
 
             is ProductContract.Event.OnSortItemSelected -> setState { copy(selectedSortItem = event.sortItem) }
             is ProductContract.Event.OnProductAddToCartClicked -> addProductToCart(event.itemIndex)
+            ProductContract.Event.OnContinueShoppingClicked -> setState {
+                copy(showSuccessAddedToCart = false)
+            }
+
+            ProductContract.Event.OnVisitYourCartClicked -> setEffect { ProductContract.Effect.Navigation.GoToCart }
         }
     }
 

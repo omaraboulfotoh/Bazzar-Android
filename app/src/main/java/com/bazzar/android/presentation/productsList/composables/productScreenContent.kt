@@ -30,7 +30,9 @@ import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.BazzarAppBar
 import com.bazzar.android.presentation.composables.ProductItem
+import com.bazzar.android.presentation.composables.SuccessAddedToCart
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
+import com.bazzar.android.presentation.productDetail.ProductDetailContract
 import com.bazzar.android.presentation.productsList.ProductContract
 import com.bazzar.android.presentation.theme.BazzarTheme
 import com.bazzar.android.presentation.theme.Shapes
@@ -157,6 +159,12 @@ fun ProductScreenContent(
             onDismiss = { onSendEvent(ProductContract.Event.OnDismissSortDialogClicked) },
             onSelectSortItem = { onSendEvent(ProductContract.Event.OnSortItemSelected(it)) },
             onApply = { onSendEvent(ProductContract.Event.OnApplySortClicked) }
+        )
+        SuccessAddedToCart(
+            modifier = Modifier.align(Alignment.BottomCenter),
+            show = state.showSuccessAddedToCart,
+            onContinueShoppingClick = { onSendEvent(ProductContract.Event.OnContinueShoppingClicked) },
+            onVisitCardClick = { onSendEvent(ProductContract.Event.OnVisitYourCartClicked) },
         )
     }
 }

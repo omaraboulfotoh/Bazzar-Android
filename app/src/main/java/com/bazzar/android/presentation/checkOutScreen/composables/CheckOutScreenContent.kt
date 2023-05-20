@@ -61,17 +61,19 @@ fun CheckOutScreenContent(
                 }
             )
         } ?: kotlin.run {
-            Spacer(modifier = Modifier.height(BazzarTheme.spacing.m))
-            Image(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_empty_address),
-                contentDescription = "ic_empty_address"
-            )
-            SectionTitle(
-                modifier = Modifier.wrapContentSize(),
-                text = stringResource(id = R.string.you_dont_have_address),
-                textAlign = TextAlign.Center,
-                color = BazzarTheme.colors.primaryButtonColor
-            )
+            if (state.addressLoaded) {
+                Spacer(modifier = Modifier.height(BazzarTheme.spacing.m))
+                Image(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_empty_address),
+                    contentDescription = "ic_empty_address"
+                )
+                SectionTitle(
+                    modifier = Modifier.wrapContentSize(),
+                    text = stringResource(id = R.string.you_dont_have_address),
+                    textAlign = TextAlign.Center,
+                    color = BazzarTheme.colors.primaryButtonColor
+                )
+            }
         }
 
 

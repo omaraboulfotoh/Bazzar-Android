@@ -45,6 +45,8 @@ class ProductContract {
         object OnBackIconClicked : Event()
         object OnSearchClicked : Event()
         object ReachedListEnd : Event()
+        object OnContinueShoppingClicked : Event()
+        object OnVisitYourCartClicked : Event()
     }
 
     sealed class Effect : ViewSideEffect {
@@ -52,6 +54,7 @@ class ProductContract {
             data class GoToProductDetailPage(val product: Product) : Navigation()
             object GoToSearch : Navigation()
             object GoToLogin : Navigation()
+            object GoToCart : Navigation()
             object GoToBack : Navigation()
         }
 

@@ -17,9 +17,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.AdDialog
 import com.bazzar.android.presentation.composables.ErrorView
+import com.bazzar.android.presentation.composables.SuccessAddedToCart
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.homeScreen.HomeContract
 import com.bazzar.android.presentation.homeScreen.HomeContract.*
+import com.bazzar.android.presentation.productDetail.ProductDetailContract
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 
@@ -27,11 +29,12 @@ import com.bazzar.android.presentation.theme.BazzarTheme
 fun HomeScreenContent(state: State, onSendEvent: (Event) -> Unit) {
     Box(
         modifier = Modifier
+            .padding(bottom = BottomNavigationHeight)
             .background(BazzarTheme.colors.backgroundColor)
             .fillMaxSize()
     ) {
         LazyColumn(
-            modifier = Modifier.padding(bottom = BottomNavigationHeight),
+            modifier = Modifier,
             verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
             horizontalAlignment = Alignment.Start,
         ) {
@@ -97,7 +100,7 @@ fun HomeScreenContent(state: State, onSendEvent: (Event) -> Unit) {
                 })
 
             item {
-                Spacer(modifier = Modifier.height(BazzarTheme.spacing.xs))
+                Spacer(modifier = Modifier.height(BazzarTheme.spacing.m))
             }
         }
 
@@ -109,8 +112,8 @@ fun HomeScreenContent(state: State, onSendEvent: (Event) -> Unit) {
                 onTryAgainClicked = {
                     onSendEvent(Event.OnTryAgainClicked)
                 })
-//        if (state.adShown.not())
-        if (1 != 1)
+        if (state.adShown.not())
+//        if (1 != 1)
             AdDialog(
                 imagePath = state.ads?.firstOrNull()?.imagePath,
                 onDismiss = { onSendEvent(Event.OnAdDismissed) },
@@ -118,6 +121,12 @@ fun HomeScreenContent(state: State, onSendEvent: (Event) -> Unit) {
                     onSendEvent(Event.OnAdClicked)
                 }
             )
+        SuccessAddedToCart(
+            modifier = Modifier.align(Alignment.BottomCenter),
+            show = state.showSuccessAddedToCart,
+            onContinueShoppingClick = { onSendEvent(Event.OnContinueShoppingClicked) },
+            onVisitCardClick = { onSendEvent(Event.OnVisitYourCartClicked) },
+        )
     }
 }
 

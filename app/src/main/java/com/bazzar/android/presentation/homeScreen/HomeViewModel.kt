@@ -61,6 +61,9 @@ class HomeViewModel @Inject constructor(
                 event.index,
                 event.sectionIndex
             )
+
+            HomeContract.Event.OnContinueShoppingClicked -> setState { copy(showSuccessAddedToCart = false) }
+            HomeContract.Event.OnVisitYourCartClicked -> setEffect { HomeContract.Effect.Navigation.GoToCart }
         }
     }
 

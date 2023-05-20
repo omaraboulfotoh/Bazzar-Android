@@ -41,6 +41,8 @@ class HomeContract {
         object OnShowAllCategories : Event()
         object OnShowAllBrands : Event()
         object OnShowAllBazaars : Event()
+        object OnContinueShoppingClicked : Event()
+        object OnVisitYourCartClicked : Event()
         data class OnShowAllProducts(val index: Int) : Event()
 
     }
@@ -54,6 +56,7 @@ class HomeContract {
             data class GoToBazaarDetails(val bazaar: BazaarModel) : Navigation()
             object GoToBazaarsList : Navigation()
             object GoToLogin : Navigation()
+            object GoToCart : Navigation()
             object GoToSearch : Navigation()
         }
     }

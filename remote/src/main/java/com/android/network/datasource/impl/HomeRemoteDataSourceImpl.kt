@@ -31,18 +31,16 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun register(request: UserRegisterRequest) =
         apiServices.register(request)
 
-    override suspend fun updateFcmToken(fcmToken: String) = apiServices.updateFcmToken(fcmToken)
+    override suspend fun updateFcmToken(fcmToken: String) =
+        apiServices.updateFcmToken(fcmToken)
 
-    override suspend fun editProfile(request: UserRegisterRequest): Response<BaseWrapper<EditProfileResponse>> =
+    override suspend fun editProfile(request: UserRegisterRequest) =
         apiServices.editProfile(request)
 
-    override suspend fun deleteAccount(): Response<BaseWrapper<Boolean>> =
+    override suspend fun deleteAccount() =
         apiServices.deleteAccount()
 
-    override suspend fun changePassword(
-        currentPassword: String,
-        newPassword: String
-    ): Response<BaseWrapper<Boolean>> =
+    override suspend fun changePassword(currentPassword: String, newPassword: String) =
         apiServices.changePassword(ChangePasswordRequest(currentPassword, newPassword))
 
     override suspend fun login(userLoginRequest: UserLoginRequest) =
@@ -65,18 +63,16 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
 
     override suspend fun getAllAreas() = apiServices.getAllAreas()
 
-    override suspend fun loadCheckout(
-        request: LoadCheckoutRequest
-    ): Response<BaseWrapper<CheckoutModel>> = apiServices.loadCheckout(body = request)
+    override suspend fun loadCheckout(request: LoadCheckoutRequest) =
+        apiServices.loadCheckout(body = request)
 
-    override suspend fun createOrder(
-        request: LoadCheckoutRequest
-    ): Response<BaseWrapper<CreateOrderModel>> =
+    override suspend fun createOrder(request: LoadCheckoutRequest) =
         apiServices.createOrder(body = request)
 
-    override suspend fun getOrdersHistory() = apiServices.getOrdersHistory()
+    override suspend fun getOrdersHistory(lastDaysCount: Int) =
+        apiServices.getOrdersHistory(lastDaysCount)
 
-    override suspend fun getAllBazars(): Response<BaseWrapper<List<BazaarModel>>> =
+    override suspend fun getAllBazars() =
         apiServices.getAllBazars()
 
     override suspend fun getBazaarDetails(bazaarId: Int) =
@@ -91,7 +87,8 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun deleteProductWishList(itemId: Int) =
         apiServices.deleteProductWishList(itemId)
 
-    override suspend fun getBazaarsWishList() = apiServices.getBazaarsWishList()
+    override suspend fun getBazaarsWishList() =
+        apiServices.getBazaarsWishList()
 
     override suspend fun addBazaarWishList(marketerId: Int) =
         apiServices.addBazaarWishList(marketerId)
@@ -105,9 +102,11 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun deleteFromCart(itemDetailId: Int) =
         apiServices.deleteFromCart(itemDetailId)
 
-    override suspend fun clearCart() = apiServices.clearCart()
+    override suspend fun clearCart() =
+        apiServices.clearCart()
 
-    override suspend fun loadCart() = apiServices.loadCart()
+    override suspend fun loadCart() =
+        apiServices.loadCart()
 
     override suspend fun updateCartQuantity(itemDetailId: Int, qty: Int) =
         apiServices.updateCartQuantity(itemDetailId, qty)

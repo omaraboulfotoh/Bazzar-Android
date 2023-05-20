@@ -30,7 +30,7 @@ interface HomeRepo {
     suspend fun addUserAddress(userAddress: UserAddress): Flow<Result<UserAddress>>
     suspend fun updateUserAddress(userAddress: UserAddress): Flow<Result<UserAddress>>
     suspend fun getAllAreas(): Flow<Result<List<Area>>>
-    suspend fun getOrdersHistory(): Flow<Result<List<OrderHistory>>>
+    suspend fun getOrdersHistory(lastDaysCount: Int): Flow<Result<List<OrderHistory>>>
     suspend fun loadCheckout(request: LoadCheckoutRequest): Flow<Result<CheckoutModel>>
     suspend fun createOrder(request: LoadCheckoutRequest): Flow<Result<CreateOrderModel>>
     suspend fun getAllBazars(): Flow<Result<List<BazaarModel>>>

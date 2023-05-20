@@ -20,7 +20,9 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
     suspend fun getAllProductList(searchProduct: SearchProductRequest) =
         homeRepo.getAllProductList(searchProduct)
 
-    suspend fun getAllProductDetails(productId: Int) = homeRepo.getAllProductDetails(productId)
+    suspend fun getAllProductDetails(productId: Int) =
+        homeRepo.getAllProductDetails(productId)
+
     suspend fun loadFiltersAndSorting(queryMap: Map<String, String>) =
         homeRepo.loadFiltersAndSorting(queryMap)
 
@@ -31,16 +33,26 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
     suspend fun changePassword(currentPassword: String, newPassword: String) =
         homeRepo.changePassword(currentPassword = currentPassword, newPassword = newPassword)
 
-    suspend fun login(userLoginRequest: UserLoginRequest) = homeRepo.login(userLoginRequest)
-    suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest) = homeRepo.verifyOtp(verifyOtpRequest)
-    suspend fun resendOtp(userId: Int) = homeRepo.resendOtp(userId)
-    suspend fun getAllAddresses() = homeRepo.getAllAddresses()
-    suspend fun addUserAddress(userAddress: UserAddress) = homeRepo.addUserAddress(userAddress)
+    suspend fun login(userLoginRequest: UserLoginRequest) =
+        homeRepo.login(userLoginRequest)
+
+    suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest) =
+        homeRepo.verifyOtp(verifyOtpRequest)
+
+    suspend fun resendOtp(userId: Int) =
+        homeRepo.resendOtp(userId)
+
+    suspend fun getAllAddresses() =
+        homeRepo.getAllAddresses()
+
+    suspend fun addUserAddress(userAddress: UserAddress) =
+        homeRepo.addUserAddress(userAddress)
+
     suspend fun getAllAreas() = homeRepo.getAllAreas()
     suspend fun updateUserAddress(userAddress: UserAddress) =
         homeRepo.updateUserAddress(userAddress)
 
-    suspend fun getOrdersHistory() = homeRepo.getOrdersHistory()
+    suspend fun getOrdersHistory(lastDaysCount: Int) = homeRepo.getOrdersHistory(lastDaysCount)
     suspend fun loadCheckout(request: LoadCheckoutRequest) = homeRepo.loadCheckout(request)
 
     suspend fun createOrder(request: LoadCheckoutRequest) =

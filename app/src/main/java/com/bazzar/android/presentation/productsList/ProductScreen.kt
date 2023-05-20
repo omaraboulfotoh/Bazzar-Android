@@ -9,6 +9,7 @@ import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.DeepLinkConstants.BRAND_PRODUCT_LIST_DEEP_LINK
 import com.bazzar.android.presentation.DeepLinkConstants.CATEGORY_PRODUCT_LIST_DEEP_LINK
+import com.bazzar.android.presentation.destinations.CartScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.bazzar.android.presentation.destinations.SearchScreenDestination
 import com.bazzar.android.presentation.productsList.composables.ProductScreenContent
@@ -50,6 +51,9 @@ fun ProductScreen(
             ProductContract.Effect.Navigation.GoToBack -> navigator.navigateUp()
             ProductContract.Effect.Navigation.GoToLogin ->
                 navigator.navigate(LoginScreenDestination)
+
+            ProductContract.Effect.Navigation.GoToCart ->
+                navigator.navigate(CartScreenDestination)
         }
     }
     // init logic

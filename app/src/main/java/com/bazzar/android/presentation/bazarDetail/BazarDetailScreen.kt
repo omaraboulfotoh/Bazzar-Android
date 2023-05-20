@@ -8,6 +8,7 @@ import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.bazarDetail.composables.BazarDetailScreenContent
 import com.bazzar.android.presentation.common.shareText
+import com.bazzar.android.presentation.destinations.CartScreenDestination
 import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.bazzar.android.presentation.destinations.ProductScreenDestination
@@ -52,6 +53,9 @@ fun BazarDetailScreen(
 
             BazarDetailContract.Effect.Navigation.GoToLogin ->
                 navigator.navigate(LoginScreenDestination)
+
+            BazarDetailContract.Effect.Navigation.GoToCart ->
+                navigator.navigate(CartScreenDestination)
         }
     }
     // init logic

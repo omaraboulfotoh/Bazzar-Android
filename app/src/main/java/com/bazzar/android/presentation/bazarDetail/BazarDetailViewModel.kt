@@ -44,6 +44,11 @@ class BazarDetailViewModel @Inject constructor(
             is BazarDetailContract.Event.OnSearchTermChanged -> {}
             is BazarDetailContract.Event.OnProductFavClicked -> handleProductFav(event.itemIndex)
             is BazarDetailContract.Event.OnProductAddToCartClicked -> addProductToCart(event.itemIndex)
+            BazarDetailContract.Event.OnContinueShoppingClicked -> setState {
+                copy(showSuccessAddedToCart = false)
+            }
+
+            BazarDetailContract.Event.OnVisitYourCartClicked -> setEffect { BazarDetailContract.Effect.Navigation.GoToCart }
         }
     }
 

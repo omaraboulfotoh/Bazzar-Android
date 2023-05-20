@@ -46,12 +46,16 @@ class CheckOutViewModel @Inject constructor(
     private fun loadAddress() = executeCatching({
         homeUseCase.getAllAddresses().collect {
             when (it) {
-                is Result.Error -> globalState.error(it.message.orEmpty())
+                is Result.Error -> {
+                    globalState.error(it.message.orEmpty())
+                    setState { copy(addressLoaded = true) }
+                }
+
                 is Result.Loading -> globalState.loading(true)
                 is Result.Success -> {
                     val selectedAddress = it.data.orEmpty().firstOrNull { it.isDefault.orFalse() }
                         ?: it.data.orEmpty().firstOrNull()
-                    setState { copy(selectedAddress = selectedAddress) }
+                    setState { copy(selectedAddress = selectedAddress, addressLoaded = true) }
                 }
             }
         }

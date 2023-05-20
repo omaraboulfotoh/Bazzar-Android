@@ -52,6 +52,7 @@ fun AddressBookScreenContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = BottomNavigationHeight)
+                .padding(horizontal = BazzarTheme.spacing.m)
                 .clip(RoundedCornerShape(33.dp)),
             onClick = { onSendEvent(AddressBookContract.Event.OnAddAddressClicked) }
         ) {

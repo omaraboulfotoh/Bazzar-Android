@@ -34,7 +34,7 @@ interface HomeRemoteDataSource {
     suspend fun addUserAddress(userAddress: UserAddress): Response<BaseWrapper<UserAddress>>
     suspend fun updateUserAddress(userAddress: UserAddress): Response<BaseWrapper<UserAddress>>
     suspend fun getAllAreas(): Response<BaseWrapper<List<Area>>>
-    suspend fun getOrdersHistory(): Response<BaseWrapper<List<OrderHistory>>>
+    suspend fun getOrdersHistory(lastDaysCount: Int): Response<BaseWrapper<List<OrderHistory>>>
     suspend fun loadCheckout(request: LoadCheckoutRequest): Response<BaseWrapper<CheckoutModel>>
     suspend fun createOrder(request: LoadCheckoutRequest): Response<BaseWrapper<CreateOrderModel>>
     suspend fun getAllBazars(): Response<BaseWrapper<List<BazaarModel>>>
