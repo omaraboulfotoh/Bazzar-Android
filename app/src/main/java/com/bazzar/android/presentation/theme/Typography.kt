@@ -82,6 +82,8 @@ data class AbsTypography(
         subtitle1.copy(fontWeight = FontWeight.Bold),
     val subtitle1SemiBold: TextStyle =
         subtitle1.copy(fontWeight = FontWeight.SemiBold),
+    val subtitle1Medium: TextStyle =
+        subtitle1.copy(fontWeight = FontWeight.Medium),
     val body1Medium: TextStyle =
         TextStyle(
             fontFamily = montserrat,
