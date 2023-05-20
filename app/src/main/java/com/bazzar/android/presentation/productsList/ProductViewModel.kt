@@ -336,6 +336,7 @@ class ProductViewModel @Inject constructor(
                             sizeFilterList = sortFilterResponse.data?.sizeList?.toList(),
                         )
                     }
+
                     else -> {}
                 }
             }
@@ -397,14 +398,38 @@ class ProductViewModel @Inject constructor(
         when (filterType) {
             FilterType.FILTER_PRICE ->
                 setState { copy(selectedFilterType = filterType, filterListToShow = null) }
+
             FilterType.FILTER_CATEGORY ->
-                setState { copy(selectedFilterType = filterType, filterListToShow = categoryFilterList) }
+                setState {
+                    copy(
+                        selectedFilterType = filterType,
+                        filterListToShow = categoryFilterList
+                    )
+                }
+
             FilterType.FILTER_BRAND ->
-                setState { copy(selectedFilterType = filterType, filterListToShow = brandFilterList) }
+                setState {
+                    copy(
+                        selectedFilterType = filterType,
+                        filterListToShow = brandFilterList
+                    )
+                }
+
             FilterType.FILTER_COLOR ->
-                setState { copy(selectedFilterType = filterType, filterListToShow = colorFilterList) }
+                setState {
+                    copy(
+                        selectedFilterType = filterType,
+                        filterListToShow = colorFilterList
+                    )
+                }
+
             FilterType.FILTER_SIZE ->
-                setState { copy(selectedFilterType = filterType, filterListToShow = sizeFilterList) }
+                setState {
+                    copy(
+                        selectedFilterType = filterType,
+                        filterListToShow = sizeFilterList
+                    )
+                }
         }
     }
 
@@ -423,6 +448,7 @@ class ProductViewModel @Inject constructor(
                     )
                 }
             }
+
             FilterType.FILTER_BRAND -> {
                 val filters = currentState.brandFilterList
                 filters?.find { it.id == filter.id }?.isSelected = isSelected
@@ -436,6 +462,7 @@ class ProductViewModel @Inject constructor(
                     )
                 }
             }
+
             FilterType.FILTER_COLOR -> {
                 val filters = currentState.colorFilterList
                 filters?.find { it.id == filter.id }?.isSelected = isSelected
@@ -449,6 +476,7 @@ class ProductViewModel @Inject constructor(
                     )
                 }
             }
+
             FilterType.FILTER_SIZE -> {
                 val filters = currentState.sizeFilterList
                 filters?.find { it.id == filter.id }?.isSelected = isSelected
@@ -462,7 +490,8 @@ class ProductViewModel @Inject constructor(
                     )
                 }
             }
-            else -> { }
+
+            else -> {}
         }
     }
 }

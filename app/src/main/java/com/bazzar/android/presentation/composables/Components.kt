@@ -35,7 +35,7 @@ fun RemoteImageCard(
     imageUrl: String?,
     description: String? = null,
     alignment: Alignment = Alignment.Center,
-    placeholder: Painter = painterResource(id = R.drawable.bazzars_home_title),
+    placeholder: Painter = painterResource(id = R.drawable.ic_logo),
     contentScale: ContentScale = ContentScale.Crop,
     withShimmer: Boolean = false,
     shape: Shape = Shapes.large,
@@ -75,7 +75,6 @@ fun RemoteImageCard(
             },
         )
     }
-
 }
 
 @Composable
@@ -84,7 +83,7 @@ fun RemoteImage(
     imageUrl: String?,
     description: String? = null,
     alignment: Alignment = Alignment.Center,
-    placeholder: Painter = painterResource(id = R.drawable.bazzars_home_title),
+    placeholder: Painter = painterResource(id = R.drawable.ic_logo),
     contentScale: ContentScale = ContentScale.Crop,
     withShimmer: Boolean = false,
     background: Color = BazzarTheme.colors.transparentColor,
