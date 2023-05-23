@@ -131,7 +131,10 @@ interface HomeApiServices {
     suspend fun addToCart(@Body addToCartRequest: AddToCartRequest): Response<BaseWrapper<Boolean>>
 
     @POST("Cart/DeleteCartItem?=33")
-    suspend fun deleteFromCart(@Query("ItemDetailId") itemDetailId: Int): Response<BaseWrapper<Boolean>>
+    suspend fun deleteFromCart(
+        @Query("ItemDetailId") itemDetailId: Int,
+        @Query("AddToWishList") addToWishList: Boolean = false,
+    ): Response<BaseWrapper<Boolean>>
 
     @GET("Cart/LoadMyCart")
     suspend fun loadCart(): Response<BaseWrapper<List<Product>>>

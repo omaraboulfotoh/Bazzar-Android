@@ -117,11 +117,14 @@ class CartViewModel @Inject constructor(
                     params = ConfirmationDialogParams(
                         title = resourceProvider.getString(R.string.delete_item),
                         description = resourceProvider.getString(R.string.delete_item_desc),
-                        positiveButtonTitle = resourceProvider.getString(R.string.delete),
-                        negativeButtonTitle = resourceProvider.getString(R.string.cancel),
+                        positiveButtonTitle = resourceProvider.getString(R.string.yes),
+                        negativeButtonTitle = resourceProvider.getString(R.string.no),
                         onPositive = {
-                            deleteItem(item.itemDetailId.orZero())
+                            deleteItem(item.itemDetailId.orZero(), true)
                         },
+                        onNegative = {
+                            deleteItem(item.itemDetailId.orZero())
+                        }
                     )
                 )
             }
@@ -132,8 +135,8 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    private fun deleteItem(itemDetailId: Int) = executeCatching({
-        homeUseCase.deleteFromCart(itemDetailId).collect { response ->
+    private fun deleteItem(itemDetailId: Int, addToWishList: Boolean = false) = executeCatching({
+        homeUseCase.deleteFromCart(itemDetailId, addToWishList).collect { response ->
             when (response) {
                 is Result.Error -> globalState.error(response.message.orEmpty())
                 is Result.Success -> loadCart()

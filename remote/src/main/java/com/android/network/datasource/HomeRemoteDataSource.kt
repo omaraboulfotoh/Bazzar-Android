@@ -44,11 +44,12 @@ interface HomeRemoteDataSource {
     suspend fun getProductWishList(): Response<BaseWrapper<List<Product>>>
     suspend fun addProductWishList(itemId: Int): Response<BaseWrapper<Boolean>>
     suspend fun deleteProductWishList(itemId: Int): Response<BaseWrapper<Boolean>>
+
     suspend fun getBazaarsWishList(): Response<BaseWrapper<List<BazaarModel>>>
     suspend fun addBazaarWishList(marketerId: Int): Response<BaseWrapper<Boolean>>
     suspend fun deleteBazaarWishList(marketerId: Int): Response<BaseWrapper<Boolean>>
     suspend fun addToCart(addToCartRequest: AddToCartRequest): Response<BaseWrapper<Boolean>>
-    suspend fun deleteFromCart(itemDetailId: Int): Response<BaseWrapper<Boolean>>
+    suspend fun deleteFromCart(itemDetailId: Int, addToWishList: Boolean = false): Response<BaseWrapper<Boolean>>
     suspend fun clearCart(): Response<BaseWrapper<Boolean>>
     suspend fun loadCart(): Response<BaseWrapper<List<Product>>>
     suspend fun updateCartQuantity(itemDetailId: Int, qty: Int): Response<BaseWrapper<Boolean>>

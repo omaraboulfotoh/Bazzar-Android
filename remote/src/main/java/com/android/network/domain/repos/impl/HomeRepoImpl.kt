@@ -541,10 +541,13 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
-    override suspend fun deleteFromCart(itemDetailId: Int): Flow<Result<Boolean>> =
+    override suspend fun deleteFromCart(
+        itemDetailId: Int,
+        addToWishList: Boolean
+    ): Flow<Result<Boolean>> =
         flow {
             try {
-                homeRemoteDataSource.deleteFromCart(itemDetailId).let {
+                homeRemoteDataSource.deleteFromCart(itemDetailId,addToWishList).let {
                     if (it.isSuccessful) emit(
                         Result.Success(
                             it.body()?.data ?: false

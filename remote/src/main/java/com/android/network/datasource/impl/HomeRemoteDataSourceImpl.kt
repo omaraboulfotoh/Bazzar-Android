@@ -103,8 +103,8 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun addToCart(addToCartRequest: AddToCartRequest) =
         apiServices.addToCart(addToCartRequest)
 
-    override suspend fun deleteFromCart(itemDetailId: Int) =
-        apiServices.deleteFromCart(itemDetailId)
+    override suspend fun deleteFromCart(itemDetailId: Int, addToWishList: Boolean) =
+        apiServices.deleteFromCart(itemDetailId,addToWishList)
 
     override suspend fun clearCart() =
         apiServices.clearCart()

@@ -45,7 +45,7 @@ interface HomeRepo {
     suspend fun addBazaarWishList(marketerId: Int): Flow<Result<Boolean>>
     suspend fun deleteBazaarWishList(marketerId: Int): Flow<Result<Boolean>>
     suspend fun addToCart(addToCartRequest: AddToCartRequest): Flow<Result<Boolean>>
-    suspend fun deleteFromCart(itemDetailId: Int): Flow<Result<Boolean>>
+    suspend fun deleteFromCart(itemDetailId: Int, addToWishList: Boolean = false): Flow<Result<Boolean>>
     suspend fun loadCart(): Flow<Result<List<Product>>>
     suspend fun clearCart(): Flow<Result<Boolean>>
     suspend fun updateCartQuantity(itemDetailId: Int, qty: Int): Flow<Result<Boolean>>

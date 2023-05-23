@@ -71,7 +71,9 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
     suspend fun addBazaarWishList(marketerId: Int) = homeRepo.addBazaarWishList(marketerId)
     suspend fun deleteBazaarWishList(marketerId: Int) = homeRepo.deleteBazaarWishList(marketerId)
     suspend fun addToCart(addToCartRequest: AddToCartRequest) = homeRepo.addToCart(addToCartRequest)
-    suspend fun deleteFromCart(itemDetailId: Int) = homeRepo.deleteFromCart(itemDetailId)
+    suspend fun deleteFromCart(itemDetailId: Int, addToWishList: Boolean = false) =
+        homeRepo.deleteFromCart(itemDetailId, addToWishList)
+
     suspend fun loadCart() = homeRepo.loadCart()
     suspend fun updateCartQuantity(itemDetailId: Int, qty: Int) =
         homeRepo.updateCartQuantity(itemDetailId, qty)
