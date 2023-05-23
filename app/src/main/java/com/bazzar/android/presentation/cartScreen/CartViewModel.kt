@@ -172,10 +172,6 @@ class CartViewModel @Inject constructor(
             when (response) {
                 is Result.Error -> {
                     setState { copy(showEmptyCart = true) }
-
-                    if (sharedPrefersManager.isUserLongedIn()) {
-                        loadWishList()
-                    }
                 }
 
                 is Result.Success -> {
@@ -183,8 +179,9 @@ class CartViewModel @Inject constructor(
                 }
 
                 else -> {}
-            }
 
+            }
+            checkWishList()
         }
     })
 
@@ -199,9 +196,6 @@ class CartViewModel @Inject constructor(
                 totalCartAMount = totalAmount,
                 showEmptyCart = productsList.isEmpty()
             )
-        }
-        if (productsList.isEmpty() && sharedPrefersManager.isUserLongedIn()) {
-            loadWishList()
         }
     }
 
@@ -267,6 +261,12 @@ class CartViewModel @Inject constructor(
         }
 
     }, withLoading = false)
+
+    private fun checkWishList() {
+        if (sharedPrefersManager.isUserLongedIn()) {
+            loadWishList()
+        }
+    }
 }
 
 enum class ItemOperation {
