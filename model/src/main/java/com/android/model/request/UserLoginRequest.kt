@@ -14,6 +14,13 @@ data class UserLoginRequest(
 
 @Parcelize
 @JsonClass(generateAdapter = true)
+data class GuestLoginRequest(
+    @Json(name = "deviceId") val deviceId: String,
+    @Json(name = "accessToken") val accessToken: String
+) : Parcelable
+
+@Parcelize
+@JsonClass(generateAdapter = true)
 data class ChangePasswordRequest(
     @Json(name = "oldPassword") val oldPassword: String,
     @Json(name = "newPassword") val newPassword: String

@@ -2,6 +2,7 @@ package com.android.network.domain.usecases
 
 import com.android.model.home.*
 import com.android.model.request.AddToCartRequest
+import com.android.model.request.GuestLoginRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
@@ -35,6 +36,9 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
 
     suspend fun login(userLoginRequest: UserLoginRequest) =
         homeRepo.login(userLoginRequest)
+
+    suspend fun loginGuest(guestLoginRequest: GuestLoginRequest) =
+        homeRepo.loginGuest(guestLoginRequest)
 
     suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest) =
         homeRepo.verifyOtp(verifyOtpRequest)

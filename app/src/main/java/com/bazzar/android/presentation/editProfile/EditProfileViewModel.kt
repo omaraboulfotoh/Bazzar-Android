@@ -6,6 +6,7 @@ import com.android.model.request.UserRegisterRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.R
+import com.bazzar.android.common.remove
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.utils.IResourceProvider
@@ -42,6 +43,7 @@ class EditProfileViewModel @Inject constructor(
             globalState.error(resourceProvider.getString(R.string.required_user_name))
         } else {
             val userRegisterRequest = UserRegisterRequest(
+                id = sharedPrefersManager.getUserData()?.id,
                 name = currentState.fullName.orEmpty(),
                 englishName = currentState.fullName.orEmpty(),
                 email = currentState.email.orEmpty(),
@@ -56,7 +58,7 @@ class EditProfileViewModel @Inject constructor(
             isInitialized = true
             setState {
                 copy(
-                    phoneNumber = userData.phone,
+                    phoneNumber = userData.phone.orEmpty().remove("+965"),
                     fullName = userData.name,
                     email = userData.email,
                 )

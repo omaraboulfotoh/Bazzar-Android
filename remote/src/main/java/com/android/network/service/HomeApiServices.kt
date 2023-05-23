@@ -3,6 +3,7 @@ package com.android.network.service
 import com.android.model.home.*
 import com.android.model.request.AddToCartRequest
 import com.android.model.request.ChangePasswordRequest
+import com.android.model.request.GuestLoginRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
@@ -57,6 +58,9 @@ interface HomeApiServices {
     // auth APIs for user
     @POST("User/Login")
     suspend fun login(@Body loginRequest: UserLoginRequest): Response<BaseWrapper<UserData>>
+
+    @POST("User/GuestUser")
+    suspend fun loginGuest(@Body guestLoginRequest: GuestLoginRequest): Response<BaseWrapper<UserData>>
 
     @POST("User/Register")
     suspend fun register(@Body request: UserRegisterRequest): Response<BaseWrapper<UserData>>

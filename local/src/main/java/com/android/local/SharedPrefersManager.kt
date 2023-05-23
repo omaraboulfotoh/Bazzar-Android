@@ -82,6 +82,15 @@ class SharedPrefersManager @Inject constructor(private val sharedPreferences: Sh
         return sharedPreferences.contains(Constants.sharedPreference_user_data)
     }
 
+    fun showAccountLogin(): Boolean {
+        val user = getUserData()
+        return user?.let {
+            it.phone.isNullOrEmpty().not()
+        } ?: kotlin.run {
+            false
+        }
+    }
+
     fun isFirstTimeOpened(): Boolean {
         return sharedPreferences.contains(Constants.first_time_opened).not()
     }

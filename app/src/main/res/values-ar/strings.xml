@@ -154,7 +154,6 @@
     <string name="product_added_to_cart_title">تمت الإضافة إلى السلة</string>
     <string name="continue_shopping">مواصلة التسوق</string>
     <string name="visit_cart">زيارة سلة التسوق الخاصة بك</string>
-
     <string name="history_list">تاريخ الطلبات</string>
     <string name="order_number">رقم الطلب</string>
     <string name="order_total">مجموع الطلب</string>
@@ -167,7 +166,7 @@
     <string name="sub_total">المجموع الفرعي</string>
     <string name="shipping">رسوم التوصيل</string>
     <string name="total">الإجمالي</string>
-    <string name="place_order">قم بتقديم طلبك\n</string>
+    <string name="place_order">قم بتقديم طلبك</string>
     <string name="payment_method">طريقة الدفع</string>
     <string name="search_by_bzar_name">البحث حسب اسم المتجر</string>
     <string name="invalid_email">بريد إلكتروني غير صالح</string>

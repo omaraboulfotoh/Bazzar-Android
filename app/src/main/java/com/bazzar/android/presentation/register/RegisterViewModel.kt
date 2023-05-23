@@ -1,6 +1,7 @@
 package com.bazzar.android.presentation.register
 
 import android.util.Patterns
+import com.android.local.SharedPrefersManager
 import com.android.model.home.UserData
 import com.android.model.request.UserRegisterRequest
 import com.android.network.domain.usecases.HomeUseCase
@@ -16,7 +17,8 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
-    private val resourceProvider: IResourceProvider
+    private val resourceProvider: IResourceProvider,
+    private val sharedPrefersManager: SharedPrefersManager
 ) :
     BaseViewModel<RegisterContract.Event, RegisterContract.State, RegisterContract.Effect>(
         globalState
@@ -50,6 +52,7 @@ class RegisterViewModel @Inject constructor(
             val phone = currentState.phoneNumber.orEmpty()
             if (isValid(email, name, phone)) {
                 val userRegisterRequest = UserRegisterRequest(
+                    id = sharedPrefersManager.getUserData()?.id,
                     name = name,
                     englishName = name,
                     phone = "+965${phone}"

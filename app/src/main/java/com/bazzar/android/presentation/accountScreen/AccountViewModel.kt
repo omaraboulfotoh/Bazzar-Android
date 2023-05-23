@@ -117,7 +117,7 @@ class AccountViewModel @Inject constructor(
         if (isInitialized.not()) {
             setState {
                 copy(
-                    isUserLoggedIn = sharedPrefersManager.isUserLongedIn(),
+                    isUserLoggedIn = sharedPrefersManager.showAccountLogin(),
                     userData = sharedPrefersManager.getUserData()
                 )
             }

@@ -2,6 +2,7 @@ package com.android.network.datasource
 
 import com.android.model.home.*
 import com.android.model.request.AddToCartRequest
+import com.android.model.request.GuestLoginRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
@@ -28,6 +29,7 @@ interface HomeRemoteDataSource {
     ): Response<BaseWrapper<Boolean>>
 
     suspend fun login(userLoginRequest: UserLoginRequest): Response<BaseWrapper<UserData>>
+    suspend fun loginGuest(guestLoginRequest: GuestLoginRequest): Response<BaseWrapper<UserData>>
     suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Response<BaseWrapper<UserData>>
     suspend fun resendOtp(userId: Int): Response<BaseWrapper<String>>
     suspend fun getAllAddresses(): Response<BaseWrapper<List<UserAddress>>>

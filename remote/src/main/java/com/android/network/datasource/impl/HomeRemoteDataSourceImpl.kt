@@ -3,6 +3,7 @@ package com.android.network.datasource.impl
 import com.android.model.home.*
 import com.android.model.request.AddToCartRequest
 import com.android.model.request.ChangePasswordRequest
+import com.android.model.request.GuestLoginRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
@@ -45,6 +46,9 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
 
     override suspend fun login(userLoginRequest: UserLoginRequest) =
         apiServices.login(userLoginRequest)
+
+    override suspend fun loginGuest(guestLoginRequest: GuestLoginRequest) =
+        apiServices.loginGuest(guestLoginRequest)
 
     override suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest) =
         apiServices.verifyOtp(verifyOtpRequest)

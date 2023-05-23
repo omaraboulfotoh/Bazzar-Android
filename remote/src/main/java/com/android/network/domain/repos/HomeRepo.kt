@@ -2,6 +2,7 @@ package com.android.network.domain.repos
 
 import com.android.model.home.*
 import com.android.model.request.AddToCartRequest
+import com.android.model.request.GuestLoginRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
@@ -24,6 +25,8 @@ interface HomeRepo {
     suspend fun deleteAccount(): Flow<Result<Boolean>>
     suspend fun changePassword(currentPassword: String, newPassword: String): Flow<Result<Boolean>>
     suspend fun login(userLoginRequest: UserLoginRequest): Flow<Result<UserData>>
+    suspend fun loginGuest(guestLoginRequest: GuestLoginRequest): Flow<Result<UserData>>
+
     suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Flow<Result<UserData>>
     suspend fun resendOtp(userId: Int): Flow<Result<String>>
     suspend fun getAllAddresses(): Flow<Result<List<UserAddress>>>

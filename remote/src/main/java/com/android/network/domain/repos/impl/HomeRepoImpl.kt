@@ -17,6 +17,7 @@ import com.android.model.home.UserData
 import com.android.model.home.OrderHistory
 import com.android.model.home.SortFilter
 import com.android.model.request.AddToCartRequest
+import com.android.model.request.GuestLoginRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
@@ -249,6 +250,25 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
+    override suspend fun loginGuest(guestLoginRequest: GuestLoginRequest): Flow<Result<UserData>> =
+        flow {
+            try {
+                homeRemoteDataSource.loginGuest(guestLoginRequest).let {
+                    if (it.isSuccessful) {
+                        emit(Result.Success(it.body()?.data ?: UserData()))
+                    } else Result.Error(
+                        UserData(), "error will be handled"
+                    )
+                }
+            } catch (throwable: Throwable) {
+                Log.e("Error", "LoginError: ", throwable)
+                emit(
+                    Result.Error(
+                        UserData(), throwable.message
+                    )
+                )
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
     override suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Flow<Result<UserData>> =
         flow {
