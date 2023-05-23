@@ -7,8 +7,6 @@ import com.bazzar.android.presentation.app.GlobalState
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.utils.IResourceProvider
 import com.bazzar.android.utils.ResourceProvider
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.net.PlacesClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,9 +40,4 @@ object CommonModule {
     @Provides
     fun providesGeoCoder(@ApplicationContext context: Context): Geocoder =
         Geocoder(context, Locale.getDefault())
-
-    @Singleton
-    @Provides
-    fun providesPlacesClient(@ApplicationContext context: Context): PlacesClient =
-        Places.createClient(context)
 }

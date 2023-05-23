@@ -19,8 +19,8 @@ object SocialMedia {
 
 object MapLatLngConstants {
     val KUWAIT_LAT_LNG_BOUNDS = LatLngBounds(
-        LatLng(28.5244, 47.3951),
-        LatLng(30.0971, 48.1292),
+        LatLng(28.5364, 46.5552),
+        LatLng(30.1073, 48.4371),
     )
 
     val KUWAIT_CITY_LAT_LAN = LatLng(29.375042, 47.978197)

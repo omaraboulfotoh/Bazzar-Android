@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -67,17 +68,25 @@ fun AddressInputViews(
             .verticalScroll(rememberScrollState())
             .background(Color.White),
     ) {
-        MapInColumn(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(180.dp),
-            isUserLocationEnabled = false,
-            zoomControlsEnabled = false,
-            scrollGesturesEnabled = false,
-            withSearch = false,
-            mapToolbarEnabled = false,
-            startLatLng = userLatLng,
-        )
+                .height(180.dp)
+        ) {
+            MapInColumn(
+                modifier = Modifier.fillMaxSize(),
+                isUserLocationEnabled = false,
+                zoomControlsEnabled = false,
+                scrollGesturesEnabled = false,
+                mapToolbarEnabled = false,
+                startLatLng = userLatLng,
+            )
+            Box(
+                modifier = Modifier
+                .fillMaxSize()
+                .clickable { }
+            ) { }
+        }
         Column(
             modifier = Modifier
                 .fillMaxWidth()

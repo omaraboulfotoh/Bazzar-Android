@@ -14,7 +14,6 @@ class LocationContract {
         val geoCoderAddress: Address? = null,
         val startLatLng: LatLng = MapLatLngConstants.KUWAIT_CITY_LAT_LAN,
         val currentLatLng: LatLng = MapLatLngConstants.KUWAIT_CITY_LAT_LAN,
-        val searchTerm: String? = null,
         val isUserLocationEnabled: Boolean = false,
         val columnScrollingEnabled: Boolean = true,
     ) : ViewState
@@ -22,7 +21,7 @@ class LocationContract {
     sealed class Event : ViewEvent {
         data class OnColumnScrollingEnabledChanged(val value: Boolean) : Event()
         data class OnLatLngChanged(val latLng: LatLng) : Event()
-        data class OnSearchTermChanged(val term: String) : Event()
+        data class OnSelectLocation(val latLng: LatLng) : Event()
         object OnPermissionGranted : Event()
         object OnPermissionDenied : Event()
         object OnConfirmLocationClicked : Event()

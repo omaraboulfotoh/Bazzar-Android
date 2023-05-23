@@ -23,9 +23,9 @@ import com.bazzar.android.common.advancedShadow
 import com.bazzar.android.presentation.composables.BazzarAppBar
 import com.bazzar.android.presentation.composables.MapInColumn
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
+import com.bazzar.android.presentation.composables.permissionRequester.LocationPermissionRequester
 import com.bazzar.android.presentation.locationScreen.LocationContract.Event
 import com.bazzar.android.presentation.locationScreen.LocationContract.State
-import com.bazzar.android.presentation.composables.permissionRequester.LocationPermissionRequester
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
@@ -54,8 +54,14 @@ fun LocationScreenContent(
             backgroundColor = BazzarTheme.colors.white,
             onNavigationClick = { onSendEvent(Event.OnBackClicked) }
         )
+        LocationSearch { place ->
+            place.latLng?.let {
+                onSendEvent(Event.OnSelectLocation(it))
+            }
+        }
         Column(
             modifier = Modifier
+                .padding(top = 8.dp)
                 .weight(1f)
                 .verticalScroll(rememberScrollState(), state.columnScrollingEnabled)
         ) {
@@ -65,7 +71,6 @@ fun LocationScreenContent(
                     .height(320.dp),
                 isUserLocationEnabled = state.isUserLocationEnabled,
                 startLatLng = state.startLatLng,
-                searchTerm = state.searchTerm,
                 mapToolbarEnabled = false,
                 onColumnScrollingEnabledChanged = {
                     onSendEvent(
@@ -74,12 +79,9 @@ fun LocationScreenContent(
                         )
                     )
                 },
-                onSearchTermChanged = { onSendEvent(Event.OnSearchTermChanged(it)) },
                 onLatLngChanged = { onSendEvent(Event.OnLatLngChanged(it)) }
             )
-            LocationInfo(
-                address = state.geoCoderAddress
-            )
+            LocationInfo(address = state.geoCoderAddress)
         }
         Button(
             modifier = Modifier
