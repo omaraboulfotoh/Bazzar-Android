@@ -6,18 +6,16 @@ import com.bazzar.android.common.getFromLatLng
 import com.bazzar.android.presentation.MapLatLngConstants
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.presentation.locationScreen.LocationContract.Effect
 import com.bazzar.android.presentation.locationScreen.LocationContract.Event
 import com.bazzar.android.presentation.locationScreen.LocationContract.State
-import com.bazzar.android.presentation.locationScreen.LocationContract.Effect
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.libraries.places.api.net.PlacesClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class LocationViewModel @Inject constructor(
     iGlobalState: IGlobalState,
-    private val placesClient: PlacesClient,
     private val geocoder: Geocoder,
 ) : BaseViewModel<Event, State, Effect>(iGlobalState) {
     override fun setInitialState() = State()
@@ -32,8 +30,11 @@ class LocationViewModel @Inject constructor(
             is Event.OnPermissionGranted -> setState { copy(isUserLocationEnabled = true) }
             is Event.OnPermissionDenied -> setState { copy(isUserLocationEnabled = false) }
             is Event.OnColumnScrollingEnabledChanged -> setState { copy(columnScrollingEnabled = event.value) }
-            is Event.OnSearchTermChanged -> handleOnSearchTermChanged(event.term)
             is Event.OnBackClicked -> setEffect { Effect.Navigation.GoBack }
+            is Event.OnSelectLocation -> {
+                setState { copy(startLatLng = event.latLng) }
+                handleOnLatLngChanged(event.latLng)
+            }
         }
     }
 
@@ -59,10 +60,6 @@ class LocationViewModel @Inject constructor(
                 )
             }
         }
-    })
-
-    private fun handleOnSearchTermChanged(term: String) = executeCatching({
-        setState { copy(searchTerm = term) }
     })
 
     fun init(userAddress: UserAddress?) {
