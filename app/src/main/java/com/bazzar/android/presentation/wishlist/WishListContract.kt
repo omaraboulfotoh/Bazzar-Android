@@ -5,6 +5,7 @@ import com.android.model.home.Product
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
 import com.bazzar.android.presentation.base.ViewState
+import com.bazzar.android.presentation.productDetail.ProductDetailContract
 
 class WishListContract {
 
@@ -13,7 +14,8 @@ class WishListContract {
         val bazaarList: List<BazaarModel>? = emptyList(),
         val showEmptyBazaars: Boolean = false,
         val showEmptyProducts: Boolean = false,
-        val currentPage: Int = 0
+        val currentPage: Int = 0,
+        val showSuccessAddedToCart: Boolean = false,
     ) : ViewState
 
     sealed class Event : ViewEvent {
@@ -24,6 +26,8 @@ class WishListContract {
         data class OnProductAddToCartClicked(val index: Int) : Event()
         data class OnBazaarClicked(val bazaar: BazaarModel) : Event()
         data class OnPageChanged(val pageIndex: Int) : Event()
+        object OnContinueShoppingClicked : Event()
+        object OnVisitYourCartClicked : Event()
     }
 
     sealed class Effect : ViewSideEffect {
@@ -31,6 +35,7 @@ class WishListContract {
             data class GoToProduct(val product: Product) : Navigation()
             data class GoToBazaar(val bazaar: BazaarModel) : Navigation()
             object GoToBack : Navigation()
+            object GoToCart : Navigation()
         }
 
         data class ScrollPager(val pager: Int) : Effect()

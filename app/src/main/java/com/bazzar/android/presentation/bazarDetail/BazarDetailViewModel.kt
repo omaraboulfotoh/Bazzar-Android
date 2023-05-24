@@ -48,7 +48,12 @@ class BazarDetailViewModel @Inject constructor(
                 copy(showSuccessAddedToCart = false)
             }
 
-            BazarDetailContract.Event.OnVisitYourCartClicked -> setEffect { BazarDetailContract.Effect.Navigation.GoToCart }
+            BazarDetailContract.Event.OnVisitYourCartClicked -> {
+                setState {
+                    copy(showSuccessAddedToCart = false)
+                }
+                setEffect { BazarDetailContract.Effect.Navigation.GoToCart }
+            }
         }
     }
 

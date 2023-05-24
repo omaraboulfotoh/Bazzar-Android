@@ -71,7 +71,13 @@ class ProductViewModel @Inject constructor(
                 copy(showSuccessAddedToCart = false)
             }
 
-            ProductContract.Event.OnVisitYourCartClicked -> setEffect { ProductContract.Effect.Navigation.GoToCart }
+            ProductContract.Event.OnVisitYourCartClicked -> {
+                setState {
+                    copy(showSuccessAddedToCart = false)
+                }
+                setEffect { ProductContract.Effect.Navigation.GoToCart }
+            }
+
             is ProductContract.Event.OnFilterTypeClicked -> handleOnFilterTypeClicked(event.filterType)
             is ProductContract.Event.OnSelectUnselectFilter ->
                 handleOnSelectUnselectFilter(event.filter, event.isSelect)

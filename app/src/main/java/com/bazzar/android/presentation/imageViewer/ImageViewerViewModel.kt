@@ -38,7 +38,12 @@ class ImageViewerViewModel @Inject constructor(
             }
 
             // navigation
-            is Event.OnVisitYourCartClicked -> setEffect { Effect.Navigation.GoToCart }
+            is Event.OnVisitYourCartClicked -> {
+                setState {
+                    copy(showSuccessAddedToCart = false)
+                }
+                setEffect { Effect.Navigation.GoToCart }
+            }
             is Event.OnBackClicked -> setEffect { Effect.Navigation.GoBack }
         }
     }

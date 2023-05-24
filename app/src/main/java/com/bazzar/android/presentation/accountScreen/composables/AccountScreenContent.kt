@@ -75,6 +75,16 @@ fun AccountScreenContent(
                     }
             )
         }
+        if (state.isUserLoggedIn.not() && state.showWishList) {
+            item {
+                BarItem(
+                    modifier = Modifier.padding(top = 24.dp),
+                    title = stringResource(id = R.string.wish_list),
+                    iconPainter = painterResource(id = R.drawable.ic_fav),
+                    onClick = { onSendEvent(AccountContract.Event.OnWishListClicked) }
+                )
+            }
+        }
         if (state.isUserLoggedIn) {
             item {
                 BarItem(

@@ -78,6 +78,7 @@ class AccountViewModel @Inject constructor(
         setState {
             copy(
                 isUserLoggedIn = false,
+                showWishList = false,
                 userData = null
             )
         }
@@ -106,7 +107,13 @@ class AccountViewModel @Inject constructor(
                     is Result.Success -> {
                         if (deleteResponse.data == true) {
                             sharedPrefersManager.logout()
-                            setState { copy(isUserLoggedIn = false, userData = null) }
+                            setState {
+                                copy(
+                                    isUserLoggedIn = false,
+                                    userData = null,
+                                    showWishList = false,
+                                )
+                            }
                         }
                     }
                 }
@@ -118,6 +125,7 @@ class AccountViewModel @Inject constructor(
             setState {
                 copy(
                     isUserLoggedIn = sharedPrefersManager.showAccountLogin(),
+                    showWishList = sharedPrefersManager.isUserLongedIn(),
                     userData = sharedPrefersManager.getUserData()
                 )
             }

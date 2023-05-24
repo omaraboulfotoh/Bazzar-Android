@@ -63,7 +63,12 @@ class HomeViewModel @Inject constructor(
             )
 
             HomeContract.Event.OnContinueShoppingClicked -> setState { copy(showSuccessAddedToCart = false) }
-            HomeContract.Event.OnVisitYourCartClicked -> setEffect { HomeContract.Effect.Navigation.GoToCart }
+            HomeContract.Event.OnVisitYourCartClicked -> {
+                setState {
+                    copy(showSuccessAddedToCart = false)
+                }
+                setEffect { HomeContract.Effect.Navigation.GoToCart }
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.bazzar.android.presentation.wishlist
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,9 +17,12 @@ import com.bazzar.android.R
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.composables.BazzarAppBar
+import com.bazzar.android.presentation.composables.SuccessAddedToCart
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.destinations.BazarDetailScreenDestination
+import com.bazzar.android.presentation.destinations.CartScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
+import com.bazzar.android.presentation.productDetail.ProductDetailContract
 import com.bazzar.android.presentation.theme.BazzarTheme
 import com.bazzar.android.presentation.wishlist.composables.WishListPager
 import com.bazzar.android.presentation.wishlist.composables.WishListPagerTabs
@@ -54,6 +58,8 @@ fun WishListScreen(
             }
 
             is WishListContract.Effect.Navigation.GoToBack -> navigator.navigateUp()
+            WishListContract.Effect.Navigation.GoToCart ->
+                navigator.navigate(CartScreenDestination)
         }
     }
 
@@ -70,7 +76,6 @@ fun WishListScreen(
         }
     }
 
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -80,31 +85,42 @@ fun WishListScreen(
         BazzarAppBar(title = stringResource(id = R.string.wish_list), onNavigationClick = {
             viewModel.setEvent(WishListContract.Event.OnBackClicked)
         })
+        Box(modifier = Modifier.weight(1f)) {
 
-        // screen layout
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .padding(BazzarTheme.spacing.m),
-            verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
-            horizontalAlignment = Alignment.Start
-        ) {
-            WishListPagerTabs(
-                tabTitles = listOf(
-                    stringResource(id = R.string.products),
-                    stringResource(id = R.string.bazzar)
-                ),
-                onTabClicked = {
-                    viewModel.setEvent(WishListContract.Event.OnPageChanged(it))
-                },
-                currentPage = state.currentPage,
-                pagerState = PagerState(0),
+
+            // screen layout
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(BazzarTheme.spacing.m),
+                verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
+                horizontalAlignment = Alignment.Start
+            ) {
+                WishListPagerTabs(
+                    tabTitles = listOf(
+                        stringResource(id = R.string.products),
+                        stringResource(id = R.string.bazzar)
+                    ),
+                    onTabClicked = {
+                        viewModel.setEvent(WishListContract.Event.OnPageChanged(it))
+                    },
+                    currentPage = state.currentPage,
+                    pagerState = PagerState(0),
+                )
+
+                WishListPager(state = state, pagerState = pagerState, onEvent = {
+                    viewModel.setEvent(it)
+                }, modifier = Modifier.weight(1f))
+            }
+
+            SuccessAddedToCart(
+                modifier = Modifier.align(Alignment.BottomCenter),
+                show = state.showSuccessAddedToCart,
+                onContinueShoppingClick = { viewModel.setEvent(WishListContract.Event.OnContinueShoppingClicked) },
+                onVisitCardClick = { viewModel.setEvent(WishListContract.Event.OnVisitYourCartClicked) },
             )
-
-            WishListPager(state = state, pagerState = pagerState, onEvent = {
-                viewModel.setEvent(it)
-            }, modifier = Modifier.weight(1f))
         }
+
 
     }
 }

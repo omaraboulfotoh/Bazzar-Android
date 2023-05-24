@@ -2,11 +2,13 @@ package com.bazzar.android.presentation.wishlist
 
 import com.android.model.home.BazaarModel
 import com.android.model.home.Product
+import com.android.model.request.AddToCartRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.presentation.cartScreen.CartContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -35,17 +37,45 @@ class WishListViewModel @Inject constructor(
             is WishListContract.Event.OnDeleteBazaar -> handleDeleteBazarFromWishList(event.bazaar)
             is WishListContract.Event.OnProductAddToCartClicked -> handleAddToCart(event.index)
             is WishListContract.Event.OnPageChanged -> handlePageChanged(event.pageIndex)
+            WishListContract.Event.OnContinueShoppingClicked -> setState {
+                copy(
+                    showSuccessAddedToCart = false
+                )
+            }
+
+            WishListContract.Event.OnVisitYourCartClicked -> {
+                setState {
+                    copy(showSuccessAddedToCart = false)
+                }
+                setEffect { WishListContract.Effect.Navigation.GoToCart }
+            }
         }
     }
 
     private fun handleAddToCart(index: Int) = executeCatching({
-
-
         val item = currentState.productCartList?.get(index) ?: return@executeCatching
         homeUseCase.getAllProductDetails(item.id.orZero()).collect { response ->
             when (response) {
                 is Result.Success -> {
-                    // todo will show add to cart sheet
+                    val product = response.data!!
+                    if (product.itemDetails.size > 1) {
+                        setEffect { WishListContract.Effect.Navigation.GoToProduct(product = product) }
+                    } else if (product.itemDetails.size == 1) {
+                        homeUseCase.addToCart(
+                            AddToCartRequest(
+                                itemDetailId = product.itemDetails.first().id.orZero()
+                            )
+                        ).collect { response ->
+                            when (response) {
+                                is Result.Error -> globalState.error(response.message.orEmpty())
+                                is Result.Success -> {
+                                    setState { copy(showSuccessAddedToCart = true) }
+                                }
+
+                                else -> {}
+                            }
+                        }
+                    }
                 }
 
                 else -> {}
@@ -63,19 +93,19 @@ class WishListViewModel @Inject constructor(
         val list = currentState.productCartList?.toMutableList() ?: return@executeCatching
         val item = list[index]
         homeUseCase.deleteProductWishList(item.id.orZero()).collect { response ->
-                when (response) {
-                    is Result.Success -> {
-                        list.removeAt(index)
-                        setState {
-                            copy(
-                                productCartList = list, showEmptyProducts = list.isEmpty()
-                            )
-                        }
+            when (response) {
+                is Result.Success -> {
+                    list.removeAt(index)
+                    setState {
+                        copy(
+                            productCartList = list, showEmptyProducts = list.isEmpty()
+                        )
                     }
-
-                    else -> {}
                 }
+
+                else -> {}
             }
+        }
     })
 
     private fun handleDeleteBazarFromWishList(bazzar: BazaarModel) = executeCatching({
@@ -83,19 +113,19 @@ class WishListViewModel @Inject constructor(
         val index = list.indexOf(bazzar)
         val item = list[index]
         homeUseCase.deleteBazaarWishList(item.id.orZero()).collect { response ->
-                when (response) {
-                    is Result.Success -> {
-                        list.removeAt(index)
-                        setState {
-                            copy(
-                                bazaarList = list, showEmptyBazaars = bazaarList.orEmpty().isEmpty()
-                            )
-                        }
+            when (response) {
+                is Result.Success -> {
+                    list.removeAt(index)
+                    setState {
+                        copy(
+                            bazaarList = list, showEmptyBazaars = bazaarList.orEmpty().isEmpty()
+                        )
                     }
-
-                    else -> {}
                 }
+
+                else -> {}
             }
+        }
     })
 
     fun init() {
