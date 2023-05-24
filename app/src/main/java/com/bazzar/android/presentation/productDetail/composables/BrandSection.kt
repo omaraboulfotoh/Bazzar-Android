@@ -95,7 +95,7 @@ fun BrandSection(
         // product title
         Text(
             text = productTitle, style = MaterialTheme.typography.subtitle1.copy(
-                fontFamily = FontFamily(Font(R.font.montserrat_semibold))
+                fontFamily = FontFamily(Font(R.font.siwa_bold))
             )
         )
 
@@ -111,7 +111,7 @@ fun BrandSection(
                     withStyle(
                         style = SpanStyle(
                             fontFamily =
-                            FontFamily(Font(R.font.montserrat_bold))
+                            FontFamily(Font(R.font.siwa_heavy))
                         )
                     ) {
                         append(newPrice ?: oldPrice)
@@ -119,7 +119,7 @@ fun BrandSection(
                     withStyle(
                         style = SpanStyle(
                             fontFamily =
-                            FontFamily(Font(R.font.montserrat_regular))
+                            FontFamily(Font(R.font.siwa_regular))
                         )
                     ) {
                         append(
@@ -131,7 +131,7 @@ fun BrandSection(
                 },
                 Modifier,
                 style = MaterialTheme.typography.subtitle2.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_semibold))
+                    fontFamily = FontFamily(Font(R.font.siwa_bold))
                 )
             )
             if (newPrice.isNullOrEmpty().not())
@@ -141,7 +141,7 @@ fun BrandSection(
                         withStyle(
                             style = SpanStyle(
                                 fontFamily =
-                                FontFamily(Font(R.font.montserrat_bold))
+                                FontFamily(Font(R.font.siwa_heavy))
                             )
                         ) {
                             append(oldPrice)
@@ -149,7 +149,7 @@ fun BrandSection(
                         withStyle(
                             style = SpanStyle(
                                 fontFamily =
-                                FontFamily(Font(R.font.montserrat_regular))
+                                FontFamily(Font(R.font.siwa_regular))
                             )
                         ) {
                             append(
@@ -162,7 +162,7 @@ fun BrandSection(
                     Modifier,
                     color = BazzarTheme.colors.textGray,
                     style = MaterialTheme.typography.subtitle2.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_semibold))
+                        fontFamily = FontFamily(Font(R.font.siwa_bold))
                     )
                 )
 

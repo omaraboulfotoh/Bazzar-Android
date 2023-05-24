@@ -11,8 +11,6 @@ import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
-import com.bazzar.android.presentation.bazarDetail.BazarDetailContract
-import com.bazzar.android.presentation.productDetail.ProductDetailContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

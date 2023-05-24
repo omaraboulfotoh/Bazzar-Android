@@ -46,7 +46,7 @@ fun ContinueAsGuest(modifier: Modifier, onContinueAsGuestClicked: () -> Unit) {
             Text(
                 text = stringResource(id = R.string.continue_as_guest),
                 style = MaterialTheme.typography.subtitle2.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                    fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                     color = colorResource(id = R.color.Cruel_Jewel)
                 ),
                 modifier = Modifier.align(Alignment.CenterVertically)

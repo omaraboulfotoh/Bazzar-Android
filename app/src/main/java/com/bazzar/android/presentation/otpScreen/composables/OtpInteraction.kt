@@ -50,7 +50,7 @@ fun OtpInteraction(
                     .fillMaxWidth(),
                 text = stringResource(id = R.string.otp_enter_digits_guide),
                 style = MaterialTheme.typography.subtitle2.copy(
-                    color = Color.Black, fontFamily = FontFamily(Font(R.font.montserrat_medium))
+                    color = Color.Black, fontFamily = FontFamily(Font(R.font.siwa_regular))
                 ),
                 textAlign = TextAlign.Center
             )
@@ -72,7 +72,7 @@ fun OtpInteraction(
                 text = buildAnnotatedString {
                     withStyle(
                         style = SpanStyle(
-                            fontFamily = FontFamily(Font(R.font.montserrat_medium)),
+                            fontFamily = FontFamily(Font(R.font.siwa_regular)),
                             fontSize = 14.sp,
                             color = Color.Black
                         )
@@ -81,7 +81,7 @@ fun OtpInteraction(
                     }
                     withStyle(
                         style = SpanStyle(
-                            fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                            fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                             fontSize = 14.sp,
                             color = colorResource(id = R.color.deep_sky_blue)
                         )

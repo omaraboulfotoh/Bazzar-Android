@@ -84,7 +84,7 @@ fun LazyListScope.CategoryList(
                             text = category.title.orEmpty(),
                             modifier = Modifier.weight(1f),
                             style = MaterialTheme.typography.subtitle2.copy(
-                                fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                                fontFamily = FontFamily(Font(R.font.siwa_bold)),
                                 color = colorResource(id = R.color.prussian_blue)
                             )
                         )
@@ -134,7 +134,7 @@ fun LazyListScope.CategoryList(
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.subtitle2.copy(
-                            fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                            fontFamily = FontFamily(Font(R.font.siwa_bold)),
                             color = colorResource(id = R.color.white),
                         )
                     )
@@ -168,7 +168,7 @@ fun LazyListScope.CategoryList(
                                 Text(
                                     text = item.title ?: "",
                                     style = MaterialTheme.typography.overline.copy(
-                                        fontFamily = FontFamily(Font(R.font.montserrat_medium)),
+                                        fontFamily = FontFamily(Font(R.font.siwa_regular)),
                                         color = colorResource(id = R.color.white),
                                     ),
                                     modifier = Modifier.padding(top = 8.dp)

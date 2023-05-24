@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?><!-- START xml_defaults -->
+<defaultsMap>
+    <entry>
+        <key>MARKETER_LINK</key>
+        <value>https://bzaaarz.com/Marketer/</value>
+    </entry>
+    <entry>
+        <key>VENDOR_LINK</key>
+        <value>https://bzaaarz.com/Provider/</value>
+    </entry>
+    <entry>
+        <key>WHATSAPP_NUMBER</key>
+        <value>+96590904880</value>
+    </entry>
+</defaultsMap><!-- END xml_defaults -->

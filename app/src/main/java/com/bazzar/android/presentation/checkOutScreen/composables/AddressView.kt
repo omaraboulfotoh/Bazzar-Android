@@ -51,7 +51,7 @@ fun AddressView(
                 text = stringResource(id = R.string.default_address),
                 style = MaterialTheme.typography.subtitle2.copy(
                     color = colorResource(id = R.color.prussian_blue),
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                    fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                 ),
             )
             Box(
@@ -74,7 +74,7 @@ fun AddressView(
                     modifier = Modifier.padding(horizontal = BazzarTheme.spacing.s),
                     text = stringResource(id = R.string.change_default_address),
                     style = MaterialTheme.typography.overline.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                         color = colorResource(id = R.color.white),
                         fontWeight = FontWeight(1)
                     ),

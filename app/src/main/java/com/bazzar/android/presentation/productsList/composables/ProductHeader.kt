@@ -45,7 +45,7 @@ fun ProductHeader(productScreenTitle: String, modifier: Modifier) {
         ) {
             Text(
                 text = productScreenTitle, style = MaterialTheme.typography.subtitle1.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                    fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                     color = colorResource(id = R.color.prussian_blue),
                 ), modifier = Modifier.align(Alignment.Center)
             )

@@ -1,19 +1,15 @@
 package com.bazzar.android.presentation.register
 
-import android.content.Context
-import android.util.Patterns
 import com.android.local.SharedPrefersManager
 import com.android.model.home.UserData
 import com.android.model.request.UserRegisterRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
-import com.bazzar.android.BazzarApplication
 import com.bazzar.android.R
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.utils.IResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 @HiltViewModel

@@ -56,7 +56,7 @@ fun InputPassword(
             Text(
                 text = stringResource(id = R.string.password),
                 style = MaterialTheme.typography.subtitle1.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                    fontFamily = FontFamily(Font(R.font.siwa_regular)),
                     color = colorResource(id = R.color.prussian_blue)
                 ),
             )

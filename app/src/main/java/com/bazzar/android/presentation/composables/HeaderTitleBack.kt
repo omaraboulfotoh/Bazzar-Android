@@ -34,7 +34,7 @@ fun HeaderTitleBack(modifier:Modifier, title:String) {
             text = title,
             style = MaterialTheme.typography.subtitle2.copy(
                 color = colorResource(id = R.color.prussian_blue),
-                fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                fontFamily = FontFamily(Font(R.font.siwa_heavy)),
 
                 ),
             modifier = Modifier.align(Alignment.Center)

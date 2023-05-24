@@ -42,7 +42,7 @@ fun LoginButton(
             Text(
                 text = stringResource(id = R.string.login),
                 style = MaterialTheme.typography.subtitle1.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                    fontFamily = FontFamily(Font(R.font.siwa_heavy))
                 ),
                 modifier = Modifier.align(Alignment.Center)
             )

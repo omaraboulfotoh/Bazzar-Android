@@ -36,7 +36,7 @@ fun BuyItem(modifier: Modifier, onBuyNowClicked: () -> Unit) {
             text = stringResource(id = R.string.buy_now),
             style = MaterialTheme.typography.subtitle2.copy(
                 color = Color.White,
-                fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                fontFamily = FontFamily(Font(R.font.siwa_heavy))
             )
         )
     }

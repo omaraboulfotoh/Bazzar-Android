@@ -19,7 +19,9 @@ class AccountContract {
         object OnAddressesClicked : Event()
         object OnBazzarTermsAndConditionsClicked : Event()
         object OnAboutUsClicked : Event()
+        object OnVendorClicked : Event()
         object OnContactUsClicked : Event()
+        object OnMarketerClicked : Event()
         object OnLanguageClicked : Event()
         object OnJoinUsClicked : Event()
         object OnRewardCenterClicked : Event()
@@ -34,6 +36,7 @@ class AccountContract {
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
             data class GoToEditProfile(val userData: UserData) : Navigation()
+            data class OpenLink(val link: String) : Navigation()
             object GoToOrdersHistory : Navigation()
             object GoToWishList : Navigation()
             object GoToRegistration : Navigation()

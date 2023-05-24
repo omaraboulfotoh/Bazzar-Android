@@ -35,7 +35,7 @@ fun OtpSuccess() {
             text = stringResource(id = R.string.account_confirmed),
             style = MaterialTheme.typography.subtitle2.copy(
                 colorResource(id = R.color.white),
-                fontFamily = FontFamily(Font(R.font.montserrat_regular))
+                fontFamily = FontFamily(Font(R.font.siwa_regular))
             )
         )
     }

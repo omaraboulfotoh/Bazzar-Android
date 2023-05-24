@@ -58,7 +58,7 @@ fun ToggleBrandCategory(onToggle: () -> Unit, isCategory: Boolean) {
                     text = stringResource(
                         id = if (!isCategory) R.string.category_category_toggle_title else R.string.category_brands_toggle_title
                     ), style = MaterialTheme.typography.caption.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                         color = colorResource(id = R.color.prussian_blue),
                     )
                 )

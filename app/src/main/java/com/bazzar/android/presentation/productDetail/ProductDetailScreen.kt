@@ -69,12 +69,10 @@ fun ProductDetailScreen(
             is ProductDetailContract.Effect.Navigation.GoToOpenProduct ->
                 navigator.navigate(ProductDetailScreenDestination(product = effect.product))
 
-            is ProductDetailContract.Effect.Navigation.GoToTalkToUs -> {
-                buildUrlIntent(SocialMedia.WHATS_APP).apply {
+            is ProductDetailContract.Effect.Navigation.GoToTalkToUs ->
+                buildUrlIntent(SocialMedia.WHATS_APP + effect.whatsAppNumber).apply {
                     context.startActivity(this)
                 }
-
-            }
 
             ProductDetailContract.Effect.Navigation.GoToLogin ->
                 navigator.navigate(LoginScreenDestination())

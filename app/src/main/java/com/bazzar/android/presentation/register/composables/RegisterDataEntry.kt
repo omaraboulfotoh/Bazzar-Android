@@ -68,7 +68,7 @@ fun RegisterDataEntry(
                 text = stringResource(id = R.string.user_name),
                 style = MaterialTheme.typography.subtitle2.copy(
                     color = colorResource(id = R.color.prussian_blue),
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                    fontFamily = FontFamily(Font(R.font.siwa_heavy))
                 ),
             )
             TextField(
@@ -110,7 +110,7 @@ fun RegisterDataEntry(
 //                text = stringResource(id = R.string.email),
 //                style = MaterialTheme.typography.subtitle2.copy(
 //                    color = colorResource(id = R.color.prussian_blue),
-//                    fontFamily = FontFamily(Font(R.font.montserrat_bold))
+//                    fontFamily = FontFamily(Font(R.font.siwa_heavy))
 //                ),
 //                modifier = Modifier.padding(top = 24.dp)
 //            )
@@ -145,7 +145,7 @@ fun RegisterDataEntry(
                 text = stringResource(id = R.string.phone_number),
                 style = MaterialTheme.typography.subtitle2.copy(
                     color = colorResource(id = R.color.prussian_blue),
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                    fontFamily = FontFamily(Font(R.font.siwa_heavy))
                 ),
                 modifier = Modifier.padding(top = 24.dp)
             )
@@ -227,7 +227,7 @@ fun RegisterDataEntry(
                         append(stringResource(id = R.string.otp_message))
                     }
                 }, style = MaterialTheme.typography.overline.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                    fontFamily = FontFamily(Font(R.font.siwa_heavy))
                 )
             )
         }
@@ -247,7 +247,7 @@ fun RegisterDataEntry(
                     text = stringResource(id = R.string.agree_terms_conditions),
                     style = MaterialTheme.typography.overline.copy(
                         color = colorResource(id = R.color.prussian_blue),
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                        fontFamily = FontFamily(Font(R.font.siwa_heavy))
                     )
                 )
             }
@@ -267,7 +267,7 @@ fun RegisterDataEntry(
                     Text(
                         text = stringResource(id = R.string.create_account),
                         style = MaterialTheme.typography.subtitle1.copy(
-                            fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                            fontFamily = FontFamily(Font(R.font.siwa_heavy))
                         ),
                         modifier = Modifier.align(Alignment.Center)
                     )

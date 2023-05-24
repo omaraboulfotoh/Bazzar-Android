@@ -43,7 +43,7 @@ fun CustomButton(
         Text(
             text = text,
             style = MaterialTheme.typography.subtitle2.copy(
-                color = Color.White, fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                color = Color.White, fontFamily = FontFamily(Font(R.font.siwa_heavy)),
             ), modifier = Modifier.align(Alignment.Center)
         )
 

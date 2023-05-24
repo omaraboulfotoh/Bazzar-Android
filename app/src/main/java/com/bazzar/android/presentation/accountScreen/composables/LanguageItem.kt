@@ -48,7 +48,7 @@ fun LanguageItem(modifier: Modifier) {
                 modifier = Modifier.wrapContentSize(),
                 text = stringResource(id = R.string.language),
                 style = MaterialTheme.typography.subtitle2.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                    fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                     color = colorResource(id = R.color.prussian_blue)
                 )
             )
@@ -63,14 +63,14 @@ fun LanguageItem(modifier: Modifier) {
             Text(
                 text = stringResource(id = R.string.english),
                 style = MaterialTheme.typography.subtitle2.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                    fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                     color = colorResource(id = R.color.deep_sky_blue)
                 )
             )
             Text(
                 text = stringResource(id = R.string.arabic),
                 style = MaterialTheme.typography.subtitle2.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                    fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                     color = colorResource(id = R.color.Gray59)
                 ),
                 modifier = Modifier.wrapContentSize()

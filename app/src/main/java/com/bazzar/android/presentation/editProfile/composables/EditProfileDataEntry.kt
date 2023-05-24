@@ -74,7 +74,7 @@ fun EditProfileDataEntry(
                 text = stringResource(id = R.string.user_name),
                 style = MaterialTheme.typography.subtitle2.copy(
                     color = colorResource(id = R.color.prussian_blue),
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                    fontFamily = FontFamily(Font(R.font.siwa_heavy))
                 ),
             )
             TextField(
@@ -107,7 +107,7 @@ fun EditProfileDataEntry(
                     Text(
                         text = stringResource(id = R.string.type_name),
                         style = MaterialTheme.typography.subtitle1.copy(
-                            fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                            fontFamily = FontFamily(Font(R.font.siwa_regular)),
                             color = colorResource(id = R.color.prussian_blue)
                         ),
                     )
@@ -117,7 +117,7 @@ fun EditProfileDataEntry(
                 text = stringResource(id = R.string.email),
                 style = MaterialTheme.typography.subtitle2.copy(
                     color = colorResource(id = R.color.prussian_blue),
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                    fontFamily = FontFamily(Font(R.font.siwa_heavy))
                 ),
                 modifier = Modifier.padding(top = 24.dp)
             )
@@ -153,7 +153,7 @@ fun EditProfileDataEntry(
                             id = R.string.type_email
                         ),
                         style = MaterialTheme.typography.subtitle1.copy(
-                            fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                            fontFamily = FontFamily(Font(R.font.siwa_regular)),
                             color = colorResource(id = R.color.prussian_blue)
                         ),
                     )
@@ -163,7 +163,7 @@ fun EditProfileDataEntry(
                 text = stringResource(id = R.string.phone_number),
                 style = MaterialTheme.typography.subtitle2.copy(
                     color = colorResource(id = R.color.prussian_blue),
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                    fontFamily = FontFamily(Font(R.font.siwa_heavy))
                 ),
                 modifier = Modifier.padding(top = 24.dp)
             )
@@ -198,7 +198,7 @@ fun EditProfileDataEntry(
                                 id = R.string.type_number
                             ),
                             style = MaterialTheme.typography.subtitle1.copy(
-                                fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                                fontFamily = FontFamily(Font(R.font.siwa_regular)),
                                 color = colorResource(id = R.color.prussian_blue)
                             )
                         )
@@ -247,7 +247,7 @@ fun EditProfileDataEntry(
                         append(stringResource(id = R.string.otp_message))
                     }
                 }, style = MaterialTheme.typography.overline.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                    fontFamily = FontFamily(Font(R.font.siwa_heavy))
                 )
             )
         }
@@ -266,7 +266,7 @@ fun EditProfileDataEntry(
                 Text(
                     text = stringResource(id = R.string.edit_account),
                     style = MaterialTheme.typography.subtitle1.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                        fontFamily = FontFamily(Font(R.font.siwa_heavy))
                     ),
                     modifier = Modifier.align(Alignment.Center)
                 )

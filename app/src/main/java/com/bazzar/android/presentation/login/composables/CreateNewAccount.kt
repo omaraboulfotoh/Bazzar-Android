@@ -40,7 +40,7 @@ fun CreateNewAccount(modifier: Modifier, goToRegister: () -> Unit) {
         Text(
             text = stringResource(id = R.string.Create_new_account),
             style = MaterialTheme.typography.subtitle2.copy(
-                fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                 color = colorResource(id = R.color.prussian_blue)
             ),
             modifier = Modifier.align(Alignment.CenterVertically)

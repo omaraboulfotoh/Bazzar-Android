@@ -31,7 +31,7 @@ fun WishListTitle() {
         Text(
             text = stringResource(id = R.string.add_from_your_wish_list),
             style = MaterialTheme.typography.subtitle2.copy(
-                fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                 color = colorResource(id = R.color.prussian_blue),
             )
         )

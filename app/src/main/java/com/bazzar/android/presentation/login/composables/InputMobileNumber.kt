@@ -47,7 +47,7 @@ fun InputMobileNumber(phone: String = "", onPhoneChanged: (String) -> Unit, modi
                     id = R.string.enter_mobile_number
                 ),
                 style = MaterialTheme.typography.subtitle1.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                    fontFamily = FontFamily(Font(R.font.siwa_regular)),
                     color = colorResource(id = R.color.prussian_blue)
                 )
             )

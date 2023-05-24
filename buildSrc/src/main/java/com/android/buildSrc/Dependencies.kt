@@ -51,6 +51,8 @@ object Dependencies {
     //Threading
     const val coroutinesCore =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutinesVersion}"
+    const val coroutinesSerialization =
+        "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.coroutinesVersion}"
     const val coroutinesCoreAndroid =
         "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutinesVersion}"
     const val coroutinesTest =

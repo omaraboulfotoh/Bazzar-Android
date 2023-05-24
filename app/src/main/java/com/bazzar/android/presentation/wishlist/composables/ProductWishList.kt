@@ -113,14 +113,14 @@ fun ProductWishList(
                         maxLines = 1,
                         text = product.brandTitle.orEmpty(),
                         style = MaterialTheme.typography.subtitle2.copy(
-                            fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                            fontFamily = FontFamily(Font(R.font.siwa_heavy))
                         )
                     )
 
                     Text(
                         text = product.title.orEmpty(),
                         style = MaterialTheme.typography.subtitle2.copy(
-                            fontFamily = FontFamily(Font(R.font.montserrat_regular))
+                            fontFamily = FontFamily(Font(R.font.siwa_regular))
                         ),
                         maxLines = 3,
                         modifier = Modifier.fillMaxWidth()
@@ -130,7 +130,7 @@ fun ProductWishList(
 //                        text = buildAnnotatedString {
 //                            withStyle(
 //                                style = SpanStyle(
-//                                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+//                                    fontFamily = FontFamily(Font(R.font.siwa_heavy)),
 //                                    fontSize = 10.sp
 //                                )
 //                            ) {
@@ -138,7 +138,7 @@ fun ProductWishList(
 //                            }
 //                            withStyle(
 //                                style = SpanStyle(
-//                                    fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+//                                    fontFamily = FontFamily(Font(R.font.siwa_regular)),
 //                                    fontSize = 14.sp
 //                                )
 //                            ) {
@@ -151,7 +151,7 @@ fun ProductWishList(
 //                        text = buildAnnotatedString {
 //                            withStyle(
 //                                style = SpanStyle(
-//                                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+//                                    fontFamily = FontFamily(Font(R.font.siwa_heavy)),
 //                                    fontSize = 10.sp
 //                                )
 //                            ) {
@@ -159,7 +159,7 @@ fun ProductWishList(
 //                            }
 //                            withStyle(
 //                                style = SpanStyle(
-//                                    fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+//                                    fontFamily = FontFamily(Font(R.font.siwa_regular)),
 //                                    fontSize = 14.sp
 //                                )
 //                            ) {
@@ -199,7 +199,7 @@ fun ProductWishList(
                         text = buildAnnotatedString {
                             withStyle(
                                 style = SpanStyle(
-                                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                                    fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                                 )
                             ) {
                                 append(
@@ -209,7 +209,7 @@ fun ProductWishList(
                             }
                             withStyle(
                                 style = SpanStyle(
-                                    fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                                    fontFamily = FontFamily(Font(R.font.siwa_regular)),
                                 )
                             ) {
                                 append(stringResource(R.string.home_screen_product_price))

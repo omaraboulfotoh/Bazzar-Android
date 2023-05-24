@@ -58,7 +58,7 @@ fun SearchProduct(searchClicked: Boolean, modifier: Modifier, onSearchClicked: (
                                 .padding(start = 89.dp),
                             text = stringResource(id = R.string.product_search_title),
                             style = MaterialTheme.typography.overline.copy(
-                                fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                                fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                                 color = colorResource(id = R.color.prussian_blue).copy(alpha = 0.4f),
                             ),
                         )
@@ -76,7 +76,7 @@ fun SearchProduct(searchClicked: Boolean, modifier: Modifier, onSearchClicked: (
                                 backgroundColor = colorResource(id = if (!searchClicked) R.color.white else R.color.white_smoke)
                             ),
                             textStyle = MaterialTheme.typography.overline.copy(
-                                fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                                fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                                 color = colorResource(id = R.color.deep_sky_blue),
                             )
                         )
@@ -86,7 +86,7 @@ fun SearchProduct(searchClicked: Boolean, modifier: Modifier, onSearchClicked: (
                                 .padding(start = 284.dp),
                             text = stringResource(id = R.string.brand_search_cancel),
                             style = MaterialTheme.typography.overline.copy(
-                                fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                                fontFamily = FontFamily(Font(R.font.siwa_bold)),
                                 color = colorResource(id = R.color.deep_sky_blue),
                             ),
                         )

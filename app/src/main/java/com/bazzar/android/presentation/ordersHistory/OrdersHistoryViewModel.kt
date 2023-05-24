@@ -1,6 +1,5 @@
 package com.bazzar.android.presentation.ordersHistory
 
-import com.android.local.SharedPrefersManager
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.R

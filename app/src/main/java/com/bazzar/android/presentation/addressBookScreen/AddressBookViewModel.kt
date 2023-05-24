@@ -1,6 +1,5 @@
 package com.bazzar.android.presentation.addressBookScreen
 
-import com.android.model.home.UserAddress
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.presentation.app.IGlobalState

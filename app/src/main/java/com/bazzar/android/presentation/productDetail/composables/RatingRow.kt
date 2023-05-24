@@ -38,7 +38,7 @@ fun RatingRow(
             Text(
                 text = stringResource(id = R.string.give_rate),
                 style = MaterialTheme.typography.overline.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                    fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                     color = Color.Black
                 )
             )
@@ -60,7 +60,7 @@ fun RatingRow(
                 modifier = Modifier.padding(start = 105.dp),
                 text = stringResource(id = R.string.sold_by),
                 style = MaterialTheme.typography.overline.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                    fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                     color = Color.Black
                 )
             )

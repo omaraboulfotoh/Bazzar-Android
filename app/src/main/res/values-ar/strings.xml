@@ -208,4 +208,6 @@
     <string name="no_phone_apps_found_on_your_device">No phone apps installed on your device</string>
     <string name="no_email_apps_found_on_your_device">No email apps installed on your device</string>
     <string name="can_not_find_a_suitable_app_to_preform_that_action">Can\'t find a suitable app to preform that action</string>
+    <string name="marketer_submition_form">نموذج تقديم المسوق</string>
+    <string name="vendor_submition_form">نموذج تقديم البائع</string>
 </resources>

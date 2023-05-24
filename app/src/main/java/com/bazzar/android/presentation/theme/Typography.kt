@@ -14,11 +14,11 @@ import com.bazzar.android.R
 
 internal val montserrat: FontFamily =
     FontFamily(
-        Font(R.font.montserrat_regular),
-        Font(R.font.montserrat_medium, FontWeight.Medium),
-        Font(R.font.montserrat_light, FontWeight.Light),
-        Font(R.font.montserrat_semibold, FontWeight.SemiBold),
-        Font(R.font.montserrat_bold, FontWeight.Bold),
+        Font(R.font.siwa_regular),
+        Font(R.font.siwa_regular, FontWeight.Medium),
+        Font(R.font.siwa_light, FontWeight.Light),
+        Font(R.font.siwa_bold, FontWeight.SemiBold),
+        Font(R.font.siwa_heavy, FontWeight.Bold),
         Font(R.font.montserrat_extrabold, FontWeight.ExtraBold)
     )
 

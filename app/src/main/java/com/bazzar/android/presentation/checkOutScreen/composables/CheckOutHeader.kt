@@ -37,7 +37,7 @@ fun CheckOutHeader() {
             modifier = Modifier
                 .padding(start = 76.dp),
             style = MaterialTheme.typography.subtitle1.copy(
-                fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                 color = colorResource(id = R.color.prussian_blue),
             )
         )

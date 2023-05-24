@@ -59,7 +59,7 @@ fun CartSummary(cartCounter: Int? = 0, totalAmount: Double) {
                 modifier = Modifier.fillMaxWidth(), text = stringResource(
                     id = R.string.number_in_cart, cartCounter.toString()
                 ), textAlign = TextAlign.Center, style = MaterialTheme.typography.subtitle2.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                    fontFamily = FontFamily(Font(R.font.siwa_regular)),
                     color = colorResource(id = R.color.prussian_blue),
                 )
             )
@@ -78,7 +78,7 @@ fun CartSummary(cartCounter: Int? = 0, totalAmount: Double) {
                     modifier = Modifier.wrapContentSize(),
                     text = stringResource(id = R.string.total_your_cart),
                     style = MaterialTheme.typography.subtitle2.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                         color = colorResource(id = R.color.Cruel_Jewel),
                     )
                 )
@@ -87,7 +87,7 @@ fun CartSummary(cartCounter: Int? = 0, totalAmount: Double) {
                     modifier = Modifier.wrapContentSize(), text = buildAnnotatedString {
                         withStyle(
                             style = SpanStyle(
-                                fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                                fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                             )
                         ) {
                             append(totalAmount.toPriceFormat())
@@ -95,7 +95,7 @@ fun CartSummary(cartCounter: Int? = 0, totalAmount: Double) {
 
                         withStyle(
                             style = SpanStyle(
-                                fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                                fontFamily = FontFamily(Font(R.font.siwa_regular)),
                                 fontSize = 10.sp
                             )
                         ) {

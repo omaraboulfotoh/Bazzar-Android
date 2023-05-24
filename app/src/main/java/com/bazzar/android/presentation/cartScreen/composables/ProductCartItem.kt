@@ -96,7 +96,7 @@ fun ProductCartItem(
                         text = product.qty.orZero().toString(),
                         style = MaterialTheme.typography.overline.copy(
                             color = colorResource(id = R.color.prussian_blue),
-                            fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                            fontFamily = FontFamily(Font(R.font.siwa_heavy))
                         )
                     )
                     Image(
@@ -121,7 +121,7 @@ fun ProductCartItem(
                     maxLines = 1,
                     text = product.brandTitle.orEmpty(),
                     style = MaterialTheme.typography.subtitle2.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                        fontFamily = FontFamily(Font(R.font.siwa_heavy))
                     )
                 )
                 Text(
@@ -129,14 +129,14 @@ fun ProductCartItem(
                     maxLines = 2,
                     text = product.itemTitle.orEmpty(),
                     style = MaterialTheme.typography.subtitle2.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_regular))
+                        fontFamily = FontFamily(Font(R.font.siwa_regular))
                     )
                 )
 
                 Text(
                     text = product.title.orEmpty(),
                     style = MaterialTheme.typography.subtitle2.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_regular))
+                        fontFamily = FontFamily(Font(R.font.siwa_regular))
                     ),
                     maxLines = 2,
                     modifier = Modifier.fillMaxWidth()
@@ -146,7 +146,7 @@ fun ProductCartItem(
                     text = buildAnnotatedString {
                         withStyle(
                             style = SpanStyle(
-                                fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                                fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                                 fontSize = 10.sp
                             )
                         ) {
@@ -154,7 +154,7 @@ fun ProductCartItem(
                         }
                         withStyle(
                             style = SpanStyle(
-                                fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                                fontFamily = FontFamily(Font(R.font.siwa_regular)),
                                 fontSize = 14.sp
                             )
                         ) {
@@ -167,7 +167,7 @@ fun ProductCartItem(
                     text = buildAnnotatedString {
                         withStyle(
                             style = SpanStyle(
-                                fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                                fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                                 fontSize = 10.sp
                             )
                         ) {
@@ -175,7 +175,7 @@ fun ProductCartItem(
                         }
                         withStyle(
                             style = SpanStyle(
-                                fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                                fontFamily = FontFamily(Font(R.font.siwa_regular)),
                                 fontSize = 14.sp
                             )
                         ) {
@@ -207,7 +207,7 @@ fun ProductCartItem(
                     text = buildAnnotatedString {
                         withStyle(
                             style = SpanStyle(
-                                fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                                fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                             )
                         ) {
                             append(
@@ -217,7 +217,7 @@ fun ProductCartItem(
                         }
                         withStyle(
                             style = SpanStyle(
-                                fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                                fontFamily = FontFamily(Font(R.font.siwa_regular)),
                             )
                         ) {
                             append(stringResource(R.string.home_screen_product_price))

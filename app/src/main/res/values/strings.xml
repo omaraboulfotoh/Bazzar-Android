@@ -209,4 +209,6 @@
     <string name="addtional_notes_placeholder">Type any thing you would like to tell us related to your order.</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="marketer_submition_form">Marketer Submitting Form</string>
+    <string name="vendor_submition_form">Vendor Submitting Form</string>
 </resources>

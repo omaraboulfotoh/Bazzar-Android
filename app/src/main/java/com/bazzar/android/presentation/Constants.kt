@@ -14,7 +14,7 @@ object SocialMedia {
     const val FACEBOOK_PAGE = "https://www.facebook.com/bazzar.gate1"
     const val INSTAGRAM_PAGE = "https://www.instagram.com/bazzar.gate/?igshid=YmMyMTA2M2Y%3D"
     const val TWITTER_PAGE = "https://twitter.com/bazzargate?s=11&t=Sx1hvXm0_rH6joDkDWScRw"
-    const val WHATS_APP = "https://api.whatsapp.com/send?phone=$+96594124128"
+    const val WHATS_APP = "https://api.whatsapp.com/send?phone="
 }
 
 object MapLatLngConstants {

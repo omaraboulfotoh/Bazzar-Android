@@ -85,8 +85,14 @@ fun AccountScreen(
             }
 
             AccountContract.Effect.Navigation.OnRestartApp -> MainActivity.restartApp(activity)
-            AccountContract.Effect.Navigation.GoToWishList ->
-                navigator.navigate(WishListScreenDestination)
+
+            AccountContract.Effect.Navigation.GoToWishList -> navigator.navigate(
+                WishListScreenDestination
+            )
+
+            is AccountContract.Effect.Navigation.OpenLink -> buildUrlIntent(effect.link).apply {
+                context.startActivity(this)
+            }
         }
     }
     viewModel.initState()

@@ -77,7 +77,7 @@ fun LazyListScope.CategoryGroup(
                         .padding(bottom = 46.dp)
                         .align(Alignment.BottomCenter),
                     style = MaterialTheme.typography.subtitle2.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                         color = colorResource(id = R.color.black)
                     )
                 )

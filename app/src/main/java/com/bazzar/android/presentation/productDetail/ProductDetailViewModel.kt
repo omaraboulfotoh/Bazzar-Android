@@ -14,7 +14,11 @@ import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.presentation.productDetail.ProductDetailContract.Effect
+import com.bazzar.android.presentation.productDetail.ProductDetailContract.Event
+import com.bazzar.android.presentation.productDetail.ProductDetailContract.State
 import com.bazzar.android.utils.IResourceProvider
+import com.bazzar.android.utils.remoteconfig.RemoteConfiguration
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -23,50 +27,56 @@ class ProductDetailViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
     private val sharedPrefersManager: SharedPrefersManager,
-    private val resourceProvider: IResourceProvider
-) : BaseViewModel<ProductDetailContract.Event, ProductDetailContract.State, ProductDetailContract.Effect>(
+    private val resourceProvider: IResourceProvider,
+    private val remoteConfiguration: RemoteConfiguration
+) : BaseViewModel<Event, State, Effect>(
     globalState
 ) {
 
     private var isInitialized = false
-    override fun setInitialState() = ProductDetailContract.State()
+    override fun setInitialState() = State()
 
 
-    override fun handleEvents(event: ProductDetailContract.Event) {
+    override fun handleEvents(event: Event) {
         when (event) {
             // navigation
-            is ProductDetailContract.Event.OnBackIconClicked -> setEffect { ProductDetailContract.Effect.Navigation.GoToBack }
-            is ProductDetailContract.Event.OnShareClicked -> shareProduct()
-            is ProductDetailContract.Event.OnVisitYourCartClicked -> {
+            is Event.OnBackIconClicked -> setEffect { Effect.Navigation.GoToBack }
+            is Event.OnShareClicked -> shareProduct()
+            is Event.OnVisitYourCartClicked -> {
                 setState { copy(showSuccessAddedToCart = false) }
-                setEffect { ProductDetailContract.Effect.Navigation.GoToCart }
+                setEffect { Effect.Navigation.GoToCart }
             }
 
-            is ProductDetailContract.Event.OnSeeMoreBrandClicked -> navigateToBrandItems()
-            is ProductDetailContract.Event.OnRelatedItemClicked -> openSelectedProduct(event.itemIndex)
-            is ProductDetailContract.Event.OnBuyNowClicked -> addToCart()
-            is ProductDetailContract.Event.OnContinueShoppingClicked -> setState {
+            is Event.OnSeeMoreBrandClicked -> navigateToBrandItems()
+            is Event.OnRelatedItemClicked -> openSelectedProduct(event.itemIndex)
+            is Event.OnBuyNowClicked -> addToCart()
+            is Event.OnContinueShoppingClicked -> setState {
                 copy(
                     showSuccessAddedToCart = false
                 )
             }
 
-            is ProductDetailContract.Event.OnTackToUsClicked -> setEffect { ProductDetailContract.Effect.Navigation.GoToTalkToUs }
-            is ProductDetailContract.Event.OnImageClicked -> handleOnImageClicked(event.index)
+            is Event.OnTackToUsClicked -> setEffect {
+                Effect.Navigation.GoToTalkToUs(
+                    remoteConfiguration.getString("WHATSAPP_NUMBER")
+                )
+            }
+
+            is Event.OnImageClicked -> handleOnImageClicked(event.index)
             // state
-            is ProductDetailContract.Event.OnColorItemSelected -> updateColor(event.colorIndex)
-            is ProductDetailContract.Event.OnSizeItemSelected -> updateSizeAndItemId(event.sizeIndex)
-            is ProductDetailContract.Event.OnSeeMoreClicked -> setState { copy(isTextExpanded = isTextExpanded.not()) }
-            is ProductDetailContract.Event.OnRelatedItemFavClicked -> handleItemFav(event.itemIndex)
-            ProductDetailContract.Event.OnFavClicked -> handleProductFav()
-            is ProductDetailContract.Event.OnProductAddToCartClicked -> addProductToCart(event.itemIndex)
+            is Event.OnColorItemSelected -> updateColor(event.colorIndex)
+            is Event.OnSizeItemSelected -> updateSizeAndItemId(event.sizeIndex)
+            is Event.OnSeeMoreClicked -> setState { copy(isTextExpanded = isTextExpanded.not()) }
+            is Event.OnRelatedItemFavClicked -> handleItemFav(event.itemIndex)
+            Event.OnFavClicked -> handleProductFav()
+            is Event.OnProductAddToCartClicked -> addProductToCart(event.itemIndex)
         }
     }
 
 
     private fun addProductToCart(itemIndex: Int) = executeCatching({
         if (sharedPrefersManager.isUserLongedIn().not()) {
-            setEffect { ProductDetailContract.Effect.Navigation.GoToLogin }
+            setEffect { Effect.Navigation.GoToLogin }
             return@executeCatching
         }
         val itemDetail =
@@ -77,7 +87,7 @@ class ProductDetailViewModel @Inject constructor(
                 is Result.Success -> {
                     val product = response.data!!
                     if (product.itemDetails?.size.orZero() > 1) {
-                        setEffect { ProductDetailContract.Effect.Navigation.GoToOpenProduct(product = product) }
+                        setEffect { Effect.Navigation.GoToOpenProduct(product = product) }
                     } else if (product.itemDetails?.size.orZero() == 1) {
                         homeUseCase.addToCart(
                             AddToCartRequest(
@@ -104,7 +114,7 @@ class ProductDetailViewModel @Inject constructor(
 
     private fun handleProductFav() = executeCatching({
         if (sharedPrefersManager.isUserLongedIn().not()) {
-            setEffect { ProductDetailContract.Effect.Navigation.GoToLogin }
+            setEffect { Effect.Navigation.GoToLogin }
             return@executeCatching
         }
         val fav = currentState.isFavourite.not()
@@ -137,7 +147,7 @@ class ProductDetailViewModel @Inject constructor(
 
     private fun handleItemFav(itemIndex: Int) = executeCatching({
         if (sharedPrefersManager.isUserLongedIn().not()) {
-            setEffect { ProductDetailContract.Effect.Navigation.GoToLogin }
+            setEffect { Effect.Navigation.GoToLogin }
             return@executeCatching
         }
         val list =
@@ -188,7 +198,7 @@ class ProductDetailViewModel @Inject constructor(
 
     private fun openSelectedProduct(itemIndex: Int) {
         val product = currentState.productDetail?.relatedItems.orEmpty()[itemIndex]
-        setEffect { ProductDetailContract.Effect.Navigation.GoToOpenProduct(product) }
+        setEffect { Effect.Navigation.GoToOpenProduct(product) }
     }
 
     private fun handleOnImageClicked(index: Int) {
@@ -197,7 +207,7 @@ class ProductDetailViewModel @Inject constructor(
         imagePaths.removeAt(index)
         imagePaths.add(0, clickedImage)
         setEffect {
-            ProductDetailContract.Effect.Navigation.GoToImageViewer(
+            Effect.Navigation.GoToImageViewer(
                 imagePathList = imagePaths, product = currentState.productDetail
             )
         }
@@ -205,7 +215,7 @@ class ProductDetailViewModel @Inject constructor(
 
     private fun addToCart() = executeCatching({
         if (sharedPrefersManager.isUserLongedIn().not()) {
-            setEffect { ProductDetailContract.Effect.Navigation.GoToLogin }
+            setEffect { Effect.Navigation.GoToLogin }
             return@executeCatching
         }
         val itemDetail = currentState.productDetail?.selectedItemDetails ?: return@executeCatching
@@ -234,14 +244,14 @@ class ProductDetailViewModel @Inject constructor(
         )
 
         // navigate to brands products list
-        setEffect { ProductDetailContract.Effect.Navigation.GoToProductBrandList(brand) }
+        setEffect { Effect.Navigation.GoToProductBrandList(brand) }
     }
 
     private fun shareProduct() {
         val product = currentState.productDetail ?: return
         // share product
         setEffect {
-            ProductDetailContract.Effect.ShareProduct(
+            Effect.ShareProduct(
                 shareText = resourceProvider.getString(R.string.share_product_text),
                 shareLink = product.shareURL.orEmpty()
             )

@@ -172,7 +172,7 @@ fun ProductItem(
                             modifier = Modifier.align(Alignment.Start),
                             text = buildAnnotatedString {
                                 withStyle(
-                                    style = SpanStyle(fontFamily = FontFamily(Font(R.font.montserrat_bold)))
+                                    style = SpanStyle(fontFamily = FontFamily(Font(R.font.siwa_heavy)))
                                 ) {
                                     append(
                                         if (product.discountPercentage.orZero() > 0) {
@@ -181,7 +181,7 @@ fun ProductItem(
                                     )
                                 }
                                 withStyle(
-                                    style = SpanStyle(fontFamily = FontFamily(Font(R.font.montserrat_regular)))
+                                    style = SpanStyle(fontFamily = FontFamily(Font(R.font.siwa_regular)))
                                 ) {
                                     append(stringResource(id = R.string.home_screen_product_price))
                                 }
@@ -198,12 +198,12 @@ fun ProductItem(
                                 modifier = Modifier.align(Alignment.Start),
                                 text = buildAnnotatedString {
                                     withStyle(
-                                        style = SpanStyle(fontFamily = FontFamily(Font(R.font.montserrat_bold)))
+                                        style = SpanStyle(fontFamily = FontFamily(Font(R.font.siwa_heavy)))
                                     ) {
                                         append(product.price.toString())
                                     }
                                     withStyle(
-                                        style = SpanStyle(fontFamily = FontFamily(Font(R.font.montserrat_regular)))
+                                        style = SpanStyle(fontFamily = FontFamily(Font(R.font.siwa_regular)))
                                     ) {
                                         append(stringResource(id = R.string.home_screen_product_price))
                                     }

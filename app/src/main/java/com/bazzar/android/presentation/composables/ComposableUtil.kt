@@ -85,7 +85,7 @@ fun SemiCircleImageView(imagePath: String, text: String,modifier: Modifier) {
                 .padding(horizontal = BazzarTheme.spacing.xs)
                 .align(Alignment.BottomCenter),
             style = MaterialTheme.typography.subtitle2.copy(
-                fontFamily = FontFamily(Font(R.font.montserrat_medium)),
+                fontFamily = FontFamily(Font(R.font.siwa_regular)),
                 color = colorResource(id = R.color.white)
             )
         )
@@ -110,7 +110,7 @@ fun HeaderTextWithViewAll(
             text = text,
             textAlign = TextAlign.Start,
             style = MaterialTheme.typography.subtitle1.copy(
-                fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                 color = colorResource(id = R.color.prussian_blue),
             )
         )
@@ -121,7 +121,7 @@ fun HeaderTextWithViewAll(
                 },
                 text = stringResource(id = R.string.home_screen_view_all),
                 style = MaterialTheme.typography.caption.copy(
-                    fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                    fontFamily = FontFamily(Font(R.font.siwa_bold)),
                     color = colorResource(id = R.color.deep_sky_blue)
                 )
             )
@@ -179,7 +179,7 @@ fun FooterTabBar(selectedMenu: MenuBarItem = MenuBarItem.Profile) {
                 else Text(
                     text = stringResource(id = R.string.footer_home), modifier = Modifier,
                     style = MaterialTheme.typography.caption.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                         color = colorResource(id = R.color.black).copy(
                             alpha = 0.15f,
                         )
@@ -195,7 +195,7 @@ fun FooterTabBar(selectedMenu: MenuBarItem = MenuBarItem.Profile) {
                     text = stringResource(id = R.string.category_category_title),
                     modifier = Modifier,
                     style = MaterialTheme.typography.caption.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                         color = colorResource(id = R.color.black).copy(
                             alpha = 0.15f,
                         )
@@ -206,7 +206,7 @@ fun FooterTabBar(selectedMenu: MenuBarItem = MenuBarItem.Profile) {
                 else Text(
                     text = stringResource(id = R.string.footer_menu_bazzar), modifier = Modifier,
                     style = MaterialTheme.typography.caption.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                         color = colorResource(id = R.color.black).copy(
                             alpha = 0.15f,
                         )
@@ -217,7 +217,7 @@ fun FooterTabBar(selectedMenu: MenuBarItem = MenuBarItem.Profile) {
                 else Text(
                     text = stringResource(id = R.string.footer_menu_cart), modifier = Modifier,
                     style = MaterialTheme.typography.caption.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                         color = colorResource(id = R.color.black).copy(
                             alpha = 0.15f,
                         )
@@ -232,7 +232,7 @@ fun FooterTabBar(selectedMenu: MenuBarItem = MenuBarItem.Profile) {
                 else Text(
                     text = stringResource(id = R.string.footer_menu_profile), modifier = Modifier,
                     style = MaterialTheme.typography.caption.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                         color = colorResource(id = R.color.black).copy(
                             alpha = 0.15f,
                         )

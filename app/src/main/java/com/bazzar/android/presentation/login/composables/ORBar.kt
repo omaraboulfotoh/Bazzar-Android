@@ -40,7 +40,7 @@ fun ORBar(modifier: Modifier) {
             text = stringResource(id = R.string.or),
             style = MaterialTheme.typography.subtitle2.copy(
                 colorResource(id = R.color.prussian_blue),
-                fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                fontFamily = FontFamily(Font(R.font.siwa_heavy))
             ),
         )
         Divider(

@@ -12,7 +12,6 @@ import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.presentation.imageViewer.ImageViewerContract.Effect
 import com.bazzar.android.presentation.imageViewer.ImageViewerContract.Event
 import com.bazzar.android.presentation.imageViewer.ImageViewerContract.State
-import com.bazzar.android.presentation.productsList.ProductContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

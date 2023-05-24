@@ -23,7 +23,9 @@ import androidx.compose.ui.unit.sp
 import com.bazzar.android.BuildConfig
 import com.bazzar.android.R
 import com.bazzar.android.presentation.accountScreen.AccountContract
+import com.bazzar.android.presentation.composables.BazzarAppBar
 import com.bazzar.android.presentation.composables.CustomButton
+import com.bazzar.android.presentation.composables.EmptyMbcAppBar
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.otpScreen.composables.HeaderTitleBack
 import com.bazzar.android.presentation.theme.BazzarTheme
@@ -42,10 +44,7 @@ fun AccountScreenContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
-            HeaderTitleBack(
-                modifier = Modifier.padding(top = 30.dp),
-                stringResource(id = R.string.my_account)
-            )
+            EmptyMbcAppBar(title = stringResource(id = R.string.my_account))
         }
         item {
             if (state.isUserLoggedIn) {
@@ -134,6 +133,24 @@ fun AccountScreenContent(
                 title = stringResource(id = R.string.contact_us),
                 iconPainter = painterResource(id = R.drawable.ic_contact_us),
                 onClick = { onSendEvent(AccountContract.Event.OnContactUsClicked) }
+            )
+
+        }
+        item {
+            BarItem(
+                modifier = Modifier.padding(top = 24.dp),
+                title = stringResource(id = R.string.marketer_submition_form),
+                iconPainter = painterResource(id = R.drawable.ic_terms_conditions),
+                onClick = { onSendEvent(AccountContract.Event.OnMarketerClicked) }
+            )
+
+        }
+        item {
+            BarItem(
+                modifier = Modifier.padding(top = 24.dp),
+                title = stringResource(id = R.string.vendor_submition_form),
+                iconPainter = painterResource(id = R.drawable.ic_terms_conditions),
+                onClick = { onSendEvent(AccountContract.Event.OnVendorClicked) }
             )
 
         }

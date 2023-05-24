@@ -82,7 +82,7 @@ fun LazyListScope.BrandGrid(
                 Text(
                     text = item.title ?: "",
                     style = MaterialTheme.typography.overline.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_medium)),
+                        fontFamily = FontFamily(Font(R.font.siwa_regular)),
                         color = colorResource(id = R.color.black),
                     ),
                 )

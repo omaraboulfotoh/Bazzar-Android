@@ -40,14 +40,14 @@ fun TermsAndConditions(modifier: Modifier) {
             text = buildAnnotatedString {
                 withStyle(
                     style = SpanStyle(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                        fontFamily = FontFamily(Font(R.font.siwa_heavy))
                     )
                 ) {
                     append(stringResource(id = R.string.bazzar))
                 }
                 withStyle(
                     style = SpanStyle(
-                        fontFamily = FontFamily(Font(R.font.montserrat_regular))
+                        fontFamily = FontFamily(Font(R.font.siwa_regular))
                     )
                 ) {
                     append(stringResource(id = R.string.terms_and_condition))

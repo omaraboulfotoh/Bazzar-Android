@@ -11,6 +11,8 @@ import com.bazzar.android.presentation.app.ConfirmationDialogParams
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.utils.IResourceProvider
+import com.bazzar.android.utils.remoteconfig.FirebaseRemoteConfiguration
+import com.bazzar.android.utils.remoteconfig.RemoteConfiguration
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -20,7 +22,8 @@ class AccountViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
     private val sharedPrefersManager: SharedPrefersManager,
-    private val resourceProvider: IResourceProvider
+    private val resourceProvider: IResourceProvider,
+    private val remoteConfiguration: RemoteConfiguration
 ) : BaseViewModel<Event, State, Effect>(globalState) {
 
     private var isInitialized = false
@@ -48,6 +51,21 @@ class AccountViewModel @Inject constructor(
             Event.OnJoinUsClicked -> {}
             Event.OnRewardCenterClicked -> {}
             Event.OnWishListClicked -> setEffect { Effect.Navigation.GoToWishList }
+            Event.OnMarketerClicked -> setEffect {
+                Effect.Navigation.OpenLink(
+                    remoteConfiguration.getString(
+                        "MARKETER_LINK"
+                    )
+                )
+            }
+
+            Event.OnVendorClicked -> setEffect {
+                Effect.Navigation.OpenLink(
+                    remoteConfiguration.getString(
+                        "VENDOR_LINK"
+                    )
+                )
+            }
         }
     }
 

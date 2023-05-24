@@ -45,7 +45,7 @@ fun BrandCategoryHeader(
             text = stringResource(
                 id = if (showBack.not()) R.string.category_category_title else R.string.category_brands_title
             ), style = MaterialTheme.typography.subtitle1.copy(
-                fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                 color = colorResource(id = R.color.prussian_blue),
             ), modifier = Modifier
                 .align(Alignment.Center)

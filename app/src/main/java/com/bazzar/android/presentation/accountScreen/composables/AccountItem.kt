@@ -60,7 +60,7 @@ fun AccountItem(
             text = buildAnnotatedString {
                 withStyle(
                     style = SpanStyle(
-                        fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                        fontFamily = FontFamily(Font(R.font.siwa_regular)),
                         fontSize = 14.sp,
                         color = BazzarTheme.colors.white
                     )
@@ -69,7 +69,7 @@ fun AccountItem(
                 }
                 withStyle(
                     style = SpanStyle(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                         fontSize = 14.sp,
                         color = BazzarTheme.colors.white
                     )

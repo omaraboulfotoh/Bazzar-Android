@@ -107,7 +107,7 @@ fun AddressItem(
                     text = stringResource(id = R.string.set_default_address),
                     style = MaterialTheme.typography.subtitle2.copy(
                         color = colorResource(id = R.color.black),
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                        fontFamily = FontFamily(Font(R.font.siwa_heavy))
                     )
                 )
                 Box(

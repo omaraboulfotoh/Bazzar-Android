@@ -91,7 +91,7 @@ private fun ItemImages(items: List<OrderItem>) {
             text = buildAnnotatedString {
                 withStyle(
                     style = SpanStyle(
-                        fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                        fontFamily = FontFamily(Font(R.font.siwa_regular)),
                         fontSize = 14.sp,
                     )
                 ) {
@@ -99,7 +99,7 @@ private fun ItemImages(items: List<OrderItem>) {
                 }
                 withStyle(
                     style = SpanStyle(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                        fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                         fontSize = 14.sp,
                     )
                 ) {
@@ -159,7 +159,7 @@ private fun OrderNumberAndPrice(
                 text = buildAnnotatedString {
                     withStyle(
                         style = SpanStyle(
-                            fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+                            fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                             fontSize = 14.sp,
                         )
                     ) {
@@ -167,7 +167,7 @@ private fun OrderNumberAndPrice(
                     }
                     withStyle(
                         style = SpanStyle(
-                            fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                            fontFamily = FontFamily(Font(R.font.siwa_regular)),
                             fontSize = 14.sp,
                         )
                     ) {

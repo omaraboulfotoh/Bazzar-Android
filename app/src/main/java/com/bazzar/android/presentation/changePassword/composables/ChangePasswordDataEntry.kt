@@ -52,7 +52,7 @@ fun ChangePasswordDataEntry(
             text = stringResource(id = R.string.current_password),
             style = MaterialTheme.typography.subtitle2.copy(
                 color = colorResource(id = R.color.prussian_blue),
-                fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                fontFamily = FontFamily(Font(R.font.siwa_heavy))
             ),
         )
         TextField(
@@ -82,7 +82,7 @@ fun ChangePasswordDataEntry(
                 Text(
                     text = stringResource(id = R.string.enter_current_password),
                     style = MaterialTheme.typography.subtitle1.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                        fontFamily = FontFamily(Font(R.font.siwa_regular)),
                         color = colorResource(id = R.color.prussian_blue)
                     ),
                 )
@@ -93,7 +93,7 @@ fun ChangePasswordDataEntry(
             text = stringResource(id = R.string.new_password),
             style = MaterialTheme.typography.subtitle2.copy(
                 color = colorResource(id = R.color.prussian_blue),
-                fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                fontFamily = FontFamily(Font(R.font.siwa_heavy))
             ),
         )
         TextField(
@@ -123,7 +123,7 @@ fun ChangePasswordDataEntry(
                 Text(
                     text = stringResource(id = R.string.enter_new_password),
                     style = MaterialTheme.typography.subtitle1.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                        fontFamily = FontFamily(Font(R.font.siwa_regular)),
                         color = colorResource(id = R.color.prussian_blue)
                     ),
                 )
@@ -143,7 +143,7 @@ fun ChangePasswordDataEntry(
                 Text(
                     text = stringResource(id = R.string.change_password),
                     style = MaterialTheme.typography.subtitle1.copy(
-                        fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                        fontFamily = FontFamily(Font(R.font.siwa_heavy))
                     ),
                     modifier = Modifier.align(Alignment.Center)
                 )
