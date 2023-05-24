@@ -120,7 +120,12 @@ class CreateOrderViewModel @Inject constructor(
                 is Result.Error -> globalState.error(response.message.orEmpty())
                 is Result.Loading -> globalState.loading(true)
                 is Result.Success -> {
-                    setEffect { CreateOrderContract.Effect.Navigation.OpenWebView(response.data?.paymentURL.orEmpty()) }
+                    if (response.data?.paymentURL.isNullOrEmpty()) {
+                        handlePaymentSuccess(true)
+                    } else {
+                        setEffect { CreateOrderContract.Effect.Navigation.OpenWebView(response.data?.paymentURL.orEmpty()) }
+                    }
+
                 }
             }
         }
