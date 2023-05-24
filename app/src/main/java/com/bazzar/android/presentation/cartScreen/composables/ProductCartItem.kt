@@ -124,6 +124,14 @@ fun ProductCartItem(
                         fontFamily = FontFamily(Font(R.font.montserrat_bold))
                     )
                 )
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    maxLines = 1,
+                    text = product.itemTitle.orEmpty(),
+                    style = MaterialTheme.typography.subtitle2.copy(
+                        fontFamily = FontFamily(Font(R.font.montserrat_regular))
+                    )
+                )
 
                 Text(
                     text = product.title.orEmpty(),

@@ -68,7 +68,7 @@ class RegisterViewModel @Inject constructor(
     private fun isValid(email: String, name: String, phone: String): Boolean {
         var isValid = true
         val errorsList = mutableListOf<String>()
-        if (phone.isEmpty() || phone.count() > 8) {
+        if (phone.isEmpty() || phone.count() != 8) {
             isValid = false
             errorsList.add(resourceProvider.getString(R.string.invalid_phone))
         }
@@ -102,7 +102,11 @@ class RegisterViewModel @Inject constructor(
                     is Result.Error -> globalState.error(registerResponse.message.orEmpty())
                     is Result.Loading -> globalState.loading(true)
                     is Result.Success -> {
-                        navigateToOtpScreen(registerResponse.data)
+                        if (registerResponse.code != 200) {
+                            globalState.error(registerResponse.message.orEmpty())
+                        } else {
+                            navigateToOtpScreen(registerResponse.data)
+                        }
                     }
 
                     else -> {}

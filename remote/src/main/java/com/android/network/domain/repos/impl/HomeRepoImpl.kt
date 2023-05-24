@@ -1,21 +1,19 @@
 package com.android.network.domain.repos.impl
 
-import android.util.Log
 import androidx.annotation.WorkerThread
 import com.android.model.home.Area
 import com.android.model.home.BazaarModel
 import com.android.model.home.Brand
 import com.android.model.home.Category
-import com.android.model.home.Checkout
 import com.android.model.home.CheckoutModel
 import com.android.model.home.CreateOrderModel
 import com.android.model.home.EditProfileResponse
 import com.android.model.home.HomeResponse
+import com.android.model.home.OrderHistory
 import com.android.model.home.Product
+import com.android.model.home.SortFilter
 import com.android.model.home.UserAddress
 import com.android.model.home.UserData
-import com.android.model.home.OrderHistory
-import com.android.model.home.SortFilter
 import com.android.model.request.AddToCartRequest
 import com.android.model.request.GuestLoginRequest
 import com.android.model.request.LoadCheckoutRequest
@@ -23,16 +21,20 @@ import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
 import com.android.model.request.VerifyOtpRequest
+import com.android.model.responses.base.BaseWrapper
 import com.android.model.responses.base.BazaarDetailsResponse
 import com.android.network.datasource.HomeRemoteDataSource
 import com.android.network.domain.repos.HomeRepo
 import com.android.network.states.Result
+import com.google.gson.GsonBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onStart
+import java.io.IOException
 import javax.inject.Inject
+
 
 @WorkerThread
 class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataSource) : HomeRepo {
@@ -40,9 +42,15 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         try {
             homeRemoteDataSource.getHome().let {
                 if (it.isSuccessful) {
-                    emit(Result.Success(it.body()?.data ?: HomeResponse()))
+                    emit(
+                        Result.Success(
+                            data = it.body()?.data ?: HomeResponse(),
+                            message = it.body()?.message,
+                            code = it.body()?.code
+                        )
+                    )
                 } else Result.Error(
-                    HomeResponse(), "error will be handled"
+                    HomeResponse(), handleErrorIn400(it.errorBody().toString())
                 )
             }
         } catch (throwable: Throwable) {
@@ -58,9 +66,15 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         try {
             homeRemoteDataSource.getAllCategories().let {
                 if (it.isSuccessful) {
-                    emit(Result.Success(it.body()?.data ?: emptyList()))
+                    emit(
+                        Result.Success(
+                            data = it.body()?.data ?: emptyList(),
+                            message = it.body()?.message,
+                            code = it.body()?.code
+                        )
+                    )
                 } else Result.Error(
-                    listOf<Category>(), "error will be handled"
+                    listOf<Category>(), handleErrorIn400(it.errorBody().toString())
                 )
             }
         } catch (throwable: Throwable) {
@@ -76,9 +90,15 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         try {
             homeRemoteDataSource.getAllBrands().let {
                 if (it.isSuccessful) {
-                    emit(Result.Success(it.body()?.data ?: emptyList()))
+                    emit(
+                        Result.Success(
+                            data = it.body()?.data ?: emptyList(),
+                            message = it.body()?.message,
+                            code = it.body()?.code
+                        )
+                    )
                 } else Result.Error(
-                    listOf<Brand>(), "error will be handled"
+                    listOf<Brand>(), handleErrorIn400(it.errorBody().toString())
                 )
             }
         } catch (throwable: Throwable) {
@@ -97,12 +117,14 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                     if (it.isSuccessful) {
                         emit(
                             Result.Success(
-                                it.body()?.data ?: emptyList(),
-                                hasMoreData = it.body()?.hasMoreData
+                                data = it.body()?.data ?: emptyList(),
+                                hasMoreData = it.body()?.hasMoreData,
+                                message = it.body()?.message,
+                                code = it.body()?.code
                             )
                         )
                     } else Result.Error(
-                        listOf<Product>(), "error will be handled"
+                        listOf<Product>(), handleErrorIn400(it.errorBody().toString())
                     )
                 }
             } catch (throwable: Throwable) {
@@ -118,13 +140,18 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         try {
             homeRemoteDataSource.getAllProductDetails(productId).let {
                 if (it.isSuccessful) {
-                    emit(Result.Success(it.body()?.data ?: Product()))
+                    emit(
+                        Result.Success(
+                            data = it.body()?.data ?: Product(),
+                            message = it.body()?.message,
+                            code = it.body()?.code
+                        )
+                    )
                 } else Result.Error(
-                    Product(), "error will be handled"
+                    Product(), handleErrorIn400(it.errorBody().toString())
                 )
             }
         } catch (throwable: Throwable) {
-            Log.e("Error", "getAllProductDetails: ", throwable)
             emit(
                 Result.Error(
                     Product(), throwable.message
@@ -137,11 +164,16 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         flow {
             try {
                 homeRemoteDataSource.loadFiltersAndSorting(queryMap).let {
-                    if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: SortFilter()))
-                    else Result.Error(SortFilter(), "error will be handled")
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            data = it.body()?.data ?: SortFilter(),
+                            message = it.body()?.message,
+                            code = it.body()?.code
+                        )
+                    )
+                    else Result.Error(SortFilter(), handleErrorIn400(it.errorBody().toString()))
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "loadFiltersAndSorting: ", throwable)
                 emit(Result.Error(SortFilter(), throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -150,13 +182,18 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         try {
             homeRemoteDataSource.register(request).let {
                 if (it.isSuccessful) {
-                    emit(Result.Success(it.body()?.data ?: UserData()))
+                    emit(
+                        Result.Success(
+                            data = it.body()?.data ?: UserData(),
+                            message = it.body()?.message,
+                            code = it.body()?.code
+                        )
+                    )
                 } else Result.Error(
-                    UserData(), "error will be handled"
+                    UserData(), handleErrorIn400(it.errorBody().toString())
                 )
             }
         } catch (throwable: Throwable) {
-            Log.e("Error", "RegisterError: ", throwable)
             emit(
                 Result.Error(
                     UserData(), throwable.message
@@ -170,13 +207,18 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             try {
                 homeRemoteDataSource.updateFcmToken(fcmToken).let {
                     if (it.isSuccessful) {
-                        emit(Result.Success(it.body()?.data))
+                        emit(
+                            Result.Success(
+                                data = it.body()?.data,
+                                message = it.body()?.message,
+                                code = it.body()?.code
+                            )
+                        )
                     } else Result.Error(
-                        null, "error will be handled"
+                        null, handleErrorIn400(it.errorBody().toString())
                     )
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "updateFcmToken: ", throwable)
                 emit(
                     Result.Error(
                         null, throwable.message
@@ -191,13 +233,17 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                 homeRemoteDataSource.editProfile(request).let {
                     if (it.isSuccessful) emit(
                         Result.Success(
-                            it.body()?.data ?: EditProfileResponse()
+                            data = it.body()?.data ?: EditProfileResponse(),
+                            message = it.body()?.message,
+                            code = it.body()?.code
                         )
                     )
-                    else Result.Error(EditProfileResponse(), "error will be handled")
+                    else Result.Error(
+                        EditProfileResponse(),
+                        handleErrorIn400(it.errorBody().toString())
+                    )
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "editProfile: ", throwable)
                 emit(Result.Error(EditProfileResponse(), throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -206,11 +252,16 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         flow {
             try {
                 homeRemoteDataSource.deleteAccount().let {
-                    if (it.isSuccessful) emit(Result.Success(it.body()?.data == true))
-                    else Result.Error(false, "error will be handled")
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            data = it.body()?.data == true,
+                            message = it.body()?.message,
+                            code = it.body()?.code
+                        )
+                    )
+                    else Result.Error(false, handleErrorIn400(it.errorBody().toString()))
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "deleteAccount: ", throwable)
                 emit(Result.Error(false, throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -222,11 +273,16 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         flow {
             try {
                 homeRemoteDataSource.changePassword(currentPassword, newPassword).let {
-                    if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: false))
-                    else Result.Error(false, "error will be handled")
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            data = it.body()?.data ?: false,
+                            message = it.body()?.message,
+                            code = it.body()?.code
+                        )
+                    )
+                    else Result.Error(false, handleErrorIn400(it.errorBody().toString()))
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "changePassword: ", throwable)
                 emit(Result.Error(false, throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -235,17 +291,18 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         try {
             homeRemoteDataSource.login(userLoginRequest).let {
                 if (it.isSuccessful) {
-                    emit(Result.Success(it.body()?.data ?: UserData()))
-                } else Result.Error(
-                    UserData(), "error will be handled"
-                )
+                    emit(
+                        Result.Success(
+                            data = it.body()?.data ?: UserData(),
+                            message = it.body()?.message,
+                            code = it.body()?.code
+                        )
+                    )
+                } else Result.Error(UserData(), handleErrorIn400(it.errorBody().toString()))
             }
         } catch (throwable: Throwable) {
-            Log.e("Error", "LoginError: ", throwable)
             emit(
-                Result.Error(
-                    UserData(), throwable.message
-                )
+                Result.Error(UserData(), throwable.message)
             )
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -255,13 +312,18 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             try {
                 homeRemoteDataSource.loginGuest(guestLoginRequest).let {
                     if (it.isSuccessful) {
-                        emit(Result.Success(it.body()?.data ?: UserData()))
+                        emit(
+                            Result.Success(
+                                data = it.body()?.data ?: UserData(),
+                                message = it.body()?.message,
+                                code = it.body()?.code
+                            )
+                        )
                     } else Result.Error(
-                        UserData(), "error will be handled"
+                        UserData(), handleErrorIn400(it.errorBody().toString())
                     )
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "LoginError: ", throwable)
                 emit(
                     Result.Error(
                         UserData(), throwable.message
@@ -275,13 +337,18 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             try {
                 homeRemoteDataSource.verifyOtp(verifyOtpRequest).let {
                     if (it.isSuccessful) {
-                        emit(Result.Success(it.body()?.data ?: UserData()))
+                        emit(
+                            Result.Success(
+                                data = it.body()?.data ?: UserData(),
+                                message = it.body()?.message,
+                                code = it.body()?.code
+                            )
+                        )
                     } else Result.Error(
-                        UserData(), "error will be handled"
+                        UserData(), handleErrorIn400(it.errorBody().toString())
                     )
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "verifyOtpError: ", throwable)
                 emit(
                     Result.Error(
                         UserData(), throwable.message
@@ -294,13 +361,19 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         try {
             homeRemoteDataSource.resendOtp(userId).let {
                 if (it.isSuccessful) {
-                    emit(Result.Success(""))
+                    emit(
+                        Result.Success(
+                            data = "",
+                            message = it.body()?.message,
+                            code = it.body()?.code
+                        )
+                    )
                 } else {
-                    Result.Error("", "error will be handled")
+                    Result.Error("", handleErrorIn400(it.errorBody().toString()))
                 }
             }
         } catch (throwable: Throwable) {
-            Log.e("Error", "verifyOtpError: ", throwable)
+
             emit(Result.Error("", throwable.message))
         }
     }.onStart { emit(Result.Loading("")) }.flowOn(Dispatchers.IO)
@@ -308,11 +381,17 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
     override suspend fun getAllAddresses(): Flow<Result<List<UserAddress>>> = flow {
         try {
             homeRemoteDataSource.getAllAddresses().let {
-                if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: listOf()))
-                else emit(Result.Error(listOf(), "error will be handled"))
+                if (it.isSuccessful) emit(
+                    Result.Success(
+                        data = it.body()?.data ?: listOf(),
+                        message = it.body()?.message,
+                        code = it.body()?.code
+                    )
+                )
+                else emit(Result.Error(listOf(), handleErrorIn400(it.errorBody().toString())))
             }
         } catch (throwable: Throwable) {
-            Log.e("Error", "getAllAddresses: ", throwable)
+
             emit(Result.Error(listOf(), throwable.message))
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -321,11 +400,22 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         flow {
             try {
                 homeRemoteDataSource.addUserAddress(userAddress).let {
-                    if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: UserAddress()))
-                    else emit(Result.Error(UserAddress(), "error will be handled"))
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            data = it.body()?.data ?: UserAddress(),
+                            message = it.body()?.message,
+                            code = it.body()?.code
+                        )
+                    )
+                    else emit(
+                        Result.Error(
+                            UserAddress(),
+                            handleErrorIn400(it.errorBody().toString())
+                        )
+                    )
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "addUserAddress: ", throwable)
+
                 emit(Result.Error(UserAddress(), throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -334,11 +424,21 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         flow {
             try {
                 homeRemoteDataSource.updateUserAddress(userAddress).let {
-                    if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: UserAddress()))
-                    else emit(Result.Error(UserAddress(), "error will be handled"))
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            data = it.body()?.data ?: UserAddress(),
+                            message = it.body()?.message,
+                            code = it.body()?.code
+                        )
+                    )
+                    else emit(
+                        Result.Error(
+                            UserAddress(),
+                            handleErrorIn400(it.errorBody().toString())
+                        )
+                    )
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "updateUserAddress: ", throwable)
                 emit(Result.Error(UserAddress(), throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -346,11 +446,16 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
     override suspend fun getAllAreas(): Flow<Result<List<Area>>> = flow {
         try {
             homeRemoteDataSource.getAllAreas().let {
-                if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: listOf()))
-                else emit(Result.Error(listOf(), "error will be handled"))
+                if (it.isSuccessful) emit(
+                    Result.Success(
+                        data = it.body()?.data ?: listOf(),
+                        message = it.body()?.message,
+                        code = it.body()?.code
+                    )
+                )
+                else emit(Result.Error(listOf(), handleErrorIn400(it.errorBody().toString())))
             }
         } catch (throwable: Throwable) {
-            Log.e("Error", "getAllAreas: ", throwable)
             emit(Result.Error(listOf(), throwable.message))
         }
     }.onStart { emit(Result.Loading(listOf())) }.flowOn(Dispatchers.IO)
@@ -359,11 +464,21 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         flow {
             try {
                 homeRemoteDataSource.loadCheckout(request).let {
-                    if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: CheckoutModel()))
-                    else emit(Result.Error(CheckoutModel(), "error will be handled"))
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            data = it.body()?.data ?: CheckoutModel(),
+                            message = it.body()?.message,
+                            code = it.body()?.code
+                        )
+                    )
+                    else emit(
+                        Result.Error(
+                            CheckoutModel(),
+                            handleErrorIn400(it.errorBody().toString())
+                        )
+                    )
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "getOrdersHistory: ", throwable)
                 emit(Result.Error(CheckoutModel(), throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -372,11 +487,16 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         flow {
             try {
                 homeRemoteDataSource.getOrdersHistory(lastDaysCount).let {
-                    if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: listOf()))
-                    else emit(Result.Error(listOf(), "error will be handled"))
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            data = it.body()?.data ?: listOf(),
+                            message = it.body()?.message,
+                            code = it.body()?.code
+                        )
+                    )
+                    else emit(Result.Error(listOf(), handleErrorIn400(it.errorBody().toString())))
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "getOrdersHistory: ", throwable)
                 emit(Result.Error(listOf(), throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -385,11 +505,21 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         flow {
             try {
                 homeRemoteDataSource.createOrder(request).let {
-                    if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: CreateOrderModel()))
-                    else emit(Result.Error(CreateOrderModel(), "error will be handled"))
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            data = it.body()?.data ?: CreateOrderModel(),
+                            message = it.body()?.message,
+                            code = it.body()?.code
+                        )
+                    )
+                    else emit(
+                        Result.Error(
+                            CreateOrderModel(),
+                            handleErrorIn400(it.errorBody().toString())
+                        )
+                    )
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "getOrdersHistory: ", throwable)
                 emit(Result.Error(CreateOrderModel(), throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -398,11 +528,16 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
         flow {
             try {
                 homeRemoteDataSource.getAllBazars().let {
-                    if (it.isSuccessful) emit(Result.Success(it.body()?.data ?: listOf()))
-                    else emit(Result.Error(listOf(), "error will be handled"))
+                    if (it.isSuccessful) emit(
+                        Result.Success(
+                            data = it.body()?.data ?: listOf(),
+                            message = it.body()?.message,
+                            code = it.body()?.code
+                        )
+                    )
+                    else emit(Result.Error(listOf(), handleErrorIn400(it.errorBody().toString())))
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "getAllBazars: ", throwable)
                 emit(Result.Error(listOf(), throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -413,13 +548,19 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                 homeRemoteDataSource.getBazaarDetails(bazaarId).let {
                     if (it.isSuccessful) emit(
                         Result.Success(
-                            it.body()?.data ?: BazaarDetailsResponse()
+                            data = it.body()?.data ?: BazaarDetailsResponse(),
+                            message = it.body()?.message,
+                            code = it.body()?.code
                         )
                     )
-                    else emit(Result.Error(BazaarDetailsResponse(), "error will be handled"))
+                    else emit(
+                        Result.Error(
+                            BazaarDetailsResponse(),
+                            handleErrorIn400(it.errorBody().toString())
+                        )
+                    )
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "getAllBazars: ", throwable)
                 emit(Result.Error(BazaarDetailsResponse(), throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -430,13 +571,14 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                 homeRemoteDataSource.getProductWishList().let {
                     if (it.isSuccessful) emit(
                         Result.Success(
-                            it.body()?.data ?: listOf()
+                            data = it.body()?.data ?: listOf(),
+                            message = it.body()?.message,
+                            code = it.body()?.code
                         )
                     )
-                    else emit(Result.Error(listOf(), "error will be handled"))
+                    else emit(Result.Error(listOf(), handleErrorIn400(it.errorBody().toString())))
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "getAllBazars: ", throwable)
                 emit(Result.Error(listOf(), throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -447,13 +589,14 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                 homeRemoteDataSource.addProductWishList(itemId).let {
                     if (it.isSuccessful) emit(
                         Result.Success(
-                            it.body()?.data ?: false
+                            data = it.body()?.data ?: false,
+                            message = it.body()?.message,
+                            code = it.body()?.code
                         )
                     )
-                    else emit(Result.Error(false, "error will be handled"))
+                    else emit(Result.Error(false, handleErrorIn400(it.errorBody().toString())))
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "getAllBazars: ", throwable)
                 emit(Result.Error(false, throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -463,13 +606,14 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             homeRemoteDataSource.deleteProductWishList(itemId).let {
                 if (it.isSuccessful) emit(
                     Result.Success(
-                        it.body()?.data ?: false
+                        data = it.body()?.data ?: false,
+                        message = it.body()?.message,
+                        code = it.body()?.code
                     )
                 )
-                else emit(Result.Error(false, "error will be handled"))
+                else emit(Result.Error(false, handleErrorIn400(it.errorBody().toString())))
             }
         } catch (throwable: Throwable) {
-            Log.e("Error", "getAllBazars: ", throwable)
             emit(Result.Error(false, throwable.message))
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -480,13 +624,14 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                 homeRemoteDataSource.getBazaarsWishList().let {
                     if (it.isSuccessful) emit(
                         Result.Success(
-                            it.body()?.data ?: listOf()
+                            data = it.body()?.data ?: listOf(),
+                            message = it.body()?.message,
+                            code = it.body()?.code
                         )
                     )
-                    else emit(Result.Error(listOf(), "error will be handled"))
+                    else emit(Result.Error(listOf(), handleErrorIn400(it.errorBody().toString())))
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "getAllBazars: ", throwable)
                 emit(Result.Error(listOf(), throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -496,13 +641,14 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             homeRemoteDataSource.addBazaarWishList(marketerId).let {
                 if (it.isSuccessful) emit(
                     Result.Success(
-                        it.body()?.data ?: false
+                        data = it.body()?.data ?: false,
+                        message = it.body()?.message,
+                        code = it.body()?.code
                     )
                 )
-                else emit(Result.Error(false, "error will be handled"))
+                else emit(Result.Error(false, handleErrorIn400(it.errorBody().toString())))
             }
         } catch (throwable: Throwable) {
-            Log.e("Error", "getAllBazars: ", throwable)
             emit(Result.Error(false, throwable.message))
         }
     }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -513,13 +659,14 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                 homeRemoteDataSource.deleteBazaarWishList(marketerId).let {
                     if (it.isSuccessful) emit(
                         Result.Success(
-                            it.body()?.data ?: false
+                            data = it.body()?.data ?: false,
+                            message = it.body()?.message,
+                            code = it.body()?.code
                         )
                     )
-                    else emit(Result.Error(false, "error will be handled"))
+                    else emit(Result.Error(false, handleErrorIn400(it.errorBody().toString())))
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "getAllBazars: ", throwable)
                 emit(Result.Error(false, throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -530,13 +677,14 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                 homeRemoteDataSource.addToCart(addToCartRequest).let {
                     if (it.isSuccessful) emit(
                         Result.Success(
-                            it.body()?.data ?: false
+                            data = it.body()?.data ?: false,
+                            message = it.body()?.message,
+                            code = it.body()?.code
                         )
                     )
-                    else emit(Result.Error(false, "error will be handled"))
+                    else emit(Result.Error(false, handleErrorIn400(it.errorBody().toString())))
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "getAllBazars: ", throwable)
                 emit(Result.Error(false, throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -547,16 +695,17 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
     ): Flow<Result<Boolean>> =
         flow {
             try {
-                homeRemoteDataSource.deleteFromCart(itemDetailId,addToWishList).let {
+                homeRemoteDataSource.deleteFromCart(itemDetailId, addToWishList).let {
                     if (it.isSuccessful) emit(
                         Result.Success(
-                            it.body()?.data ?: false
+                            data = it.body()?.data ?: false,
+                            message = it.body()?.message,
+                            code = it.body()?.code
                         )
                     )
-                    else emit(Result.Error(false, "error will be handled"))
+                    else emit(Result.Error(false, handleErrorIn400(it.errorBody().toString())))
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "getAllBazars: ", throwable)
                 emit(Result.Error(false, throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -567,13 +716,14 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                 homeRemoteDataSource.loadCart().let {
                     if (it.isSuccessful) emit(
                         Result.Success(
-                            it.body()?.data ?: listOf()
+                            data = it.body()?.data ?: listOf(),
+                            message = it.body()?.message,
+                            code = it.body()?.code
                         )
                     )
-                    else emit(Result.Error(listOf(), "error will be handled"))
+                    else emit(Result.Error(listOf(), handleErrorIn400(it.errorBody().toString())))
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "getAllBazars: ", throwable)
                 emit(Result.Error(listOf(), throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -583,13 +733,18 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             try {
                 homeRemoteDataSource.clearCart().let {
                     if (it.isSuccessful) {
-                        emit(Result.Success(it.body()?.data ?: false))
+                        emit(
+                            Result.Success(
+                                data = it.body()?.data ?: false,
+                                message = it.body()?.message,
+                                code = it.body()?.code
+                            )
+                        )
                     } else {
-                        emit(Result.Error(false, "error will be handled"))
+                        emit(Result.Error(false, handleErrorIn400(it.errorBody().toString())))
                     }
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "getAllBazars: ", throwable)
                 emit(Result.Error(false, throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
@@ -603,15 +758,31 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             try {
                 homeRemoteDataSource.updateCartQuantity(itemDetailId, qty).let {
                     if (it.isSuccessful) {
-                        emit(Result.Success(it.body()?.data ?: false))
+                        emit(
+                            Result.Success(
+                                data = it.body()?.data ?: false,
+                                message = it.body()?.message,
+                                code = it.body()?.code
+                            )
+                        )
                     } else {
-                        emit(Result.Error(false, "error will be handled"))
+                        emit(Result.Error(false, handleErrorIn400(it.errorBody().toString())))
                     }
                 }
             } catch (throwable: Throwable) {
-                Log.e("Error", "getAllBazars: ", throwable)
                 emit(Result.Error(false, throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
+}
+
+fun handleErrorIn400(errorBody: String): String {
+    val gson = GsonBuilder().create()
+    return try {
+        gson.fromJson(errorBody, BaseWrapper::class.java).message.orEmpty()
+
+    } catch (e: IOException) {
+        // handle failure to read error
+        "Something went wrong"
+    }
 }

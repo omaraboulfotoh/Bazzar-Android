@@ -7,8 +7,11 @@ import com.android.model.request.UserLoginRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.BazzarApplication
+import com.bazzar.android.R
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.utils.IResourceProvider
+import com.bazzar.android.utils.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -20,6 +23,7 @@ class LoginViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
     private val sharedPrefersManager: SharedPrefersManager,
+    private val resourceProvider: IResourceProvider,
     private val application: BazzarApplication
 ) : BaseViewModel<LoginContract.Event, LoginContract.State, LoginContract.Effect>(
     globalState
@@ -65,7 +69,10 @@ class LoginViewModel @Inject constructor(
     })
 
     private fun logIn() = executeCatching({
-
+        if (currentState.mobileNumber.orEmpty().count() != 8) {
+            globalState.error(resourceProvider.getString(R.string.invalid_phone))
+            return@executeCatching
+        }
         homeUseCase.login(
             UserLoginRequest(
                 "+965${currentState.mobileNumber.orEmpty()}",
@@ -77,11 +84,14 @@ class LoginViewModel @Inject constructor(
                 is Result.Loading -> globalState.loading(true)
                 is Result.Success -> {
                     // update fcm token on the api
-
-                    updateFCM()
-                    sharedPrefersManager.saveToken(loginResponse.data?.accessToken)
-                    sharedPrefersManager.saveUserData(loginResponse.data!!)
-                    setEffect { LoginContract.Effect.Navigation.GoBack }
+                    if (loginResponse.code != 200) {
+                        globalState.error(loginResponse.message.orEmpty())
+                    }else {
+                        updateFCM()
+                        sharedPrefersManager.saveToken(loginResponse.data?.accessToken)
+                        sharedPrefersManager.saveUserData(loginResponse.data!!)
+                        setEffect { LoginContract.Effect.Navigation.GoBack }
+                    }
                 }
 
                 else -> {}

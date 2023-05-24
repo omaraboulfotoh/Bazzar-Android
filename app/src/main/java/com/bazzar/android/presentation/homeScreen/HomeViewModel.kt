@@ -274,17 +274,22 @@ class HomeViewModel @Inject constructor(
             when (it) {
                 is Result.Error -> setState { copy(showError = true) }
                 is Result.Loading -> {}
-                is Result.Success -> setState {
-                    copy(
-                        ads = it.data?.ads,
-                        slides1 = it.data?.slider1,
-                        slides2 = it.data?.slider2,
-                        categoryItems = it.data?.categoryItems,
-                        featuredBrands = it.data?.featuredBrands,
-                        featuredCategories = it.data?.featuredCategories,
-                        featuredBazzars = it.data?.featuredBzarz,
-                    )
-                }
+                is Result.Success ->
+                    if (it.code != 200) {
+                        setState { copy(showError = true) }
+                    } else {
+                        setState {
+                            copy(
+                                ads = it.data?.ads,
+                                slides1 = it.data?.slider1,
+                                slides2 = it.data?.slider2,
+                                categoryItems = it.data?.categoryItems,
+                                featuredBrands = it.data?.featuredBrands,
+                                featuredCategories = it.data?.featuredCategories,
+                                featuredBazzars = it.data?.featuredBzarz,
+                            )
+                        }
+                    }
 
                 else -> {}
             }
