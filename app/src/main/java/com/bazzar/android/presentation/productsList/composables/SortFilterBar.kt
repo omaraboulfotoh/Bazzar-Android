@@ -5,9 +5,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material3.Card
@@ -44,11 +46,12 @@ fun SortFilterBar(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text(
-                    text = "${numOfProducts ?: "0000"} ${stringResource(id = R.string.product_items_counter)}",
-                    style = BazzarTheme.typography.subtitle3SemiBold,
-                    color = colorResource(id = R.color.prussian_blue)
-                )
+//                Text(
+//                    text = "${numOfProducts ?: "0000"} ${stringResource(id = R.string.product_items_counter)}",
+//                    style = BazzarTheme.typography.subtitle3SemiBold,
+//                    color = colorResource(id = R.color.prussian_blue)
+//                )
+                Spacer(modifier = modifier.width(BazzarTheme.spacing.m))
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
