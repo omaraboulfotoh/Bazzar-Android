@@ -100,12 +100,12 @@ class ProductViewModel @Inject constructor(
             when (response) {
                 is Result.Success -> {
                     val product = response.data!!
-                    if (product.itemDetails.size > 1) {
+                    if (product.itemDetails?.size.orZero() > 1) {
                         setEffect { ProductContract.Effect.Navigation.GoToProductDetailPage(product = product) }
-                    } else if (product.itemDetails.size == 1) {
+                    } else if (product.itemDetails?.size.orZero() == 1) {
                         homeUseCase.addToCart(
                             AddToCartRequest(
-                                itemDetailId = product.itemDetails.first().id.orZero()
+                                itemDetailId = product.itemDetails?.first()?.id.orZero()
                             )
                         ).collect { response ->
                             when (response) {

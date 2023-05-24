@@ -9,6 +9,7 @@ import kotlinx.android.parcel.Parcelize
 @JsonClass(generateAdapter = true)
 data class Product(
     @Json(name = "id") val id: Int? = null,
+    @Json(name = "itemId") val itemId: Int? = null,
     @Json(name = "itemDetailId") val itemDetailId: Int? = null,
     @Json(name = "title") val title: String? = null,
     @Json(name = "description") val description: String? = null,
@@ -25,9 +26,9 @@ data class Product(
     @Json(name = "price") val price: Double? = 0.0,
     @Json(name = "oldPrice") val oldPrice: Double? = null,
     @Json(name = "discountPercentage") val discountPercentage: Double? = null,
-    @Json(name = "itemDetails") val itemDetails: List<ItemDetail> = listOf(),
-    @Json(name = "itemImages") val itemImages: List<ItemImages> = listOf(),
-    @Json(name = "relatedItems") val relatedItems: List<Product> = listOf(),
+    @Json(name = "itemDetails") val itemDetails: List<ItemDetail>? = listOf(),
+    @Json(name = "itemImages") val itemImages: List<ItemImages>? = listOf(),
+    @Json(name = "relatedItems") val relatedItems: List<Product>? = listOf(),
     @Json(name = "categoryImagePath") val categoryImagePath: String? = null,
     @Json(name = "brandImagePath") val brandImagePath: String? = null,
     @Json(name = "selectedItemDetails") val selectedItemDetails: ItemDetail? = null,
@@ -39,7 +40,9 @@ data class Product(
     @Json(name = "isAvailable") val isAvailable: Boolean? = true,
     @Json(name = "itemBalance") val itemBalance: Int? = null,
     @Json(name = "qty") val qty: Int? = null,
-) : Parcelable
+) : Parcelable {
+    fun getProductId() = id ?: itemId
+}
 
 
 @Parcelize

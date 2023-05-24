@@ -68,12 +68,12 @@ class BazarDetailViewModel @Inject constructor(
             when (response) {
                 is Result.Success -> {
                     val product = response.data!!
-                    if (product.itemDetails.size > 1) {
+                    if (product.itemDetails?.size.orZero() > 1) {
                         setEffect { BazarDetailContract.Effect.Navigation.GoToProductDetails(product = product) }
-                    } else if (product.itemDetails.size == 1) {
+                    } else if (product.itemDetails?.size.orZero() == 1) {
                         homeUseCase.addToCart(
                             AddToCartRequest(
-                                itemDetailId = product.itemDetails.first().id.orZero(),
+                                itemDetailId = product.itemDetails?.first()?.id.orZero(),
                                 marketerId = currentState.bazaar?.id
                             )
                         ).collect { response ->

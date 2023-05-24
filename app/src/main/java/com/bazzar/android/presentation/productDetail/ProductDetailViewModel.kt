@@ -14,10 +14,8 @@ import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
-import com.bazzar.android.presentation.bazarDetail.BazarDetailContract
 import com.bazzar.android.utils.IResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @HiltViewModel
@@ -78,12 +76,12 @@ class ProductDetailViewModel @Inject constructor(
             when (response) {
                 is Result.Success -> {
                     val product = response.data!!
-                    if (product.itemDetails.size > 1) {
+                    if (product.itemDetails?.size.orZero() > 1) {
                         setEffect { ProductDetailContract.Effect.Navigation.GoToOpenProduct(product = product) }
-                    } else if (product.itemDetails.size == 1) {
+                    } else if (product.itemDetails?.size.orZero() == 1) {
                         homeUseCase.addToCart(
                             AddToCartRequest(
-                                itemDetailId = product.itemDetails.first().id.orZero(),
+                                itemDetailId = product.itemDetails?.first()?.id.orZero(),
                                 marketerId = currentState.bazaar?.id
                             )
                         ).collect { response ->
@@ -283,7 +281,7 @@ class ProductDetailViewModel @Inject constructor(
 
     fun init(product: Product?, itemId: String?, bazaar: BazaarModel?) {
         if (isInitialized.not()) {
-            loadProductData(product?.id ?: itemId?.toIntOrNull() ?: 0, bazaar)
+            loadProductData(product?.getProductId() ?: itemId?.toIntOrNull() ?: 0, bazaar)
             isInitialized = true
         }
     }
@@ -329,10 +327,10 @@ class ProductDetailViewModel @Inject constructor(
         val list = mutableListOf<ItemImages>()
         productDetail?.let {
             colorsIdsList.forEach { colorId ->
-                list.add(productDetail.itemImages.firstOrNull { it.colorId == colorId }
+                list.add(productDetail.itemImages?.firstOrNull { it.colorId == colorId }
                     ?: ItemImages(
                         colorId,
-                        colorTitle = productDetail.itemDetails.first { it.colorId == colorId }.colorTitle
+                        colorTitle = productDetail.itemDetails?.first { it.colorId == colorId }?.colorTitle
                     )
                 )
             }
