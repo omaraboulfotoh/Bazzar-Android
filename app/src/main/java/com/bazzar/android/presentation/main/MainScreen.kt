@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.bazzar.android.common.sideEffect
@@ -39,8 +40,7 @@ fun MainScreen(
                 navController = navController,
 
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(BottomNavigationHeight),
+                    .fillMaxWidth(),
                 onTabSelected = {
                     viewModel.setEvent(MainContract.Event.OnNavItemSelected(it))
                 }
