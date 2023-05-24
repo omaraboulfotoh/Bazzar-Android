@@ -17,7 +17,8 @@ class CreateOrderContract {
         val discount: Double = 0.0,
         val additionalNotes: String? = null,
         val promoCode: String? = null,
-        val orderPromoCode: String? = null
+        val orderPromoCode: String? = null,
+        val shippingMessage: String? = null,
     ) : ViewState
 
     sealed class Event : ViewEvent {

@@ -89,6 +89,7 @@ class CreateOrderViewModel @Inject constructor(
                                 shipping = response.data?.shipping.orZero(),
                                 subTotal = response.data?.subTotal.orZero(),
                                 discount = response.data?.discount.orZero(),
+                                shippingMessage = response.data?.shippingMessage,
                                 promoCode = null,
                                 orderPromoCode = promoCode
                             )

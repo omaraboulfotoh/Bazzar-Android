@@ -32,6 +32,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.common.orFalse
@@ -63,7 +64,8 @@ fun CreateOrderScreenContent(
         modifier = Modifier
             .fillMaxSize()
             .background(BazzarTheme.colors.backgroundColor)
-            .padding(bottom = BottomNavigationHeight)
+            .padding(bottom = BottomNavigationHeight),
+        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
     ) {
 
         // top bar
@@ -84,6 +86,29 @@ fun CreateOrderScreenContent(
                 verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
                 horizontalAlignment = Alignment.Start
             ) {
+
+                state.shippingMessage?.let {
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = BazzarTheme.spacing.s),
+                        verticalAlignment = Alignment.Top,
+                        horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.s)
+                    ) {
+                        Image(
+                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_discount),
+                            contentDescription = "ic_discount"
+                        )
+                        Subtitle(
+                            modifier = Modifier.wrapContentSize(),
+                            text = it,
+                            textAlign = TextAlign.Start,
+                            style = BazzarTheme.typography.body2Medium,
+                            color = BazzarTheme.colors.primaryButtonColor
+                        )
+
+                    }
+                }
 
                 // invoice details
                 Column(
