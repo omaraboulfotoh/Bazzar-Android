@@ -195,7 +195,7 @@
     <string name="wish_list">WishList</string>
     <string name="products">Products</string>
     <string name="delete_item">Delete Item</string>
-    <string name="delete_item_desc">Do you want to add this item into your wishlist?</string>
+    <string name="delete_item_desc">Are you sure you want to delete this product?</string>
     <string name="empty_cart">Your Cart Still Empty</string>
     <string name="start_shopping_now">Start Shopping Now</string>
     <string name="you_dont_have_address">You haven\'t saved any address</string>

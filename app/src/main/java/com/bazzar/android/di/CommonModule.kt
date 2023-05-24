@@ -7,6 +7,9 @@ import com.bazzar.android.presentation.app.GlobalState
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.utils.IResourceProvider
 import com.bazzar.android.utils.ResourceProvider
+import com.bazzar.android.utils.remoteconfig.FirebaseRemoteConfiguration
+import com.bazzar.android.utils.remoteconfig.RemoteConfiguration
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,4 +43,17 @@ object CommonModule {
     @Provides
     fun providesGeoCoder(@ApplicationContext context: Context): Geocoder =
         Geocoder(context, Locale.getDefault())
+
+    @Singleton
+    @Provides
+    fun firebaseConfig() = FirebaseRemoteConfig.getInstance()
+
+    @Singleton
+    @Provides
+    fun firebaseRemoteConfiguration(
+        @ApplicationContext context: Context,
+        config: FirebaseRemoteConfig,
+    ): RemoteConfiguration = FirebaseRemoteConfiguration(context, config).apply {
+        init()
+    }
 }

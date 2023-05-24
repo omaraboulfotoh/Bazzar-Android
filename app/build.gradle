@@ -167,6 +167,8 @@ dependencies {
     // Firebase
     implementation platform(Dependencies.firebase_bom)
     implementation(Dependencies.firebaseAnalytics)
+    implementation(Dependencies.remoteConfig)
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0'
     implementation(Dependencies.firebaseCrashlytics)
     implementation(Dependencies.firebaseMessaging)
     implementation(Dependencies.firebaseDynamicLinks)

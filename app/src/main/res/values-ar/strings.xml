@@ -191,7 +191,7 @@
     <string name="wish_list">المفضلة</string>
     <string name="products">منتجات</string>
     <string name="delete_item">حذف المنتج</string>
-    <string name="delete_item_desc">هل تريد اضافة المنتج في المفضلة لديك ؟</string>
+    <string name="delete_item_desc">هل انت متأكد من حذف هذا المنتج ؟</string>
     <string name="empty_cart">لا تزال الحقيبة فارغة</string>
     <string name="start_shopping_now">ابدأ التسوق الأن</string>
     <string name="you_dont_have_address">ليس لديك اي عنوان</string>

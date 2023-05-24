@@ -110,6 +110,7 @@ object Dependencies {
     //Firebase
     const val firebase_bom = "com.google.firebase:firebase-bom:${Versions.firebaseBomVersion}"
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
+    const val remoteConfig = "com.google.firebase:firebase-config-ktx"
     const val firebaseAuth = "com.google.firebase:firebase-auth-ktx"
     const val firebaseDynamicLinks = "com.google.firebase:firebase-dynamic-links-ktx"
     const val firebaseMessaging = "com.google.firebase:firebase-messaging-ktx"

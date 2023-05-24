@@ -118,14 +118,11 @@ class CartViewModel @Inject constructor(
                     params = ConfirmationDialogParams(
                         title = resourceProvider.getString(R.string.delete_item),
                         description = resourceProvider.getString(R.string.delete_item_desc),
-                        positiveButtonTitle = resourceProvider.getString(R.string.yes),
-                        negativeButtonTitle = resourceProvider.getString(R.string.no),
+                        positiveButtonTitle = resourceProvider.getString(R.string.delete),
+                        negativeButtonTitle = resourceProvider.getString(R.string.cancel),
                         onPositive = {
-                            deleteItem(item.itemDetailId.orZero(), true)
-                        },
-                        onNegative = {
                             deleteItem(item.itemDetailId.orZero())
-                        }
+                        },
                     )
                 )
             }
