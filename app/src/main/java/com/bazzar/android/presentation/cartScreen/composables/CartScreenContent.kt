@@ -68,7 +68,6 @@ fun CartScreenContent(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = BazzarTheme.spacing.m)
                     .padding(bottom = BazzarTheme.spacing.xs),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
@@ -84,7 +83,10 @@ fun CartScreenContent(
                         state.productCartList?.let {
                             itemsIndexed(it) { index, product ->
                                 ProductCartItem(
-                                    modifier = Modifier.padding(vertical = BazzarTheme.spacing.xs),
+                                    modifier = Modifier.padding(
+                                        vertical = BazzarTheme.spacing.xs,
+                                        horizontal = BazzarTheme.spacing.m
+                                    ),
                                     product = product,
                                     onItemClicked = {
                                         onSendEvent(CartContract.Event.OnProductClicked(index))
@@ -95,21 +97,78 @@ fun CartScreenContent(
                                     }, onPlusClicked = {
                                         onSendEvent(CartContract.Event.OnPlusItem(index))
                                     })
-                                if (index == state.productCartList.lastIndex) {
+                                if (index == state.productCartList.lastIndex && state.showWishList.not()) {
                                     Spacer(modifier = Modifier.height(65.dp))
                                 }
+                            }
+                        }
+                        if (state.showWishList) {
+                            item {
+                                Spacer(modifier = Modifier.height(BazzarTheme.spacing.m))
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(45.dp)
+                                        .background(BazzarTheme.colors.white)
+                                ) {
+                                    SectionTitle(
+                                        modifier = Modifier
+                                            .wrapContentSize()
+                                            .align(Alignment.Center),
+                                        textAlign = TextAlign.Center,
+                                        text = stringResource(id = R.string.add_from_your_wish_list)
+                                    )
+
+                                }
+                                Spacer(modifier = Modifier.height(BazzarTheme.spacing.m))
+                                LazyRow(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .wrapContentHeight(),
+                                    horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs),
+                                    contentPadding = PaddingValues(horizontal = BazzarTheme.spacing.xs),
+                                ) {
+                                    itemsIndexed(state.productWishList.orEmpty()) { index, product ->
+                                        ProductItem(
+                                            product,
+                                            onItemClicked = {
+                                                onSendEvent(
+                                                    CartContract.Event.OnFavProductClicked(
+                                                        index
+                                                    )
+                                                )
+                                            },
+                                            onFavClicked = {
+                                                onSendEvent(
+                                                    CartContract.Event.OnProductFavClicked(
+                                                        index
+                                                    )
+                                                )
+                                            },
+                                            onAddToCartClicked = {
+                                                onSendEvent(
+                                                    CartContract.Event.OnProductAddToCartClicked(
+                                                        index
+                                                    )
+                                                )
+                                            }
+                                        )
+                                    }
+                                }
+                                Spacer(modifier = Modifier.height(65.dp))
                             }
                         }
                     }
 
                     // checkout button
-                    if (state.productCartList.isNullOrEmpty().not())
+                    if (state.productCartList.isNullOrEmpty().not() && state.hideBuyButton.not())
                         PrimaryButton(
                             text = stringResource(id = R.string.check_out),
                             onClick = { onSendEvent(CartContract.Event.OnCheckout) },
                             modifier = Modifier
                                 .width(124.dp)
                                 .height(65.dp)
+                                .padding(horizontal = BazzarTheme.spacing.s)
                                 .clip(RoundedCornerShape(32.5.dp))
                                 .background(colorResource(id = R.color.prussian_blue))
                                 .align(Alignment.BottomStart),
@@ -136,45 +195,46 @@ fun CartScreenContent(
                 color = BazzarTheme.colors.primaryButtonColor,
                 style = BazzarTheme.typography.captionBold,
                 onClick = { onSendEvent(CartContract.Event.OnShoppingClicked) })
-        }
-        if (state.showWishList) {
-            Spacer(modifier = Modifier.height(1.dp))
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(45.dp)
-                    .background(BazzarTheme.colors.white)
-            ) {
-                SectionTitle(
+
+            if (state.showWishList) {
+                Spacer(modifier = Modifier.height(1.dp))
+                Box(
                     modifier = Modifier
-                        .wrapContentSize()
-                        .align(Alignment.Center),
-                    textAlign = TextAlign.Center,
-                    text = stringResource(id = R.string.add_from_your_wish_list)
-                )
-
-            }
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .wrapContentHeight(),
-                horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs),
-                contentPadding = PaddingValues(horizontal = BazzarTheme.spacing.xs),
-            ) {
-
-                itemsIndexed(state.productWishList.orEmpty()) { index, product ->
-                    ProductItem(
-                        product,
-                        onItemClicked = {
-                            onSendEvent(CartContract.Event.OnFavProductClicked(index))
-                        },
-                        onFavClicked = {
-                            onSendEvent(CartContract.Event.OnProductFavClicked(index))
-                        },
-                        onAddToCartClicked = {
-                            onSendEvent(CartContract.Event.OnProductAddToCartClicked(index))
-                        }
+                        .fillMaxWidth()
+                        .height(45.dp)
+                        .background(BazzarTheme.colors.white)
+                ) {
+                    SectionTitle(
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .align(Alignment.Center),
+                        textAlign = TextAlign.Center,
+                        text = stringResource(id = R.string.add_from_your_wish_list)
                     )
+
+                }
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .wrapContentHeight(),
+                    horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs),
+                    contentPadding = PaddingValues(horizontal = BazzarTheme.spacing.xs),
+                ) {
+
+                    itemsIndexed(state.productWishList.orEmpty()) { index, product ->
+                        ProductItem(
+                            product,
+                            onItemClicked = {
+                                onSendEvent(CartContract.Event.OnFavProductClicked(index))
+                            },
+                            onFavClicked = {
+                                onSendEvent(CartContract.Event.OnProductFavClicked(index))
+                            },
+                            onAddToCartClicked = {
+                                onSendEvent(CartContract.Event.OnProductAddToCartClicked(index))
+                            }
+                        )
+                    }
                 }
             }
         }

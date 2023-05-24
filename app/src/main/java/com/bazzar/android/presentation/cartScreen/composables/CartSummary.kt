@@ -41,6 +41,7 @@ fun CartSummary(cartCounter: Int? = 0, totalAmount: Double) {
         Modifier
             .fillMaxWidth()
             .wrapContentHeight()
+            .padding(horizontal = BazzarTheme.spacing.m)
             .defaultMinSize(minHeight = 100.dp)
             .clip(RoundedCornerShape(25.dp))
             .background(Color.White),

@@ -1,15 +1,18 @@
 package com.bazzar.android.presentation.login
 
+import android.provider.Settings
 import com.android.local.SharedPrefersManager
 import com.android.model.request.GuestLoginRequest
 import com.android.model.request.UserLoginRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
+import com.bazzar.android.BazzarApplication
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.Calendar
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,6 +20,7 @@ class LoginViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
     private val sharedPrefersManager: SharedPrefersManager,
+    private val application: BazzarApplication
 ) : BaseViewModel<LoginContract.Event, LoginContract.State, LoginContract.Effect>(
     globalState
 ) {
@@ -38,7 +42,10 @@ class LoginViewModel @Inject constructor(
 
         homeUseCase.loginGuest(
             GuestLoginRequest(
-                deviceId = "",
+                deviceId = Settings.Secure.getString(
+                    application.contentResolver,
+                    Settings.Secure.ANDROID_ID
+                ) ?: "RandomKEY${Calendar.getInstance().timeInMillis}",
                 accessToken = sharedPrefersManager.getFcmToken().orEmpty()
             )
         ).collect { loginResponse ->
@@ -90,8 +97,9 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun init() {
+    fun init(showGuest: Boolean) {
         if (isInitialized.not()) {
+            setState { copy(showGuest = showGuest) }
             isInitialized = true
         }
     }

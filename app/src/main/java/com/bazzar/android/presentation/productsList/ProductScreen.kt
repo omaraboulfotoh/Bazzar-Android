@@ -50,7 +50,7 @@ fun ProductScreen(
             // category, brand
             ProductContract.Effect.Navigation.GoToBack -> navigator.navigateUp()
             ProductContract.Effect.Navigation.GoToLogin ->
-                navigator.navigate(LoginScreenDestination)
+                navigator.navigate(LoginScreenDestination())
 
             ProductContract.Effect.Navigation.GoToCart ->
                 navigator.navigate(CartScreenDestination)

@@ -53,7 +53,7 @@ fun HomeScreen(
             )
 
             HomeContract.Effect.Navigation.GoToLogin ->
-                navigator.navigate(LoginScreenDestination)
+                navigator.navigate(LoginScreenDestination())
 
             HomeContract.Effect.Navigation.GoToCart ->
                 navigator.navigate(CartScreenDestination)

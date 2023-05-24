@@ -6,6 +6,7 @@ import com.android.model.request.AddToCartRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
 import com.bazzar.android.R
+import com.bazzar.android.common.contains
 import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.ConfirmationDialogParams
@@ -57,7 +58,7 @@ class CartViewModel @Inject constructor(
 
     private fun addProductToCart(itemIndex: Int) = executeCatching({
         if (sharedPrefersManager.isUserLongedIn().not()) {
-            setEffect { CartContract.Effect.Navigation.GoToLogin }
+            setEffect { CartContract.Effect.Navigation.GoToLogin(showGuest = true) }
             return@executeCatching
         }
         val itemDetail = currentState.productWishList?.get(itemIndex) ?: return@executeCatching
@@ -156,10 +157,10 @@ class CartViewModel @Inject constructor(
     })
 
     private fun handleCheckout() {
-        if (sharedPrefersManager.isUserLongedIn()) {
+        if (sharedPrefersManager.showAccountLogin()) {
             setEffect { CartContract.Effect.Navigation.GoToSelectAddress }
         } else {
-            setEffect { CartContract.Effect.Navigation.GoToLogin }
+            setEffect { CartContract.Effect.Navigation.GoToLogin(showGuest = false) }
         }
     }
 
@@ -194,6 +195,7 @@ class CartViewModel @Inject constructor(
                 productCartList = productsList,
                 counterItem = totalCount,
                 totalCartAMount = totalAmount,
+                hideBuyButton = productsList.contains { it.isSoldOut.orFalse() },
                 showEmptyCart = productsList.isEmpty()
             )
         }
@@ -250,9 +252,7 @@ class CartViewModel @Inject constructor(
                                 product
                             }
                         }
-                        setState {
-                            copy(productWishList = updatedList)
-                        }
+                        setState { copy(productWishList = updatedList) }
                     }
 
                     else -> {}

@@ -12,7 +12,6 @@ import com.bazzar.android.presentation.destinations.CartScreenDestination
 import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.bazzar.android.presentation.destinations.ProductScreenDestination
-import com.bazzar.android.presentation.homeScreen.HomeContract
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -52,7 +51,7 @@ fun BazarDetailScreen(
                 navigator.navigate(ProductScreenDestination(category = effect.category))
 
             BazarDetailContract.Effect.Navigation.GoToLogin ->
-                navigator.navigate(LoginScreenDestination)
+                navigator.navigate(LoginScreenDestination())
 
             BazarDetailContract.Effect.Navigation.GoToCart ->
                 navigator.navigate(CartScreenDestination)

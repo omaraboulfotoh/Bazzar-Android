@@ -43,7 +43,7 @@ fun AccountScreen(
             }
 
             is AccountContract.Effect.Navigation.GoToRegistration -> {
-                navigator.navigate(LoginScreenDestination)
+                navigator.navigate(LoginScreenDestination())
             }
 
             is AccountContract.Effect.Navigation.GoToAddressBook -> {

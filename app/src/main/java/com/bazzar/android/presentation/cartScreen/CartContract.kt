@@ -14,6 +14,7 @@ class CartContract {
         val showEmptyCart: Boolean = false,
         val counterItem: Int? = null,
         val totalCartAMount: Double = 0.0,
+        val hideBuyButton: Boolean = true
     ) : ViewState
 
     sealed class Event : ViewEvent {
@@ -31,7 +32,7 @@ class CartContract {
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
             data class GoToProduct(val product: Product) : Navigation()
-            object GoToLogin : Navigation()
+            data class GoToLogin(val showGuest: Boolean) : Navigation()
             object GoToHome : Navigation()
             object GoToSelectAddress : Navigation()
         }

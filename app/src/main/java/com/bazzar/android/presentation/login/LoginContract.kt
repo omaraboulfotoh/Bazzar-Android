@@ -6,8 +6,9 @@ import com.bazzar.android.presentation.base.ViewState
 
 class LoginContract {
     data class State(
-        var mobileNumber: String? = "",
-        var password: String? = "",
+        val mobileNumber: String? = "",
+        val password: String? = "",
+        val showGuest: Boolean = true,
     ) : ViewState
 
     sealed class Event : ViewEvent {

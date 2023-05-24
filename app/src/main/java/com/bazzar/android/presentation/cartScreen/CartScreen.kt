@@ -28,8 +28,8 @@ fun CartScreen(
                 ProductDetailScreenDestination(product = effect.product)
             )
 
-            CartContract.Effect.Navigation.GoToLogin ->
-                navigator.navigate(LoginScreenDestination)
+            is CartContract.Effect.Navigation.GoToLogin ->
+                navigator.navigate(LoginScreenDestination(effect.showGuest))
 
             CartContract.Effect.Navigation.GoToSelectAddress ->
                 navigator.navigate(CheckOutScreenDestination)

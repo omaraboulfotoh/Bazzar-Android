@@ -36,8 +36,7 @@ fun LoginScreenContent(
     ) {
 
         // login header
-        LoginHeader(
-            modifier = Modifier,
+        LoginHeader(modifier = Modifier,
             onAction = { onSendEvent(LoginContract.Event.OnContinueAsAGuest) })
 
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
@@ -57,23 +56,20 @@ fun LoginScreenContent(
                     .padding(vertical = 4.dp),
             )
         }
-        InputPassword(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = BazzarTheme.spacing.xs)
-                .border(
-                    width = 1.dp,
-                    color = BazzarTheme.colors.primaryButtonTextColorDisabled,
-                    shape = RoundedCornerShape(32.5.dp),
-                )
-                .padding(vertical = 4.dp),
+        InputPassword(modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = BazzarTheme.spacing.xs)
+            .border(
+                width = 1.dp,
+                color = BazzarTheme.colors.primaryButtonTextColorDisabled,
+                shape = RoundedCornerShape(32.5.dp),
+            )
+            .padding(vertical = 4.dp),
             password = state.password.orEmpty(),
             onPasswordChanged = {
                 onSendEvent(LoginContract.Event.OnPasswordChanged(it))
-            }
-        )
-        LoginButton(
-            onSubmit = { onSendEvent(LoginContract.Event.OnLogin) })
+            })
+        LoginButton(onSubmit = { onSendEvent(LoginContract.Event.OnLogin) })
 
         Column(
             modifier = Modifier
@@ -84,14 +80,11 @@ fun LoginScreenContent(
             verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
         ) {
             ORBar(modifier = Modifier.fillMaxWidth())
-            CreateNewAccount(
-                modifier = Modifier.fillMaxWidth()
-            )
-            { onSendEvent(LoginContract.Event.OnCreateNewAccount) }
-            ContinueAsGuest(
-                modifier = Modifier.fillMaxWidth()
-            ) { onSendEvent(LoginContract.Event.OnContinueAsAGuest) }
+            CreateNewAccount(modifier = Modifier.fillMaxWidth()) { onSendEvent(LoginContract.Event.OnCreateNewAccount) }
 
+            if (state.showGuest) {
+                ContinueAsGuest(modifier = Modifier.fillMaxWidth()) { onSendEvent(LoginContract.Event.OnContinueAsAGuest) }
+            }
             Divider(
                 Modifier
                     .fillMaxWidth()

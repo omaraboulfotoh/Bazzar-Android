@@ -34,7 +34,7 @@ fun BazarListScreen(
             }
 
             BazarListContract.Effect.Navigation.GoToLogin ->
-                navigator.navigate(LoginScreenDestination)
+                navigator.navigate(LoginScreenDestination())
         }
     }
     BazarListScreenContent(state) { viewModel.setEvent(it) }

@@ -71,7 +71,7 @@ fun ProductDetailScreen(
             }
 
             ProductDetailContract.Effect.Navigation.GoToLogin ->
-                navigator.navigate(LoginScreenDestination)
+                navigator.navigate(LoginScreenDestination())
         }
     }
     // init logic

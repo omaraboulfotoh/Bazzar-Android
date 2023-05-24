@@ -17,4 +17,8 @@ data class Brand(
     val displayOrder: Int? = null,
     @Json(name = "imagePath")
     val imagePath: String? = null,
+    @Json(name = "shareURL")
+    val shareURL: String? = null,
+    @Json(name = "sliderImagePath")
+    val sliderImagePath: String? = null,
 ) : Parcelable

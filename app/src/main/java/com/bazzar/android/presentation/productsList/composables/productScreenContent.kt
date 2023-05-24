@@ -101,7 +101,7 @@ fun ProductScreenContent(
                         .padding(horizontal = BazzarTheme.spacing.m)
                 ) {
                     BrandImage(
-                        state.brand.imagePath,
+                        state.brand.sliderImagePath,
                         contentScale = ContentScale.Fit,
                         modifier = Modifier
                             .fillMaxSize()

@@ -228,7 +228,8 @@ class ProductViewModel @Inject constructor(
 
             // if screen opened form brands
             val updatedBrand =
-                prefersManager.getBrandList().orEmpty().firstOrNull { it.id == brand?.id }
+                prefersManager.getBrandList().orEmpty()
+                    .firstOrNull { it.id == (brand?.id ?: brandId?.toIntOrNull()) } ?: brand
             updatedBrand?.id?.let {
                 request = request.copy(brandList = listOf(it))
             }

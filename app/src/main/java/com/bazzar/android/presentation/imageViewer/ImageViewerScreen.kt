@@ -32,7 +32,7 @@ fun ImageViewerScreen(
 
             is ImageViewerContract.Effect.Navigation.GoBack -> navigator.navigateUp()
             ImageViewerContract.Effect.Navigation.GoToLogin ->
-                navigator.navigate(LoginScreenDestination)
+                navigator.navigate(LoginScreenDestination())
         }
     }
 

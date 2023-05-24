@@ -29,8 +29,10 @@ import androidx.compose.ui.unit.sp
 import com.android.model.home.Product
 import com.bazzar.android.R
 import com.bazzar.android.common.nullIfEmpty
+import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.composables.RemoteImageCard
+import com.bazzar.android.presentation.productsList.composables.SoldOutView
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 
@@ -63,11 +65,23 @@ fun ProductCartItem(
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
-                RemoteImageCard(
-                    imageUrl = product.imagePath,
-                    modifier = Modifier.size(88.dp),
-                    withShimmer = true
-                )
+                Box(modifier = Modifier.size(88.dp)) {
+                    RemoteImageCard(
+                        imageUrl = product.imagePath,
+                        modifier = Modifier.fillMaxSize(),
+                        withShimmer = true
+                    )
+                    if (product.isSoldOut.orFalse()) {
+                        SoldOutView(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .align(Alignment.Center)
+                                .height(24.dp)
+                                .padding(horizontal = BazzarTheme.spacing.xs)
+                        )
+                    }
+                }
+
                 Row(
                     Modifier.width(73.dp),
                     verticalAlignment = Alignment.CenterVertically,

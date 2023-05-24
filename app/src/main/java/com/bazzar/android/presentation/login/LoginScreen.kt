@@ -14,6 +14,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
     navigator: DestinationsNavigator,
+    showGuest: Boolean = true
 ) {
 
     // get state
@@ -31,7 +32,7 @@ fun LoginScreen(
         }
     }
     // init logic
-    viewModel.init()
+    viewModel.init(showGuest)
 
     LoginScreenContent(state = state) { viewModel.setEvent(it) }
 }
