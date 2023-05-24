@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.splash
 
+import android.util.Log
 import com.android.local.SharedPrefersManager
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
@@ -22,6 +23,7 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun handleAnimationDone(progress: Float) {
+        Log.e("FCM", sharedPrefersManager.getFcmToken().orEmpty())
         if (progress == 1f) navigateToNextStep()
     }
 

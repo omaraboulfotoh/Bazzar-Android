@@ -16,8 +16,10 @@ import com.bazzar.android.presentation.DeepLinkConstants.BRAND_ID
 import com.bazzar.android.presentation.DeepLinkConstants.BRAND_PRODUCT_LIST_DEEP_LINK
 import com.bazzar.android.presentation.DeepLinkConstants.CATEGORY_ID
 import com.bazzar.android.presentation.DeepLinkConstants.CATEGORY_PRODUCT_LIST_DEEP_LINK
+import com.bazzar.android.presentation.DeepLinkConstants.CUSTOM_IMAGE
 import com.bazzar.android.presentation.DeepLinkConstants.ITEM_ID
 import com.bazzar.android.presentation.DeepLinkConstants.PRODUCT_DETAILS_DEEP_LINK
+import com.bumptech.glide.Glide
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import timber.log.Timber
@@ -98,11 +100,10 @@ class MessagingService : FirebaseMessagingService() {
     private fun sendNotification(remoteMessage: RemoteMessage) {
         val title = remoteMessage.notification?.title
         val messageBody = remoteMessage.notification?.body
-        // val imageUrl = remoteMessage.notification?.imageUrl
+         val imageUrl = remoteMessage.notification?.imageUrl
         val itemId = remoteMessage.data[ITEM_ID]
         val brandId = remoteMessage.data[BRAND_ID]
         val categoryId = remoteMessage.data[CATEGORY_ID]
-
         val deepLinkTarget = when {
             itemId.isNullOrEmpty().not() -> "${PRODUCT_DETAILS_DEEP_LINK}/$itemId"
             brandId.isNullOrEmpty().not() -> "${BRAND_PRODUCT_LIST_DEEP_LINK}/$brandId"
@@ -131,6 +132,15 @@ class MessagingService : FirebaseMessagingService() {
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)
 
+        imageUrl?.let {
+            val futureTarget = Glide.with(this)
+                .asBitmap()
+                .load(imageUrl)
+                .submit()
+
+            val bitmap = futureTarget.get()
+            notificationBuilder.setLargeIcon(bitmap)
+        }
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -138,7 +148,7 @@ class MessagingService : FirebaseMessagingService() {
             val channel = NotificationChannel(
                 channelId,
                 "Channel human readable title",
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_HIGH
             )
             notificationManager.createNotificationChannel(channel)
         }
