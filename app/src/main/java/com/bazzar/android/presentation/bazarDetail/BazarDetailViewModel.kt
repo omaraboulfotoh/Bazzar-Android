@@ -234,16 +234,16 @@ class BazarDetailViewModel @Inject constructor(
         loadProductData(updatedRequest)
     }
 
-    fun init(bazaar: BazaarModel) {
+    fun init(bazaar: BazaarModel?, marketerId: String?) {
 
         if (isInitialized.not()) {
-            val request = SearchProductRequest(marketerId = bazaar.id)
+            val request = SearchProductRequest(marketerId = bazaar?.id ?: marketerId?.toIntOrNull())
             setState {
                 copy(
                     searchRequest = request, bazaar = bazaar
                 )
             }
-            getBazzarDetails(bazaar.id.orZero())
+            getBazzarDetails((bazaar?.id ?: marketerId?.toIntOrNull()).orZero())
             loadProductData(request)
             isInitialized = true
         }

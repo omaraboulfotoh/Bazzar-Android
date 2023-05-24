@@ -8,11 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import com.android.local.Constants
 import com.android.local.SharedPrefersManager
+import com.bazzar.android.presentation.DeepLinkConstants.BAZZAR_DETAILS_DEEP_LINK
 import com.bazzar.android.presentation.DeepLinkConstants.BRAND_ID
 import com.bazzar.android.presentation.DeepLinkConstants.BRAND_PRODUCT_LIST_DEEP_LINK
 import com.bazzar.android.presentation.DeepLinkConstants.CATEGORY_ID
 import com.bazzar.android.presentation.DeepLinkConstants.CATEGORY_PRODUCT_LIST_DEEP_LINK
 import com.bazzar.android.presentation.DeepLinkConstants.ITEM_ID
+import com.bazzar.android.presentation.DeepLinkConstants.MARKETER_ID
 import com.bazzar.android.presentation.DeepLinkConstants.PRODUCT_DETAILS_DEEP_LINK
 import com.bazzar.android.presentation.composables.permissionRequester.NotificationPermissionRequester
 import com.bazzar.android.presentation.theme.BazzarComposeTheme
@@ -27,6 +29,8 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var globalState: IGlobalState
+
+    private var isDeeplinkShown = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,11 +59,13 @@ class MainActivity : AppCompatActivity() {
         val itemId = intent?.getStringExtra(ITEM_ID)
         val brandId = intent?.getStringExtra(BRAND_ID)
         val categoryId = intent?.getStringExtra(CATEGORY_ID)
+        val marketerId = intent?.getStringExtra(MARKETER_ID)
 
         val deepLinkTarget = when {
             itemId.isNullOrEmpty().not() -> "${PRODUCT_DETAILS_DEEP_LINK}/$itemId"
             brandId.isNullOrEmpty().not() -> "${BRAND_PRODUCT_LIST_DEEP_LINK}/$brandId"
             categoryId.isNullOrEmpty().not() -> "${CATEGORY_PRODUCT_LIST_DEEP_LINK}/$categoryId"
+            marketerId.isNullOrEmpty().not() -> "${BAZZAR_DETAILS_DEEP_LINK}/$marketerId"
             else -> ""
         }
 

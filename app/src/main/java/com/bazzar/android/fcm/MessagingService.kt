@@ -12,12 +12,14 @@ import androidx.core.net.toUri
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.bazzar.android.R
+import com.bazzar.android.presentation.DeepLinkConstants.BAZZAR_DETAILS_DEEP_LINK
 import com.bazzar.android.presentation.DeepLinkConstants.BRAND_ID
 import com.bazzar.android.presentation.DeepLinkConstants.BRAND_PRODUCT_LIST_DEEP_LINK
 import com.bazzar.android.presentation.DeepLinkConstants.CATEGORY_ID
 import com.bazzar.android.presentation.DeepLinkConstants.CATEGORY_PRODUCT_LIST_DEEP_LINK
 import com.bazzar.android.presentation.DeepLinkConstants.CUSTOM_IMAGE
 import com.bazzar.android.presentation.DeepLinkConstants.ITEM_ID
+import com.bazzar.android.presentation.DeepLinkConstants.MARKETER_ID
 import com.bazzar.android.presentation.DeepLinkConstants.PRODUCT_DETAILS_DEEP_LINK
 import com.bumptech.glide.Glide
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -104,10 +106,13 @@ class MessagingService : FirebaseMessagingService() {
         val itemId = remoteMessage.data[ITEM_ID]
         val brandId = remoteMessage.data[BRAND_ID]
         val categoryId = remoteMessage.data[CATEGORY_ID]
+        val marketerId = remoteMessage.data[MARKETER_ID]
+
         val deepLinkTarget = when {
             itemId.isNullOrEmpty().not() -> "${PRODUCT_DETAILS_DEEP_LINK}/$itemId"
             brandId.isNullOrEmpty().not() -> "${BRAND_PRODUCT_LIST_DEEP_LINK}/$brandId"
             categoryId.isNullOrEmpty().not() -> "${CATEGORY_PRODUCT_LIST_DEEP_LINK}/$categoryId"
+            marketerId.isNullOrEmpty().not() -> "${BAZZAR_DETAILS_DEEP_LINK}/$marketerId"
             else -> ""
         }
 

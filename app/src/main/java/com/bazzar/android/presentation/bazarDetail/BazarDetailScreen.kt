@@ -6,21 +6,30 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.android.model.home.BazaarModel
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
+import com.bazzar.android.presentation.DeepLinkConstants.BAZZAR_DETAILS_DEEP_LINK
+import com.bazzar.android.presentation.DeepLinkConstants.BAZZAR_DETAILS_HTTP_DEEP_LINK
 import com.bazzar.android.presentation.bazarDetail.composables.BazarDetailScreenContent
 import com.bazzar.android.presentation.common.shareText
 import com.bazzar.android.presentation.destinations.CartScreenDestination
 import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.bazzar.android.presentation.destinations.ProductScreenDestination
+import com.ramcosta.composedestinations.annotation.DeepLink
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@Destination
 @Composable
+@Destination(
+    deepLinks = [
+        DeepLink(uriPattern = "${BAZZAR_DETAILS_DEEP_LINK}/{marketerId}"),
+        DeepLink(uriPattern = "${BAZZAR_DETAILS_HTTP_DEEP_LINK}/{marketerId}"),
+    ]
+)
 fun BazarDetailScreen(
     viewModel: BazarDetailViewModel = hiltViewModel(),
     navigator: DestinationsNavigator,
-    bazaar: BazaarModel
+    bazaar: BazaarModel? = null,
+    marketerId: String? = null,
 ) {
     // get state
     val state = viewModel.viewState()
@@ -58,7 +67,7 @@ fun BazarDetailScreen(
         }
     }
     // init logic
-    viewModel.init(bazaar)
+    viewModel.init(bazaar, marketerId)
 
     BazarDetailScreenContent(state = state) { viewModel.setEvent(it) }
 }

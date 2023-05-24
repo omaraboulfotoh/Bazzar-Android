@@ -31,7 +31,15 @@ object DeepLinkConstants {
     const val BRAND_ID = "BrandId"
     const val CATEGORY_ID = "CategoryId"
     const val CUSTOM_IMAGE = "image"
+    const val MARKETER_ID = "MarketerId"
+
     const val PRODUCT_DETAILS_DEEP_LINK = "bazzar://product-details"
+    const val PRODUCT_DETAILS_HTTP_DEEP_LINK = "https://admin.bzaaarz.com/share/product"
+
     const val BRAND_PRODUCT_LIST_DEEP_LINK = "bazzar://brand-product-list"
     const val CATEGORY_PRODUCT_LIST_DEEP_LINK = "bazzar://category-product-list"
+    const val BRAND_PRODUCT_LIST_HTTP_DEEP_LINK = "https://admin.bzaaarz.com/Share/Brand"
+
+    const val BAZZAR_DETAILS_DEEP_LINK = "bazzar://bazzar-details"
+    const val BAZZAR_DETAILS_HTTP_DEEP_LINK = "https://admin.bzaaarz.com/Share/Marketer"
 }
