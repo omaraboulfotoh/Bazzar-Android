@@ -8,6 +8,7 @@ import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.DeepLinkConstants.BRAND_PRODUCT_LIST_DEEP_LINK
+import com.bazzar.android.presentation.DeepLinkConstants.BRAND_PRODUCT_LIST_HTTP_DEEP_LINK
 import com.bazzar.android.presentation.DeepLinkConstants.CATEGORY_PRODUCT_LIST_DEEP_LINK
 import com.bazzar.android.presentation.destinations.CartScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
@@ -22,6 +23,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
     deepLinks = [
         DeepLink(uriPattern = "$BRAND_PRODUCT_LIST_DEEP_LINK/{brandId}"),
         DeepLink(uriPattern = "$CATEGORY_PRODUCT_LIST_DEEP_LINK/{categoryId}"),
+        DeepLink(uriPattern = "$BRAND_PRODUCT_LIST_HTTP_DEEP_LINK/{brandId}"),
     ]
 )
 fun ProductScreen(
@@ -31,7 +33,7 @@ fun ProductScreen(
     category: Category? = null,
     searchTerm: String? = null,
     brandId: String? = null,
-    categoryId: String? = null,
+    categoryId: String? = null
 ) {
     // get state
     val state = viewModel.viewState()
@@ -62,7 +64,7 @@ fun ProductScreen(
         category = category,
         searchTerm = searchTerm,
         brandId = brandId,
-        categoryId = categoryId
+        categoryId = categoryId,
     )
 
     ProductScreenContent(state = state) { viewModel.setEvent(it) }

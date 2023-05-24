@@ -32,6 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <!-- product details deeplink -->
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -42,7 +43,20 @@
                     android:host="product-details"
                     android:scheme="bazzar" />
             </intent-filter>
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="admin.bzaaarz.com"
+                    android:pathPattern="/share/product/.*"
+                    android:scheme="https" />
+            </intent-filter>
+            <!-- end product details deeplink -->
+
+            <!-- product list deeplink -->
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -64,6 +78,42 @@
                     android:host="category-product-list"
                     android:scheme="bazzar" />
             </intent-filter>
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="admin.bzaaarz.com"
+                    android:pathPattern="/Share/Brand/.*"
+                    android:scheme="https" />
+            </intent-filter>
+            <!-- end product list deeplink -->
+
+            <!-- bazzar details deeplink -->
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="bazzar-details"
+                    android:scheme="bazzar" />
+            </intent-filter>
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="admin.bzaaarz.com"
+                    android:pathPattern="/Share/Marketer/.*"
+                    android:scheme="https" />
+            </intent-filter>
+            <!-- end bazzar details deeplink -->
         </activity>
         <service
             android:name=".fcm.MessagingService"

@@ -9,6 +9,7 @@ import com.bazzar.android.common.buildUrlIntent
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.DeepLinkConstants.PRODUCT_DETAILS_DEEP_LINK
+import com.bazzar.android.presentation.DeepLinkConstants.PRODUCT_DETAILS_HTTP_DEEP_LINK
 import com.bazzar.android.presentation.SocialMedia
 import com.bazzar.android.presentation.common.shareText
 import com.bazzar.android.presentation.destinations.CartScreenDestination
@@ -22,7 +23,12 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Composable
-@Destination(deepLinks = [DeepLink(uriPattern = "$PRODUCT_DETAILS_DEEP_LINK/{itemId}")])
+@Destination(
+    deepLinks = [
+        DeepLink(uriPattern = "$PRODUCT_DETAILS_DEEP_LINK/{itemId}"),
+        DeepLink(uriPattern = "$PRODUCT_DETAILS_HTTP_DEEP_LINK/{itemId}"),
+    ]
+)
 fun ProductDetailScreen(
     viewModel: ProductDetailViewModel = hiltViewModel(),
     navigator: DestinationsNavigator,
