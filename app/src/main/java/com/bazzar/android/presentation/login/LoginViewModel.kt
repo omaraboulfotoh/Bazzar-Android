@@ -83,7 +83,7 @@ class LoginViewModel @Inject constructor(
                 is Result.Loading -> globalState.loading(true)
                 is Result.Success -> {
                     // update fcm token on the api
-                    if (loginResponse.code != 200) {
+                    if (loginResponse.code != 0) {
                         globalState.error(loginResponse.message.orEmpty())
                     }else {
                         updateFCM()

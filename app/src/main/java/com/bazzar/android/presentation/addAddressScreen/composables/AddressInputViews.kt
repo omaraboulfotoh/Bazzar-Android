@@ -81,11 +81,6 @@ fun AddressInputViews(
                 mapToolbarEnabled = false,
                 startLatLng = userLatLng,
             )
-            Box(
-                modifier = Modifier
-                .fillMaxSize()
-                .clickable { }
-            ) { }
         }
         Column(
             modifier = Modifier
@@ -243,7 +238,6 @@ fun AddressInputViews(
             )
             Row(
                 modifier = Modifier
-                    .padding(top = BazzarTheme.spacing.m)
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -271,13 +265,15 @@ fun AddressInputViews(
                         contentDescription = null,
                         tint = colorResource(id = if (toggleEnabled) R.color.prussian_blue else R.color.dark_gray),
                         modifier = if (toggleEnabled) Modifier
-                            .align(Alignment.CenterStart)
-                            .padding(2.dp) else Modifier
                             .align(Alignment.CenterEnd)
+                            .padding(2.dp) else Modifier
+                            .align(Alignment.CenterStart)
                             .padding(2.dp)
                     )
                 }
             }
+
+            Spacer(modifier = Modifier.height(BazzarTheme.spacing.xxs))
         }
     }
 

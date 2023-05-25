@@ -52,7 +52,7 @@ fun AddressScreenContent(
             userLatLng = state.userLatLng,
             toggleEnabled = state.toggleEnabled,
             onSelectGovernment = { onSendEvent(AddressContract.Event.OnGovernmentSelected(it)) },
-            onSelectArea =  { onSendEvent(AddressContract.Event.OnAreaSelected(it)) },
+            onSelectArea = { onSendEvent(AddressContract.Event.OnAreaSelected(it)) },
             onStreetNameChangec = { onSendEvent(AddressContract.Event.OnStreetNameChanged(it)) },
             onBlockChanged = { onSendEvent(AddressContract.Event.OnBlockChanged(it)) },
             onHouseNumberChanged = { onSendEvent(AddressContract.Event.OnHouseNumberChanged(it)) },
@@ -64,6 +64,7 @@ fun AddressScreenContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = BottomNavigationHeight)
+                .padding(horizontal = BazzarTheme.spacing.m)
                 .clip(RoundedCornerShape(33.dp)),
             onClick = { onSendEvent(AddressContract.Event.OnSaveButtonClicked) }
         ) {

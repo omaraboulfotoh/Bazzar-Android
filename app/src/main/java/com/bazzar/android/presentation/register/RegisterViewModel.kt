@@ -98,7 +98,7 @@ class RegisterViewModel @Inject constructor(
                     is Result.Error -> globalState.error(registerResponse.message.orEmpty())
                     is Result.Loading -> globalState.loading(true)
                     is Result.Success -> {
-                        if (registerResponse.code != 200) {
+                        if (registerResponse.code != 0) {
                             globalState.error(registerResponse.message.orEmpty())
                         } else {
                             navigateToOtpScreen(registerResponse.data)
