@@ -30,6 +30,7 @@ fun AddressScreenContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(bottom = BottomNavigationHeight)
             .background(BazzarTheme.colors.white),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -65,7 +66,7 @@ fun AddressScreenContent(
         Button(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = BottomNavigationHeight)
+                .padding(bottom = BazzarTheme.spacing.m)
                 .padding(horizontal = BazzarTheme.spacing.m)
                 .clip(RoundedCornerShape(33.dp)),
             onClick = { onSendEvent(AddressContract.Event.OnSaveButtonClicked) }
