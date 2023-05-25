@@ -39,9 +39,12 @@ class AddressViewModel @Inject constructor(
             is AddressContract.Event.OnBackIconClicked -> {
                 setEffect { AddressContract.Effect.Navigation.GoToBack }
             }
+
             is AddressContract.Event.OnSaveButtonClicked -> {
                 addOrEditAddress()
             }
+
+            is AddressContract.Event.OnJadaValueChanged -> setState { copy(jada = event.jada) }
         }
     }
 
@@ -73,16 +76,19 @@ class AddressViewModel @Inject constructor(
                         val areas = allGovernmentsAndAreas.filter { it.parentId != null }
 
                         val selectedArea =
-                            if(userAddress.areaId == null) null
+                            if (userAddress.areaId == null) null
                             else areas.find { it.id == userAddress.areaId }
 
                         val selectedGovernment =
-                            if(selectedArea == null) null
+                            if (selectedArea == null) null
                             else governments.find { it.id == selectedArea.parentId }
 
                         val userLatLng =
                             if (userAddress.latitude?.toDoubleOrNull() != null && userAddress.longitude?.toDoubleOrNull() != null)
-                                LatLng(userAddress.latitude!!.toDouble(), userAddress.longitude!!.toDouble())
+                                LatLng(
+                                    userAddress.latitude!!.toDouble(),
+                                    userAddress.longitude!!.toDouble()
+                                )
                             else
                                 MapLatLngConstants.KUWAIT_CITY_LAT_LAN
 
@@ -98,6 +104,7 @@ class AddressViewModel @Inject constructor(
                                 selectedArea = selectedArea,
                                 streetName = userAddress.streetName,
                                 block = userAddress.block,
+                                jada = userAddress.addressDescription,
                                 houseNumber = userAddress.houseNumber,
                                 flatNumber = userAddress.flatNumber,
                                 notes = userAddress.addressNotes,
@@ -119,6 +126,7 @@ class AddressViewModel @Inject constructor(
             block = currentState.block,
             houseNumber = currentState.houseNumber,
             flatNumber = currentState.flatNumber,
+            addressDescription = currentState.jada,
             addressNotes = currentState.notes,
             isDefault = currentState.toggleEnabled,
             latitude = currentState.userAddress.latitude,
@@ -134,7 +142,9 @@ class AddressViewModel @Inject constructor(
             when (response) {
                 is Result.Error -> globalState.error(response.message.orEmpty())
                 is Result.Loading -> globalState.loading(true)
-                is Result.Success -> { setEffect { AddressContract.Effect.Navigation.ReturnToAddressBook } }
+                is Result.Success -> {
+                    setEffect { AddressContract.Effect.Navigation.ReturnToAddressBook }
+                }
             }
         }
     })

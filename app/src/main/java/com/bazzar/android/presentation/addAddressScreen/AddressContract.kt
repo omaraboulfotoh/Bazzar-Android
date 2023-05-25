@@ -23,6 +23,7 @@ class AddressContract {
         val houseNumber: String? = "",
         val flatNumber: String? = "",
         val notes: String? = "",
+        val jada: String? = "",
         val toggleEnabled: Boolean = false,
         val isEditAddress: Boolean = false,
     ) : ViewState
@@ -35,6 +36,7 @@ class AddressContract {
         data class OnHouseNumberChanged(val houseNumber: String) : Event()
         data class OnFlatNumberChanged(val flatNumber: String) : Event()
         data class OnNotesChanged(val notes: String) : Event()
+        data class OnJadaValueChanged(val jada: String) : Event()
         data class OnToggleChanged(val togelEnabled: Boolean) : Event()
         object OnSaveButtonClicked : Event()
         object OnBackIconClicked : Event()

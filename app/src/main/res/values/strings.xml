@@ -117,7 +117,7 @@
     <string name="select_your_area">Select your area</string>
     <string name="select_your_block">Select your block</string>
     <string name="select_your_governorate">Select your governorate</string>
-    <string name="select_your_street_name">Select your street name</string>
+    <string name="select_your_street_name">type your street name</string>
     <string name="optional">optional</string>
     <string name="optional_data">Optional Data</string>
     <string name="check_out">Check Out</string>

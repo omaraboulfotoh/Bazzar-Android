@@ -22,6 +22,8 @@ data class UserAddress(
     var houseNumber: String? = null,
     @Json(name = "flatNumber")
     var flatNumber: String? = null,
+    @Json(name = "jada")
+    var jada: String? = null,
     @Json(name = "addressDescription")
     var addressDescription: String? = null,
     @Json(name = "addressNotes")

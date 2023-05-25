@@ -45,6 +45,7 @@ fun AddressScreenContent(
             selectedGovernment = state.selectedGovernment,
             selectedArea = state.selectedArea,
             streetName = state.streetName,
+            jada = state.jada,
             block = state.block,
             houseNumber = state.houseNumber,
             flatNumber = state.flatNumber,
@@ -58,6 +59,7 @@ fun AddressScreenContent(
             onHouseNumberChanged = { onSendEvent(AddressContract.Event.OnHouseNumberChanged(it)) },
             onFlatNumberChanged = { onSendEvent(AddressContract.Event.OnFlatNumberChanged(it)) },
             onNotesChanged = { onSendEvent(AddressContract.Event.OnNotesChanged(it)) },
+            onJadaValueChanged = { onSendEvent(AddressContract.Event.OnJadaValueChanged(it)) },
             onToggleChanged = { onSendEvent(AddressContract.Event.OnToggleChanged(it)) },
         )
         Button(

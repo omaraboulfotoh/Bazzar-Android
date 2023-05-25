@@ -49,6 +49,7 @@ fun AddressInputViews(
     selectedGovernment: Area? = null,
     selectedArea: Area? = null,
     streetName: String? = null,
+    jada: String? = null,
     block: String? = null,
     houseNumber: String? = null,
     flatNumber: String? = null,
@@ -59,6 +60,7 @@ fun AddressInputViews(
     onStreetNameChangec: (value: String) -> Unit,
     onBlockChanged: (value: String) -> Unit,
     onHouseNumberChanged: (value: String) -> Unit,
+    onJadaValueChanged: (value: String) -> Unit,
     onFlatNumberChanged: (value: String) -> Unit,
     onNotesChanged: (value: String) -> Unit,
     onToggleChanged: (value: Boolean) -> Unit,
@@ -142,36 +144,19 @@ fun AddressInputViews(
                     )
                 }
             )
-            TextInputField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                text = streetName.orEmpty(),
-                label = stringResource(id = R.string.street),
-                placeholder = stringResource(id = R.string.select_your_street_name),
-                borderFocusColor = BazzarTheme.colors.primaryButtonColor,
-                borderUnFocusColor = BazzarTheme.colors.stroke,
-                textStyle = BazzarTheme.typography.body2.copy(
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.End
-                ),
-                placeHolderStyle = BazzarTheme.typography.body2.copy(fontSize = 14.sp),
-                placeholderColor = BazzarTheme.colors.primaryButtonColor,
-                textColor = BazzarTheme.colors.primaryButtonColor,
-                onValueChange = { onStreetNameChangec.invoke(it) }
-            )
+
             TextInputField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight(),
                 text = block.orEmpty(),
                 label = stringResource(id = R.string.block),
-                placeholder = stringResource(id = R.string.optional),
+                placeholder = stringResource(id = R.string.block),
                 borderFocusColor = BazzarTheme.colors.primaryButtonColor,
                 borderUnFocusColor = BazzarTheme.colors.stroke,
                 textStyle = BazzarTheme.typography.body2.copy(
                     fontSize = 14.sp,
-                    textAlign = TextAlign.End
+                    textAlign = TextAlign.Start
                 ),
                 placeHolderStyle = BazzarTheme.typography.body2.copy(fontSize = 14.sp),
                 placeholderColor = BazzarTheme.colors.primaryButtonColor,
@@ -183,14 +168,50 @@ fun AddressInputViews(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight(),
-                text = houseNumber.orEmpty(),
-                label = stringResource(id = R.string.house_number),
+                text = streetName.orEmpty(),
+                label = stringResource(id = R.string.street),
+                placeholder = stringResource(id = R.string.select_your_street_name),
+                borderFocusColor = BazzarTheme.colors.primaryButtonColor,
+                borderUnFocusColor = BazzarTheme.colors.stroke,
+                textStyle = BazzarTheme.typography.body2.copy(
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Start
+                ),
+                placeHolderStyle = BazzarTheme.typography.body2.copy(fontSize = 14.sp),
+                placeholderColor = BazzarTheme.colors.primaryButtonColor,
+                textColor = BazzarTheme.colors.primaryButtonColor,
+                onValueChange = { onStreetNameChangec.invoke(it) }
+            )
+            TextInputField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                text = jada.orEmpty(),
+                label = stringResource(id = R.string.jaddah),
                 placeholder = stringResource(id = R.string.optional),
                 borderFocusColor = BazzarTheme.colors.primaryButtonColor,
                 borderUnFocusColor = BazzarTheme.colors.stroke,
                 textStyle = BazzarTheme.typography.body2.copy(
                     fontSize = 14.sp,
-                    textAlign = TextAlign.End
+                    textAlign = TextAlign.Start
+                ),
+                placeHolderStyle = BazzarTheme.typography.body2.copy(fontSize = 14.sp),
+                placeholderColor = BazzarTheme.colors.primaryButtonColor,
+                textColor = BazzarTheme.colors.primaryButtonColor,
+                onValueChange = { onJadaValueChanged.invoke(it) }
+            )
+            TextInputField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                text = houseNumber.orEmpty(),
+                label = stringResource(id = R.string.house_number),
+                placeholder = stringResource(id = R.string.house_number),
+                borderFocusColor = BazzarTheme.colors.primaryButtonColor,
+                borderUnFocusColor = BazzarTheme.colors.stroke,
+                textStyle = BazzarTheme.typography.body2.copy(
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Start
                 ),
                 placeHolderStyle = BazzarTheme.typography.body2.copy(fontSize = 14.sp),
                 placeholderColor = BazzarTheme.colors.primaryButtonColor,
@@ -209,7 +230,7 @@ fun AddressInputViews(
                 borderUnFocusColor = BazzarTheme.colors.stroke,
                 textStyle = BazzarTheme.typography.body2.copy(
                     fontSize = 14.sp,
-                    textAlign = TextAlign.End
+                    textAlign = TextAlign.Start
                 ),
                 placeHolderStyle = BazzarTheme.typography.body2.copy(fontSize = 14.sp),
                 placeholderColor = BazzarTheme.colors.primaryButtonColor,
@@ -228,7 +249,7 @@ fun AddressInputViews(
                 borderUnFocusColor = BazzarTheme.colors.stroke,
                 textStyle = BazzarTheme.typography.body2.copy(
                     fontSize = 14.sp,
-                    textAlign = TextAlign.End
+                    textAlign = TextAlign.Start
                 ),
                 placeHolderStyle = BazzarTheme.typography.body2.copy(fontSize = 14.sp),
                 placeholderColor = BazzarTheme.colors.primaryButtonColor,
