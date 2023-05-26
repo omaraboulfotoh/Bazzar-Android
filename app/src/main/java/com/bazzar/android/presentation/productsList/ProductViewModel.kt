@@ -13,6 +13,7 @@ import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.presentation.productsList.ProductContract.*
 import com.bazzar.android.presentation.productsList.composables.filter.FilterType
 import com.bazzar.android.utils.IResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,73 +26,78 @@ class ProductViewModel @Inject constructor(
     private val prefersManager: SharedPrefersManager,
     private val resourceProvider: IResourceProvider,
 ) :
-    BaseViewModel<ProductContract.Event, ProductContract.State, ProductContract.Effect>(
+    BaseViewModel<Event, State, Effect>(
         globalState
     ) {
 
     private var isInitialized = false
     private var isSortFiltersLoaded = false
-    override fun setInitialState() = ProductContract.State()
+    override fun setInitialState() = State()
 
-    override fun handleEvents(event: ProductContract.Event) {
+    override fun handleEvents(event: Event) {
         when (event) {
-            is ProductContract.Event.OnSubCategoryClicked -> onSubCategorySelected(event.categoryIndex)
-            is ProductContract.Event.OnBackIconClicked -> setEffect { ProductContract.Effect.Navigation.GoToBack }
-            is ProductContract.Event.OnSearchClicked -> {
-                setEffect { ProductContract.Effect.Navigation.GoToSearch }
+            is Event.OnSubCategoryClicked -> onSubCategorySelected(event.categoryIndex)
+            is Event.OnBackIconClicked -> setEffect { Effect.Navigation.GoToBack }
+            is Event.OnSearchClicked -> {
+                setEffect { Effect.Navigation.GoToSearch }
             }
 
-            is ProductContract.Event.OnProductClicked -> navigateToProductDetails(event.itemIndex)
-            ProductContract.Event.ReachedListEnd -> loadMoreProducts()
-            is ProductContract.Event.OnProductFavClicked -> handleProductFav(event.itemIndex)
-            is ProductContract.Event.OnDismissFilterDialogClicked -> {
+            is Event.OnProductClicked -> navigateToProductDetails(event.itemIndex)
+            Event.ReachedListEnd -> loadMoreProducts()
+            is Event.OnProductFavClicked -> handleProductFav(event.itemIndex)
+            is Event.OnDismissFilterDialogClicked -> {
                 setState { copy(showFilterDialog = false) }
             }
 
-            is ProductContract.Event.OnDismissSortDialogClicked -> {
+            is Event.OnDismissSortDialogClicked -> {
                 setState { copy(showSortDialog = false) }
             }
 
-            is ProductContract.Event.OnFilterClicked -> {
+            is Event.OnFilterClicked -> {
                 setState { copy(showFilterDialog = true) }
             }
 
-            is ProductContract.Event.OnSortClicked -> {
+            is Event.OnSortClicked -> {
                 setState { copy(showSortDialog = true) }
             }
 
-            is ProductContract.Event.OnApplySortClicked -> {
+            is Event.OnApplySortClicked -> {
                 setState { copy(showSortDialog = false) }
-                loadProductData(currentState.searchRequest.copy(sorting = currentState.selectedSort?.sortKey))
+                loadProductData(
+                    currentState.searchRequest.copy(
+                        sorting = currentState.selectedSort?.sortKey,
+                        pageIndex = 0
+                    )
+                )
             }
 
-            is ProductContract.Event.OnSortItemSelected -> setState { copy(selectedSort = event.sort) }
-            is ProductContract.Event.OnProductAddToCartClicked -> addProductToCart(event.itemIndex)
-            ProductContract.Event.OnContinueShoppingClicked -> setState {
+            is Event.OnSortItemSelected -> setState { copy(selectedSort = event.sort) }
+            is Event.OnProductAddToCartClicked -> addProductToCart(event.itemIndex)
+            Event.OnContinueShoppingClicked -> setState {
                 copy(showSuccessAddedToCart = false)
             }
 
-            ProductContract.Event.OnVisitYourCartClicked -> {
+            Event.OnVisitYourCartClicked -> {
                 setState {
                     copy(showSuccessAddedToCart = false)
                 }
-                setEffect { ProductContract.Effect.Navigation.GoToCart }
+                setEffect { Effect.Navigation.GoToCart }
             }
 
-            is ProductContract.Event.OnFilterTypeClicked -> handleOnFilterTypeClicked(event.filterType)
-            is ProductContract.Event.OnSelectUnselectFilter ->
+            is Event.OnFilterTypeClicked -> handleOnFilterTypeClicked(event.filterType)
+            is Event.OnSelectUnselectFilter ->
                 handleOnSelectUnselectFilter(event.filter, event.isSelect)
 
-            is ProductContract.Event.OnApplyFiltersClicked -> handleOnApplyFiltersClicked()
-            is ProductContract.Event.OnResetFiltersClicked -> handleOnResetFiltersClicked()
-            is ProductContract.Event.OnMaxPriceChanged -> setState { copy(selectedFilterMaxPrice = event.maxPrice) }
-            is ProductContract.Event.OnMinPriceChanged -> setState { copy(selectedFilterMinPrice = event.minPrice) }
+            is Event.OnApplyFiltersClicked -> handleOnApplyFiltersClicked()
+            is Event.OnResetFiltersClicked -> handleOnResetFiltersClicked()
+            is Event.OnMaxPriceChanged -> setState { copy(selectedFilterMaxPrice = event.maxPrice) }
+            is Event.OnMinPriceChanged -> setState { copy(selectedFilterMinPrice = event.minPrice) }
         }
     }
 
     private fun addProductToCart(itemIndex: Int) = executeCatching({
         if (prefersManager.isUserLongedIn().not()) {
-            setEffect { ProductContract.Effect.Navigation.GoToLogin }
+            setEffect { Effect.Navigation.GoToLogin }
             return@executeCatching
         }
         val itemDetail = currentState.productList?.get(itemIndex) ?: return@executeCatching
@@ -101,7 +107,7 @@ class ProductViewModel @Inject constructor(
                 is Result.Success -> {
                     val product = response.data!!
                     if (product.itemDetails?.size.orZero() > 1) {
-                        setEffect { ProductContract.Effect.Navigation.GoToProductDetailPage(product = product) }
+                        setEffect { Effect.Navigation.GoToProductDetailPage(product = product) }
                     } else if (product.itemDetails?.size.orZero() == 1) {
                         homeUseCase.addToCart(
                             AddToCartRequest(
@@ -128,7 +134,7 @@ class ProductViewModel @Inject constructor(
 
     private fun handleProductFav(itemIndex: Int) = executeCatching({
         if (prefersManager.isUserLongedIn().not()) {
-            setEffect { ProductContract.Effect.Navigation.GoToLogin }
+            setEffect { Effect.Navigation.GoToLogin }
             return@executeCatching
         }
         val list = currentState.productList?.toMutableList() ?: return@executeCatching
@@ -181,7 +187,7 @@ class ProductViewModel @Inject constructor(
     private fun navigateToProductDetails(itemIndex: Int) {
         val item = currentState.productList?.get(itemIndex) ?: return
         // navigate to details
-        setEffect { ProductContract.Effect.Navigation.GoToProductDetailPage(item) }
+        setEffect { Effect.Navigation.GoToProductDetailPage(item) }
     }
 
     private fun onSubCategorySelected(subSubCategoryIndex: Int) {
@@ -372,6 +378,7 @@ class ProductViewModel @Inject constructor(
         setState { copy(showFilterDialog = false) }
         loadProductData(
             currentState.searchRequest.copy(
+                pageIndex = 0,
                 maxPrice = maxPrice,
                 minPrice = minPrice,
                 brandList = brandFilters,

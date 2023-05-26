@@ -4,6 +4,7 @@ import com.android.local.SharedPrefersManager
 import com.android.model.home.BazaarModel
 import com.android.model.home.Brand
 import com.android.model.home.Category
+import com.android.model.home.Filter
 import com.android.model.home.Product
 import com.android.model.request.AddToCartRequest
 import com.android.model.request.SearchProductRequest
@@ -14,6 +15,9 @@ import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.presentation.bazarDetail.BazarDetailContract.*
+import com.bazzar.android.presentation.productsList.ProductContract
+import com.bazzar.android.presentation.productsList.composables.filter.FilterType
 import com.bazzar.android.utils.IResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -24,41 +28,86 @@ class BazarDetailViewModel @Inject constructor(
     private val homeUseCase: HomeUseCase,
     private val resourceProvider: IResourceProvider,
     private val sharedPrefersManager: SharedPrefersManager,
-) : BaseViewModel<BazarDetailContract.Event, BazarDetailContract.State, BazarDetailContract.Effect>(
+) : BaseViewModel<Event, State, Effect>(
     globalState
 ) {
 
     private var isInitialized = false
-    override fun setInitialState() = BazarDetailContract.State()
+    private var isSortFiltersLoaded = false
+    override fun setInitialState() = State()
 
-    override fun handleEvents(event: BazarDetailContract.Event) {
+    override fun handleEvents(event: Event) {
         when (event) {
-            is BazarDetailContract.Event.OnSubCategoryClicked -> onSubCategorySelected(event.categoryIndex)
-            BazarDetailContract.Event.OnBackIconClicked -> BazarDetailContract.Effect.Navigation.GoToBack
-            is BazarDetailContract.Event.OnProductClicked -> navigateToProductDetails(event.itemIndex)
-            BazarDetailContract.Event.OnFavouriteClicked -> handleFavAction()
-            BazarDetailContract.Event.OnShareCLicked -> shareLink()
-            BazarDetailContract.Event.ReachedListEnd -> loadMoreProducts()
-            is BazarDetailContract.Event.OnSliderClicked -> handleSliderAction(event.sliderItemIndex)
-            is BazarDetailContract.Event.OnSearchTermChanged -> {}
-            is BazarDetailContract.Event.OnProductFavClicked -> handleProductFav(event.itemIndex)
-            is BazarDetailContract.Event.OnProductAddToCartClicked -> addProductToCart(event.itemIndex)
-            BazarDetailContract.Event.OnContinueShoppingClicked -> setState {
+            is Event.OnSubCategoryClicked -> onSubCategorySelected(event.categoryIndex)
+            Event.OnBackIconClicked -> Effect.Navigation.GoToBack
+            is Event.OnProductClicked -> navigateToProductDetails(event.itemIndex)
+            Event.OnFavouriteClicked -> handleFavAction()
+            Event.OnShareCLicked -> shareLink()
+            Event.ReachedListEnd -> loadMoreProducts()
+            is Event.OnSliderClicked -> handleSliderAction(event.sliderItemIndex)
+            is Event.OnSearchTermChanged -> {}
+            is Event.OnProductFavClicked -> handleProductFav(event.itemIndex)
+            is Event.OnProductAddToCartClicked -> addProductToCart(event.itemIndex)
+            Event.OnContinueShoppingClicked -> setState {
                 copy(showSuccessAddedToCart = false)
             }
 
-            BazarDetailContract.Event.OnVisitYourCartClicked -> {
+            Event.OnVisitYourCartClicked -> {
                 setState {
                     copy(showSuccessAddedToCart = false)
                 }
-                setEffect { BazarDetailContract.Effect.Navigation.GoToCart }
+                setEffect { Effect.Navigation.GoToCart }
             }
+
+            is Event.OnApplyFiltersClicked -> handleOnApplyFiltersClicked()
+            is Event.OnResetFiltersClicked -> handleOnResetFiltersClicked()
+            is Event.OnMaxPriceChanged -> setState { copy(selectedFilterMaxPrice = event.maxPrice) }
+            is Event.OnMinPriceChanged -> setState { copy(selectedFilterMinPrice = event.minPrice) }
+            is Event.OnDismissFilterDialogClicked -> {
+                setState { copy(showFilterDialog = false) }
+            }
+
+            is Event.OnDismissSortDialogClicked -> {
+                setState { copy(showSortDialog = false) }
+            }
+
+            is Event.OnFilterClicked -> {
+                setState { copy(showFilterDialog = true) }
+            }
+
+            is Event.OnSortClicked -> {
+                setState { copy(showSortDialog = true) }
+            }
+
+            is Event.OnApplySortClicked -> {
+                setState { copy(showSortDialog = false) }
+                loadProductData(
+                    currentState.searchRequest.copy(
+                        sorting = currentState.selectedSort?.sortKey,
+                        pageIndex = 0
+                    )
+                )
+            }
+
+            is Event.OnSortItemSelected -> setState { copy(selectedSort = event.sort) }
+            Event.OnVisitYourCartClicked -> {
+                setState {
+                    copy(showSuccessAddedToCart = false)
+                }
+                setEffect { Effect.Navigation.GoToCart }
+            }
+
+            is Event.OnFilterTypeClicked -> handleOnFilterTypeClicked(event.filterType)
+            is Event.OnSelectUnselectFilter -> handleOnSelectUnselectFilter(
+                event.filter,
+                event.isSelect
+            )
         }
     }
 
     private fun addProductToCart(itemIndex: Int) = executeCatching({
         if (sharedPrefersManager.isUserLongedIn().not()) {
-            setEffect { BazarDetailContract.Effect.Navigation.GoToLogin }
+            setEffect { Effect.Navigation.GoToLogin }
             return@executeCatching
         }
         val itemDetail = currentState.productList?.get(itemIndex) ?: return@executeCatching
@@ -68,7 +117,7 @@ class BazarDetailViewModel @Inject constructor(
                 is Result.Success -> {
                     val product = response.data!!
                     if (product.itemDetails?.size.orZero() > 1) {
-                        setEffect { BazarDetailContract.Effect.Navigation.GoToProductDetails(product = product) }
+                        setEffect { Effect.Navigation.GoToProductDetails(product = product) }
                     } else if (product.itemDetails?.size.orZero() == 1) {
                         homeUseCase.addToCart(
                             AddToCartRequest(
@@ -95,7 +144,7 @@ class BazarDetailViewModel @Inject constructor(
 
     private fun handleProductFav(itemIndex: Int) = executeCatching({
         if (sharedPrefersManager.isUserLongedIn().not()) {
-            setEffect { BazarDetailContract.Effect.Navigation.GoToLogin }
+            setEffect { Effect.Navigation.GoToLogin }
             return@executeCatching
         }
         val list = currentState.productList?.toMutableList() ?: return@executeCatching
@@ -149,19 +198,19 @@ class BazarDetailViewModel @Inject constructor(
         when {
             selectedItem.itemId != null -> {
                 setEffect {
-                    BazarDetailContract.Effect.Navigation.GoToProductDetails(Product(id = selectedItem.itemId))
+                    Effect.Navigation.GoToProductDetails(Product(id = selectedItem.itemId))
                 }
             }
 
             selectedItem.brandId != null -> {
                 setEffect {
-                    BazarDetailContract.Effect.Navigation.GoToBrandProductsList(Brand(id = selectedItem.brandId))
+                    Effect.Navigation.GoToBrandProductsList(Brand(id = selectedItem.brandId))
                 }
             }
 
             selectedItem.categoryId != null -> {
                 setEffect {
-                    BazarDetailContract.Effect.Navigation.GoToCategoryProductsList(Category(id = selectedItem.categoryId))
+                    Effect.Navigation.GoToCategoryProductsList(Category(id = selectedItem.categoryId))
                 }
             }
         }
@@ -169,7 +218,7 @@ class BazarDetailViewModel @Inject constructor(
 
     private fun shareLink() {
         setEffect {
-            BazarDetailContract.Effect.OnShareBazaar(
+            Effect.OnShareBazaar(
                 resourceProvider.getString(R.string.share_bazzar_text),
                 currentState.shareLink.orEmpty()
             )
@@ -178,7 +227,7 @@ class BazarDetailViewModel @Inject constructor(
 
     private fun handleFavAction() = executeCatching({
         if (sharedPrefersManager.isUserLongedIn().not()) {
-            setEffect { BazarDetailContract.Effect.Navigation.GoToLogin }
+            setEffect { Effect.Navigation.GoToLogin }
             return@executeCatching
         }
 
@@ -211,7 +260,7 @@ class BazarDetailViewModel @Inject constructor(
     private fun navigateToProductDetails(itemIndex: Int) {
         val item = currentState.productList?.get(itemIndex) ?: return
         // navigate to details
-        setEffect { BazarDetailContract.Effect.Navigation.GoToProductDetails(item) }
+        setEffect { Effect.Navigation.GoToProductDetails(item) }
     }
 
     private fun onSubCategorySelected(subSubCategoryIndex: Int) {
@@ -255,11 +304,12 @@ class BazarDetailViewModel @Inject constructor(
                 is Result.Success -> setState {
                     val data = response.data
                     val categoriesList = data?.categoryList.orEmpty().toMutableList()
-                    categoriesList.add(
-                        0, Category(
-                            null, resourceProvider.getString(R.string.all), isSelected = true
-                        )
-                    )
+                    categoriesList[0] = categoriesList[0].copy(isSelected = true)
+                    val sortFiltersQueryMap: Map<String, String> = when {
+                        (categoriesList.isNotEmpty()) -> mapOf("CategoryId" to "${categoriesList.first { it.isSelected }.id}")
+                        else -> mapOf()
+                    }
+                    loadFiltersAndSorting(sortFiltersQueryMap)
                     copy(
                         isFavourite = data?.isWishList.orFalse(),
                         categoriesList = categoriesList,
@@ -315,5 +365,179 @@ class BazarDetailViewModel @Inject constructor(
             }
         }
     })
+
+    private fun loadFiltersAndSorting(queryMap: Map<String, String>) = executeCatching({
+        homeUseCase.loadFiltersAndSorting(queryMap)
+            .collect { sortFilterResponse ->
+                when (sortFilterResponse) {
+                    is Result.Success -> setState {
+                        isSortFiltersLoaded = true
+                        copy(
+                            sortFilter = sortFilterResponse.data,
+                            categoryFilterList = sortFilterResponse.data?.categoryList?.toList(),
+                            brandFilterList = sortFilterResponse.data?.brandList?.toList(),
+                            colorFilterList = sortFilterResponse.data?.colorList?.toList(),
+                            sizeFilterList = sortFilterResponse.data?.sizeList?.toList(),
+                        )
+                    }
+
+                    else -> {}
+                }
+            }
+    })
+
+    private fun handleOnApplyFiltersClicked() {
+        val categoryFilters = currentState.categoryFilterList
+            ?.filter { it.isSelected }
+            ?.map { it.id } ?: emptyList()
+
+        val brandFilters = currentState.brandFilterList
+            ?.filter { it.isSelected }
+            ?.map { it.id } ?: emptyList()
+
+        val colorFilters = currentState.colorFilterList
+            ?.filter { it.isSelected }
+            ?.map { it.id } ?: emptyList()
+
+        val sizeFilters = currentState.sizeFilterList
+            ?.filter { it.isSelected }
+            ?.map { it.id } ?: emptyList()
+
+        val maxPrice = currentState.selectedFilterMaxPrice ?: 0
+        val minPrice = currentState.selectedFilterMinPrice ?: 0
+
+        setState { copy(showFilterDialog = false) }
+        loadProductData(
+            currentState.searchRequest.copy(
+                pageIndex = 0,
+                maxPrice = maxPrice,
+                minPrice = minPrice,
+                brandList = brandFilters,
+                colorList = colorFilters,
+                sizeList = sizeFilters,
+            )
+        )
+    }
+
+    private fun handleOnResetFiltersClicked() {
+        setState {
+            copy(
+                selectedFilterType = null,
+                filterListToShow = null,
+                categoryFilterList = sortFilter?.categoryList,
+                brandFilterList = sortFilter?.brandList,
+                colorFilterList = sortFilter?.colorList,
+                sizeFilterList = sortFilter?.sizeList,
+                selectedFilterMaxPrice = null,
+                selectedFilterMinPrice = null,
+                numOfSelectedSizeFilters = 0,
+                numOfSelectedColorFilters = 0,
+                numOfSelectedBrandFilters = 0,
+                numOfSelectedCategoryFilters = 0,
+                numOfSelectedFilter = 0,
+            )
+        }
+    }
+
+    private fun handleOnFilterTypeClicked(filterType: FilterType) {
+        when (filterType) {
+            FilterType.FILTER_PRICE ->
+                setState { copy(selectedFilterType = filterType, filterListToShow = null) }
+
+            FilterType.FILTER_CATEGORY ->
+                setState {
+                    copy(
+                        selectedFilterType = filterType,
+                        filterListToShow = categoryFilterList
+                    )
+                }
+
+            FilterType.FILTER_BRAND ->
+                setState {
+                    copy(
+                        selectedFilterType = filterType,
+                        filterListToShow = brandFilterList
+                    )
+                }
+
+            FilterType.FILTER_COLOR ->
+                setState {
+                    copy(
+                        selectedFilterType = filterType,
+                        filterListToShow = colorFilterList
+                    )
+                }
+
+            FilterType.FILTER_SIZE ->
+                setState {
+                    copy(
+                        selectedFilterType = filterType,
+                        filterListToShow = sizeFilterList
+                    )
+                }
+        }
+    }
+
+    private fun handleOnSelectUnselectFilter(filter: Filter, isSelected: Boolean) {
+        when (currentState.selectedFilterType) {
+            FilterType.FILTER_CATEGORY -> {
+                val filters = currentState.categoryFilterList
+                filters?.find { it.id == filter.id }?.isSelected = isSelected
+                val updated = filters?.toList()
+                val numOfSelected = updated?.filter { it.isSelected }?.size ?: 0
+                setState {
+                    copy(
+                        categoryFilterList = updated,
+                        filterListToShow = updated,
+                        numOfSelectedCategoryFilters = numOfSelected
+                    )
+                }
+            }
+
+            FilterType.FILTER_BRAND -> {
+                val filters = currentState.brandFilterList
+                filters?.find { it.id == filter.id }?.isSelected = isSelected
+                val updated = filters?.toList()
+                val numOfSelected = updated?.filter { it.isSelected }?.size ?: 0
+                setState {
+                    copy(
+                        brandFilterList = updated,
+                        filterListToShow = updated,
+                        numOfSelectedBrandFilters = numOfSelected
+                    )
+                }
+            }
+
+            FilterType.FILTER_COLOR -> {
+                val filters = currentState.colorFilterList
+                filters?.find { it.id == filter.id }?.isSelected = isSelected
+                val updated = filters?.toList()
+                val numOfSelected = updated?.filter { it.isSelected }?.size ?: 0
+                setState {
+                    copy(
+                        colorFilterList = updated,
+                        filterListToShow = updated,
+                        numOfSelectedColorFilters = numOfSelected
+                    )
+                }
+            }
+
+            FilterType.FILTER_SIZE -> {
+                val filters = currentState.sizeFilterList
+                filters?.find { it.id == filter.id }?.isSelected = isSelected
+                val updated = filters?.toList()
+                val numOfSelected = updated?.filter { it.isSelected }?.size ?: 0
+                setState {
+                    copy(
+                        sizeFilterList = updated,
+                        filterListToShow = updated,
+                        numOfSelectedSizeFilters = numOfSelected
+                    )
+                }
+            }
+
+            else -> {}
+        }
+    }
 }
 

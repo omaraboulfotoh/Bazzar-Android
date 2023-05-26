@@ -19,8 +19,6 @@ class ProductContract {
         val searchRequest: SearchProductRequest = SearchProductRequest(),
         val category: Category? = null,
         val subCategoryList: List<Category>? = emptyList(),
-        val selectedSort: Sort? = null,
-        val sortFilter: SortFilter? = null,
         val listPaging: Int? = 1,
         val hasMore: Boolean = false,
         val showEmptyView: Boolean = false,
@@ -43,6 +41,8 @@ class ProductContract {
         val brandFilterList: List<Filter>? = null,
         val colorFilterList: List<Filter>? = null,
         val sizeFilterList: List<Filter>? = null,
+        val selectedSort: Sort? = null,
+        val sortFilter: SortFilter? = null,
     ) : ViewState
 
     sealed class Event : ViewEvent {

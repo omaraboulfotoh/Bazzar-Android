@@ -37,6 +37,9 @@ import com.bazzar.android.presentation.composables.SuccessAddedToCart
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.homeScreen.composables.IndicatorHomeImageSlider
 import com.bazzar.android.presentation.productDetail.ProductDetailContract
+import com.bazzar.android.presentation.productsList.ProductContract
+import com.bazzar.android.presentation.productsList.composables.FilterDialog
+import com.bazzar.android.presentation.productsList.composables.SortDialog
 import com.bazzar.android.presentation.productsList.composables.SubCategoryTextSlider
 import com.bazzar.android.presentation.theme.BazzarTheme
 
@@ -179,6 +182,44 @@ fun BazarDetailScreenContent(
             show = state.showSuccessAddedToCart,
             onContinueShoppingClick = { onSendEvent(BazarDetailContract.Event.OnContinueShoppingClicked) },
             onVisitCardClick = { onSendEvent(BazarDetailContract.Event.OnVisitYourCartClicked) },
+        )
+
+
+        SortDialog(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = BazzarTheme.spacing.m)
+                .padding(bottom = BazzarTheme.spacing.m)
+                .align(Alignment.BottomCenter),
+            show = state.showSortDialog,
+            sortingList = state.sortFilter?.sortingList ?: listOf(),
+            selectedSort = state.selectedSort,
+            onDismiss = { onSendEvent(BazarDetailContract.Event.OnDismissSortDialogClicked) },
+            onSelectSortItem = { onSendEvent(BazarDetailContract.Event.OnSortItemSelected(it)) },
+            onApply = { onSendEvent(BazarDetailContract.Event.OnApplySortClicked) }
+        )
+        FilterDialog(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(BazzarTheme.spacing.m),
+            show = state.showFilterDialog,
+            selectedFilterType = state.selectedFilterType,
+            selectedFiltersToShow = state.filterListToShow,
+            numOfSelectedCategoryFilters = state.numOfSelectedCategoryFilters,
+            numOfSelectedBrandFilters = state.numOfSelectedBrandFilters,
+            numOfSelectedColorFilters = state.numOfSelectedColorFilters,
+            numOfSelectedSizeFilters = state.numOfSelectedSizeFilters,
+            minPrice = state.selectedFilterMinPrice ?: 0,
+            maxPrice = state.selectedFilterMaxPrice ?: 1000,
+            onFilterTypeClick = { onSendEvent(BazarDetailContract.Event.OnFilterTypeClicked(it)) },
+            onSelectUnselectFilter = { filter, isSelect ->
+                onSendEvent(BazarDetailContract.Event.OnSelectUnselectFilter(filter, isSelect))
+            },
+            onApply = { onSendEvent(BazarDetailContract.Event.OnApplyFiltersClicked) },
+            onRest = { onSendEvent(BazarDetailContract.Event.OnResetFiltersClicked) },
+            onDismiss = { onSendEvent(BazarDetailContract.Event.OnDismissFilterDialogClicked) },
+            onMinPriceChanged = { onSendEvent(BazarDetailContract.Event.OnMinPriceChanged(it)) },
+            onMaxPriceChanged = { onSendEvent(BazarDetailContract.Event.OnMaxPriceChanged(it)) },
         )
     }
 
