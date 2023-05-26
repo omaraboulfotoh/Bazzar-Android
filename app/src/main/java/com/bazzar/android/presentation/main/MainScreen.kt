@@ -1,6 +1,7 @@
 package com.bazzar.android.presentation.main
 
 import android.annotation.SuppressLint
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.Scaffold
@@ -33,14 +34,16 @@ fun MainScreen(
     // Get bottom bar nav controller
     val navController = rememberNavController()
 
+    BackHandler {
+        
+    }
+
     // Render scaffold to put bottom bar
     Scaffold(
         bottomBar = {
             MBCBottomNavigation(
                 navController = navController,
-
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 onTabSelected = {
                     viewModel.setEvent(MainContract.Event.OnNavItemSelected(it))
                 }

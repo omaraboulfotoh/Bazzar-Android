@@ -2,6 +2,7 @@ package com.bazzar.android.presentation.composables.bottomNavigation
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.navigation.NavController
 import com.bazzar.android.R
 import com.bazzar.android.presentation.destinations.AccountScreenDestination
 import com.bazzar.android.presentation.destinations.BazarListScreenDestination

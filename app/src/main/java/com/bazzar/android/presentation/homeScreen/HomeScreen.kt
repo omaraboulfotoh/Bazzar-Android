@@ -2,9 +2,12 @@ package com.bazzar.android.presentation.homeScreen
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.bazarListScreen.BazarListScreen
+import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavItemDestination
+import com.bazzar.android.presentation.composables.bottomNavigation.onNavItemClick
 import com.bazzar.android.presentation.destinations.BazarDetailScreenDestination
 import com.bazzar.android.presentation.destinations.BazarListScreenDestination
 import com.bazzar.android.presentation.destinations.CartScreenDestination
@@ -23,6 +26,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigator: DestinationsNavigator,
+    navController: NavController,
 ) {
 
     // get state
@@ -48,9 +52,8 @@ fun HomeScreen(
             HomeContract.Effect.Navigation.GoToBazaarsList ->
                 navigator.navigate(BazarListScreenDestination)
 
-            is HomeContract.Effect.Navigation.GoToCategoriesScreen -> navigator.navigate(
-                CategoryScreenDestination(showCategories = effect.showCategory)
-            )
+            is HomeContract.Effect.Navigation.GoToCategoriesScreen ->  navController.onNavItemClick(
+                BottomNavItemDestination.Categories)
 
             HomeContract.Effect.Navigation.GoToLogin ->
                 navigator.navigate(LoginScreenDestination())

@@ -52,7 +52,8 @@ fun MBCBottomNavigation(
 
     val screenWidth = LocalConfiguration.current.screenWidthDp
 
-    val selectedDestination = remember { mutableStateOf(BottomNavItemDestination.Home.direction) }
+    val selectedDestination =
+        remember { mutableStateOf(BottomNavItemDestination.Home.direction) }
     var selectedIndex by remember { mutableStateOf(0) }
 
     Box(
@@ -111,7 +112,7 @@ fun MBCBottomNavigation(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .padding(
-                    bottom = 36.dp,
+                    bottom = 32.dp,
                     start = ((selectedIndex * (screenWidth / items.size))).dp.plus(16.dp)
                 )
                 .width(52.dp)
@@ -151,7 +152,7 @@ fun MBCBottomNavigation(
     }
 }
 
-private fun NavController.onNavItemClick(navItem: BottomNavItemDestination) {
+fun NavController.onNavItemClick(navItem: BottomNavItemDestination) {
     navigate(navItem.direction.route) {
         popUpTo(NavGraphs.root) { saveState = true }
         launchSingleTop = true
