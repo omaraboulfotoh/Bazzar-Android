@@ -40,6 +40,7 @@ import com.bazzar.android.presentation.productDetail.ProductDetailContract
 import com.bazzar.android.presentation.productsList.ProductContract
 import com.bazzar.android.presentation.productsList.composables.FilterDialog
 import com.bazzar.android.presentation.productsList.composables.SortDialog
+import com.bazzar.android.presentation.productsList.composables.SortFilterBar
 import com.bazzar.android.presentation.productsList.composables.SubCategoryTextSlider
 import com.bazzar.android.presentation.theme.BazzarTheme
 
@@ -144,6 +145,14 @@ fun BazarDetailScreenContent(
                                 BazarDetailContract.Event.OnSubCategoryClicked(categoryIndex)
                             )
                         })
+                }
+                item {
+                    SortFilterBar(
+                        numOfProducts = state.productList?.size,
+                        numOfSelectedFilters = state.numOfSelectedFilter,
+                        onFilterClicked = { onSendEvent(BazarDetailContract.Event.OnFilterClicked) },
+                        onSortClicked = { onSendEvent(BazarDetailContract.Event.OnSortClicked) },
+                    )
                 }
                 gridItems(count = state.productList.orEmpty().size,
                     nColumns = 2,

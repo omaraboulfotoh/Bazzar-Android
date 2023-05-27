@@ -304,7 +304,8 @@ class BazarDetailViewModel @Inject constructor(
                 is Result.Success -> setState {
                     val data = response.data
                     val categoriesList = data?.categoryList.orEmpty().toMutableList()
-                    categoriesList[0] = categoriesList[0].copy(isSelected = true)
+                    if (categoriesList.isNotEmpty())
+                        categoriesList[0] = categoriesList[0].copy(isSelected = true)
                     val sortFiltersQueryMap: Map<String, String> = when {
                         (categoriesList.isNotEmpty()) -> mapOf("CategoryId" to "${categoriesList.first { it.isSelected }.id}")
                         else -> mapOf()
