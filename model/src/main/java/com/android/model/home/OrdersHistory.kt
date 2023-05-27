@@ -7,9 +7,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class OrderHistory(
-    val id: Int = 0,
-    val orderDate: String = "",
-    val orderNumber: String,
+    val id: Int? = null,
+    val orderDate: String? =null,
+    val orderNumber: String? = null,
     val subTotal: Double? = null,
     val deliveryCharges: Double? = null,
     val discount: String? = null,

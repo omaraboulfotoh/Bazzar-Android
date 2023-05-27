@@ -15,6 +15,7 @@ import com.android.model.home.SortFilter
 import com.android.model.home.UserAddress
 import com.android.model.home.UserData
 import com.android.model.request.AddToCartRequest
+import com.android.model.request.ContactUsRequest
 import com.android.model.request.GuestLoginRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
@@ -773,6 +774,76 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                 emit(Result.Error(false, throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun getAboutUs(): Flow<Result<String>> =
+        flow {
+            try {
+                homeRemoteDataSource.getAboutUs().let {
+                    if (it.isSuccessful) {
+                        emit(
+                            Result.Success(
+                                data = it.body()?.data ?: "",
+                                message = it.body()?.message,
+                                code = it.body()?.code
+                            )
+                        )
+                    } else {
+                        emit(Result.Error("", handleErrorIn400(it.errorBody().toString())))
+                    }
+                }
+            } catch (throwable: Throwable) {
+                emit(Result.Error("", throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun submitContractUs(contactUsRequest: ContactUsRequest): Flow<Result<Boolean>> =
+        flow {
+            try {
+                homeRemoteDataSource.submitContractUs(contactUsRequest).let {
+                    if (it.isSuccessful) {
+                        emit(
+                            Result.Success(
+                                data = it.body()?.data ?: false,
+                                message = it.body()?.message,
+                                code = it.body()?.code
+                            )
+                        )
+                    } else {
+                        emit(Result.Error(false, handleErrorIn400(it.errorBody().toString())))
+                    }
+                }
+            } catch (throwable: Throwable) {
+                emit(Result.Error(false, throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+
+    override suspend fun getOrdersDetails(orderId: Int): Flow<Result<OrderHistory>> =
+        flow {
+            try {
+                homeRemoteDataSource.getOrdersDetails(orderId).let {
+                    if (it.isSuccessful) {
+                        emit(
+                            Result.Success(
+                                data = it.body()?.data ?: OrderHistory(),
+                                message = it.body()?.message,
+                                code = it.body()?.code
+                            )
+                        )
+                    } else {
+                        emit(
+                            Result.Error(
+                                OrderHistory(),
+                                handleErrorIn400(it.errorBody().toString())
+                            )
+                        )
+                    }
+                }
+            } catch (throwable: Throwable) {
+                emit(Result.Error(OrderHistory(), throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
 
 }
 

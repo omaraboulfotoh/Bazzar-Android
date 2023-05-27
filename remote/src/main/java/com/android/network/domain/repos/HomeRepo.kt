@@ -2,15 +2,18 @@ package com.android.network.domain.repos
 
 import com.android.model.home.*
 import com.android.model.request.AddToCartRequest
+import com.android.model.request.ContactUsRequest
 import com.android.model.request.GuestLoginRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
 import com.android.model.request.VerifyOtpRequest
+import com.android.model.responses.base.BaseWrapper
 import com.android.model.responses.base.BazaarDetailsResponse
 import com.android.network.states.Result
 import kotlinx.coroutines.flow.Flow
+import retrofit2.Response
 
 interface HomeRepo {
     suspend fun getHome(): Flow<Result<HomeResponse>>
@@ -45,10 +48,17 @@ interface HomeRepo {
     suspend fun addBazaarWishList(marketerId: Int): Flow<Result<Boolean>>
     suspend fun deleteBazaarWishList(marketerId: Int): Flow<Result<Boolean>>
     suspend fun addToCart(addToCartRequest: AddToCartRequest): Flow<Result<Boolean>>
-    suspend fun deleteFromCart(itemDetailId: Int, addToWishList: Boolean = false): Flow<Result<Boolean>>
+    suspend fun deleteFromCart(
+        itemDetailId: Int,
+        addToWishList: Boolean = false
+    ): Flow<Result<Boolean>>
+
     suspend fun loadCart(): Flow<Result<List<Product>>>
     suspend fun clearCart(): Flow<Result<Boolean>>
     suspend fun updateCartQuantity(itemDetailId: Int, qty: Int): Flow<Result<Boolean>>
+    suspend fun getAboutUs(): Flow<Result<String>>
+    suspend fun submitContractUs(contactUsRequest: ContactUsRequest): Flow<Result<Boolean>>
+    suspend fun getOrdersDetails(orderId: Int): Flow<Result<OrderHistory>>
 
 
 }

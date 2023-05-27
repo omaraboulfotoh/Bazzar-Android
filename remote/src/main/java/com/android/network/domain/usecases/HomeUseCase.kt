@@ -2,6 +2,7 @@ package com.android.network.domain.usecases
 
 import com.android.model.home.*
 import com.android.model.request.AddToCartRequest
+import com.android.model.request.ContactUsRequest
 import com.android.model.request.GuestLoginRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
@@ -79,5 +80,11 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
         homeRepo.updateCartQuantity(itemDetailId, qty)
 
     suspend fun clearCart() = homeRepo.clearCart()
+    suspend fun getAboutUs() = homeRepo.getAboutUs()
+    suspend fun submitContractUs(contactUsRequest: ContactUsRequest) =
+        homeRepo.submitContractUs(contactUsRequest)
+
+    suspend fun getOrdersDetails(orderId: Int) =
+        homeRepo.getOrdersDetails(orderId)
 
 }

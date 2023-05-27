@@ -2,6 +2,7 @@ package com.android.network.datasource
 
 import com.android.model.home.*
 import com.android.model.request.AddToCartRequest
+import com.android.model.request.ContactUsRequest
 import com.android.model.request.GuestLoginRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
@@ -11,6 +12,10 @@ import com.android.model.request.VerifyOtpRequest
 import com.android.model.responses.base.BaseWrapper
 import com.android.model.responses.base.BazaarDetailsResponse
 import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface HomeRemoteDataSource {
     suspend fun getHome(): Response<BaseWrapper<HomeResponse>>
@@ -49,10 +54,18 @@ interface HomeRemoteDataSource {
     suspend fun addBazaarWishList(marketerId: Int): Response<BaseWrapper<Boolean>>
     suspend fun deleteBazaarWishList(marketerId: Int): Response<BaseWrapper<Boolean>>
     suspend fun addToCart(addToCartRequest: AddToCartRequest): Response<BaseWrapper<Boolean>>
-    suspend fun deleteFromCart(itemDetailId: Int, addToWishList: Boolean = false): Response<BaseWrapper<Boolean>>
+    suspend fun deleteFromCart(
+        itemDetailId: Int,
+        addToWishList: Boolean = false
+    ): Response<BaseWrapper<Boolean>>
+
     suspend fun clearCart(): Response<BaseWrapper<Boolean>>
     suspend fun loadCart(): Response<BaseWrapper<List<Product>>>
     suspend fun updateCartQuantity(itemDetailId: Int, qty: Int): Response<BaseWrapper<Boolean>>
+
+    suspend fun getAboutUs(): Response<BaseWrapper<String>>
+    suspend fun submitContractUs(contactUsRequest: ContactUsRequest): Response<BaseWrapper<Boolean>>
+    suspend fun getOrdersDetails(orderId: Int): Response<BaseWrapper<OrderHistory>>
 
 
 }

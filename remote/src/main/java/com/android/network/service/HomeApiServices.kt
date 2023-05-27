@@ -3,6 +3,7 @@ package com.android.network.service
 import com.android.model.home.*
 import com.android.model.request.AddToCartRequest
 import com.android.model.request.ChangePasswordRequest
+import com.android.model.request.ContactUsRequest
 import com.android.model.request.GuestLoginRequest
 import com.android.model.request.LoadCheckoutRequest
 import com.android.model.request.SearchProductRequest
@@ -42,6 +43,12 @@ interface HomeApiServices {
 
     @GET("General/GetBzarDetails")
     suspend fun getBazaarDetails(@Query("MarketerId") MarketerId: Int): Response<BaseWrapper<BazaarDetailsResponse>>
+
+    @GET("General/GetAboutUs")
+    suspend fun getAboutUs(): Response<BaseWrapper<String>>
+
+    @POST("General/ContactUs")
+    suspend fun submitContractUs(@Body contactUsRequest: ContactUsRequest): Response<BaseWrapper<Boolean>>
 
 
     // all product APIS
@@ -98,6 +105,9 @@ interface HomeApiServices {
     // Orders APIs
     @POST("Order/OrderHistory")
     suspend fun getOrdersHistory(@Query("LastDaysCount") lastDaysCount: Int): Response<BaseWrapper<List<OrderHistory>>>
+
+    @POST("Order/OrderDetails")
+    suspend fun getOrdersDetails(@Query("OrderId") orderId: Int): Response<BaseWrapper<OrderHistory>>
 
     @POST("Order/LoadCheckout")
     suspend fun loadCheckout(@Body body: LoadCheckoutRequest): Response<BaseWrapper<CheckoutModel>>
