@@ -11,6 +11,8 @@ import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.presentation.eventbus.EventBus
+import com.bazzar.android.presentation.eventbus.MainEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -43,7 +45,10 @@ class HomeViewModel @Inject constructor(
             )
 
             HomeContract.Event.OnAdClicked -> handleAdClicked()
-            HomeContract.Event.OnShowAllBazaars -> setEffect { HomeContract.Effect.Navigation.GoToBazaarsList }
+            HomeContract.Event.OnShowAllBazaars -> {
+                publishMainEventBut(2)
+                setEffect { HomeContract.Effect.Navigation.GoToBazaarsList }
+            }
             HomeContract.Event.OnShowAllBrands -> navigateToCategoryTab(false)
             HomeContract.Event.OnShowAllCategories -> navigateToCategoryTab(true)
             is HomeContract.Event.OnShowAllProducts -> handleProductNavigation(event.index)
@@ -65,6 +70,7 @@ class HomeViewModel @Inject constructor(
                 setState {
                     copy(showSuccessAddedToCart = false)
                 }
+                publishMainEventBut(3)
                 setEffect { HomeContract.Effect.Navigation.GoToCart }
             }
         }
@@ -72,6 +78,7 @@ class HomeViewModel @Inject constructor(
 
     private fun addProductToCart(itemIndex: Int, sectionIndex: Int) = executeCatching({
         if (sharedPrefersManager.isUserLongedIn().not()) {
+            publishMainEventBut(4)
             setEffect { HomeContract.Effect.Navigation.GoToLogin }
             return@executeCatching
         }
@@ -83,6 +90,7 @@ class HomeViewModel @Inject constructor(
                 is Result.Success -> {
                     val product = response.data!!
                     if (product.itemDetails?.size.orZero() > 1) {
+                        publishMainEventBut(1)
                         setEffect { HomeContract.Effect.Navigation.GoToProductDetails(product = product) }
                     } else if (product.itemDetails?.size.orZero() == 1) {
                         homeUseCase.addToCart(
@@ -119,16 +127,19 @@ class HomeViewModel @Inject constructor(
 
     private fun navigateToBazaar(index: Int) {
         val bazaar = currentState.featuredBazzars.orEmpty()[index]
+        publishMainEventBut(2)
         setEffect { HomeContract.Effect.Navigation.GoToBazaarDetails(bazaar) }
     }
 
     private fun handleProductNavigation(index: Int) {
         val sectionItem = currentState.categoryItems.orEmpty()[index]
         val category = Category(id = sectionItem.categoryId, title = sectionItem.title)
+        publishMainEventBut(1)
         setEffect { HomeContract.Effect.Navigation.GoToCategoryProductsList(category) }
     }
 
     private fun navigateToCategoryTab(showCategory: Boolean) {
+        publishMainEventBut(1)
         setEffect {
             HomeContract.Effect.Navigation.GoToCategoriesScreen(
                 showCategory = showCategory
@@ -142,18 +153,21 @@ class HomeViewModel @Inject constructor(
         when {
             selectedItem.itemId != null -> {
                 setEffect {
+                    publishMainEventBut(1)
                     HomeContract.Effect.Navigation.GoToProductDetails(Product(id = selectedItem.itemId))
                 }
             }
 
             selectedItem.brandId != null -> {
                 setEffect {
+                    publishMainEventBut(1)
                     HomeContract.Effect.Navigation.GoToBrandProductsList(Brand(id = selectedItem.brandId))
                 }
             }
 
             selectedItem.categoryId != null -> {
                 setEffect {
+                    publishMainEventBut(1)
                     HomeContract.Effect.Navigation.GoToCategoryProductsList(Category(id = selectedItem.categoryId))
                 }
             }
@@ -162,6 +176,7 @@ class HomeViewModel @Inject constructor(
 
     private fun onProductFavClicked(index: Int, sectionIndex: Int) = executeCatching({
         if (sharedPrefersManager.isUserLongedIn().not()) {
+            publishMainEventBut(4)
             setEffect { HomeContract.Effect.Navigation.GoToLogin }
             return@executeCatching
         }
@@ -222,16 +237,19 @@ class HomeViewModel @Inject constructor(
 
     private fun onProductClicked(index: Int, sectionIndex: Int) {
         val product = currentState.categoryItems?.get(sectionIndex)?.items?.get(index) ?: return
+        publishMainEventBut(1)
         setEffect { HomeContract.Effect.Navigation.GoToProductDetails(product) }
     }
 
     private fun handleBrandClicked(index: Int) {
         val brand = currentState.featuredBrands?.get(index) ?: return
+        publishMainEventBut(1)
         setEffect { HomeContract.Effect.Navigation.GoToBrandProductsList(brand) }
     }
 
     private fun handleCategoryClicked(index: Int) {
         val category = currentState.featuredCategories?.get(index) ?: return
+        publishMainEventBut(1)
         setEffect { HomeContract.Effect.Navigation.GoToCategoryProductsList(category) }
     }
 
@@ -242,18 +260,21 @@ class HomeViewModel @Inject constructor(
         when {
             selectedItem.itemId != null -> {
                 setEffect {
+                    publishMainEventBut(1)
                     HomeContract.Effect.Navigation.GoToProductDetails(Product(id = selectedItem.itemId))
                 }
             }
 
             selectedItem.brandId != null -> {
                 setEffect {
+                    publishMainEventBut(1)
                     HomeContract.Effect.Navigation.GoToBrandProductsList(Brand(id = selectedItem.brandId))
                 }
             }
 
             selectedItem.categoryId != null -> {
                 setEffect {
+                    publishMainEventBut(1)
                     HomeContract.Effect.Navigation.GoToCategoryProductsList(Category(id = selectedItem.categoryId))
                 }
             }
@@ -288,6 +309,10 @@ class HomeViewModel @Inject constructor(
                 else -> {}
             }
         }
+    })
+
+    private fun publishMainEventBut(index: Int) = executeCatching({
+        EventBus.publish(MainEvent.ChangeBottomTap(index))
     })
 
 }

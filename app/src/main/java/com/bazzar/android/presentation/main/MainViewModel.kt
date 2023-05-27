@@ -3,8 +3,11 @@ package com.bazzar.android.presentation.main
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavItemDestination
-import com.bazzar.android.presentation.destinations.HomeScreenDestination
-import com.bazzar.android.presentation.main.MainContract.*
+import com.bazzar.android.presentation.eventbus.EventBus
+import com.bazzar.android.presentation.eventbus.MainEvent
+import com.bazzar.android.presentation.main.MainContract.Effect
+import com.bazzar.android.presentation.main.MainContract.Event
+import com.bazzar.android.presentation.main.MainContract.State
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -12,6 +15,18 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     globalState: IGlobalState,
 ) : BaseViewModel<Event, State, Effect>(globalState) {
+
+    init {
+        executeCatching({
+            EventBus.subscribe<MainEvent> { event ->
+                when (event) {
+                    is MainEvent.ChangeBottomTap -> {
+                        triggerTapClicked(event.tapIndex)
+                    }
+                }
+            }
+        })
+    }
 
     override fun setInitialState() = State()
 
