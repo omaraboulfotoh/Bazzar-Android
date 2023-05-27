@@ -53,11 +53,11 @@ fun OrderHistoryItem(
         Column(modifier = Modifier.padding(vertical = 10.dp)) {
             ItemImages(items = orderHistory.items.orEmpty())
             OrderNumberAndPrice(
-                orderNumber = orderHistory.orderNumber,
+                orderNumber = orderHistory.orderNumber.orEmpty(),
                 totalPrice = "${orderHistory.totalPrice}"
             )
             OrderStatus(orderStatus = orderHistory.statusLog.orEmpty())
-            OrderFooter(date = orderHistory.orderDate)
+            OrderFooter(date = orderHistory.orderDate.orEmpty())
         }
     }
 }

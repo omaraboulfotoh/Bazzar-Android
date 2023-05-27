@@ -360,45 +360,23 @@ fun ExpandingText(
 }
 
 @Composable
-fun ExpandingText(
-    description: String,
-    modifier: Modifier = Modifier,
-    textStyle: TextStyle = BazzarTheme.typography.body2,
-    expandable: Boolean = true,
-    collapsedMaxLines: Int = 2,
-    expandedMaxLines: Int = Int.MAX_VALUE,
+fun HtmlText(
+    html: String,
+    color: Color = BazzarTheme.colors.primaryButtonColor,
+    modifier: Modifier = Modifier
 ) {
-    val text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY)
-    } else {
-        HtmlCompat.fromHtml(description, HtmlCompat.FROM_HTML_MODE_LEGACY)
-    }
 
-    var canTextExpand by remember(text) { mutableStateOf(true) }
-    var expanded by remember { mutableStateOf(false) }
-    val interactionSource = remember { MutableInteractionSource() }
+    val fullText =
+        HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_COMPACT)
 
-    Text(
-        text = text.toString(),
-        style = textStyle,
-        overflow = TextOverflow.Ellipsis,
-        maxLines = if (expanded) expandedMaxLines else collapsedMaxLines,
-        modifier = Modifier
-            .clickable(
-                enabled = expandable && canTextExpand,
-                onClick = { expanded = !expanded },
-                indication = rememberRipple(bounded = true),
-                interactionSource = interactionSource,
-            )
-            .animateContentSize(animationSpec = spring())
-            .then(modifier),
-        onTextLayout = {
-            if (!expanded) {
-                canTextExpand = it.hasVisualOverflow
-            }
-        }
+    Caption(
+        text = fullText.toString(),
+        modifier = modifier,
+        textAlign = TextAlign.Start,
+        color = color
     )
 }
+
 
 object TextComponentsConstants {
     const val DOTS_COUNTS = 4
@@ -427,13 +405,4 @@ fun MultipleStylesText(
     )
 }
 
-@Composable
-fun HtmlText(html: String, modifier: Modifier = Modifier) {
-    AndroidView(modifier = modifier,
-        factory = { context -> TextView(context) },
-        update = {
-            it.text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_COMPACT)
-        }
-    )
-}
 
