@@ -58,7 +58,7 @@ class ContactUsViewModel @Inject constructor(
             when (response) {
                 is Result.Error -> globalState.error(response.message.orEmpty())
                 is Result.Success -> {
-                    if (response.code != 0) {
+                    if (response.code == 0) {
                         globalState.success(resourceProvider.getString(R.string.contact_us_success))
                         delay(2000)
                         setEffect { Effect.Navigation.GoBack }
