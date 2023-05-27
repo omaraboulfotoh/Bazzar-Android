@@ -1,5 +1,7 @@
 package com.bazzar.android.presentation.composables.bottomNavigation
 
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -7,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -15,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -105,15 +109,26 @@ fun MBCBottomNavigation(
                 )
             }
         }
+
+        var targetOffset by remember { mutableStateOf(0.dp) }
+        val animatedOffset by animateDpAsState(
+            targetValue = targetOffset,
+            animationSpec = tween(durationMillis = 500)
+        )
+
+        LaunchedEffect(selectedIndex) {
+            targetOffset =
+                if (selectedIndex == 0) 16.dp
+                else (selectedIndex * (screenWidth / items.size) + 16).dp
+        }
+
         // Custom float icon when selected
         Column(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .padding(
-                    bottom = 32.dp,
-                    start = ((selectedIndex * (screenWidth / items.size))).dp.plus(16.dp)
-                )
+                .padding(bottom = 32.dp)
                 .width(52.dp)
+                .offset(x = animatedOffset)
         ) {
             Box(
                 modifier = Modifier
