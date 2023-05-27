@@ -5,9 +5,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
+import com.bazzar.android.presentation.bazarListScreen.BazarListScreen
+import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavItemDestination
+import com.bazzar.android.presentation.composables.bottomNavigation.onNavItemClick
 import com.bazzar.android.presentation.destinations.BazarDetailScreenDestination
 import com.bazzar.android.presentation.destinations.BazarListScreenDestination
 import com.bazzar.android.presentation.destinations.CartScreenDestination
+import com.bazzar.android.presentation.destinations.CategoryScreenDestination
 import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.bazzar.android.presentation.destinations.ProductScreenDestination
@@ -49,7 +53,7 @@ fun HomeScreen(
                 navigator.navigate(BazarListScreenDestination)
 
             is HomeContract.Effect.Navigation.GoToCategoriesScreen -> {
-
+                // todo will handle the event bus here
             }
 
             HomeContract.Effect.Navigation.GoToLogin ->

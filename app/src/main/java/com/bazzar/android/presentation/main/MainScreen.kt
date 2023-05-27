@@ -30,10 +30,8 @@ fun MainScreen(
     navigator: DestinationsNavigator,
     selectedTabIndex: Int = MainContract.HOME_TAB,
 ) {
-
     val state = viewModel.viewState()
     val navController = rememberNavController()
-    val context = LocalContext.current
     val activity = LocalContext.current.getActivity<MainActivity>()!!
 
     // handle effects
@@ -42,6 +40,7 @@ fun MainScreen(
             MainContract.Effect.OnBackClicked -> if (navigator.popBackStack().not()) {
                 activity.finish()
             }
+
             is MainContract.Effect.NavigateToDirection -> {
                 navController.onNavItemClick(effect.navItem)
             }
@@ -79,3 +78,4 @@ fun MainScreen(
         )
     }
 }
+
