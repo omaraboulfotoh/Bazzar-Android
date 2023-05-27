@@ -3,16 +3,18 @@ package com.android.local
 import android.content.SharedPreferences
 import com.android.model.home.Brand
 import com.android.model.home.Category
-import com.android.model.home.Product
 import com.android.model.home.UserData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.util.Locale
 import javax.inject.Inject
 
 class SharedPrefersManager @Inject constructor(private val sharedPreferences: SharedPreferences) {
 
     fun getAppLanguage(): String {
-        return sharedPreferences.getString(Constants.sharedPreference_language, null) ?: LANGUAGE_AR
+        val defaultLang =
+            if (Locale.getDefault().language.lowercase() == LANGUAGE_AR) LANGUAGE_AR else LANGUAGE_EN
+        return sharedPreferences.getString(Constants.sharedPreference_language, null) ?: defaultLang
     }
 
     fun setAppLanguage(newLanguage: String) {

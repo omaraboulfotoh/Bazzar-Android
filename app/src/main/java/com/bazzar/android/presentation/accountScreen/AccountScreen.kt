@@ -13,6 +13,7 @@ import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.SocialMedia
 import com.bazzar.android.presentation.accountScreen.composables.AccountScreenContent
 import com.bazzar.android.presentation.app.MainActivity
+import com.bazzar.android.presentation.destinations.AboutUsScreenDestination
 import com.bazzar.android.presentation.destinations.AddressBookScreenDestination
 import com.bazzar.android.presentation.destinations.EditProfileScreenDestination
 import com.bazzar.android.presentation.destinations.LoginScreenDestination
@@ -54,9 +55,9 @@ fun AccountScreen(
                 navigator.navigateAndClearBackStack(MainScreenDestination())
             }
 
-            AccountContract.Effect.Navigation.GoToAboutUs -> {
-                openWebPageInAppBrowser(context, BuildConfig.ABOUT_US)
-            }
+            AccountContract.Effect.Navigation.GoToAboutUs -> navigator.navigate(
+                AboutUsScreenDestination
+            )
 
             AccountContract.Effect.Navigation.GoToContactUs -> {
                 openWebPageInAppBrowser(context, BuildConfig.CONTACT_US)
