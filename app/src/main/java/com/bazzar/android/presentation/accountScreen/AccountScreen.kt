@@ -15,6 +15,7 @@ import com.bazzar.android.presentation.accountScreen.composables.AccountScreenCo
 import com.bazzar.android.presentation.app.MainActivity
 import com.bazzar.android.presentation.destinations.AboutUsScreenDestination
 import com.bazzar.android.presentation.destinations.AddressBookScreenDestination
+import com.bazzar.android.presentation.destinations.ContactUsScreenDestination
 import com.bazzar.android.presentation.destinations.EditProfileScreenDestination
 import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.destinations.MainScreenDestination
@@ -35,65 +36,54 @@ fun AccountScreen(
 
     viewModel.sideEffect { effect ->
         when (effect) {
-            is AccountContract.Effect.Navigation.GoToEditProfile -> {
+            is AccountContract.Effect.Navigation.GoToEditProfile ->
                 navigator.navigate(EditProfileScreenDestination(userData = effect.userData))
-            }
 
-            is AccountContract.Effect.Navigation.GoToOrdersHistory -> {
+            is AccountContract.Effect.Navigation.GoToOrdersHistory ->
                 navigator.navigate(OrdersHistoryScreenDestination())
-            }
 
-            is AccountContract.Effect.Navigation.GoToRegistration -> {
+
+            is AccountContract.Effect.Navigation.GoToRegistration ->
                 navigator.navigate(LoginScreenDestination())
-            }
 
-            is AccountContract.Effect.Navigation.GoToAddressBook -> {
+
+            is AccountContract.Effect.Navigation.GoToAddressBook ->
                 navigator.navigate(AddressBookScreenDestination)
-            }
 
-            is AccountContract.Effect.Navigation.GoToHome -> {
-                navigator.navigateAndClearBackStack(MainScreenDestination())
-            }
 
-            AccountContract.Effect.Navigation.GoToAboutUs -> navigator.navigate(
-                AboutUsScreenDestination
-            )
+            AccountContract.Effect.Navigation.GoToAboutUs ->
+                navigator.navigate(AboutUsScreenDestination)
 
-            AccountContract.Effect.Navigation.GoToContactUs -> {
-                openWebPageInAppBrowser(context, BuildConfig.CONTACT_US)
-            }
+            AccountContract.Effect.Navigation.GoToContactUs ->
+                navigator.navigate(ContactUsScreenDestination)
 
-            AccountContract.Effect.Navigation.GoToTermsAndConditions -> {
+            AccountContract.Effect.Navigation.GoToTermsAndConditions ->
                 openWebPageInAppBrowser(context, BuildConfig.TERMS_AND_CONDITIONS)
-            }
 
-            AccountContract.Effect.Navigation.GoToInstagramPage -> {
+
+            AccountContract.Effect.Navigation.GoToInstagramPage ->
                 buildUrlIntent(SocialMedia.INSTAGRAM_PAGE).apply {
                     context.startActivity(this)
                 }
-            }
 
-            AccountContract.Effect.Navigation.GoToFacebookPage -> {
+            AccountContract.Effect.Navigation.GoToFacebookPage ->
                 buildUrlIntent(SocialMedia.FACEBOOK_PAGE).apply {
                     context.startActivity(this)
                 }
-            }
 
-            AccountContract.Effect.Navigation.GoToTwitterPage -> {
+            AccountContract.Effect.Navigation.GoToTwitterPage ->
                 buildUrlIntent(SocialMedia.TWITTER_PAGE).apply {
                     context.startActivity(this)
                 }
-            }
 
-            AccountContract.Effect.Navigation.OnRestartApp -> MainActivity.restartApp(activity)
+            AccountContract.Effect.Navigation.OnRestartApp ->
+                MainActivity.restartApp(activity)
 
-            AccountContract.Effect.Navigation.GoToWishList -> navigator.navigate(
-                WishListScreenDestination
-            )
+            AccountContract.Effect.Navigation.GoToWishList ->
+                navigator.navigate(WishListScreenDestination)
 
-            is AccountContract.Effect.Navigation.OpenLink -> buildUrlIntent(effect.link).apply {
-                context.startActivity(this)
-            }
+            is AccountContract.Effect.Navigation.OpenLink ->
+                buildUrlIntent(effect.link).apply { context.startActivity(this) }
 
             is AccountContract.Effect.Navigation.CallSupport ->
                 buildUrlIntent(SocialMedia.WHATS_APP + effect.phone).apply {

@@ -42,7 +42,6 @@ class AccountContract {
             object GoToWishList : Navigation()
             object GoToRegistration : Navigation()
             object GoToAddressBook : Navigation()
-            object GoToHome : Navigation()
             object GoToAboutUs : Navigation()
             object GoToTermsAndConditions : Navigation()
             object GoToContactUs : Navigation()
