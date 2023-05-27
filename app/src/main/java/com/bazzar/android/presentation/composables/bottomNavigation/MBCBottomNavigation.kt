@@ -35,12 +35,15 @@ import com.bazzar.android.presentation.NavGraphs
 import com.bazzar.android.presentation.composables.OverLine
 import com.bazzar.android.presentation.theme.BazzarTheme
 import com.ramcosta.composedestinations.navigation.popUpTo
+import com.ramcosta.composedestinations.spec.Direction
 
 @Composable
 fun MBCBottomNavigation(
     navController: NavController,
     onTabSelected: (Int) -> Unit,
+    selectedIndex: Int = 0,
     modifier: Modifier,
+    selectedDestination: Direction = BottomNavItemDestination.Home.direction
 ) {
     val items = listOf(
         BottomNavItemDestination.Home,
@@ -52,9 +55,6 @@ fun MBCBottomNavigation(
 
     val screenWidth = LocalConfiguration.current.screenWidthDp
 
-    val selectedDestination =
-        remember { mutableStateOf(BottomNavItemDestination.Home.direction) }
-    var selectedIndex by remember { mutableStateOf(0) }
 
     Box(
         modifier = modifier.background(Color.Transparent)
@@ -69,15 +69,13 @@ fun MBCBottomNavigation(
             elevation = 4.dp
         ) {
             items.forEachIndexed { index, navItem ->
-                val isSelected = navItem.direction == selectedDestination.value
+                val isSelected = navItem.direction == selectedDestination
                 BottomNavigationItem(
                     modifier = Modifier.padding(bottom = BazzarTheme.spacing.m),
                     selected = isSelected,
                     onClick = {
-                        selectedDestination.value = navItem.direction
-                        selectedIndex = index
                         onTabSelected(navItem.tapIndex)
-                        navController.onNavItemClick(navItem)
+                        navController.onNavItemClick(navItem.direction)
                     },
 
                     icon = {
@@ -152,8 +150,8 @@ fun MBCBottomNavigation(
     }
 }
 
-fun NavController.onNavItemClick(navItem: BottomNavItemDestination) {
-    navigate(navItem.direction.route) {
+fun NavController.onNavItemClick(navItem: Direction) {
+    navigate(navItem.route) {
         popUpTo(NavGraphs.root) { saveState = true }
         launchSingleTop = true
         restoreState = true
