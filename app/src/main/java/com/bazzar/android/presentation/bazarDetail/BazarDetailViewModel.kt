@@ -16,6 +16,7 @@ import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.presentation.bazarDetail.BazarDetailContract.*
+import com.bazzar.android.presentation.main.MainContract
 import com.bazzar.android.presentation.productsList.ProductContract
 import com.bazzar.android.presentation.productsList.composables.filter.FilterType
 import com.bazzar.android.utils.IResourceProvider
@@ -56,7 +57,7 @@ class BazarDetailViewModel @Inject constructor(
                 setState {
                     copy(showSuccessAddedToCart = false)
                 }
-                setEffect { Effect.Navigation.GoToCart }
+                publishMainEventBut(MainContract.CART_TAB)
             }
 
             is Event.OnApplyFiltersClicked -> handleOnApplyFiltersClicked()
@@ -90,12 +91,6 @@ class BazarDetailViewModel @Inject constructor(
             }
 
             is Event.OnSortItemSelected -> setState { copy(selectedSort = event.sort) }
-            Event.OnVisitYourCartClicked -> {
-                setState {
-                    copy(showSuccessAddedToCart = false)
-                }
-                setEffect { Effect.Navigation.GoToCart }
-            }
 
             is Event.OnFilterTypeClicked -> handleOnFilterTypeClicked(event.filterType)
             is Event.OnSelectUnselectFilter -> handleOnSelectUnselectFilter(

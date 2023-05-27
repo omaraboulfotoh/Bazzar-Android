@@ -3,6 +3,7 @@ package com.bazzar.android.presentation.main
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavItemDestination
+import com.bazzar.android.presentation.destinations.CategoryScreenDestination
 import com.bazzar.android.presentation.eventbus.EventBus
 import com.bazzar.android.presentation.eventbus.MainEvent
 import com.bazzar.android.presentation.main.MainContract.Effect
@@ -21,7 +22,7 @@ class MainViewModel @Inject constructor(
             EventBus.subscribe<MainEvent> { event ->
                 when (event) {
                     is MainEvent.ChangeBottomTap -> {
-                        triggerTapClicked(event.tapIndex)
+                        triggerTapClicked(event.tapIndex, event.additionalValue, true)
                     }
                 }
             }
@@ -46,16 +47,21 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun triggerTapClicked(tabIndex: Int) {
+    private fun triggerTapClicked(
+        tabIndex: Int,
+        additionalValue: Boolean? = null,
+        handleItemNavigation: Boolean = false
+    ) {
         val direction = when (tabIndex) {
-            MainContract.CATEGORIES_TAB -> BottomNavItemDestination.Categories.direction
+            MainContract.CATEGORIES_TAB -> CategoryScreenDestination(additionalValue ?: true)
             MainContract.BZAAARZ_TAB -> BottomNavItemDestination.Bazzars.direction
             MainContract.CART_TAB -> BottomNavItemDestination.Cart.direction
             MainContract.PROFILE_TAB -> BottomNavItemDestination.Profile.direction
             else -> BottomNavItemDestination.Home.direction
         }
         setState { copy(tabIndex = tabIndex, direction = direction) }
-//        setEffect { Effect.NavigateToDirection(direction) }
+        if (handleItemNavigation)
+            setEffect { Effect.NavigateToDirection(direction) }
 
     }
 }

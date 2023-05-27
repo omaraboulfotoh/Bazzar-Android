@@ -8,6 +8,7 @@ import com.android.network.states.Result
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.presentation.main.MainContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -46,7 +47,7 @@ class WishListViewModel @Inject constructor(
                 setState {
                     copy(showSuccessAddedToCart = false)
                 }
-                setEffect { WishListContract.Effect.Navigation.GoToCart }
+                publishMainEventBut(MainContract.CART_TAB)
             }
         }
     }

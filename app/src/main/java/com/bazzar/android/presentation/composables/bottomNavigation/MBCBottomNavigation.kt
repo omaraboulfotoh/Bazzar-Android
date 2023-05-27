@@ -69,7 +69,7 @@ fun MBCBottomNavigation(
             elevation = 4.dp
         ) {
             items.forEachIndexed { index, navItem ->
-                val isSelected = navItem.direction == selectedDestination
+                val isSelected = index == selectedIndex
                 BottomNavigationItem(
                     modifier = Modifier.padding(bottom = BazzarTheme.spacing.m),
                     selected = isSelected,

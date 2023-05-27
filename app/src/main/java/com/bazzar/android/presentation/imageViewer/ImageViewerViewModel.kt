@@ -12,6 +12,7 @@ import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.presentation.imageViewer.ImageViewerContract.Effect
 import com.bazzar.android.presentation.imageViewer.ImageViewerContract.Event
 import com.bazzar.android.presentation.imageViewer.ImageViewerContract.State
+import com.bazzar.android.presentation.main.MainContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -41,7 +42,7 @@ class ImageViewerViewModel @Inject constructor(
                 setState {
                     copy(showSuccessAddedToCart = false)
                 }
-                setEffect { Effect.Navigation.GoToCart }
+                publishMainEventBut(MainContract.CART_TAB)
             }
             is Event.OnBackClicked -> setEffect { Effect.Navigation.GoBack }
         }

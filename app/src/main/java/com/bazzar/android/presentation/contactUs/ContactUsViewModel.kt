@@ -50,7 +50,7 @@ class ContactUsViewModel @Inject constructor(
             ContactUsRequest(
                 name = name,
                 email = email,
-                phone = phone,
+                phone = "+965$phone",
                 subject = subject,
                 message = message
             )

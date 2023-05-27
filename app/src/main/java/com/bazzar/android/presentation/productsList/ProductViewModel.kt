@@ -13,6 +13,7 @@ import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.presentation.main.MainContract
 import com.bazzar.android.presentation.productsList.ProductContract.*
 import com.bazzar.android.presentation.productsList.composables.filter.FilterType
 import com.bazzar.android.utils.IResourceProvider
@@ -81,7 +82,7 @@ class ProductViewModel @Inject constructor(
                 setState {
                     copy(showSuccessAddedToCart = false)
                 }
-                setEffect { Effect.Navigation.GoToCart }
+                publishMainEventBut(MainContract.CART_TAB)
             }
 
             is Event.OnFilterTypeClicked -> handleOnFilterTypeClicked(event.filterType)

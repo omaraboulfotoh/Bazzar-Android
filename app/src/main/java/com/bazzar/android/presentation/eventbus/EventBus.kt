@@ -25,5 +25,6 @@ object EventBus {
 }
 
 sealed class MainEvent {
-    data class ChangeBottomTap(val tapIndex: Int) : MainEvent()
+    data class ChangeBottomTap(val tapIndex: Int, val additionalValue: Boolean? = null) :
+        MainEvent()
 }

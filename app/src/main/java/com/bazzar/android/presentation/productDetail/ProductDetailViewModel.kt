@@ -14,6 +14,7 @@ import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.presentation.main.MainContract
 import com.bazzar.android.presentation.productDetail.ProductDetailContract.Effect
 import com.bazzar.android.presentation.productDetail.ProductDetailContract.Event
 import com.bazzar.android.presentation.productDetail.ProductDetailContract.State
@@ -44,7 +45,7 @@ class ProductDetailViewModel @Inject constructor(
             is Event.OnShareClicked -> shareProduct()
             is Event.OnVisitYourCartClicked -> {
                 setState { copy(showSuccessAddedToCart = false) }
-                setEffect { Effect.Navigation.GoToCart }
+                publishMainEventBut(MainContract.CART_TAB)
             }
 
             is Event.OnSeeMoreBrandClicked -> navigateToBrandItems()

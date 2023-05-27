@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.BuildConfig
+import com.bazzar.android.presentation.eventbus.EventBus
+import com.bazzar.android.presentation.eventbus.MainEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -87,11 +89,13 @@ abstract class BaseViewModel<Event : ViewEvent, UiState : ViewState, Effect : Vi
                     is UnknownHostException -> {
                         "No internet connection, please check your connection and try again."
                     }
+
                     is java.net.SocketTimeoutException,
                     is ConnectTimeoutException,
                     -> {
                         "Looks like the server is taking too long to respond, please try again later."
                     }
+
                     else -> {
                         throwable.localizedMessage
                     }
@@ -118,4 +122,9 @@ abstract class BaseViewModel<Event : ViewEvent, UiState : ViewState, Effect : Vi
             onComplete?.invoke()
         }
     }
+
+    fun publishMainEventBut(index: Int, additionalValue: Boolean? = null) =
+        executeCatching({
+            EventBus.publish(MainEvent.ChangeBottomTap(index, additionalValue))
+        })
 }
