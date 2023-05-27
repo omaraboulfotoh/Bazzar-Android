@@ -37,7 +37,7 @@ fun LoginScreenContent(
 
         // login header
         LoginHeader(modifier = Modifier,
-            onAction = { onSendEvent(LoginContract.Event.OnContinueAsAGuest) })
+            onAction = { onSendEvent(LoginContract.Event.OnBackClicked) })
 
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
             InputMobileNumber(

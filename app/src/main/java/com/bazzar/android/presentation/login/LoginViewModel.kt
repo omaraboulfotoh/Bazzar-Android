@@ -38,6 +38,7 @@ class LoginViewModel @Inject constructor(
             is LoginContract.Event.OnCreateNewAccount -> setEffect { LoginContract.Effect.Navigation.GoToRegisterScreen }
             is LoginContract.Event.OnPasswordChanged -> setState { copy(password = event.password) }
             is LoginContract.Event.OnPhoneChanged -> setState { copy(mobileNumber = event.phoneNumber) }
+            LoginContract.Event.OnBackClicked -> setEffect { LoginContract.Effect.Navigation.GoBack }
         }
     }
 
@@ -85,7 +86,7 @@ class LoginViewModel @Inject constructor(
                     // update fcm token on the api
                     if (loginResponse.code != 0) {
                         globalState.error(loginResponse.message.orEmpty())
-                    }else {
+                    } else {
                         updateFCM()
                         sharedPrefersManager.saveToken(loginResponse.data?.accessToken)
                         sharedPrefersManager.saveUserData(loginResponse.data!!)

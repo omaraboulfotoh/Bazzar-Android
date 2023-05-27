@@ -19,6 +19,7 @@ class LoginContract {
         //navigation
         object OnCreateNewAccount : Event()
         object OnContinueAsAGuest : Event()
+        object OnBackClicked : Event()
     }
 
     sealed class Effect : ViewSideEffect {
