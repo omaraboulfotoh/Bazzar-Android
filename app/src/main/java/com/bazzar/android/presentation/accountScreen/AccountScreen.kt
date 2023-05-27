@@ -93,6 +93,11 @@ fun AccountScreen(
             is AccountContract.Effect.Navigation.OpenLink -> buildUrlIntent(effect.link).apply {
                 context.startActivity(this)
             }
+
+            is AccountContract.Effect.Navigation.CallSupport ->
+                buildUrlIntent(SocialMedia.WHATS_APP + effect.phone).apply {
+                    context.startActivity(this)
+                }
         }
     }
     viewModel.initState()

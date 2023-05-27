@@ -23,7 +23,7 @@ class AccountViewModel @Inject constructor(
     private val homeUseCase: HomeUseCase,
     private val sharedPrefersManager: SharedPrefersManager,
     private val resourceProvider: IResourceProvider,
-    private val remoteConfiguration: RemoteConfiguration
+    private val remoteConfiguration: RemoteConfiguration,
 ) : BaseViewModel<Event, State, Effect>(globalState) {
 
     private var isInitialized = false
@@ -65,6 +65,10 @@ class AccountViewModel @Inject constructor(
                         "VENDOR_LINK"
                     )
                 )
+            }
+
+            Event.OnTackToUsClicked -> setEffect {
+                Effect.Navigation.CallSupport(phone = remoteConfiguration.getString("WHATSAPP_NUMBER"))
             }
         }
     }

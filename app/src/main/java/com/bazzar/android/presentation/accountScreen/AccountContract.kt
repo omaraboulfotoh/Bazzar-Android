@@ -31,6 +31,7 @@ class AccountContract {
         object OnLogOutClicked : Event()
         object OnDeleteMyAccountClicked : Event()
         object OnSignupClicked : Event()
+        object OnTackToUsClicked : Event()
     }
 
     sealed class Effect : ViewSideEffect {
@@ -45,6 +46,7 @@ class AccountContract {
             object GoToAboutUs : Navigation()
             object GoToTermsAndConditions : Navigation()
             object GoToContactUs : Navigation()
+            data class CallSupport(val phone: String) : Navigation()
             object GoToFacebookPage : Navigation()
             object GoToInstagramPage : Navigation()
             object GoToTwitterPage : Navigation()
