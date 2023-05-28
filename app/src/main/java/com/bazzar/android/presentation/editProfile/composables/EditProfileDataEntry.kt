@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -56,20 +57,21 @@ fun EditProfileDataEntry(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.SpaceBetween,
+        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
+        horizontalAlignment = Alignment.Start
     ) {
         Button(
             shape = RoundedCornerShape(28.dp),
             onClick = onChangePasswordClick
         ) {
             Text(
-                modifier = Modifier.padding(BazzarTheme.spacing.m),
+                modifier = Modifier.padding(BazzarTheme.spacing.s),
                 text = stringResource(id = R.string.change_password),
                 style = BazzarTheme.typography.captionBold,
                 color = BazzarTheme.colors.white,
             )
         }
-        Column(modifier = Modifier.padding(top = 16.dp, bottom = 88.dp)) {
+        Column(modifier = Modifier) {
             Text(
                 text = stringResource(id = R.string.user_name),
                 style = MaterialTheme.typography.subtitle2.copy(
@@ -221,6 +223,7 @@ fun EditProfileDataEntry(
                 )
             }
         }
+        Spacer(modifier = modifier.height(1.dp))
         Box(Modifier.fillMaxWidth()) {
             Box(
                 modifier = Modifier

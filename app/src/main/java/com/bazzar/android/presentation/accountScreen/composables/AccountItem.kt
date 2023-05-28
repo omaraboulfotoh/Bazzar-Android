@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -39,7 +40,7 @@ fun AccountItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = BazzarTheme.spacing.m)
+            .height(90.dp)
             .background(
                 color = BazzarTheme.colors.primaryButtonColor,
                 shape = RoundedCornerShape(BazzarTheme.spacing.xl)

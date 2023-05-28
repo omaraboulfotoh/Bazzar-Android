@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
@@ -41,219 +44,230 @@ fun AccountScreenContent(
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .padding(bottom = BottomNavigationHeight)
             .background(BazzarTheme.colors.backgroundColor)
     ) {
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = BazzarTheme.spacing.m)
-                .padding(bottom = BottomNavigationHeight),
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            item {
-                EmptyMbcAppBar(title = stringResource(id = R.string.my_account))
-            }
-            item {
-                if (state.isUserLoggedIn) {
-                    AccountItem(
-                        modifier = Modifier.padding(top = 50.dp),
-                        userData = state.userData,
-                        onAccountItemClick = {
-                            state.userData?.let {
-                                onSendEvent(AccountContract.Event.OnAccountClicked(it))
+            EmptyMbcAppBar(title = stringResource(id = R.string.my_account))
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = BazzarTheme.spacing.m),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
+            ) {
+                item {
+                    Spacer(modifier = Modifier.height(BazzarTheme.spacing.s))
+                }
+                item {
+                    if (state.isUserLoggedIn) {
+                        Spacer(modifier = Modifier.height(BazzarTheme.spacing.l))
+                        AccountItem(
+                            modifier = Modifier,
+                            userData = state.userData,
+                            onAccountItemClick = {
+                                state.userData?.let {
+                                    onSendEvent(AccountContract.Event.OnAccountClicked(it))
+                                }
                             }
-                        }
-                    )
-                } else {
-                    CustomButton(
-                        text = stringResource(id = R.string.sign_up),
-                        modifier = Modifier.padding(top = 50.dp),
-                        onClick = { onSendEvent(AccountContract.Event.OnSignupClicked) }
-                    )
-                }
-            }
-            item {
-                LanguageItem(
-                    modifier = Modifier
-                        .padding(top = 24.dp)
-                        .clickable {
-                            onSendEvent(AccountContract.Event.OnLanguageClicked)
-                        }
-                )
-            }
-            if (state.isUserLoggedIn.not() && state.showWishList) {
-                item {
-                    BarItem(
-                        modifier = Modifier.padding(top = 24.dp),
-                        title = stringResource(id = R.string.wish_list),
-                        iconPainter = painterResource(id = R.drawable.ic_fav),
-                        onClick = { onSendEvent(AccountContract.Event.OnWishListClicked) }
-                    )
-                }
-            }
-            if (state.isUserLoggedIn) {
-                item {
-                    BarItem(
-                        modifier = Modifier.padding(top = 24.dp),
-                        title = stringResource(id = R.string.history_list),
-                        iconPainter = painterResource(id = R.drawable.ic_order_history),
-                        onClick = { onSendEvent(AccountContract.Event.OnOrderHistoryClicked) }
-                    )
-                }
-                item {
-                    BarItem(
-                        modifier = Modifier.padding(top = 24.dp),
-                        title = stringResource(id = R.string.address_book),
-                        iconPainter = painterResource(id = R.drawable.ic_location),
-                        onClick = { onSendEvent(AccountContract.Event.OnAddressesClicked) }
-                    )
-                }
-                item {
-                    BarItem(
-                        modifier = Modifier.padding(top = 24.dp),
-                        title = stringResource(id = R.string.wish_list),
-                        iconPainter = painterResource(id = R.drawable.ic_fav),
-                        onClick = { onSendEvent(AccountContract.Event.OnWishListClicked) }
-                    )
-                }
-            }
-            item {
-                BarItem(
-                    modifier = Modifier.padding(top = 24.dp),
-                    title = stringResource(id = R.string.bazar_terms_conditions),
-                    iconPainter = painterResource(id = R.drawable.ic_terms_conditions),
-                    onClick = { onSendEvent(AccountContract.Event.OnBazzarTermsAndConditionsClicked) }
-                )
-            }
-            item {
-                BarItem(
-                    modifier = Modifier.padding(top = 24.dp),
-                    title = stringResource(id = R.string.about_us),
-                    iconPainter = painterResource(id = R.drawable.ic_about_us),
-                    onClick = { onSendEvent(AccountContract.Event.OnAboutUsClicked) }
-                )
-
-            }
-            item {
-                BarItem(
-                    modifier = Modifier.padding(top = 24.dp),
-                    title = stringResource(id = R.string.contact_us),
-                    iconPainter = painterResource(id = R.drawable.ic_contact_us),
-                    onClick = { onSendEvent(AccountContract.Event.OnContactUsClicked) }
-                )
-
-            }
-            item {
-                BarItem(
-                    modifier = Modifier.padding(top = 24.dp),
-                    title = stringResource(id = R.string.marketer_submition_form),
-                    iconPainter = painterResource(id = R.drawable.ic_terms_conditions),
-                    onClick = { onSendEvent(AccountContract.Event.OnMarketerClicked) }
-                )
-
-            }
-            item {
-                BarItem(
-                    modifier = Modifier.padding(top = 24.dp),
-                    title = stringResource(id = R.string.vendor_submition_form),
-                    iconPainter = painterResource(id = R.drawable.ic_terms_conditions),
-                    onClick = { onSendEvent(AccountContract.Event.OnVendorClicked) }
-                )
-
-            }
-            item {
-                Row(
-                    modifier = Modifier.padding(top = 56.dp),
-                    horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs)
-                ) {
-                    Icon(
-                        modifier = Modifier.clickable { onSendEvent(AccountContract.Event.OnTwitterClicked) },
-                        painter = painterResource(id = R.drawable.twittericon),
-                        tint = BazzarTheme.colors.primaryButtonColor,
-                        contentDescription = ""
-                    )
-                    Icon(
-                        painter = painterResource(id = R.drawable.snapicon),
-                        tint = BazzarTheme.colors.primaryButtonColor,
-                        contentDescription = ""
-                    )
-                    Icon(
-                        modifier = Modifier.clickable { onSendEvent(AccountContract.Event.OnFacebookClicked) },
-                        painter = painterResource(id = R.drawable.facebookicon),
-                        tint = BazzarTheme.colors.primaryButtonColor,
-                        contentDescription = ""
-                    )
-                    Icon(
-                        modifier = Modifier.clickable { onSendEvent(AccountContract.Event.OnInstagramClicked) },
-                        painter = painterResource(id = R.drawable.instagramicon),
-                        tint = BazzarTheme.colors.primaryButtonColor,
-                        contentDescription = ""
-                    )
-                }
-            }
-
-            item {
-                Text(
-                    modifier = Modifier.padding(top = BazzarTheme.spacing.m),
-                    text = "Version ${BuildConfig.VERSION_NAME}",
-                    style = BazzarTheme.typography.body2Medium,
-                    color = BazzarTheme.colors.primaryButtonColor,
-                )
-            }
-
-            item {
-                if (state.isUserLoggedIn) {
-                    Column(
-                        modifier = Modifier
-                            .padding(horizontal = BazzarTheme.spacing.m, vertical = 56.dp)
-                            .fillMaxSize()
-                    ) {
-                        IconButton(onClick = { onSendEvent(AccountContract.Event.OnLogOutClicked) }) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(
-                                    imageVector = Icons.Filled.Logout,
-                                    tint = BazzarTheme.colors.discountText,
-                                    contentDescription = ""
-                                )
-                                Text(
-                                    modifier = Modifier.padding(
-                                        top = BazzarTheme.spacing.m,
-                                        start = BazzarTheme.spacing.xxs,
-                                        bottom = BazzarTheme.spacing.m,
-                                        end = BazzarTheme.spacing.m
-                                    ),
-                                    text = stringResource(id = R.string.logout),
-                                    style = BazzarTheme.typography.body2Medium.copy(
-                                        color = BazzarTheme.colors.discountText,
-                                        fontSize = 14.sp
-                                    )
-                                )
-                            }
-                        }
-                        Text(
-                            modifier = Modifier
-                                .padding(top = BazzarTheme.spacing.xl)
-                                .clickable { },
-                            text = stringResource(id = R.string.delete_my_account),
-                            style = BazzarTheme.typography.body2Medium.copy(
-                                color = BazzarTheme.colors.discountText,
-                                fontSize = 14.sp
-                            )
+                        )
+                    } else {
+                        CustomButton(
+                            text = stringResource(id = R.string.sign_up),
+                            modifier = Modifier,
+                            onClick = { onSendEvent(AccountContract.Event.OnSignupClicked) }
                         )
                     }
                 }
+                item {
+                    Spacer(modifier = Modifier.height(1.dp))
+                }
+                item {
+                    LanguageItem(
+                        modifier = Modifier
+                            .clickable {
+                                onSendEvent(AccountContract.Event.OnLanguageClicked)
+                            }
+                    )
+                }
+                if (state.isUserLoggedIn.not() && state.showWishList) {
+                    item {
+                        BarItem(
+                            modifier = Modifier,
+                            title = stringResource(id = R.string.wish_list),
+                            iconPainter = painterResource(id = R.drawable.ic_fav),
+                            onClick = { onSendEvent(AccountContract.Event.OnWishListClicked) }
+                        )
+                    }
+                }
+                if (state.isUserLoggedIn) {
+                    item {
+                        BarItem(
+                            modifier = Modifier,
+                            title = stringResource(id = R.string.history_list),
+                            iconPainter = painterResource(id = R.drawable.ic_order_history),
+                            onClick = { onSendEvent(AccountContract.Event.OnOrderHistoryClicked) }
+                        )
+                    }
+                    item {
+                        BarItem(
+                            modifier = Modifier,
+                            title = stringResource(id = R.string.address_book),
+                            iconPainter = painterResource(id = R.drawable.ic_location),
+                            onClick = { onSendEvent(AccountContract.Event.OnAddressesClicked) }
+                        )
+                    }
+                    item {
+                        BarItem(
+                            modifier = Modifier,
+                            title = stringResource(id = R.string.wish_list),
+                            iconPainter = painterResource(id = R.drawable.ic_fav),
+                            onClick = { onSendEvent(AccountContract.Event.OnWishListClicked) }
+                        )
+                    }
+                }
+                item {
+                    BarItem(
+                        modifier = Modifier,
+                        title = stringResource(id = R.string.bazar_terms_conditions),
+                        iconPainter = painterResource(id = R.drawable.ic_terms_conditions),
+                        onClick = { onSendEvent(AccountContract.Event.OnBazzarTermsAndConditionsClicked) }
+                    )
+                }
+                item {
+                    BarItem(
+                        modifier = Modifier,
+                        title = stringResource(id = R.string.about_us),
+                        iconPainter = painterResource(id = R.drawable.ic_about_us),
+                        onClick = { onSendEvent(AccountContract.Event.OnAboutUsClicked) }
+                    )
+
+                }
+                item {
+                    BarItem(
+                        modifier = Modifier,
+                        title = stringResource(id = R.string.contact_us),
+                        iconPainter = painterResource(id = R.drawable.ic_contact_us),
+                        onClick = { onSendEvent(AccountContract.Event.OnContactUsClicked) }
+                    )
+
+                }
+                item {
+                    BarItem(
+                        modifier = Modifier,
+                        title = stringResource(id = R.string.marketer_submition_form),
+                        iconPainter = painterResource(id = R.drawable.ic_terms_conditions),
+                        onClick = { onSendEvent(AccountContract.Event.OnMarketerClicked) }
+                    )
+
+                }
+                item {
+                    BarItem(
+                        modifier = Modifier,
+                        title = stringResource(id = R.string.vendor_submition_form),
+                        iconPainter = painterResource(id = R.drawable.ic_terms_conditions),
+                        onClick = { onSendEvent(AccountContract.Event.OnVendorClicked) }
+                    )
+
+                }
+                item {
+                    Spacer(modifier = Modifier.height(BazzarTheme.spacing.m))
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs)
+                    ) {
+                        Row(
+                            modifier = Modifier,
+                            horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs)
+                        ) {
+                            Icon(
+                                modifier = Modifier.clickable { onSendEvent(AccountContract.Event.OnTwitterClicked) },
+                                painter = painterResource(id = R.drawable.twittericon),
+                                tint = BazzarTheme.colors.primaryButtonColor,
+                                contentDescription = ""
+                            )
+                            Icon(
+                                painter = painterResource(id = R.drawable.snapicon),
+                                tint = BazzarTheme.colors.primaryButtonColor,
+                                contentDescription = ""
+                            )
+                            Icon(
+                                modifier = Modifier.clickable { onSendEvent(AccountContract.Event.OnFacebookClicked) },
+                                painter = painterResource(id = R.drawable.facebookicon),
+                                tint = BazzarTheme.colors.primaryButtonColor,
+                                contentDescription = ""
+                            )
+                            Icon(
+                                modifier = Modifier.clickable { onSendEvent(AccountContract.Event.OnInstagramClicked) },
+                                painter = painterResource(id = R.drawable.instagramicon),
+                                tint = BazzarTheme.colors.primaryButtonColor,
+                                contentDescription = ""
+                            )
+                        }
+                        Text(
+                            modifier = Modifier,
+                            text = "Version ${BuildConfig.VERSION_NAME}",
+                            style = BazzarTheme.typography.body2Medium,
+                            color = BazzarTheme.colors.primaryButtonColor,
+                        )
+                    }
+                }
+                if (state.isUserLoggedIn) {
+                    item {
+                        Column(
+                            modifier = Modifier
+                                .padding(horizontal = BazzarTheme.spacing.m)
+                                .fillMaxSize(),
+                            horizontalAlignment = Alignment.Start,
+                            verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs)
+                        ) {
+                            IconButton(onClick = { onSendEvent(AccountContract.Event.OnLogOutClicked) }) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Logout,
+                                        tint = BazzarTheme.colors.discountText,
+                                        contentDescription = ""
+                                    )
+                                    Text(
+                                        modifier = Modifier.padding(start = BazzarTheme.spacing.xxs),
+                                        text = stringResource(id = R.string.logout),
+                                        style = BazzarTheme.typography.body2Medium.copy(
+                                            color = BazzarTheme.colors.discountText,
+                                            fontSize = 14.sp
+                                        )
+                                    )
+                                }
+                            }
+                            Text(
+                                modifier = Modifier
+                                    .clickable { },
+                                text = stringResource(id = R.string.delete_my_account),
+                                style = BazzarTheme.typography.body2Medium.copy(
+                                    color = BazzarTheme.colors.discountText,
+                                    fontSize = 14.sp
+                                )
+                            )
+                        }
+                    }
+                }
+                item {
+                    Spacer(modifier = Modifier.height(1.dp))
+                }
             }
         }
-
         // talk to us
         TalkToUs(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(all = BazzarTheme.spacing.m),
+                .padding(end = BazzarTheme.spacing.m, bottom = BazzarTheme.spacing.xl),
             onClick = { onSendEvent(AccountContract.Event.OnTackToUsClicked) }
         )
-
     }
-
 }

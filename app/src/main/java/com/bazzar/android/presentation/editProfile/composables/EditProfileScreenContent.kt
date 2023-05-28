@@ -25,9 +25,9 @@ fun EditProfileScreenContent(
         modifier = Modifier
             .fillMaxSize()
             .padding(bottom = BottomNavigationHeight)
-            .background(BazzarTheme.colors.white),
+            .background(BazzarTheme.colors.backgroundColor),
         horizontalAlignment = Alignment.Start,
-        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.s)
+        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
 
     ) {
         BazzarAppBar(
@@ -36,15 +36,12 @@ fun EditProfileScreenContent(
                 onSendEvent(EditProfileContract.Event.OnBackClicked)
             },
         )
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
+        LazyColumn(modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = BazzarTheme.spacing.m)) {
             item {
                 EditProfileDataEntry(
-                    modifier = Modifier
-                        .background(color = BazzarTheme.colors.backgroundColor)
-                        .padding(
-                        horizontal = BazzarTheme.spacing.spacerMini,
-                        vertical = BazzarTheme.spacing.l
-                    ),
+                    modifier = Modifier,
                     fullName = state.fullName.orEmpty(),
                     email = state.email.orEmpty(),
                     phone = state.phoneNumber.orEmpty(),

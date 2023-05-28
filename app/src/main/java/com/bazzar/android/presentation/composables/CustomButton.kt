@@ -3,6 +3,7 @@ package com.bazzar.android.presentation.composables
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -30,7 +31,7 @@ fun CustomButton(
 ){
     Box(
         modifier = modifier
-            .width(343.dp)
+            .fillMaxWidth()
             .height(65.dp)
             .clip(RoundedCornerShape(62.5.dp))
             .background(
