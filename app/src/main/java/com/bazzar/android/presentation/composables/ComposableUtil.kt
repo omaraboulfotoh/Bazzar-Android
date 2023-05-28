@@ -44,7 +44,7 @@ fun Indicator(selected: Boolean, onClick: () -> Unit) {
 }
 
 @Composable
-fun SemiCircleImageView(imagePath: String, text: String,modifier: Modifier) {
+fun SemiCircleImageView(imagePath: String, text: String, modifier: Modifier) {
     Box(
         modifier = modifier
             .width(136.dp)
@@ -132,19 +132,17 @@ fun HeaderTextWithViewAll(
 fun CustomLazyRow(
     imageList: List<BazaarModel>?,
     customIV: @Composable (image: String, text: String, modifier: Modifier) -> Unit,
-    topPadding: Dp,
     spaceBetweenItems: Dp,
     onClick: (Int) -> Unit
 ) {
     LazyRow(
         modifier = Modifier
-            .padding(top = topPadding)
+            .height(222.dp)
             .wrapContentWidth(),
         horizontalArrangement = Arrangement.spacedBy(spaceBetweenItems),
-        contentPadding = PaddingValues(horizontal = spaceBetweenItems)
     ) {
         itemsIndexed(imageList!!) { index, item ->
-            customIV(item.imagePath!!, item.name!!, Modifier.clickable {
+            customIV(item.imagePath.orEmpty(), item.name.orEmpty(), Modifier.clickable {
                 onClick(index)
             })
         }
