@@ -141,7 +141,7 @@ fun CustomLazyRow(
             .wrapContentWidth(),
         horizontalArrangement = Arrangement.spacedBy(spaceBetweenItems),
     ) {
-        itemsIndexed(imageList!!) { index, item ->
+        itemsIndexed(imageList.orEmpty()) { index, item ->
             customIV(item.imagePath.orEmpty(), item.name.orEmpty(), Modifier.clickable {
                 onClick(index)
             })

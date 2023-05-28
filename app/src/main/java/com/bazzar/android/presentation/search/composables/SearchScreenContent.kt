@@ -51,7 +51,7 @@ fun SearchScreenContent(state: State, onSendEvent: (Event) -> Unit) {
                 Spacer(modifier = Modifier.height(BazzarTheme.spacing.xxl))
                 ProductsGroup(
                     headerTitle = stringResource(id = R.string.top_rated_products),
-                    productsList = state.productList!!,
+                    productsList = state.productList.orEmpty(),
                     onProductClicked = { onSendEvent(Event.OnProductClicked(it)) },
                     onProductFavClicked = { },
                     OnProductAddToCartClicked = {},

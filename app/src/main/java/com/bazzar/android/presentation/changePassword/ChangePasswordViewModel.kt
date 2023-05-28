@@ -43,8 +43,8 @@ class ChangePasswordViewModel @Inject constructor(
         }
 
         homeUseCase.changePassword(
-            currentPassword = currentState.currentPassword!!,
-            newPassword = currentState.newPassword!!
+            currentPassword = currentState.currentPassword.orEmpty(),
+            newPassword = currentState.newPassword.orEmpty()
         ).collect { changePasswordResponse ->
             when (changePasswordResponse) {
                 is Result.Error -> globalState.error(changePasswordResponse.message.orEmpty())
