@@ -79,7 +79,6 @@ android {
             buildConfigField "String", "CONTACT_US", "\"https://bazzargate.com/ContactUs\""
             buildConfigField "String", "TERMS_AND_CONDITIONS", "\"https://bazzargate.com/Assets/Files/CustomersTermsConditions.pdf\""
             applicationId "com.bazzar.android"
-            versionNameSuffix "-prod"
         }
     }
     buildFeatures {
