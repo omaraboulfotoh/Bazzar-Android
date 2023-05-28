@@ -31,7 +31,7 @@ interface HomeRepo {
     suspend fun loginGuest(guestLoginRequest: GuestLoginRequest): Flow<Result<UserData>>
 
     suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Flow<Result<UserData>>
-    suspend fun resendOtp(userId: Int): Flow<Result<String>>
+    suspend fun resendOtp(userId: Int): Flow<Result<Boolean>>
     suspend fun getAllAddresses(): Flow<Result<List<UserAddress>>>
     suspend fun addUserAddress(userAddress: UserAddress): Flow<Result<UserAddress>>
     suspend fun updateUserAddress(userAddress: UserAddress): Flow<Result<UserAddress>>

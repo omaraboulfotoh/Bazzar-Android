@@ -6,8 +6,11 @@ import com.android.model.home.UserData
 import com.android.model.request.VerifyOtpRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
+import com.bazzar.android.R
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.utils.IResourceProvider
+import com.bazzar.android.utils.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -16,6 +19,7 @@ class OtpViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
     private val sharedPrefersManager: SharedPrefersManager,
+    private val resourceProvider: IResourceProvider
 ) : BaseViewModel<OtpContract.Event, OtpContract.State, OtpContract.Effect>(
     globalState
 ) {
@@ -34,6 +38,7 @@ class OtpViewModel @Inject constructor(
                     verifyOtp(otpSMS = otp)
                 }
             }
+
             is OtpContract.Event.OnOtpChanged -> setState { copy(otp = event.otp) }
             is OtpContract.Event.OnSendAgain -> resendOtp()
         }
@@ -42,13 +47,15 @@ class OtpViewModel @Inject constructor(
     private fun isInputDataValidated(userEnteredOtp: String): Boolean {
         return when {
             userEnteredOtp.length != OTP_SIZE -> {
-                // error message wrong size
+                globalState.error(resourceProvider.getString(R.string.invalid_otp))
                 false
             }
+
             !userEnteredOtp.isDigitsOnly() -> {
-                // error message not digit
+                globalState.error(resourceProvider.getString(R.string.invalid_otp))
                 false
             }
+
             else -> true
         }
     }
@@ -60,13 +67,12 @@ class OtpViewModel @Inject constructor(
                 when (resendResponse) {
                     is Result.Error -> globalState.error(resendResponse.message.orEmpty())
                     is Result.Loading -> globalState.loading(true)
-                    is Result.Success -> { }
+                    is Result.Success -> {}
                 }
             }
     })
 
     private fun verifyOtp(otpSMS: String) = executeCatching({
-        // todo add validation on OTP
         val id = currentState.userData?.id ?: return@executeCatching
         homeUseCase.verifyOtp(VerifyOtpRequest(userId = id, otp = otpSMS))
             .collect { otpResponse ->
@@ -74,14 +80,19 @@ class OtpViewModel @Inject constructor(
                     is Result.Error -> globalState.error(otpResponse.message.orEmpty())
                     is Result.Loading -> globalState.loading(true)
                     is Result.Success -> {
-                        // send fcm token to the api
-                        sharedPrefersManager.getFcmToken()?.let {
-                            homeUseCase.updateFcmToken(it)
+
+                        if (otpResponse.code != 0) {
+                            // send fcm token to the api
+                            sharedPrefersManager.getFcmToken()?.let {
+                                homeUseCase.updateFcmToken(it)
+                            }
+                            val userData = otpResponse.data!!
+                            sharedPrefersManager.saveToken(userData.accessToken)
+                            sharedPrefersManager.saveUserData(userData)
+                            setEffect { OtpContract.Effect.Navigation.GoToHomeScreen }
+                        } else {
+                            globalState.error(otpResponse.message.orEmpty())
                         }
-                        val userData = otpResponse.data!!
-                        sharedPrefersManager.saveToken(userData.accessToken)
-                        sharedPrefersManager.saveUserData(userData)
-                        setEffect { OtpContract.Effect.Navigation.GoToHomeScreen }
                     }
 
                     else -> {}

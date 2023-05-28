@@ -358,26 +358,26 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
-    override suspend fun resendOtp(userId: Int): Flow<Result<String>> = flow {
+    override suspend fun resendOtp(userId: Int): Flow<Result<Boolean>> = flow {
         try {
             homeRemoteDataSource.resendOtp(userId).let {
                 if (it.isSuccessful) {
                     emit(
                         Result.Success(
-                            data = "",
+                            data = it.body()?.data ?: false,
                             message = it.body()?.message,
                             code = it.body()?.code
                         )
                     )
                 } else {
-                    Result.Error("", handleErrorIn400(it.errorBody().toString()))
+                    Result.Error(false, handleErrorIn400(it.errorBody().toString()))
                 }
             }
         } catch (throwable: Throwable) {
 
-            emit(Result.Error("", throwable.message))
+            emit(Result.Error(false, throwable.message))
         }
-    }.onStart { emit(Result.Loading("")) }.flowOn(Dispatchers.IO)
+    }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 
     override suspend fun getAllAddresses(): Flow<Result<List<UserAddress>>> = flow {
         try {

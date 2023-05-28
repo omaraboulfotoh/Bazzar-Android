@@ -88,7 +88,7 @@ interface HomeApiServices {
     suspend fun verifyOtp(@Body verifyOtpRequest: VerifyOtpRequest): Response<BaseWrapper<UserData>>
 
     @POST("User/ResendOTP")
-    suspend fun resendOtp(@Query("userId") userId: Int): Response<BaseWrapper<String>>
+    suspend fun resendOtp(@Query("userId") userId: Int): Response<BaseWrapper<Boolean>>
 
 
     // Address APIS

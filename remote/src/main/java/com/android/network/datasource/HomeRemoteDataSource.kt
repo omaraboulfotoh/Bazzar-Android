@@ -36,7 +36,7 @@ interface HomeRemoteDataSource {
     suspend fun login(userLoginRequest: UserLoginRequest): Response<BaseWrapper<UserData>>
     suspend fun loginGuest(guestLoginRequest: GuestLoginRequest): Response<BaseWrapper<UserData>>
     suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Response<BaseWrapper<UserData>>
-    suspend fun resendOtp(userId: Int): Response<BaseWrapper<String>>
+    suspend fun resendOtp(userId: Int): Response<BaseWrapper<Boolean>>
     suspend fun getAllAddresses(): Response<BaseWrapper<List<UserAddress>>>
     suspend fun addUserAddress(userAddress: UserAddress): Response<BaseWrapper<UserAddress>>
     suspend fun updateUserAddress(userAddress: UserAddress): Response<BaseWrapper<UserAddress>>
