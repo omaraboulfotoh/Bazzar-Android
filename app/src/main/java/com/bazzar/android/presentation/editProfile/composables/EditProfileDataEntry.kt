@@ -220,36 +220,6 @@ fun EditProfileDataEntry(
                     }
                 )
             }
-            Text(
-                modifier = Modifier.padding(top = 8.dp),
-                text = buildAnnotatedString {
-                    withStyle(
-                        style = SpanStyle(
-                            color = colorResource(id = R.color.prussian_blue)
-                        )
-                    ) {
-                        append(stringResource(id = R.string.well_will_send))
-                        append(" ")
-                    }
-                    withStyle(
-                        style = SpanStyle(
-                            color = colorResource(id = R.color.Malachite)
-                        )
-                    ) {
-                        append(stringResource(id = R.string.whatsApp))
-                        append(" ")
-                    }
-                    withStyle(
-                        style = SpanStyle(
-                            color = colorResource(id = R.color.prussian_blue)
-                        )
-                    ) {
-                        append(stringResource(id = R.string.otp_message))
-                    }
-                }, style = MaterialTheme.typography.overline.copy(
-                    fontFamily = FontFamily(Font(R.font.siwa_heavy))
-                )
-            )
         }
         Box(Modifier.fillMaxWidth()) {
             Box(

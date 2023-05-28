@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.editProfile
 
+import android.util.Patterns
 import com.android.local.SharedPrefersManager
 import com.android.model.home.UserData
 import com.android.model.request.UserRegisterRequest
@@ -39,19 +40,36 @@ class EditProfileViewModel @Inject constructor(
     }
 
     private fun handleEditAccountClicked() {
-        if (currentState.fullName.isNullOrEmpty()) {
-            globalState.error(resourceProvider.getString(R.string.required_user_name))
-        } else {
+        val name = currentState.fullName.orEmpty()
+        val email = currentState.email.orEmpty()
+        if (isValid(email, name)) {
             val userRegisterRequest = UserRegisterRequest(
                 id = sharedPrefersManager.getUserData()?.id,
-                name = currentState.fullName.orEmpty(),
-                englishName = currentState.fullName.orEmpty(),
-                email = currentState.email.orEmpty(),
-                phone = currentState.phoneNumber.orEmpty()
+                name = name,
+                englishName = name,
+                email = email,
+                phone = "+965${currentState.phoneNumber.orEmpty()}"
             )
             editProfile(userRegisterRequest)
         }
     }
+
+    private fun isValid(email: String, name: String): Boolean {
+        var isValid = true
+        val errorsList = mutableListOf<String>()
+        if (name.isNullOrEmpty()) {
+            isValid = false
+            errorsList.add(resourceProvider.getString(R.string.name_required))
+        }
+        if (email.isNullOrEmpty().not() && Patterns.EMAIL_ADDRESS.matcher(email).matches().not()) {
+            isValid = false
+            errorsList.add(resourceProvider.getString(R.string.invalid_email))
+        }
+        if (isValid.not())
+            globalState.error(errorsList)
+        return isValid
+    }
+
 
     fun init(userData: UserData) {
         if (isInitialized.not()) {

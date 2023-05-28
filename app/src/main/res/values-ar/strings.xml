@@ -221,4 +221,5 @@
     <string name="forget_password_text">نسيت كلمة المرور</string>
     <string name="forget_password_success">كلمة مرور جديدة تم ارسالها بنجاح</string>
     <string name="send">ارسل</string>
+    <string name="email_required">Email is required</string>
 </resources>
