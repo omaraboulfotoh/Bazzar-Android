@@ -59,6 +59,7 @@ interface HomeRepo {
     suspend fun getAboutUs(): Flow<Result<String>>
     suspend fun submitContractUs(contactUsRequest: ContactUsRequest): Flow<Result<Boolean>>
     suspend fun getOrdersDetails(orderId: Int): Flow<Result<OrderHistory>>
+    suspend fun requestForgetPassword(phone: String): Flow<Result<Boolean>>
 
 
 }

@@ -1,4 +1,4 @@
-package com.bazzar.android.presentation.register.composables
+package com.bazzar.android.presentation.forgetPassword
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,9 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Checkbox
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -40,79 +38,46 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.bazzar.android.R
+import com.bazzar.android.common.sideEffect
+import com.bazzar.android.common.viewState
+import com.bazzar.android.presentation.composables.BazzarAppBar
 import com.bazzar.android.presentation.theme.BazzarTheme
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+
 
 @Composable
-fun RegisterDataEntry(
-    isTermsChecked: Boolean = false,
-    fullName: String,
-    phone: String,
-    modifier: Modifier,
-    onCreateAccount: () -> Unit,
-    onPhoneChanged: (String) -> Unit,
-    onNameChanged: (String) -> Unit,
-    onTermsAndConditionClicked: () -> Unit
+@Destination
+fun ForgetPasswordScreen(
+    viewModel: ForgetPasswordViewModel = hiltViewModel(),
+    navigator: DestinationsNavigator,
+    phoneNumber: String
 ) {
-    Column(
-        modifier = modifier
-            .background(Color.White)
-            .fillMaxSize()
-            .padding(horizontal = BazzarTheme.spacing.m),
-        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
-    ) {
-        Column(modifier = Modifier.padding(bottom = BazzarTheme.spacing.m)) {
-            Text(
-                text = stringResource(id = R.string.user_name),
-                style = MaterialTheme.typography.subtitle2.copy(
-                    color = colorResource(id = R.color.prussian_blue),
-                    fontFamily = FontFamily(Font(R.font.siwa_heavy))
-                ),
-            )
-            TextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = BazzarTheme.spacing.xs)
-                    .border(
-                        width = 1.dp,
-                        color = BazzarTheme.colors.primaryButtonTextColorDisabled,
-                        shape = RoundedCornerShape(32.5.dp),
-                    )
-                    .padding(vertical = 4.dp),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions.Default,
-                singleLine = true,
-                maxLines = 1,
-                colors = TextFieldDefaults.textFieldColors(
-                    textColor = colorResource(id = R.color.prussian_blue),
-                    backgroundColor = BazzarTheme.colors.white,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent
-                ),
-                value = fullName,
-                onValueChange = onNameChanged,
-                shape = RoundedCornerShape(32.5.dp),
-                placeholder = {
-                    Text(
-                        text = stringResource(id = R.string.type_name),
-                        style = BazzarTheme.typography.caption,
-                        color = BazzarTheme.colors.primaryButtonColor
-                    )
-                },
-            )
-            Text(
-                text = stringResource(id = R.string.phone_number),
-                style = MaterialTheme.typography.subtitle2.copy(
-                    color = colorResource(id = R.color.prussian_blue),
-                    fontFamily = FontFamily(Font(R.font.siwa_heavy))
-                ),
-                modifier = Modifier.padding(top = 24.dp)
-            )
+    // get state
+    val state = viewModel.viewState()
+    viewModel.sideEffect { effect ->
+        when (effect) {
+            ForgetPasswordContract.Effect.Navigation.GoBack ->
+                navigator.navigateUp()
+        }
+    }
+    // init logic
+    viewModel.init(phoneNumber)
 
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
+    ) {
+        BazzarAppBar(title = stringResource(id = R.string.forget_password_text))
+        Spacer(modifier = Modifier.height(BazzarTheme.spacing.m))
+        Column(
+            modifier = Modifier.weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                 TextField(
                     modifier = Modifier
@@ -137,7 +102,9 @@ fun RegisterDataEntry(
                         unfocusedIndicatorColor = Color.Transparent,
                         disabledIndicatorColor = Color.Transparent
                     ),
-                    value = phone, onValueChange = onPhoneChanged,
+                    value = state.phoneNumber.orEmpty(), onValueChange = {
+                        viewModel.setEvent(ForgetPasswordContract.Event.OnPhoneChanged(it))
+                    },
                     shape = RoundedCornerShape(32.5.dp),
                     placeholder = {
                         Text(
@@ -187,33 +154,12 @@ fun RegisterDataEntry(
                             color = colorResource(id = R.color.prussian_blue)
                         )
                     ) {
-                        append(stringResource(id = R.string.otp_message))
+                        append(stringResource(id = R.string.otp_message_password))
                     }
                 }, style = MaterialTheme.typography.overline.copy(
                     fontFamily = FontFamily(Font(R.font.siwa_heavy))
                 )
             )
-        }
-
-        Column {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Checkbox(
-                    checked = isTermsChecked,
-                    onCheckedChange = { checked_ ->
-                        onTermsAndConditionClicked()
-                    },
-                )
-                Text(
-                    modifier = Modifier.padding(start = 2.dp),
-                    text = stringResource(id = R.string.agree_terms_conditions),
-                    style = MaterialTheme.typography.overline.copy(
-                        color = colorResource(id = R.color.prussian_blue),
-                        fontFamily = FontFamily(Font(R.font.siwa_heavy))
-                    )
-                )
-            }
             Spacer(modifier = Modifier.weight(1f))
             Box(Modifier.fillMaxWidth()) {
                 Box(
@@ -224,7 +170,7 @@ fun RegisterDataEntry(
                         .background(colorResource(id = R.color.prussian_blue))
                         .align(Alignment.Center)
                         .clickable {
-                            onCreateAccount()
+                            viewModel.setEvent(ForgetPasswordContract.Event.OnSendClicked)
                         }
                 ) {
                     Text(

@@ -13,6 +13,7 @@ class LoginContract {
 
     sealed class Event : ViewEvent {
         object OnLogin : Event()
+        object OnForgetPassword : Event()
         data class OnPhoneChanged(val phoneNumber: String) : Event()
         data class OnPasswordChanged(val password: String) : Event()
 
@@ -25,6 +26,7 @@ class LoginContract {
     sealed class Effect : ViewSideEffect {
         sealed class Navigation : Effect() {
             object GoToRegisterScreen : Navigation()
+            data class GoToForgetPassword(val mobileNumber: String) : Navigation()
             object GoToHomeAsGuest : Navigation()
             object GoBack : Navigation()
         }

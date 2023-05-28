@@ -67,6 +67,7 @@
     <string name="well_will_send">سنرسل </string>
     <string name="whatsApp">واتساب</string>
     <string name="otp_message">الرسالة تحتوي على رقم OTP.</string>
+    <string name="otp_message_password">الرسالة تحتوي على كلمة مرور.</string>
     <string name="birth_date">تاريخ الميلاد</string>
     <string name="select_your_gender">حدد النوع</string>
     <string name="agree_terms_conditions">موافقة على شروط وأحكام BZAAARZ</string>
@@ -216,4 +217,7 @@
     <string name="message">الرسالة</string>
     <string name="submit">أرسال</string>
     <string name="invalid_otp">"Invalid OTP "</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="forget_password_text">Forget Password</string>
+    <string name="forget_password_success">New password sent to your whatsapp</string>
 </resources>

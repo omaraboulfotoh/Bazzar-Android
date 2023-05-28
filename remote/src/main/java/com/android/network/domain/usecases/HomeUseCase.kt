@@ -9,9 +9,11 @@ import com.android.model.request.SearchProductRequest
 import com.android.model.request.UserLoginRequest
 import com.android.model.request.UserRegisterRequest
 import com.android.model.request.VerifyOtpRequest
+import com.android.model.responses.base.BaseWrapper
 import com.android.network.domain.repos.HomeRepo
 import com.android.network.states.Result
 import kotlinx.coroutines.flow.Flow
+import retrofit2.Response
 import javax.inject.Inject
 
 class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
@@ -86,5 +88,6 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
 
     suspend fun getOrdersDetails(orderId: Int) =
         homeRepo.getOrdersDetails(orderId)
+    suspend fun requestForgetPassword(phone: String)= homeRepo.requestForgetPassword(phone)
 
 }

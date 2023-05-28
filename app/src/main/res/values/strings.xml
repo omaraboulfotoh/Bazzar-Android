@@ -70,6 +70,7 @@
     <string name="well_will_send">we will send </string>
     <string name="whatsApp">WhatsApp</string>
     <string name="otp_message">message contains OTP number.</string>
+    <string name="otp_message_password">message contains Password.</string>
     <string name="birth_date">Birth Date</string>
     <string name="select_your_gender">Select your gender</string>
     <string name="agree_terms_conditions">Agree on BZAAARZ Terms &amp; Condition</string>
@@ -217,4 +218,7 @@
     <string name="message">Message</string>
     <string name="submit">Submit</string>
     <string name="invalid_otp">"Invalid OTP "</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="forget_password_text">Forget Password</string>
+    <string name="forget_password_success">New password sent to your whatsapp</string>
 </resources>

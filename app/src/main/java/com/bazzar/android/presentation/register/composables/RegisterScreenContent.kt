@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,7 +27,7 @@ fun RegisterScreenContent(
             .padding(bottom = BottomNavigationHeight)
             .background(BazzarTheme.colors.white),
         horizontalAlignment = Alignment.Start,
-        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.s)
+        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
 
     ) {
         BazzarAppBar(
@@ -36,16 +37,12 @@ fun RegisterScreenContent(
             },
         )
         RegisterDataEntry(
-            modifier = Modifier.padding(vertical = 14.dp),
+            modifier = Modifier.fillMaxWidth(),
             fullName = state.fullName.orEmpty(),
-            email = state.email.orEmpty(),
             phone = state.phoneNumber.orEmpty(),
             isTermsChecked = state.isAgreeTermsAndConditions,
             onPhoneChanged = {
                 onSendEvent(RegisterContract.Event.OnPhoneChanged(it))
-            },
-            onEmailChanged = {
-                onSendEvent(RegisterContract.Event.OnEmailChanged(it))
             },
             onNameChanged = {
                 onSendEvent(RegisterContract.Event.OnNameChanged(it))

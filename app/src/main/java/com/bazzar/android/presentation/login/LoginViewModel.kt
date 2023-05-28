@@ -39,6 +39,11 @@ class LoginViewModel @Inject constructor(
             is LoginContract.Event.OnPasswordChanged -> setState { copy(password = event.password) }
             is LoginContract.Event.OnPhoneChanged -> setState { copy(mobileNumber = event.phoneNumber) }
             LoginContract.Event.OnBackClicked -> setEffect { LoginContract.Effect.Navigation.GoBack }
+            LoginContract.Event.OnForgetPassword -> setEffect {
+                LoginContract.Effect.Navigation.GoToForgetPassword(
+                    currentState.mobileNumber.orEmpty()
+                )
+            }
         }
     }
 
@@ -99,7 +104,7 @@ class LoginViewModel @Inject constructor(
         }
     })
 
-    suspend fun updateFCM() {
+    private suspend fun updateFCM() {
         GlobalScope.launch {
             sharedPrefersManager.getFcmToken()?.let {
                 homeUseCase.updateFcmToken(it)

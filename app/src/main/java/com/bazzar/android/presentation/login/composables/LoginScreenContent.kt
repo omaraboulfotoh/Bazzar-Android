@@ -13,9 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
+import com.bazzar.android.presentation.composables.ClickableText
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.login.LoginContract
 import com.bazzar.android.presentation.theme.BazzarTheme
@@ -47,7 +50,6 @@ fun LoginScreenContent(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = BazzarTheme.spacing.xs)
                     .border(
                         width = 1.dp,
                         color = BazzarTheme.colors.primaryButtonTextColorDisabled,
@@ -56,19 +58,31 @@ fun LoginScreenContent(
                     .padding(vertical = 4.dp),
             )
         }
-        InputPassword(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = BazzarTheme.spacing.xs)
-            .border(
-                width = 1.dp,
-                color = BazzarTheme.colors.primaryButtonTextColorDisabled,
-                shape = RoundedCornerShape(32.5.dp),
-            )
-            .padding(vertical = 4.dp),
-            password = state.password.orEmpty(),
-            onPasswordChanged = {
-                onSendEvent(LoginContract.Event.OnPasswordChanged(it))
-            })
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.End,
+            verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.s)
+        ) {
+            InputPassword(modifier = Modifier
+                .fillMaxWidth()
+                .border(
+                    width = 1.dp,
+                    color = BazzarTheme.colors.primaryButtonTextColorDisabled,
+                    shape = RoundedCornerShape(32.5.dp),
+                )
+                .padding(vertical = 4.dp),
+                password = state.password.orEmpty(),
+                onPasswordChanged = {
+                    onSendEvent(LoginContract.Event.OnPasswordChanged(it))
+                })
+
+            ClickableText(
+                modifier = Modifier.wrapContentSize(),
+                textAlign = TextAlign.End,
+                color = BazzarTheme.colors.primaryButtonColor,
+                text = stringResource(id = R.string.forget_password),
+                onClick = { onSendEvent(LoginContract.Event.OnForgetPassword) })
+        }
         LoginButton(onSubmit = { onSendEvent(LoginContract.Event.OnLogin) })
 
         Column(

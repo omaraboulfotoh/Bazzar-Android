@@ -122,4 +122,6 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
         apiServices.submitContractUs(contactUsRequest)
 
     override suspend fun getOrdersDetails(orderId: Int) = apiServices.getOrdersDetails(orderId)
+    override suspend fun requestForgetPassword(phone: String) =
+        apiServices.requestForgetPassword(phone)
 }

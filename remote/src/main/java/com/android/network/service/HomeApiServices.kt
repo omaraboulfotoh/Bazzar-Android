@@ -14,8 +14,6 @@ import com.android.model.responses.base.BaseWrapper
 import com.android.model.responses.base.BazaarDetailsResponse
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -89,6 +87,9 @@ interface HomeApiServices {
 
     @POST("User/ResendOTP")
     suspend fun resendOtp(@Query("userId") userId: Int): Response<BaseWrapper<Boolean>>
+
+    @POST("User/ForgetPassword")
+    suspend fun requestForgetPassword(@Query("phone") phone: String): Response<BaseWrapper<Boolean>>
 
 
     // Address APIS

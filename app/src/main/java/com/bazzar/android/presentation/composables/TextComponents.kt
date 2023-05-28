@@ -243,7 +243,7 @@ fun ClickableText(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     color: Color = BazzarTheme.colors.white,
-    style: TextStyle = BazzarTheme.typography.h7Bold.copy(textDecoration = TextDecoration.Underline),
+    style: TextStyle = BazzarTheme.typography.captionSemiBold.copy(textDecoration = TextDecoration.Underline),
     textAlign: TextAlign = TextAlign.Start,
     isEnabled: Boolean = true,
 ) {
