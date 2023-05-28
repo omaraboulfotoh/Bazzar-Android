@@ -43,6 +43,7 @@ import com.bazzar.android.R
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.composables.BazzarAppBar
+import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.theme.BazzarTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -67,16 +68,23 @@ fun ForgetPasswordScreen(
     viewModel.init(phoneNumber)
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = BottomNavigationHeight),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
     ) {
-        BazzarAppBar(title = stringResource(id = R.string.forget_password_text))
-        Spacer(modifier = Modifier.height(BazzarTheme.spacing.m))
+        BazzarAppBar(
+            title = stringResource(id = R.string.forget_password_text),
+            onNavigationClick = {
+                viewModel.setEvent(ForgetPasswordContract.Event.OnBackClicked)
+            })
         Column(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .padding(BazzarTheme.spacing.m),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
+            verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs)
         ) {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                 TextField(
@@ -130,8 +138,9 @@ fun ForgetPasswordScreen(
                     }
                 )
             }
+            Spacer(modifier = Modifier.weight(1f))
             Text(
-                modifier = Modifier.padding(top = 8.dp),
+                modifier = Modifier,
                 text = buildAnnotatedString {
                     withStyle(
                         style = SpanStyle(
@@ -160,7 +169,7 @@ fun ForgetPasswordScreen(
                     fontFamily = FontFamily(Font(R.font.siwa_heavy))
                 )
             )
-            Spacer(modifier = Modifier.weight(1f))
+
             Box(Modifier.fillMaxWidth()) {
                 Box(
                     modifier = Modifier
@@ -174,7 +183,7 @@ fun ForgetPasswordScreen(
                         }
                 ) {
                     Text(
-                        text = stringResource(id = R.string.create_account),
+                        text = stringResource(id = R.string.send),
                         style = MaterialTheme.typography.subtitle1.copy(
                             fontFamily = FontFamily(Font(R.font.siwa_heavy))
                         ),
@@ -182,6 +191,7 @@ fun ForgetPasswordScreen(
                     )
                 }
             }
+            Spacer(modifier = Modifier.height(BazzarTheme.spacing.m))
         }
     }
 }

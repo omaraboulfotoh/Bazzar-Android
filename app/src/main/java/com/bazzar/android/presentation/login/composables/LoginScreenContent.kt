@@ -77,7 +77,9 @@ fun LoginScreenContent(
                 })
 
             ClickableText(
-                modifier = Modifier.wrapContentSize(),
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(end = BazzarTheme.spacing.xs),
                 textAlign = TextAlign.End,
                 color = BazzarTheme.colors.primaryButtonColor,
                 text = stringResource(id = R.string.forget_password),

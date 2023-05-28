@@ -221,4 +221,5 @@
     <string name="forget_password">Forget Password?</string>
     <string name="forget_password_text">Forget Password</string>
     <string name="forget_password_success">New password sent to your whatsapp</string>
+    <string name="send">Send</string>
 </resources>

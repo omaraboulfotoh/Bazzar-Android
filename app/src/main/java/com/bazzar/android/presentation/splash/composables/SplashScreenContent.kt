@@ -49,7 +49,7 @@ fun SplashScreenContent(state: SplashContract.State, onEventSent: (SplashContrac
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(2f)
+                .weight(1f)
         )
     }
 
