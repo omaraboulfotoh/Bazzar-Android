@@ -22,8 +22,8 @@ class LoginViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
     private val sharedPrefersManager: SharedPrefersManager,
-    private val resourceProvider: IResourceProvider,
     private val application: BazzarApplication
+
 ) : BaseViewModel<LoginContract.Event, LoginContract.State, LoginContract.Effect>(
     globalState
 ) {
@@ -75,7 +75,7 @@ class LoginViewModel @Inject constructor(
 
     private fun logIn() = executeCatching({
         if (currentState.mobileNumber.orEmpty().count() != 8) {
-            globalState.error(resourceProvider.getString(R.string.invalid_phone))
+            globalState.error(R.string.invalid_phone)
             return@executeCatching
         }
         homeUseCase.login(

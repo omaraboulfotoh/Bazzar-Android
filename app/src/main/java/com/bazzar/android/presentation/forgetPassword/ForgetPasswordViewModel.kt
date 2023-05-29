@@ -17,7 +17,6 @@ import javax.inject.Inject
 class ForgetPasswordViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
-    private val resourceProvider: IResourceProvider
 ) :
     BaseViewModel<Event, State, Effect>(
         globalState
@@ -38,7 +37,7 @@ class ForgetPasswordViewModel @Inject constructor(
     private fun requestForgetPassword() = executeCatching({
         val phone = currentState.phoneNumber
         if (phone?.count() != 8 || phone.matches(Regex("\\d+")).not()) {
-            globalState.error(resourceProvider.getString(R.string.invalid_phone))
+            globalState.error(R.string.invalid_phone)
             return@executeCatching
         }
         homeUseCase.requestForgetPassword("+965$phone").collect {
@@ -48,7 +47,7 @@ class ForgetPasswordViewModel @Inject constructor(
                     if (it.code != 0) {
                         globalState.error(it.message.orEmpty())
                     } else {
-                        globalState.success(resourceProvider.getString(R.string.forget_password_success))
+                        globalState.success(R.string.forget_password_success)
                         delay(1000)
                         setEffect { Effect.Navigation.GoBack }
                     }

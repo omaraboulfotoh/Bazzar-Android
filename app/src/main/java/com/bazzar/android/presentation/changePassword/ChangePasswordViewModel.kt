@@ -17,7 +17,6 @@ import javax.inject.Inject
 class ChangePasswordViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
-    private val resourceProvider: IResourceProvider
 ) : BaseViewModel<Event, State, Effect>(globalState) {
 
     override fun setInitialState() = State()
@@ -35,10 +34,10 @@ class ChangePasswordViewModel @Inject constructor(
 
     private fun changePassword() = executeCatching({
         if (currentState.currentPassword.isNullOrEmpty() || currentState.newPassword.isNullOrEmpty()) {
-            globalState.error(resourceProvider.getString(R.string.current_and_new_password_required))
+            globalState.error(R.string.current_and_new_password_required)
             return@executeCatching
         } else if (currentState.newPassword?.isValidPassword() != true) {
-            globalState.error(resourceProvider.getString(R.string.password_error_validation))
+            globalState.error(R.string.password_error_validation)
             return@executeCatching
         }
 
@@ -53,7 +52,7 @@ class ChangePasswordViewModel @Inject constructor(
                     if (changePasswordResponse.data == true) {
                         setEffect { Effect.Navigation.GoToMainScreen }
                     } else {
-                        globalState.error(changePasswordResponse.message ?: "Invalid")
+                        globalState.error(changePasswordResponse.message.orEmpty())
                     }
                 }
             }

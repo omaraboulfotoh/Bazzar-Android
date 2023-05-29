@@ -13,7 +13,6 @@ import javax.inject.Inject
 class OrdersHistoryViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
-    private val resourceProvider: IResourceProvider
 ) :
     BaseViewModel<OrdersHistoryContract.Event, OrdersHistoryContract.State, OrdersHistoryContract.Effect>(
         globalState
@@ -38,7 +37,7 @@ class OrdersHistoryViewModel @Inject constructor(
     }
 
     fun init() {
-        loadHistory(0,0)
+        loadHistory(0, 0)
     }
 
     private fun loadHistory(lastDaysCount: Int, index: Int) = executeCatching({
@@ -53,9 +52,9 @@ class OrdersHistoryViewModel @Inject constructor(
                                 orderList = ordersResult.data.orEmpty(),
                                 orderListPerTime = ordersResult.data.orEmpty(),
                                 timeCategoryList = listOf(
-                                    resourceProvider.getString(R.string.all),
-                                    resourceProvider.getString(R.string.last_week),
-                                    resourceProvider.getString(R.string.last_month)
+                                    R.string.all,
+                                    R.string.last_week,
+                                    R.string.last_month
                                 )
                             )
                         }

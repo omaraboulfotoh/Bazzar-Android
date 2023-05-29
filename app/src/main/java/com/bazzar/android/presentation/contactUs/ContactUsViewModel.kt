@@ -19,7 +19,6 @@ import javax.inject.Inject
 class ContactUsViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
-    private val resourceProvider: IResourceProvider
 ) :
     BaseViewModel<Event, State, Effect>(
         globalState
@@ -59,7 +58,7 @@ class ContactUsViewModel @Inject constructor(
                 is Result.Error -> globalState.error(response.message.orEmpty())
                 is Result.Success -> {
                     if (response.code == 0) {
-                        globalState.success(resourceProvider.getString(R.string.contact_us_success))
+                        globalState.success(R.string.contact_us_success)
                         delay(2000)
                         setEffect { Effect.Navigation.GoBack }
                     } else {

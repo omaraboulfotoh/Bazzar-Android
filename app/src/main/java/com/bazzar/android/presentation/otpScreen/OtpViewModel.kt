@@ -19,7 +19,6 @@ class OtpViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
     private val sharedPrefersManager: SharedPrefersManager,
-    private val resourceProvider: IResourceProvider
 ) : BaseViewModel<OtpContract.Event, OtpContract.State, OtpContract.Effect>(
     globalState
 ) {
@@ -47,12 +46,12 @@ class OtpViewModel @Inject constructor(
     private fun isInputDataValidated(userEnteredOtp: String): Boolean {
         return when {
             userEnteredOtp.length != OTP_SIZE -> {
-                globalState.error(resourceProvider.getString(R.string.invalid_otp))
+                globalState.error(R.string.invalid_otp)
                 false
             }
 
             !userEnteredOtp.isDigitsOnly() -> {
-                globalState.error(resourceProvider.getString(R.string.invalid_otp))
+                globalState.error(R.string.invalid_otp)
                 false
             }
 

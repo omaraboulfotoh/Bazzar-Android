@@ -56,6 +56,19 @@ fun App(globalState: IGlobalState) {
                     }
                 )
             }
+            if (globalState.errorStateRes.value != null) {
+                DefaultMessageDialog(
+                    title = stringResource(R.string.error),
+                    body = stringResource(id = globalState.errorStateRes.value!!),
+                    buttonText = stringResource(R.string.got_it),
+                    onNegative = {
+                        globalState.idle()
+                    },
+                    onPositive = {
+                        globalState.idle()
+                    }
+                )
+            }
 
             if (globalState.successState.value != null) {
                 DefaultMessageDialog(
@@ -70,14 +83,27 @@ fun App(globalState: IGlobalState) {
                     }
                 )
             }
+            if (globalState.successStateRes.value != null) {
+                DefaultMessageDialog(
+                    title = stringResource(R.string.success),
+                    body = stringResource(id = globalState.successStateRes.value!!),
+                    buttonText = stringResource(R.string.got_it),
+                    onNegative = {
+                        globalState.idle()
+                    },
+                    onPositive = {
+                        globalState.idle()
+                    }
+                )
+            }
 
             if (globalState.confirmationState.value != null) {
                 val state = globalState.confirmationState.value!!
                 ConfirmationMessageDialog(
-                    title = state.title,
-                    body = state.description,
-                    positiveButtonText = state.positiveButtonTitle,
-                    negativeButtonText = state.negativeButtonTitle,
+                    title = stringResource(id = state.title),
+                    body = stringResource(id = state.description),
+                    positiveButtonText = stringResource(id = state.positiveButtonTitle),
+                    negativeButtonText = stringResource(id = state.negativeButtonTitle),
                     onNegative = {
                         globalState.idle()
                         state.onNegative?.invoke()

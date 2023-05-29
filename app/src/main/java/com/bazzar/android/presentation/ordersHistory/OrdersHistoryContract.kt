@@ -9,7 +9,7 @@ class OrdersHistoryContract {
     data class State(
         val orderList: List<OrderHistory>? = listOf(),
         val orderListPerTime: List<OrderHistory>? = listOf(),
-        val timeCategoryList: List<String>? = listOf(),
+        val timeCategoryList: List<Int>? = listOf(),
         val selectedTimeCategoryIndex: Int = 0,
         val showEmptyView: Boolean = false,
     ) : ViewState

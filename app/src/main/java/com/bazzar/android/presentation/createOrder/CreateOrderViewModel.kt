@@ -19,7 +19,6 @@ import javax.inject.Inject
 class CreateOrderViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
-    private val resourceProvider: IResourceProvider
 ) : BaseViewModel<CreateOrderContract.Event, CreateOrderContract.State, CreateOrderContract.Effect>(
     globalState
 ) {
@@ -53,7 +52,7 @@ class CreateOrderViewModel @Inject constructor(
             }
             setEffect { CreateOrderContract.Effect.Navigation.GoToSuccessScreen }
         } else {
-            globalState.error(resourceProvider.getString(R.string.payment_falid))
+            globalState.error(R.string.payment_falid)
         }
     })
 

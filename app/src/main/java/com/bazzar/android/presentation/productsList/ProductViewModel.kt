@@ -25,7 +25,6 @@ class ProductViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
     private val prefersManager: SharedPrefersManager,
-    private val resourceProvider: IResourceProvider,
 ) :
     BaseViewModel<Event, State, Effect>(
         globalState
@@ -219,6 +218,9 @@ class ProductViewModel @Inject constructor(
     ) {
 
         if (isInitialized.not()) {
+
+            val allText =
+                if (prefersManager.getAppLanguage() == SharedPrefersManager.LANGUAGE_AR) "الكل" else "All"
             var request =
                 SearchProductRequest(categoryId = category?.id ?: categoryId?.toIntOrNull())
 
@@ -233,7 +235,7 @@ class ProductViewModel @Inject constructor(
                 subSubCategoriesList?.add(
                     0,
                     updatedCategory.copy(
-                        title = resourceProvider.getString(R.string.all),
+                        title = allText,
                         isSelected = true
                     )
                 )

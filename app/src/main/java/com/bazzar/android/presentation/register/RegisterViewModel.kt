@@ -8,7 +8,6 @@ import com.android.network.states.Result
 import com.bazzar.android.R
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
-import com.bazzar.android.utils.IResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -16,7 +15,6 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
-    private val resourceProvider: IResourceProvider,
     private val sharedPrefersManager: SharedPrefersManager
 ) :
     BaseViewModel<RegisterContract.Event, RegisterContract.State, RegisterContract.Effect>(
@@ -44,12 +42,11 @@ class RegisterViewModel @Inject constructor(
 
     private fun handleRegisterClicked() {
         if (currentState.isAgreeTermsAndConditions.not()) {
-            globalState.error(resourceProvider.getString(R.string.terms_and_condition_required))
+            globalState.error(R.string.terms_and_condition_required)
         } else {
-            val email = currentState.email.orEmpty()
             val name = currentState.fullName.orEmpty()
             val phone = currentState.phoneNumber.orEmpty()
-            if (isValid(email, name, phone)) {
+            if (isValid(name, phone)) {
                 val userRegisterRequest = UserRegisterRequest(
                     id = sharedPrefersManager.getUserData()?.id,
                     name = name,
@@ -61,19 +58,16 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    private fun isValid(email: String, name: String, phone: String): Boolean {
+    private fun isValid(name: String, phone: String): Boolean {
         var isValid = true
-        val errorsList = mutableListOf<String>()
         if (phone.isEmpty() || phone.count() != 8) {
             isValid = false
-            errorsList.add(resourceProvider.getString(R.string.invalid_phone))
+            globalState.error(R.string.invalid_phone)
         }
         if (name.isNullOrEmpty()) {
             isValid = false
-            errorsList.add(resourceProvider.getString(R.string.name_required))
+            globalState.error(R.string.name_required)
         }
-        if (isValid.not())
-            globalState.error(errorsList)
         return isValid
     }
 

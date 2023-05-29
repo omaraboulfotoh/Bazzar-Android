@@ -19,7 +19,6 @@ class EditProfileViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
     private val sharedPrefersManager: SharedPrefersManager,
-    private val resourceProvider: IResourceProvider
 ) :
     BaseViewModel<EditProfileContract.Event, EditProfileContract.State, EditProfileContract.Effect>(
         globalState
@@ -56,17 +55,14 @@ class EditProfileViewModel @Inject constructor(
 
     private fun isValid(email: String, name: String): Boolean {
         var isValid = true
-        val errorsList = mutableListOf<String>()
         if (name.isNullOrEmpty()) {
             isValid = false
-            errorsList.add(resourceProvider.getString(R.string.name_required))
+            globalState.error(R.string.name_required)
         }
         if (email.isNullOrEmpty().not() && Patterns.EMAIL_ADDRESS.matcher(email).matches().not()) {
             isValid = false
-            errorsList.add(resourceProvider.getString(R.string.invalid_email))
+            globalState.error(R.string.invalid_email)
         }
-        if (isValid.not())
-            globalState.error(errorsList)
         return isValid
     }
 

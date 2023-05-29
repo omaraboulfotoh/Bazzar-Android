@@ -12,6 +12,7 @@ import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.ConfirmationDialogParams
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.presentation.main.MainContract
 import com.bazzar.android.utils.IResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -20,7 +21,6 @@ import javax.inject.Inject
 class CartViewModel @Inject constructor(
     globalState: IGlobalState,
     private val sharedPrefersManager: SharedPrefersManager,
-    private val resourceProvider: IResourceProvider,
     private val homeUseCase: HomeUseCase
 ) : BaseViewModel<CartContract.Event, CartContract.State, CartContract.Effect>(globalState) {
 
@@ -48,7 +48,7 @@ class CartViewModel @Inject constructor(
             )
 
             is CartContract.Event.OnProductFavClicked -> handleItemFav(event.index)
-            CartContract.Event.OnShoppingClicked -> setEffect { CartContract.Effect.Navigation.GoToHome }
+            CartContract.Event.OnShoppingClicked -> publishMainEventBut(MainContract.HOME_TAB)
             is CartContract.Event.OnFavProductClicked -> handleFavNavigation(event.index)
             is CartContract.Event.OnProductAddToCartClicked -> addProductToCart(event.index)
         }
@@ -115,10 +115,10 @@ class CartViewModel @Inject constructor(
             ItemOperation.DELETE -> {
                 globalState.confirmationDialog(
                     params = ConfirmationDialogParams(
-                        title = resourceProvider.getString(R.string.delete_item),
-                        description = resourceProvider.getString(R.string.delete_item_desc),
-                        positiveButtonTitle = resourceProvider.getString(R.string.delete),
-                        negativeButtonTitle = resourceProvider.getString(R.string.cancel),
+                        title = R.string.delete_item,
+                        description = R.string.delete_item_desc,
+                        positiveButtonTitle = R.string.delete,
+                        negativeButtonTitle = R.string.cancel,
                         onPositive = {
                             deleteItem(item.itemDetailId.orZero())
                         },

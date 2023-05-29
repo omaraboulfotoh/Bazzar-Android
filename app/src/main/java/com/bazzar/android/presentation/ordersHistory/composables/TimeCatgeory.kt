@@ -12,13 +12,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
 fun TimeCategory(
     modifier: Modifier = Modifier,
-    timeCategoryList: List<String>,
+    timeCategoryList: List<Int>,
     selectedTimeCategoryIndex: Int,
     onTimeCategoryClicked: (index: Int) -> Unit,
 ) {
@@ -37,7 +38,7 @@ fun TimeCategory(
                     .clickable { onTimeCategoryClicked.invoke(index) },
             ) {
                 Text(
-                    text = timeCategory,
+                    text = stringResource(id = timeCategory),
                     color = if (index == selectedTimeCategoryIndex) BazzarTheme.colors.black else BazzarTheme.colors.indicatorGrey,
                     style = BazzarTheme.typography.captionMedium
                 )

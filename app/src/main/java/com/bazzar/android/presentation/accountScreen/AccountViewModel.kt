@@ -22,7 +22,6 @@ class AccountViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
     private val sharedPrefersManager: SharedPrefersManager,
-    private val resourceProvider: IResourceProvider,
     private val remoteConfiguration: RemoteConfiguration,
 ) : BaseViewModel<Event, State, Effect>(globalState) {
 
@@ -84,10 +83,10 @@ class AccountViewModel @Inject constructor(
     private fun showLogoutDialog() {
         globalState.confirmationDialog(
             params = ConfirmationDialogParams(
-                title = resourceProvider.getString(R.string.logout),
-                description = resourceProvider.getString(R.string.logout_message),
-                positiveButtonTitle = resourceProvider.getString(R.string.logout),
-                negativeButtonTitle = resourceProvider.getString(R.string.cancel),
+                title = R.string.logout,
+                description = R.string.logout_message,
+                positiveButtonTitle = R.string.logout,
+                negativeButtonTitle = R.string.cancel,
                 onPositive = {
                     handleLogout()
                 }
@@ -109,10 +108,10 @@ class AccountViewModel @Inject constructor(
     private fun showDeleteAccountDialog() {
         globalState.confirmationDialog(
             params = ConfirmationDialogParams(
-                title = resourceProvider.getString(R.string.delete_my_account),
-                description = resourceProvider.getString(R.string.delete_my_account_description),
-                positiveButtonTitle = resourceProvider.getString(R.string.delete),
-                negativeButtonTitle = resourceProvider.getString(R.string.cancel),
+                title = R.string.delete_my_account,
+                description = R.string.delete_my_account_description,
+                positiveButtonTitle = R.string.delete,
+                negativeButtonTitle = R.string.cancel,
                 onPositive = {
                     handleDeleteMyAccount()
                 }
