@@ -2,7 +2,6 @@ package com.bazzar.android.presentation.checkOutScreen.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,11 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
@@ -29,7 +26,6 @@ import com.bazzar.android.presentation.composables.BazzarAppBar
 import com.bazzar.android.presentation.composables.PrimaryButton
 import com.bazzar.android.presentation.composables.PrimaryOutlinedButton
 import com.bazzar.android.presentation.composables.SectionTitle
-import com.bazzar.android.presentation.composables.Subtitle
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.theme.BazzarTheme
 
@@ -55,10 +51,12 @@ fun CheckOutScreenContent(
 
         // show address if invalid else show empty view
         state.selectedAddress?.let {
-            AddressView(selectedAddress = state.selectedAddress,
-                onChangeAddressClicked = {
-                    onSendEvent(CheckOutContract.Event.OnChangeAddressClicked)
-                }
+            AddressView(
+                selectedAddress = state.selectedAddress,
+                onChangeAddressClicked = { onSendEvent(CheckOutContract.Event.OnChangeAddressClicked) },
+                onDeleteAddress = { onSendEvent(CheckOutContract.Event.OnDeleteAddressClicked) },
+                onSetAsDefaultClick = { onSendEvent(CheckOutContract.Event.OnSetAsDefaultClicked) },
+                onEditAddressClick = { onSendEvent(CheckOutContract.Event.OnEditAddressClicked) },
             )
         } ?: kotlin.run {
             if (state.addressLoaded) {

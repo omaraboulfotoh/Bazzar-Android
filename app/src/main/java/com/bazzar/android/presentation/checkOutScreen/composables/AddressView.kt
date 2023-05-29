@@ -37,7 +37,10 @@ import com.bazzar.android.presentation.theme.BazzarTheme
 @Composable
 fun AddressView(
     selectedAddress: UserAddress,
-    onChangeAddressClicked: () -> Unit
+    onChangeAddressClicked: () -> Unit,
+    onEditAddressClick: () -> Unit,
+    onSetAsDefaultClick: () -> Unit,
+    onDeleteAddress: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -84,10 +87,12 @@ fun AddressView(
 
         }
 
-        AddressItem(address = selectedAddress,
-            onEditAddressClick = { },
-            onSetAsDefaultClick = { },
-            onDeleteAddress = { })
+        AddressItem(
+            address = selectedAddress,
+            onEditAddressClick = onEditAddressClick,
+            onSetAsDefaultClick = onSetAsDefaultClick,
+            onDeleteAddress = onDeleteAddress
+        )
     }
 }
 
