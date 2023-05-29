@@ -3,7 +3,6 @@ package com.bazzar.android.presentation.addressBookScreen.composable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
@@ -20,7 +19,7 @@ fun AddressList(
     addressList: List<UserAddress>,
     onSetAsDefaultClick: (index: Int) -> Unit,
     onEditAddressClick: (userAddress: UserAddress) -> Unit,
-    onDeleteAddress: (index: Int) -> Unit,
+    onDeleteAddress: (address: UserAddress, index: Int) -> Unit,
 ) {
     LazyColumn(
         modifier = modifier,
@@ -31,7 +30,7 @@ fun AddressList(
             AddressItem(
                 address = item,
                 onSetAsDefaultClick = { onSetAsDefaultClick.invoke(index) },
-                onDeleteAddress = { onDeleteAddress.invoke(index) },
+                onDeleteAddress = { onDeleteAddress.invoke(item, index) },
                 onEditAddressClick = { onEditAddressClick.invoke(item) },
             )
             if (index == addressList.lastIndex) {

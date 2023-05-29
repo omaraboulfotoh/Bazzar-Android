@@ -1,7 +1,9 @@
 package com.bazzar.android.presentation.addressBookScreen
 
+import com.android.model.home.UserAddress
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
+import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +29,7 @@ class AddressBookViewModel @Inject constructor(
             }
 
             is AddressBookContract.Event.OnDeleteAddressClicked -> {
-                deleteAddress(event.index)
+                deleteAddress(event.address, event.index)
             }
 
             is AddressBookContract.Event.OnEditAddressClicked -> {
@@ -57,12 +59,20 @@ class AddressBookViewModel @Inject constructor(
             }
     })
 
-    private fun deleteAddress(index: Int) {
-        // ToDO: remove or replace this logic with api logic after add it
-        val addressList = ArrayList(currentState.addressList)
-        addressList.removeAt(index)
-        setState { copy(addressList = addressList) }
-    }
+    private fun deleteAddress(userAddress: UserAddress, index: Int) = executeCatching({
+        homeUseCase.deleteAddress(userAddress.id.orZero())
+            .collect {
+                when (it) {
+                    is Result.Error -> globalState.error(it.message.orEmpty())
+                    is Result.Loading -> globalState.loading(true)
+                    is Result.Success -> {
+                        val addressList = ArrayList(currentState.addressList)
+                        addressList.removeAt(index)
+                        setState { copy(addressList = addressList) }
+                    }
+                }
+            }
+    })
 
     fun init() = executeCatching({
         homeUseCase.getAllAddresses()

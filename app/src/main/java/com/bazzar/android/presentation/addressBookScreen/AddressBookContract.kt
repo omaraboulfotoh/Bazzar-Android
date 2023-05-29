@@ -13,7 +13,7 @@ class AddressBookContract {
 
     sealed class Event : ViewEvent {
         data class OnSetAsDefaultClicked(val index: Int) : Event()
-        data class OnDeleteAddressClicked(val index: Int) : Event()
+        data class OnDeleteAddressClicked(val address: UserAddress, val index: Int) : Event()
         data class OnEditAddressClicked(val userAddress: UserAddress) : Event()
         object OnAddAddressClicked : Event()
         object OnBackIconClicked : Event()

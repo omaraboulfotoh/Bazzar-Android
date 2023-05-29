@@ -59,7 +59,14 @@ fun AddressBookScreenContent(
                         )
                     )
                 },
-                onDeleteAddress = { onSendEvent(AddressBookContract.Event.OnDeleteAddressClicked(it)) },
+                onDeleteAddress = { userAddress, index ->
+                    onSendEvent(
+                        AddressBookContract.Event.OnDeleteAddressClicked(
+                            userAddress,
+                            index
+                        )
+                    )
+                },
                 onEditAddressClick = { onSendEvent(AddressBookContract.Event.OnEditAddressClicked(it)) }
             )
         }
