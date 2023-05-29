@@ -237,7 +237,7 @@ fun EditProfileDataEntry(
                     }
             ) {
                 Text(
-                    text = stringResource(id = R.string.edit_account),
+                    text = stringResource(id = R.string.btn_save),
                     style = MaterialTheme.typography.subtitle1.copy(
                         fontFamily = FontFamily(Font(R.font.siwa_heavy))
                     ),

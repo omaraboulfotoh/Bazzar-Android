@@ -73,7 +73,7 @@ fun AddressScreenContent(
         ) {
             Text(
                 modifier = Modifier.padding(vertical = BazzarTheme.spacing.m),
-                text = stringResource(id = R.string.save_address),
+                text = stringResource(id = R.string.btn_save),
                 style = BazzarTheme.typography.body2Bold,
                 fontSize = 14.sp,
                 color = BazzarTheme.colors.white,
