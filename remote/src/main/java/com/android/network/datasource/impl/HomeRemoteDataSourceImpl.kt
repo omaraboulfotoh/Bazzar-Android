@@ -124,4 +124,7 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
     override suspend fun getOrdersDetails(orderId: Int) = apiServices.getOrdersDetails(orderId)
     override suspend fun requestForgetPassword(phone: String) =
         apiServices.requestForgetPassword(phone)
+
+    override suspend fun deleteAddress(userAddressId: Int) =
+        apiServices.deleteAddress(userAddressId)
 }

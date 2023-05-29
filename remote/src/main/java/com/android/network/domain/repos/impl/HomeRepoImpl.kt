@@ -864,6 +864,27 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                 emit(Result.Error(false, throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun deleteAddress(userAddressId: Int): Flow<Result<Boolean>> =
+        flow {
+            try {
+                homeRemoteDataSource.deleteAddress(userAddressId).let {
+                    if (it.isSuccessful) {
+                        emit(
+                            Result.Success(
+                                data = it.body()?.data ?: false,
+                                message = it.body()?.message,
+                                code = it.body()?.code
+                            )
+                        )
+                    } else {
+                        emit(Result.Error(false, handleErrorIn400(it.errorBody().toString())))
+                    }
+                }
+            } catch (throwable: Throwable) {
+                emit(Result.Error(false, throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 }
 
 fun handleErrorIn400(errorBody: String): String {

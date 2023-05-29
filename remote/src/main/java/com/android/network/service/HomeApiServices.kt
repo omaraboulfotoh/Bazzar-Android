@@ -101,7 +101,8 @@ interface HomeApiServices {
 
     @POST("UserAddress/UpdateUserAddress")
     suspend fun updateUserAddress(@Body userAddress: UserAddress): Response<BaseWrapper<UserAddress>>
-
+    @POST("UserAddress/DeleteUserAddress")
+    suspend fun deleteAddress(@Query("userAddressId") userAddressId: Int): Response<BaseWrapper<Boolean>>
 
     // Orders APIs
     @POST("Order/OrderHistory")

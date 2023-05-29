@@ -88,6 +88,8 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
 
     suspend fun getOrdersDetails(orderId: Int) =
         homeRepo.getOrdersDetails(orderId)
-    suspend fun requestForgetPassword(phone: String)= homeRepo.requestForgetPassword(phone)
+
+    suspend fun requestForgetPassword(phone: String) = homeRepo.requestForgetPassword(phone)
+    suspend fun deleteAddress(userAddressId: Int) = homeRepo.deleteAddress(userAddressId)
 
 }

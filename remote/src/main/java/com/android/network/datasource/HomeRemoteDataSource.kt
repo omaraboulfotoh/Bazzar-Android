@@ -67,6 +67,7 @@ interface HomeRemoteDataSource {
     suspend fun submitContractUs(contactUsRequest: ContactUsRequest): Response<BaseWrapper<Boolean>>
     suspend fun getOrdersDetails(orderId: Int): Response<BaseWrapper<OrderHistory>>
     suspend fun requestForgetPassword(phone: String): Response<BaseWrapper<Boolean>>
+    suspend fun deleteAddress(userAddressId: Int): Response<BaseWrapper<Boolean>>
 
 
 }
