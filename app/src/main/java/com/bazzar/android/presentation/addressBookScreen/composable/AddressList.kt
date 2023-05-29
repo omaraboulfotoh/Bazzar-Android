@@ -1,6 +1,8 @@
 package com.bazzar.android.presentation.addressBookScreen.composable
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -21,9 +23,9 @@ fun AddressList(
     onDeleteAddress: (index: Int) -> Unit,
 ) {
     LazyColumn(
-        modifier = modifier.padding(horizontal = BazzarTheme.spacing.m),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
     ) {
         itemsIndexed(addressList) { index: Int, item: UserAddress ->
             AddressItem(
@@ -32,6 +34,9 @@ fun AddressList(
                 onDeleteAddress = { onDeleteAddress.invoke(index) },
                 onEditAddressClick = { onEditAddressClick.invoke(item) },
             )
+            if (index == addressList.lastIndex) {
+                Spacer(modifier = Modifier.height(96.dp))
+            }
         }
     }
 }

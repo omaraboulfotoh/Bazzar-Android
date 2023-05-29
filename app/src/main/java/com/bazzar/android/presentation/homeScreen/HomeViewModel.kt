@@ -226,13 +226,11 @@ class HomeViewModel @Inject constructor(
 
     private fun handleBrandClicked(index: Int) {
         val brand = currentState.featuredBrands?.get(index) ?: return
-        publishMainEventBut(MainContract.CATEGORIES_TAB)
         setEffect { HomeContract.Effect.Navigation.GoToBrandProductsList(brand) }
     }
 
     private fun handleCategoryClicked(index: Int) {
         val category = currentState.featuredCategories?.get(index) ?: return
-        publishMainEventBut(MainContract.CATEGORIES_TAB)
         setEffect { HomeContract.Effect.Navigation.GoToCategoryProductsList(category) }
     }
 
@@ -249,14 +247,12 @@ class HomeViewModel @Inject constructor(
 
             selectedItem.brandId != null -> {
                 setEffect {
-                    publishMainEventBut(MainContract.CATEGORIES_TAB)
                     HomeContract.Effect.Navigation.GoToBrandProductsList(Brand(id = selectedItem.brandId))
                 }
             }
 
             selectedItem.categoryId != null -> {
                 setEffect {
-                    publishMainEventBut(MainContract.CATEGORIES_TAB)
                     HomeContract.Effect.Navigation.GoToCategoryProductsList(Category(id = selectedItem.categoryId))
                 }
             }

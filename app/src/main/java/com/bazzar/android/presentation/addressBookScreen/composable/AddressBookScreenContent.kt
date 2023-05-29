@@ -2,6 +2,7 @@ package com.bazzar.android.presentation.addressBookScreen.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,32 +28,47 @@ fun AddressBookScreenContent(
     state: AddressBookContract.State,
     onSendEvent: (AddressBookContract.Event) -> Unit
 ) {
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = BazzarTheme.spacing.m)
-            .background(BazzarTheme.colors.backgroundColor),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
+            .padding(bottom = BottomNavigationHeight)
+            .background(BazzarTheme.colors.backgroundColor)
     ) {
-        BazzarAppBar(
-            title = stringResource(id = R.string.address_book),
-            isUpperCase = false,
-            backgroundColor = BazzarTheme.colors.backgroundColor,
-            onNavigationClick = { onSendEvent(AddressBookContract.Event.OnBackIconClicked) }
-        )
-        AddressList(
-            modifier = Modifier.weight(1f),
-            addressList = state.addressList,
-            onSetAsDefaultClick = { onSendEvent(AddressBookContract.Event.OnSetAsDefaultClicked(it)) },
-            onDeleteAddress = { onSendEvent(AddressBookContract.Event.OnDeleteAddressClicked(it)) },
-            onEditAddressClick = { onSendEvent(AddressBookContract.Event.OnEditAddressClicked(it)) }
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(BazzarTheme.colors.backgroundColor),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m)
+        ) {
+            BazzarAppBar(
+                title = stringResource(id = R.string.address_book),
+                isUpperCase = false,
+                backgroundColor = BazzarTheme.colors.backgroundColor,
+                onNavigationClick = { onSendEvent(AddressBookContract.Event.OnBackIconClicked) }
+            )
+            AddressList(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = BazzarTheme.spacing.m),
+                addressList = state.addressList,
+                onSetAsDefaultClick = {
+                    onSendEvent(
+                        AddressBookContract.Event.OnSetAsDefaultClicked(
+                            it
+                        )
+                    )
+                },
+                onDeleteAddress = { onSendEvent(AddressBookContract.Event.OnDeleteAddressClicked(it)) },
+                onEditAddressClick = { onSendEvent(AddressBookContract.Event.OnEditAddressClicked(it)) }
+            )
+        }
         Button(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = BottomNavigationHeight)
+                .align(Alignment.BottomCenter)
                 .padding(horizontal = BazzarTheme.spacing.m)
+                .padding(bottom = BazzarTheme.spacing.m)
                 .clip(RoundedCornerShape(33.dp)),
             onClick = { onSendEvent(AddressBookContract.Event.OnAddAddressClicked) }
         ) {

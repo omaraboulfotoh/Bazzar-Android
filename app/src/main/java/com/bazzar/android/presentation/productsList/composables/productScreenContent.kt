@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -28,6 +29,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
+import com.bazzar.android.presentation.bazarDetail.BazarDetailContract
+import com.bazzar.android.presentation.common.gridItems
 import com.bazzar.android.presentation.composables.BazzarAppBar
 import com.bazzar.android.presentation.composables.ProductItem
 import com.bazzar.android.presentation.composables.SuccessAddedToCart
@@ -72,77 +75,93 @@ fun ProductScreenContent(
                         )
                     }
                 })
-            // show subCategories
-            if (state.subCategoryList.isNullOrEmpty().not()) {
-                SubCategorySlider(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(94.dp),
-                    subCategoryList = state.subCategoryList.orEmpty(),
-                    onClickSubCategory = { categoryIndex ->
-                        onSendEvent(
-                            ProductContract.Event.OnSubCategoryClicked(categoryIndex)
+
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.s)
+            ) {
+                // show subCategories
+                if (state.subCategoryList.isNullOrEmpty().not()) {
+                    item {
+                        SubCategorySlider(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(90.dp),
+                            subCategoryList = state.subCategoryList.orEmpty(),
+                            onClickSubCategory = { categoryIndex ->
+                                onSendEvent(
+                                    ProductContract.Event.OnSubCategoryClicked(categoryIndex)
+                                )
+                            }
                         )
                     }
-                )
-            }
-            SortFilterBar(
-                numOfProducts = state.productList?.size,
-                numOfSelectedFilters = state.numOfSelectedFilter,
-                onFilterClicked = { onSendEvent(ProductContract.Event.OnFilterClicked) },
-                onSortClicked = { onSendEvent(ProductContract.Event.OnSortClicked) },
-            )
-            // show brands
-            if (state.brand != null) {
-                Box(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(150.dp)
-                        .padding(horizontal = BazzarTheme.spacing.m)
-                ) {
-                    BrandImage(
-                        state.brand.sliderImagePath,
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clip(Shapes.large)
-                    )
                 }
-            }
-
-            // list items
-            if (state.showEmptyView) {
-                Box(modifier = Modifier.weight(1f)) {
-                    Image(
-                        modifier = Modifier
-                            .wrapContentSize()
-                            .align(Alignment.Center),
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_empty_view),
-                        contentDescription = "ic_empty_view"
-                    )
-                }
-            } else {
-                LazyVerticalGrid(
-                    modifier = Modifier.weight(1f),
-                    columns = GridCells.Fixed(2),
-                    contentPadding = PaddingValues(BazzarTheme.spacing.m),
-                    verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs),
-                    horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs),
-                ) {
-                    itemsIndexed(state.productList.orEmpty()) { index, item ->
-                        ProductItem(item, onItemClicked = {
-                            onSendEvent(ProductContract.Event.OnProductClicked(index))
-                        }, onFavClicked = {
-                            onSendEvent(ProductContract.Event.OnProductFavClicked(index))
-                        }, onAddToCartClicked = {
-                            onSendEvent(ProductContract.Event.OnProductAddToCartClicked(index))
-                        })
-
-                        val isLastItem = index == state.productList.orEmpty().lastIndex
-                        if (isLastItem && state.isLoadingMore.not() && state.hasMore) {
-                            onSendEvent(ProductContract.Event.ReachedListEnd)
+                // show brands
+                if (state.brand != null) {
+                    item {
+                        Box(
+                            Modifier
+                                .fillMaxWidth()
+                                .height(150.dp)
+                                .padding(horizontal = BazzarTheme.spacing.m)
+                        ) {
+                            BrandImage(
+                                state.brand.sliderImagePath,
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clip(Shapes.large)
+                            )
                         }
                     }
+                }
+                item {
+                    SortFilterBar(
+                        numOfProducts = state.productList?.size,
+                        numOfSelectedFilters = state.numOfSelectedFilter,
+                        onFilterClicked = { onSendEvent(ProductContract.Event.OnFilterClicked) },
+                        onSortClicked = { onSendEvent(ProductContract.Event.OnSortClicked) },
+                    )
+                }
+                // list items
+                if (state.showEmptyView) {
+                    item {
+                        Box(modifier = Modifier.weight(1f)) {
+                            Image(
+                                modifier = Modifier
+                                    .wrapContentSize()
+                                    .align(Alignment.Center),
+                                imageVector = ImageVector.vectorResource(R.drawable.ic_empty_view),
+                                contentDescription = "ic_empty_view"
+                            )
+                        }
+                    }
+                } else {
+                    gridItems(count = state.productList.orEmpty().size,
+                        nColumns = 2,
+                        horizontalArrangement = Arrangement.Start,
+                        itemContent = { index ->
+                            val item = state.productList.orEmpty()[index]
+                            ProductItem(
+                                item,
+                                modifier = Modifier.padding(BazzarTheme.spacing.xs),
+                                onItemClicked = {
+                                    onSendEvent(ProductContract.Event.OnProductClicked(index))
+                                }, onFavClicked = {
+                                    onSendEvent(ProductContract.Event.OnProductFavClicked(index))
+                                }, onAddToCartClicked = {
+                                    onSendEvent(
+                                        ProductContract.Event.OnProductAddToCartClicked(
+                                            index
+                                        )
+                                    )
+                                })
+                            val isLastItem = index == state.productList.orEmpty().lastIndex
+                            if (isLastItem && state.isLoadingMore.not() && state.hasMore) {
+                                onSendEvent(ProductContract.Event.ReachedListEnd)
+                            }
+
+                        })
                 }
             }
         }
