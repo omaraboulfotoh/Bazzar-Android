@@ -19,7 +19,7 @@ internal val montserrat: FontFamily =
         Font(R.font.siwa_light, FontWeight.Light),
         Font(R.font.siwa_bold, FontWeight.SemiBold),
         Font(R.font.siwa_heavy, FontWeight.Bold),
-        Font(R.font.montserrat_extrabold, FontWeight.ExtraBold)
+        Font(R.font.siwa_heavy, FontWeight.ExtraBold)
     )
 
 val Typography = Typography(defaultFontFamily = montserrat)
