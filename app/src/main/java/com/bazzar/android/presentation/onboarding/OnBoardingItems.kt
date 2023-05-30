@@ -7,12 +7,12 @@ class OnBoardingItems(
     val title: Int = R.string.onboarding_title,
     val desc: Int
 ) {
-    companion object{
-        fun getData(): List<OnBoardingItems>{
+    companion object {
+        fun getData(): List<OnBoardingItems> {
             return listOf(
-                OnBoardingItems(image = R.drawable.onboarding1,desc= R.string.onboarding_desc1),
+                OnBoardingItems(image = R.drawable.onboarding1, desc = R.string.onboarding_desc1),
                 OnBoardingItems(image = R.drawable.onboarding2, desc = R.string.onboarding_desc2),
-                OnBoardingItems(image = R.drawable.onboarding2, desc = R.string.onboarding_desc3)
+                OnBoardingItems(image = R.drawable.onboarding3, desc = R.string.onboarding_desc3)
             )
         }
     }
