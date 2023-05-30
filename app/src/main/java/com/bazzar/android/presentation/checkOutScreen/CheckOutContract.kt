@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.checkOutScreen
 
+import com.android.model.home.Area
 import com.android.model.home.UserAddress
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
@@ -8,7 +9,8 @@ import com.bazzar.android.presentation.base.ViewState
 class CheckOutContract {
     data class State(
         val selectedAddress: UserAddress? = null,
-        val addressLoaded: Boolean = false
+        val addressLoaded: Boolean = false,
+        val areasList: List<Area> = emptyList()
     ) : ViewState
 
     sealed class Event : ViewEvent {

@@ -112,7 +112,7 @@ fun DiscountStylesInText(
                 style = SpanStyle(
                     fontFamily = montserrat,
                     fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Normal
                 )
             ) {
                 append(text1)
@@ -121,8 +121,8 @@ fun DiscountStylesInText(
             withStyle(
                 style = SpanStyle(
                     fontFamily = montserrat,
-                    fontSize = 8.sp,
-                    fontWeight = FontWeight.Medium
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
                 )
             ) {
                 append(text2)

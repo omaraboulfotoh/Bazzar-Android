@@ -223,4 +223,6 @@
     <string name="send">ارسل</string>
     <string name="email_required">البريد الالكتروني مطلوب</string>
     <string name="btn_save">حفظ</string>
+    <string name="delete_address">حذف العنوان</string>
+    <string name="delete_address_message">هل انت متأكد من انك تريد حذف هذا العنوان؟</string>
 </resources>

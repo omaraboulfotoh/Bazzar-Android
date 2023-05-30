@@ -53,6 +53,7 @@ fun CheckOutScreenContent(
         state.selectedAddress?.let {
             AddressView(
                 selectedAddress = state.selectedAddress,
+                areasList = state.areasList,
                 onChangeAddressClicked = { onSendEvent(CheckOutContract.Event.OnChangeAddressClicked) },
                 onDeleteAddress = { onSendEvent(CheckOutContract.Event.OnDeleteAddressClicked) },
                 onSetAsDefaultClick = { onSendEvent(CheckOutContract.Event.OnSetAsDefaultClicked) },

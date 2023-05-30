@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.addressBookScreen
 
+import com.android.model.home.Area
 import com.android.model.home.UserAddress
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
@@ -8,6 +9,7 @@ import com.bazzar.android.presentation.base.ViewState
 class AddressBookContract {
     data class State(
         var counterItem: Int = 0,
+        val areasList: List<Area> = emptyList(),
         var addressList: List<UserAddress> = emptyList(),
     ) : ViewState
 

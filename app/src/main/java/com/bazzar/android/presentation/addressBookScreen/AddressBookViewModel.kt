@@ -3,10 +3,13 @@ package com.bazzar.android.presentation.addressBookScreen
 import com.android.model.home.UserAddress
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
+import com.bazzar.android.R
 import com.bazzar.android.common.orZero
+import com.bazzar.android.presentation.app.ConfirmationDialogParams
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,9 +31,10 @@ class AddressBookViewModel @Inject constructor(
                 setAddressAsDefault(event.index)
             }
 
-            is AddressBookContract.Event.OnDeleteAddressClicked -> {
-                deleteAddress(event.address, event.index)
-            }
+            is AddressBookContract.Event.OnDeleteAddressClicked -> showDeleteDialog(
+                event.index,
+                event.address
+            )
 
             is AddressBookContract.Event.OnEditAddressClicked -> {
                 setEffect { AddressBookContract.Effect.Navigation.GoToLocation(event.userAddress) }
@@ -40,6 +44,22 @@ class AddressBookViewModel @Inject constructor(
                 setEffect { AddressBookContract.Effect.Navigation.GoToLocation() }
             }
         }
+    }
+
+    private fun showDeleteDialog(index: Int, address: UserAddress) {
+
+        globalState.confirmationDialog(
+            params = ConfirmationDialogParams(
+                title = R.string.delete_address,
+                description = R.string.delete_address_message,
+                positiveButtonTitle = R.string.delete,
+                negativeButtonTitle = R.string.cancel,
+                onPositive = {
+                    deleteAddress(address, index)
+                }
+            )
+        )
+
     }
 
     private fun setAddressAsDefault(index: Int) = executeCatching({
@@ -75,17 +95,26 @@ class AddressBookViewModel @Inject constructor(
     })
 
     fun init() = executeCatching({
-        homeUseCase.getAllAddresses()
-            .collect { addressesResponse ->
-                when (addressesResponse) {
-                    is Result.Error -> globalState.error(addressesResponse.message.orEmpty())
-                    is Result.Loading -> globalState.loading(true)
-                    is Result.Success -> {
-                        setState {
-                            copy(addressList = addressesResponse.data.orEmpty())
+        homeUseCase.getAllAreas().collect { areasResponse ->
+            when (areasResponse) {
+                is Result.Error -> globalState.error(areasResponse.message.orEmpty())
+                is Result.Loading -> globalState.loading(true)
+                is Result.Success -> {
+                    setState { copy(areasList = areasResponse.data.orEmpty()) }
+                    homeUseCase.getAllAddresses()
+                        .collect { addressesResponse ->
+                            when (addressesResponse) {
+                                is Result.Error -> globalState.error(addressesResponse.message.orEmpty())
+                                is Result.Loading -> globalState.loading(true)
+                                is Result.Success -> {
+                                    setState {
+                                        copy(addressList = addressesResponse.data.orEmpty())
+                                    }
+                                }
+                            }
                         }
-                    }
                 }
             }
+        }
     })
 }

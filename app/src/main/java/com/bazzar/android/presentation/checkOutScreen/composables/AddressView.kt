@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.android.model.home.Area
 import com.android.model.home.UserAddress
 import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.PrimaryButton
@@ -37,6 +38,7 @@ import com.bazzar.android.presentation.theme.BazzarTheme
 @Composable
 fun AddressView(
     selectedAddress: UserAddress,
+    areasList: List<Area>,
     onChangeAddressClicked: () -> Unit,
     onEditAddressClick: () -> Unit,
     onSetAsDefaultClick: () -> Unit,
@@ -89,6 +91,7 @@ fun AddressView(
 
         AddressItem(
             address = selectedAddress,
+            areasList = areasList,
             onEditAddressClick = onEditAddressClick,
             onSetAsDefaultClick = onSetAsDefaultClick,
             onDeleteAddress = onDeleteAddress

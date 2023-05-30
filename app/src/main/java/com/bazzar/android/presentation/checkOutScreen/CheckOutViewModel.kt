@@ -64,12 +64,23 @@ class CheckOutViewModel @Inject constructor(
         setEffect { Effect.Navigation.GoToCheckout(selectedAddress) }
     }
 
-    fun init() {
-//        if (isInitialized.not()) {
-        loadAddress()
-//            isInitialized = false
-//    }
-    }
+    fun init() = executeCatching({
+        if (isInitialized.not()) {
+            homeUseCase.getAllAreas().collect { areasResponse ->
+                when (areasResponse) {
+                    is Result.Error -> globalState.error(areasResponse.message.orEmpty())
+                    is Result.Loading -> globalState.loading(true)
+                    is Result.Success -> {
+                        setState { copy(areasList = areasResponse.data.orEmpty()) }
+                        loadAddress()
+                    }
+                }
+            }
+            isInitialized = true
+        } else {
+            loadAddress()
+        }
+    })
 
     private fun loadAddress() = executeCatching({
         homeUseCase.getAllAddresses().collect {

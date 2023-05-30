@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.android.model.home.Area
 import com.android.model.home.UserAddress
 import com.bazzar.android.presentation.checkOutScreen.composables.AddressItem
 import com.bazzar.android.presentation.theme.BazzarTheme
@@ -17,6 +18,7 @@ import com.bazzar.android.presentation.theme.BazzarTheme
 fun AddressList(
     modifier: Modifier = Modifier,
     addressList: List<UserAddress>,
+    areasList: List<Area>,
     onSetAsDefaultClick: (index: Int) -> Unit,
     onEditAddressClick: (userAddress: UserAddress) -> Unit,
     onDeleteAddress: (address: UserAddress, index: Int) -> Unit,
@@ -29,6 +31,7 @@ fun AddressList(
         itemsIndexed(addressList) { index: Int, item: UserAddress ->
             AddressItem(
                 address = item,
+                areasList = areasList,
                 onSetAsDefaultClick = { onSetAsDefaultClick.invoke(index) },
                 onDeleteAddress = { onDeleteAddress.invoke(item, index) },
                 onEditAddressClick = { onEditAddressClick.invoke(item) },

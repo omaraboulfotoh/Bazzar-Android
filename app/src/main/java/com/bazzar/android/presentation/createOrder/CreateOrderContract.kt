@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.createOrder
 
+import com.android.model.home.Area
 import com.android.model.home.PaymentMethod
 import com.android.model.home.Product
 import com.android.model.home.UserAddress
@@ -19,6 +20,7 @@ class CreateOrderContract {
         val promoCode: String? = null,
         val orderPromoCode: String? = null,
         val shippingMessage: String? = null,
+        val areasList: List<Area> = emptyList()
     ) : ViewState
 
     sealed class Event : ViewEvent {

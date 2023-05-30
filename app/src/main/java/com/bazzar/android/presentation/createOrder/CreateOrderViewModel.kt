@@ -8,7 +8,6 @@ import com.bazzar.android.R
 import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
-import com.bazzar.android.utils.IResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -58,10 +57,23 @@ class CreateOrderViewModel @Inject constructor(
 
     fun init(address: UserAddress) {
         if (isInitialized.not()) {
-            loadCheckout(address)
+            loadAreas(address)
             isInitialized = true
         }
     }
+
+    private fun loadAreas(address: UserAddress) = executeCatching({
+        homeUseCase.getAllAreas().collect { areasResponse ->
+            when (areasResponse) {
+                is Result.Error -> globalState.error(areasResponse.message.orEmpty())
+                is Result.Loading -> globalState.loading(true)
+                is Result.Success -> {
+                    setState { copy(areasList = areasResponse.data.orEmpty()) }
+                    loadCheckout(address)
+                }
+            }
+        }
+    })
 
     private fun loadCheckout(address: UserAddress, promoCode: String? = null) = executeCatching({
         homeUseCase.loadCheckout(
@@ -70,31 +82,30 @@ class CreateOrderViewModel @Inject constructor(
                 promotionCode = promoCode,
                 orderNotes = currentState.additionalNotes
             )
-        )
-            .collect { response ->
-                when (response) {
-                    is Result.Error -> globalState.error(response.message.orEmpty())
-                    is Result.Loading -> globalState.loading(true)
-                    is Result.Success -> {
-                        val paymentMethodList =
-                            response.data?.paymentMethods.orEmpty().toMutableList()
-                        paymentMethodList[0] = paymentMethodList.first().copy(isSelected = true)
-                        setState {
-                            copy(
-                                address = address,
-                                paymentMethodList = paymentMethodList,
-                                totalPrice = response.data?.totalPrice.orZero(),
-                                shipping = response.data?.shipping.orZero(),
-                                subTotal = response.data?.subTotal.orZero(),
-                                discount = response.data?.discount.orZero(),
-                                shippingMessage = response.data?.shippingMessage,
-                                promoCode = null,
-                                orderPromoCode = promoCode
-                            )
-                        }
+        ).collect { response ->
+            when (response) {
+                is Result.Error -> globalState.error(response.message.orEmpty())
+                is Result.Loading -> globalState.loading(true)
+                is Result.Success -> {
+                    val paymentMethodList =
+                        response.data?.paymentMethods.orEmpty().toMutableList()
+                    paymentMethodList[0] = paymentMethodList.first().copy(isSelected = true)
+                    setState {
+                        copy(
+                            address = address,
+                            paymentMethodList = paymentMethodList,
+                            totalPrice = response.data?.totalPrice.orZero(),
+                            shipping = response.data?.shipping.orZero(),
+                            subTotal = response.data?.subTotal.orZero(),
+                            discount = response.data?.discount.orZero(),
+                            shippingMessage = response.data?.shippingMessage,
+                            promoCode = null,
+                            orderPromoCode = promoCode
+                        )
                     }
                 }
             }
+        }
     })
 
     private fun changePaymentMethod(itemIndex: Int) {

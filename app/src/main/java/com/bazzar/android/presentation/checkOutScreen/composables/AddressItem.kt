@@ -30,17 +30,24 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.android.model.home.Area
 import com.android.model.home.UserAddress
 import com.bazzar.android.R
+import com.bazzar.android.presentation.composables.DiscountStylesInText
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
 fun AddressItem(
     address: UserAddress,
+    areasList: List<Area>,
+    showActions: Boolean = true,
     onSetAsDefaultClick: () -> Unit,
     onEditAddressClick: () -> Unit,
     onDeleteAddress: () -> Unit,
 ) {
+
+    val area = areasList.first { it.id == address.areaId }
+    val government = areasList.first { it.id == area.parentId }
     Card(
         modifier = Modifier
             .fillMaxWidth(),
@@ -61,20 +68,21 @@ fun AddressItem(
                     style = BazzarTheme.typography.body2Bold,
                     fontSize = 14.sp,
                 )
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Image(
-                        modifier = Modifier
-                            .padding(end = BazzarTheme.spacing.m)
-                            .clickable { onEditAddressClick.invoke() },
-                        imageVector = ImageVector.vectorResource(id = R.drawable.icon_awesome_pen),
-                        contentDescription = null,
-                    )
-                    Image(
-                        modifier = Modifier.clickable { onDeleteAddress.invoke() },
-                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_trash),
-                        contentDescription = null,
-                    )
-                }
+                if (showActions)
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Image(
+                            modifier = Modifier
+                                .padding(end = BazzarTheme.spacing.m)
+                                .clickable { onEditAddressClick.invoke() },
+                            imageVector = ImageVector.vectorResource(id = R.drawable.icon_awesome_pen),
+                            contentDescription = null,
+                        )
+                        Image(
+                            modifier = Modifier.clickable { onDeleteAddress.invoke() },
+                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_trash),
+                            contentDescription = null,
+                        )
+                    }
             }
             Divider(
                 modifier = Modifier
@@ -82,13 +90,14 @@ fun AddressItem(
                     .fillMaxWidth()
                     .height(1.dp)
             )
-            Text(
+            DiscountStylesInText(
                 modifier = Modifier.padding(top = BazzarTheme.spacing.m),
-                text = "${stringResource(id = R.string.address_flat)}: ${address.flatNumber}, " +
+                text1 = "${stringResource(id = R.string.address_flat)}: ${address.flatNumber}, " +
                         "${stringResource(id = R.string.address_building)}: ${address.houseNumber}, " +
-                        "${stringResource(id = R.string.address_street)}: ${address.streetName}, ",
-                style = BazzarTheme.typography.body2,
-                fontSize = 14.sp,
+                        "${stringResource(id = R.string.address_street)}: ${address.streetName}, " +
+                        "${stringResource(id = R.string.jaddah)}: ${address.addressDescription}, " +
+                        "${stringResource(id = R.string.area)}: ${area.title.orEmpty()}, ",
+                text2 = government.title.orEmpty()
             )
             Divider(
                 modifier = Modifier

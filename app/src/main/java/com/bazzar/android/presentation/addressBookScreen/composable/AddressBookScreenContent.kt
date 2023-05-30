@@ -52,6 +52,7 @@ fun AddressBookScreenContent(
                     .weight(1f)
                     .padding(horizontal = BazzarTheme.spacing.m),
                 addressList = state.addressList,
+                areasList = state.areasList,
                 onSetAsDefaultClick = {
                     onSendEvent(
                         AddressBookContract.Event.OnSetAsDefaultClicked(

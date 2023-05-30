@@ -322,6 +322,8 @@ fun CreateOrderScreenContent(
                     state.address?.let {
                         AddressItem(
                             address = it,
+                            areasList = state.areasList,
+                            showActions = false,
                             onSetAsDefaultClick = {},
                             onEditAddressClick = {},
                             onDeleteAddress = { }
