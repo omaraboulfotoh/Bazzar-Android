@@ -95,7 +95,7 @@ class AddressViewModel @Inject constructor(
                         setState {
                             copy(
                                 userAddress = userAddress,
-                                isEditAddress = userAddress.areaId != null,
+                                isEditAddress = userAddress.id != null,
                                 userLatLng = userLatLng,
                                 allGovernmentsAndAreas = allGovernmentsAndAreas,
                                 governments = governments,

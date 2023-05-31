@@ -51,7 +51,8 @@ class LocationViewModel @Inject constructor(
                 is Result.Success -> {
                     setEffect {
                         Effect.Navigation.GoToAddEditAddress(
-                            it.data ?: currentState.userAddress
+                            it.data?.copy(id = currentState.userAddress.id)
+                                ?: currentState.userAddress
                         )
                     }
                 }
