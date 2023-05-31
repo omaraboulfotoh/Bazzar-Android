@@ -61,6 +61,10 @@ interface HomeRepo {
     suspend fun getOrdersDetails(orderId: Int): Flow<Result<OrderHistory>>
     suspend fun requestForgetPassword(phone: String): Flow<Result<Boolean>>
     suspend fun deleteAddress(userAddressId: Int): Flow<Result<Boolean>>
+    suspend fun getAddressFromMap(
+        longitude: Double,
+        latitude: Double
+    ): Flow<Result<UserAddress>>
 
 
 }

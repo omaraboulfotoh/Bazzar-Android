@@ -91,5 +91,10 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
 
     suspend fun requestForgetPassword(phone: String) = homeRepo.requestForgetPassword(phone)
     suspend fun deleteAddress(userAddressId: Int) = homeRepo.deleteAddress(userAddressId)
+    suspend fun getAddressFromMap(
+        longitude: Double,
+        latitude: Double
+    ) = homeRepo.getAddressFromMap(longitude, latitude)
+
 
 }

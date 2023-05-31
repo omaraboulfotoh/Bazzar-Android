@@ -127,4 +127,9 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
 
     override suspend fun deleteAddress(userAddressId: Int) =
         apiServices.deleteAddress(userAddressId)
+
+    override suspend fun getAddressFromMap(
+        longitude: Double,
+        latitude: Double
+    ) = apiServices.getAddressFromMap(longitude, latitude)
 }

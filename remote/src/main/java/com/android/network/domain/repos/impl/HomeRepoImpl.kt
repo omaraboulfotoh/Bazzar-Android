@@ -885,6 +885,35 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                 emit(Result.Error(false, throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun getAddressFromMap(
+        longitude: Double,
+        latitude: Double
+    ): Flow<Result<UserAddress>> =
+        flow {
+            try {
+                homeRemoteDataSource.getAddressFromMap(longitude, latitude).let {
+                    if (it.isSuccessful) {
+                        emit(
+                            Result.Success(
+                                data = it.body()?.data ?: UserAddress(),
+                                message = it.body()?.message,
+                                code = it.body()?.code
+                            )
+                        )
+                    } else {
+                        emit(
+                            Result.Error(
+                                UserAddress(),
+                                handleErrorIn400(it.errorBody().toString())
+                            )
+                        )
+                    }
+                }
+            } catch (throwable: Throwable) {
+                emit(Result.Error(UserAddress(), throwable.message))
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 }
 
 fun handleErrorIn400(errorBody: String): String {

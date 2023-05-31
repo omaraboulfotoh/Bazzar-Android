@@ -96,11 +96,18 @@ interface HomeApiServices {
     @GET("UserAddress/GetAllUserAddress")
     suspend fun getAllAddresses(): Response<BaseWrapper<List<UserAddress>>>
 
+    @GET("UserAddress/GetMapLocationAddress")
+    suspend fun getAddressFromMap(
+        @Query("longitude") longitude: Double,
+        @Query("longitude") latitude: Double
+    ): Response<BaseWrapper<UserAddress>>
+
     @POST("UserAddress/AddUserAddress")
     suspend fun addUserAddress(@Body userAddress: UserAddress): Response<BaseWrapper<UserAddress>>
 
     @POST("UserAddress/UpdateUserAddress")
     suspend fun updateUserAddress(@Body userAddress: UserAddress): Response<BaseWrapper<UserAddress>>
+
     @POST("UserAddress/DeleteUserAddress")
     suspend fun deleteAddress(@Query("userAddressId") userAddressId: Int): Response<BaseWrapper<Boolean>>
 

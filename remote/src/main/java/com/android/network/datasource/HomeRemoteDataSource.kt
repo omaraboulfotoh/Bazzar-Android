@@ -69,5 +69,10 @@ interface HomeRemoteDataSource {
     suspend fun requestForgetPassword(phone: String): Response<BaseWrapper<Boolean>>
     suspend fun deleteAddress(userAddressId: Int): Response<BaseWrapper<Boolean>>
 
+    suspend fun getAddressFromMap(
+        longitude: Double,
+        latitude: Double
+    ): Response<BaseWrapper<UserAddress>>
+
 
 }
