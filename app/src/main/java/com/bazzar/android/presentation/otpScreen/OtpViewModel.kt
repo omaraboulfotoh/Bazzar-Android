@@ -80,7 +80,7 @@ class OtpViewModel @Inject constructor(
                     is Result.Loading -> globalState.loading(true)
                     is Result.Success -> {
 
-                        if (otpResponse.code != 0) {
+                        if (otpResponse.code == 0) {
                             // send fcm token to the api
                             sharedPrefersManager.getFcmToken()?.let {
                                 homeUseCase.updateFcmToken(it)

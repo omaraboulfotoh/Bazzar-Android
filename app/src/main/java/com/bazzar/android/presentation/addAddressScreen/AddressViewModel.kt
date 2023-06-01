@@ -143,7 +143,11 @@ class AddressViewModel @Inject constructor(
                 is Result.Error -> globalState.error(response.message.orEmpty())
                 is Result.Loading -> globalState.loading(true)
                 is Result.Success -> {
-                    setEffect { AddressContract.Effect.Navigation.ReturnToAddressBook }
+                    if (response.code == 0) {
+                        setEffect { AddressContract.Effect.Navigation.ReturnToAddressBook }
+                    } else {
+                        globalState.error(response.message.orEmpty())
+                    }
                 }
             }
         }
