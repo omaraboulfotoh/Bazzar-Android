@@ -80,8 +80,8 @@ class AddressViewModel @Inject constructor(
                             else areas.find { it.id == userAddress.areaId }
 
                         val selectedGovernment =
-                            if (selectedArea == null) null
-                            else governments.find { it.id == selectedArea.parentId }
+                            if (userAddress.governorateId == null) null
+                            else governments.find { it.id == userAddress.governorateId }
 
                         val userLatLng =
                             if (userAddress.latitude?.toDoubleOrNull() != null && userAddress.longitude?.toDoubleOrNull() != null)

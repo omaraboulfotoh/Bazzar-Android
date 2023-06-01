@@ -99,7 +99,7 @@ interface HomeApiServices {
     @GET("UserAddress/GetMapLocationAddress")
     suspend fun getAddressFromMap(
         @Query("longitude") longitude: Double,
-        @Query("longitude") latitude: Double
+        @Query("latitude") latitude: Double
     ): Response<BaseWrapper<UserAddress>>
 
     @POST("UserAddress/AddUserAddress")

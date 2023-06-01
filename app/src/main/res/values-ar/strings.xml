@@ -103,7 +103,7 @@
     <string name="remove">إزالة</string>
     <string name="governorate">المحافظة</string>
     <string name="area">المنطقة</string>
-    <string name="block">الحي</string>
+    <string name="block">القطعة</string>
     <string name="street">الشارع</string>
     <string name="house_number">رقم المنزل</string>
     <string name="jaddah">الجادة</string>
@@ -113,7 +113,7 @@
     <string name="set_default_address">تعيين كعنوان افتراضي</string>
     <string name="save_address">حفظ العنوان</string>
     <string name="select_your_area">حدد منطقتك</string>
-    <string name="select_your_block">حدد حيك</string>
+    <string name="select_your_block">حدد القطعة</string>
     <string name="select_your_governorate">حدد محافظتك</string>
     <string name="select_your_street_name">حدد اسم الشارع</string>
     <string name="optional">اختياري</string>

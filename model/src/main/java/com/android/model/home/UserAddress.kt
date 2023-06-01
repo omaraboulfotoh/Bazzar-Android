@@ -14,6 +14,8 @@ data class UserAddress(
     var id: Int? = null,
     @Json(name = "areaId")
     var areaId: Int? = null,
+    @Json(name = "governorateId")
+    var governorateId: Int? = null,
     @Json(name = "streetName")
     var streetName: String? = null,
     @Json(name = "block")
