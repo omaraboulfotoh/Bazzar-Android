@@ -189,7 +189,7 @@ fun ProductScreenContent(
         FilterDialog(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(BazzarTheme.spacing.m),
+                .padding(vertical = BazzarTheme.spacing.m),
             show = state.showFilterDialog,
             selectedFilterType = state.selectedFilterType,
             selectedFiltersToShow = state.filterListToShow,
@@ -198,7 +198,7 @@ fun ProductScreenContent(
             numOfSelectedColorFilters = state.numOfSelectedColorFilters,
             numOfSelectedSizeFilters = state.numOfSelectedSizeFilters,
             minPrice = state.selectedFilterMinPrice ?: 0,
-            maxPrice = state.selectedFilterMaxPrice ?: 1000,
+            maxPrice = state.selectedFilterMaxPrice ?: 3000,
             onFilterTypeClick = { onSendEvent(ProductContract.Event.OnFilterTypeClicked(it)) },
             onSelectUnselectFilter = { filter, isSelect ->
                 onSendEvent(ProductContract.Event.OnSelectUnselectFilter(filter, isSelect))

@@ -90,8 +90,8 @@ class ProductViewModel @Inject constructor(
 
             is Event.OnApplyFiltersClicked -> handleOnApplyFiltersClicked()
             is Event.OnResetFiltersClicked -> handleOnResetFiltersClicked()
-            is Event.OnMaxPriceChanged -> setState { copy(selectedFilterMaxPrice = event.maxPrice) }
-            is Event.OnMinPriceChanged -> setState { copy(selectedFilterMinPrice = event.minPrice) }
+            is Event.OnMaxPriceChanged -> handleFilterOnMaxPriceChanged(event.maxPrice)
+            is Event.OnMinPriceChanged -> handleFilterOnMinPriceChanged(event.minPrice)
         }
     }
 
@@ -346,10 +346,10 @@ class ProductViewModel @Inject constructor(
                         isSortFiltersLoaded = true
                         copy(
                             sortFilter = sortFilterResponse.data,
-                            categoryFilterList = sortFilterResponse.data?.categoryList?.toList(),
-                            brandFilterList = sortFilterResponse.data?.brandList?.toList(),
-                            colorFilterList = sortFilterResponse.data?.colorList?.toList(),
-                            sizeFilterList = sortFilterResponse.data?.sizeList?.toList(),
+                            categoryFilterList = sortFilterResponse.data?.categoryList?.map { it.copy(isSelected = false) },
+                            brandFilterList = sortFilterResponse.data?.brandList?.map { it.copy(isSelected = false) },
+                            colorFilterList = sortFilterResponse.data?.colorList?.map { it.copy(isSelected = false) },
+                            sizeFilterList = sortFilterResponse.data?.sizeList?.map { it.copy(isSelected = false) },
                         )
                     }
 
@@ -396,10 +396,10 @@ class ProductViewModel @Inject constructor(
             copy(
                 selectedFilterType = null,
                 filterListToShow = null,
-                categoryFilterList = sortFilter?.categoryList,
-                brandFilterList = sortFilter?.brandList,
-                colorFilterList = sortFilter?.colorList,
-                sizeFilterList = sortFilter?.sizeList,
+                categoryFilterList = sortFilter?.categoryList?.map { it.copy(isSelected = false) },
+                brandFilterList = sortFilter?.brandList?.map { it.copy(isSelected = false) },
+                colorFilterList = sortFilter?.colorList?.map { it.copy(isSelected = false) },
+                sizeFilterList = sortFilter?.sizeList?.map { it.copy(isSelected = false) },
                 selectedFilterMaxPrice = null,
                 selectedFilterMinPrice = null,
                 numOfSelectedSizeFilters = 0,
@@ -509,6 +509,21 @@ class ProductViewModel @Inject constructor(
             }
 
             else -> {}
+        }
+    }
+
+    private fun handleFilterOnMaxPriceChanged(maxPrice: Int) {
+        if (maxPrice >= 0) {
+            setState { copy(selectedFilterMaxPrice = maxPrice) }
+        }
+    }
+
+    private fun handleFilterOnMinPriceChanged(minPrice: Int) {
+        if (minPrice >= 0) {
+            val maxPrice = currentState.selectedFilterMaxPrice
+            if (maxPrice == null || minPrice <= maxPrice) {
+                setState { copy(selectedFilterMinPrice = minPrice) }
+            }
         }
     }
 }
