@@ -51,7 +51,7 @@ fun AccountScreen(
                 navigator.navigate(AddressBookScreenDestination)
 
 
-            AccountContract.Effect.Navigation.GoToAboutUs ->
+            is AccountContract.Effect.Navigation.GoToAboutUs ->
                 navigator.navigate(AboutUsScreenDestination)
 
             AccountContract.Effect.Navigation.GoToContactUs ->
@@ -63,6 +63,11 @@ fun AccountScreen(
 
             AccountContract.Effect.Navigation.GoToInstagramPage ->
                 buildUrlIntent(SocialMedia.INSTAGRAM_PAGE).apply {
+                    context.startActivity(this)
+                }
+
+            AccountContract.Effect.Navigation.GoToSnapchatPage ->
+                buildUrlIntent(SocialMedia.SNAPCHAT_PAGE).apply {
                     context.startActivity(this)
                 }
 

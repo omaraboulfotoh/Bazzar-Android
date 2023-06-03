@@ -9,7 +9,8 @@ import com.ramcosta.composedestinations.spec.Direction
 class MainContract {
     data class State(
         val tabIndex: Int = 0,
-        val direction: Direction = BottomNavItemDestination.Home.direction
+        val direction: Direction = BottomNavItemDestination.Home.direction,
+        val numOfCartItems: Int = 0,
     ) : ViewState
 
     sealed class Event : ViewEvent {

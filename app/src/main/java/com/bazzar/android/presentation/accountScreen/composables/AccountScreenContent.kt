@@ -194,6 +194,7 @@ fun AccountScreenContent(
                                 contentDescription = ""
                             )
                             Icon(
+                                modifier = Modifier.clickable { onSendEvent(AccountContract.Event.OnSnapchatClicked) },
                                 painter = painterResource(id = R.drawable.snapicon),
                                 tint = BazzarTheme.colors.primaryButtonColor,
                                 contentDescription = ""

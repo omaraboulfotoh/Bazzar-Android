@@ -41,6 +41,7 @@ class AccountViewModel @Inject constructor(
             is Event.OnFacebookClicked -> setEffect { Effect.Navigation.GoToFacebookPage }
             is Event.OnInstagramClicked -> setEffect { Effect.Navigation.GoToInstagramPage }
             is Event.OnTwitterClicked -> setEffect { Effect.Navigation.GoToTwitterPage }
+            is Event.OnSnapchatClicked -> setEffect { Effect.Navigation.GoToSnapchatPage }
             is Event.OnAboutUsClicked -> setEffect { Effect.Navigation.GoToAboutUs }
             is Event.OnBazzarTermsAndConditionsClicked -> setEffect { Effect.Navigation.GoToTermsAndConditions }
             is Event.OnContactUsClicked -> setEffect { Effect.Navigation.GoToContactUs }
