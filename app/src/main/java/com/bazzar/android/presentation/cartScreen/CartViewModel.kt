@@ -12,6 +12,8 @@ import com.bazzar.android.common.orZero
 import com.bazzar.android.presentation.app.ConfirmationDialogParams
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
+import com.bazzar.android.presentation.eventbus.EventBus
+import com.bazzar.android.presentation.eventbus.MainEvent
 import com.bazzar.android.presentation.main.MainContract
 import com.bazzar.android.utils.IResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -173,6 +175,11 @@ class CartViewModel @Inject constructor(
 
                 is Result.Success -> {
                     handleCartInfo(response.data.orEmpty())
+                    EventBus.publish(
+                        MainEvent.OnCartNumberChange(
+                            response.data.orEmpty().sumOf { it.qty.orZero() }
+                        )
+                    )
                 }
 
                 else -> {}

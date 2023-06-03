@@ -25,6 +25,6 @@ object EventBus {
 }
 
 sealed class MainEvent {
-    data class ChangeBottomTap(val tapIndex: Int, val additionalValue: Boolean? = null) :
-        MainEvent()
+    data class ChangeBottomTap(val tapIndex: Int, val additionalValue: Boolean? = null) : MainEvent()
+    data class OnCartNumberChange(val number: Int = 0) : MainEvent()
 }
