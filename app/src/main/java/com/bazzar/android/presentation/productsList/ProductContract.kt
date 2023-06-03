@@ -10,6 +10,7 @@ import com.android.model.request.SearchProductRequest
 import com.bazzar.android.presentation.base.ViewEvent
 import com.bazzar.android.presentation.base.ViewSideEffect
 import com.bazzar.android.presentation.base.ViewState
+import com.bazzar.android.presentation.productDetail.ProductDetailContract
 import com.bazzar.android.presentation.productsList.composables.filter.FilterType
 
 class ProductContract {
@@ -67,6 +68,7 @@ class ProductContract {
         object ReachedListEnd : Event()
         object OnContinueShoppingClicked : Event()
         object OnVisitYourCartClicked : Event()
+        object OnShareClicked : Event()
     }
 
     sealed class Effect : ViewSideEffect {
@@ -76,6 +78,7 @@ class ProductContract {
             object GoToLogin : Navigation()
             object GoToCart : Navigation()
             object GoToBack : Navigation()
+            data class ShareBrand(val shareText: String, val shareLink: String) : Effect()
         }
 
     }

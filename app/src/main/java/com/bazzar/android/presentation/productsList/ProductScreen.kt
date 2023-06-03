@@ -1,6 +1,7 @@
 package com.bazzar.android.presentation.productsList
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.android.model.home.Brand
 import com.android.model.home.Category
@@ -10,6 +11,7 @@ import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.DeepLinkConstants.BRAND_PRODUCT_LIST_DEEP_LINK
 import com.bazzar.android.presentation.DeepLinkConstants.BRAND_PRODUCT_LIST_HTTP_DEEP_LINK
 import com.bazzar.android.presentation.DeepLinkConstants.CATEGORY_PRODUCT_LIST_DEEP_LINK
+import com.bazzar.android.presentation.common.shareText
 import com.bazzar.android.presentation.destinations.CartScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.bazzar.android.presentation.destinations.SearchScreenDestination
@@ -37,6 +39,7 @@ fun ProductScreen(
 ) {
     // get state
     val state = viewModel.viewState()
+    val context = LocalContext.current
     viewModel.sideEffect { effect ->
         when (effect) {
             is ProductContract.Effect.Navigation.GoToProductDetailPage -> {
@@ -56,6 +59,9 @@ fun ProductScreen(
 
             ProductContract.Effect.Navigation.GoToCart ->
                 navigator.navigate(CartScreenDestination)
+
+            is ProductContract.Effect.Navigation.ShareBrand ->
+                context.shareText(effect.shareText, effect.shareLink)
         }
     }
     // init logic

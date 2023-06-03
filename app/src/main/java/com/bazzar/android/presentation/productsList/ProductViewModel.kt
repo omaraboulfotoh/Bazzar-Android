@@ -17,6 +17,7 @@ import com.bazzar.android.presentation.main.MainContract
 import com.bazzar.android.presentation.productsList.ProductContract.*
 import com.bazzar.android.presentation.productsList.composables.filter.FilterType
 import com.bazzar.android.utils.IResourceProvider
+import com.bazzar.android.utils.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -25,6 +26,7 @@ class ProductViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
     private val prefersManager: SharedPrefersManager,
+    private val resourceProvider: IResourceProvider
 ) :
     BaseViewModel<Event, State, Effect>(
         globalState
@@ -92,6 +94,17 @@ class ProductViewModel @Inject constructor(
             is Event.OnResetFiltersClicked -> handleOnResetFiltersClicked()
             is Event.OnMaxPriceChanged -> handleFilterOnMaxPriceChanged(event.maxPrice)
             is Event.OnMinPriceChanged -> handleFilterOnMinPriceChanged(event.minPrice)
+            Event.OnShareClicked -> handleShareBrand()
+        }
+    }
+
+    private fun handleShareBrand() {
+        val brand = currentState.brand ?: return
+        setEffect {
+            Effect.Navigation.ShareBrand(
+                shareLink = brand.shareURL.orEmpty(),
+                shareText = resourceProvider.getString(R.string.share_brand_text)
+            )
         }
     }
 
@@ -346,10 +359,26 @@ class ProductViewModel @Inject constructor(
                         isSortFiltersLoaded = true
                         copy(
                             sortFilter = sortFilterResponse.data,
-                            categoryFilterList = sortFilterResponse.data?.categoryList?.map { it.copy(isSelected = false) },
-                            brandFilterList = sortFilterResponse.data?.brandList?.map { it.copy(isSelected = false) },
-                            colorFilterList = sortFilterResponse.data?.colorList?.map { it.copy(isSelected = false) },
-                            sizeFilterList = sortFilterResponse.data?.sizeList?.map { it.copy(isSelected = false) },
+                            categoryFilterList = sortFilterResponse.data?.categoryList?.map {
+                                it.copy(
+                                    isSelected = false
+                                )
+                            },
+                            brandFilterList = sortFilterResponse.data?.brandList?.map {
+                                it.copy(
+                                    isSelected = false
+                                )
+                            },
+                            colorFilterList = sortFilterResponse.data?.colorList?.map {
+                                it.copy(
+                                    isSelected = false
+                                )
+                            },
+                            sizeFilterList = sortFilterResponse.data?.sizeList?.map {
+                                it.copy(
+                                    isSelected = false
+                                )
+                            },
                         )
                     }
 

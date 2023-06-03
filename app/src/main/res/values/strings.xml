@@ -185,6 +185,7 @@
     <string name="error_text">Something Error Happened</string>
     <string name="try_again">Try again</string>
     <string name="share_bazzar_text">Checkout this Bzaar products now from this link</string>
+    <string name="share_brand_text">Checkout this Brand products now from this link</string>
     <string name="share_product_text">Checkout this Product now from this link</string>
     <string name="location">Location</string>
     <string name="confirm_Location">Confirm Location</string>

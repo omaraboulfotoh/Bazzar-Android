@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -60,20 +61,39 @@ fun ProductScreenContent(
                     onSendEvent(ProductContract.Event.OnBackIconClicked)
                 },
                 actions = {
-                    Box(
-                        modifier = Modifier
-                            .defaultMinSize(minWidth = 50.dp, minHeight = 50.dp)
-                            .clickable {
-                                onSendEvent(ProductContract.Event.OnSearchClicked)
-                            }
+                    Row(
+                        modifier = Modifier.wrapContentSize(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.End
                     ) {
-                        Icon(
-                            modifier = Modifier.align(Alignment.CenterEnd),
-                            painter = painterResource(id = R.drawable.search_icon),
-                            contentDescription = null,
-                            tint = colorResource(id = R.color.prussian_blue)
-                        )
+                        state.brand?.let {
+                            Box(modifier = Modifier
+                                .defaultMinSize(minWidth = 40.dp, minHeight = 40.dp)
+                                .clickable { ProductContract.Event.OnShareClicked }) {
+                                Icon(
+                                    modifier = Modifier.align(Alignment.CenterEnd),
+                                    painter = painterResource(id = R.drawable.ic_share),
+                                    contentDescription = null,
+                                    tint = colorResource(id = R.color.prussian_blue)
+                                )
+                            }
+                        }
+                        Box(
+                            modifier = Modifier
+                                .defaultMinSize(minWidth = 50.dp, minHeight = 50.dp)
+                                .clickable {
+                                    onSendEvent(ProductContract.Event.OnSearchClicked)
+                                }
+                        ) {
+                            Icon(
+                                modifier = Modifier.align(Alignment.CenterEnd),
+                                painter = painterResource(id = R.drawable.search_icon),
+                                contentDescription = null,
+                                tint = colorResource(id = R.color.prussian_blue)
+                            )
+                        }
                     }
+
                 })
 
             LazyColumn(
