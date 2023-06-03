@@ -102,7 +102,7 @@ fun MBCBottomNavigation(
                                 modifier = Modifier.wrapContentSize(),
                                 text = stringResource(id = navItem.title).uppercase(),
                                 color = BazzarTheme.colors.bottomNavBarSelected,
-                                maxLines = 1,
+                                maxLines = 2,
                                 style = BazzarTheme.typography.subtitle1SemiBold.copy(fontSize = 11.sp)
                             )
                         }
@@ -151,14 +151,17 @@ fun MBCBottomNavigation(
                 Box(contentAlignment = Alignment.Center) {
                     if (selectedIndex == 3 && numOfCartItems > 0) {
                         Text(
-                            modifier = Modifier.padding(start = 8.dp),
+                            modifier = Modifier.align(Alignment.Center),
                             text = "$numOfCartItems",
                             style = BazzarTheme.typography.captionMedium,
                             color = colorResource(id = R.color.deep_sky_blue)
                         )
                     }
                     Image(
-                        modifier = Modifier.size(24.dp),
+                        modifier = Modifier
+                            .size(24.dp)
+                            .padding(start = 2.dp)
+                            .align(Alignment.BottomCenter),
                         contentScale = ContentScale.FillBounds,
                         imageVector = ImageVector.vectorResource(id = items[selectedIndex].vectorResSelected),
                         contentDescription = stringResource(id = items[selectedIndex].title)

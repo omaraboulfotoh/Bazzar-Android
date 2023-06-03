@@ -59,7 +59,7 @@ fun LazyListScope.FeaturedBrands(
                     content = {
                         RemoteImageCard(
                             imageUrl = product.imagePath,
-                            contentScale = ContentScale.Inside,
+                            contentScale = ContentScale.Fit,
                             background = BazzarTheme.colors.white,
                             withShimmer = false,
                             modifier = Modifier
