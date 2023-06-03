@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.search.composables
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,6 +34,7 @@ fun SearchScreenHeader(
                 modifier = Modifier
                     .padding(start = BazzarTheme.spacing.xxl)
                     .fillMaxWidth()
+                    .background(BazzarTheme.colors.white)
                     .border(
                         width = 1.dp,
                         color = BazzarTheme.colors.stroke,
@@ -42,9 +44,9 @@ fun SearchScreenHeader(
                 value = searchTerm,
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
                 keyboardActions = KeyboardActions(onSearch = { onSearchClicked() }),
-                childRowModifier = Modifier.padding(vertical = BazzarTheme.spacing.spacerMini),
+                childRowModifier = Modifier.padding(vertical = BazzarTheme.spacing.xs),
                 onValueChange = onSearchTermChanged,
-                textStyle = BazzarTheme.typography.overlineBold.copy(color = BazzarTheme.colors.primaryButtonColor),
+                textStyle = BazzarTheme.typography.captionBold.copy(color = BazzarTheme.colors.primaryButtonColor),
                 cursorColor = SolidColor(BazzarTheme.colors.primaryButtonColor),
                 leadingIcon = {
                     Icon(

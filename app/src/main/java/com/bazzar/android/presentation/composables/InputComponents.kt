@@ -287,11 +287,8 @@ fun SearchTextInput(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     onValueChange: (String) -> Unit,
     hint: String = stringResource(id = R.string.search),
-    textStyle: TextStyle = LocalTextStyle.current.copy(
-        color = Color.Black,
-        fontSize = BazzarTheme.typography.subtitle1.fontSize
-    ),
-    cursorColor: SolidColor = SolidColor(Color.White),
+    textStyle: TextStyle,
+    cursorColor: SolidColor = SolidColor(BazzarTheme.colors.primaryButtonColor),
 ) {
     BasicTextField(
         modifier = modifier,

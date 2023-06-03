@@ -53,7 +53,7 @@ interface HomeApiServices {
     @POST("Item/SearchProducts")
     suspend fun getAllProductList(@Body searchProduct: SearchProductRequest): Response<BaseWrapper<List<Product>>>
 
-    @GET("Item/Item/TopRatedProducts")
+    @GET("Item/TopRatedProducts")
     suspend fun getTopRated(): Response<BaseWrapper<List<Product>>>
 
     @GET("Item/ProductDetails")

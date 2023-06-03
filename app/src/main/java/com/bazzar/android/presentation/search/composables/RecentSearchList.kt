@@ -78,7 +78,8 @@ private fun RecentSearchItem(
             .padding(
                 horizontal = BazzarTheme.spacing.m,
                 vertical = BazzarTheme.spacing.xs
-            ).clickable { onClick() },
+            )
+            .clickable { onClick() },
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -86,14 +87,14 @@ private fun RecentSearchItem(
             modifier = Modifier.padding(end = BazzarTheme.spacing.m),
             text = term,
             style = BazzarTheme.typography.overlineBold,
-            color = BazzarTheme.colors.borderColor,
+            color = BazzarTheme.colors.textGray,
         )
         Icon(
             modifier = Modifier
                 .size(18.dp)
                 .clickable { onRemoveClick() },
             painter = painterResource(id = R.drawable.ic_close_circular),
-            tint = BazzarTheme.colors.stroke,
+            tint = BazzarTheme.colors.textGray,
             contentDescription = ""
         )
     }
