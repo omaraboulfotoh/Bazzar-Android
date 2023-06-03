@@ -44,7 +44,9 @@ fun FilterTypeItem(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(BazzarTheme.spacing.xxs),
                 text = title,
                 style = BazzarTheme.typography.subtitle1Medium,
                 color = colorResource(id = R.color.black),

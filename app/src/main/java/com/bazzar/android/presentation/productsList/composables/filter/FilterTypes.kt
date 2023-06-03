@@ -31,10 +31,7 @@ fun FilterTypes(
             .padding(top = BazzarTheme.spacing.m)
             .clip(RoundedCornerShape(22.dp))
             .background(color = BazzarTheme.colors.white)
-            .padding(top = 6.dp)
-            .padding(horizontal = BazzarTheme.spacing.xs),
     ) {
-
         FilterTypeItem(
             title = stringResource(id = R.string.filter_price),
             isSelected = selectedFilterType == FilterType.FILTER_PRICE,
