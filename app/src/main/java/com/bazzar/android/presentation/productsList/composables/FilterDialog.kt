@@ -46,7 +46,7 @@ fun FilterDialog(
     numOfSelectedSizeFilters: Int = 0,
     selectedFiltersToShow: List<Filter>?,
     minPrice: Int = 0,
-    maxPrice: Int = 1000,
+    maxPrice: Int = 3000,
     onFilterTypeClick: (filterType: FilterType) -> Unit,
     onSelectUnselectFilter: (filter: Filter, isSelect: Boolean) -> Unit,
     onMinPriceChanged: (minPrice: Int) -> Unit,
@@ -66,8 +66,7 @@ fun FilterDialog(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = BazzarTheme.spacing.m)
-                .padding(bottom = BazzarTheme.spacing.m),
+                .padding(start = BazzarTheme.spacing.m, bottom = BazzarTheme.spacing.m),
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
                 IconButton(
@@ -82,8 +81,9 @@ fun FilterDialog(
                 }
 
                 Text(
-                    text = stringResource(id = R.string.sorting),
+                    text = stringResource(id = R.string.filters),
                     style = BazzarTheme.typography.subtitle1Bold,
+                    fontSize =  18.sp,
                     color = colorResource(id = R.color.prussian_blue)
                 )
 
@@ -98,7 +98,6 @@ fun FilterDialog(
                     )
                     FilterSelectionList(
                         modifier = modifier
-                            .padding(top = 32.dp)
                             .weight(1f),
                         filterList = selectedFiltersToShow,
                         filterType = selectedFilterType,

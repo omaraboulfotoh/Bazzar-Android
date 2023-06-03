@@ -3,7 +3,6 @@ package com.bazzar.android.presentation.productsList.composables.filter
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,9 +16,9 @@ import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.presentation.theme.BazzarTheme
@@ -42,25 +41,31 @@ fun FilterTypeItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = BazzarTheme.spacing.m),
-            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
+                modifier = Modifier.weight(1f),
                 text = title,
                 style = BazzarTheme.typography.subtitle1Medium,
-                color = colorResource(id = R.color.black)
+                color = colorResource(id = R.color.black),
+                textAlign = TextAlign.Start,
             )
             if (numOfSelectedFilters != 0) {
                 Box(
                     modifier = Modifier
-                        .size(14.dp)
-                        .background(color = Color.Transparent, shape = RoundedCornerShape(7.dp))
-                        .border(width = 1.dp, color = colorResource(id = R.color.deep_sky_blue), shape = RoundedCornerShape(7.dp))
+                        .size(20.dp)
+                        .background(color = Color.Transparent, shape = RoundedCornerShape(10.dp))
+                        .border(
+                            width = 1.dp,
+                            color = colorResource(id = R.color.deep_sky_blue),
+                            shape = RoundedCornerShape(10.dp)
+                        ),
+                    contentAlignment = Alignment.Center,
                 ) {
                     Text(
                         modifier = Modifier.align(Alignment.Center),
                         text = numOfSelectedFilters.toString(),
-                        style = BazzarTheme.typography.subtitle3,
+                        style = BazzarTheme.typography.subtitle1Medium,
                         color = colorResource(id = R.color.black),
                     )
                 }
