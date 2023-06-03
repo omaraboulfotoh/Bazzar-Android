@@ -65,6 +65,6 @@ interface HomeRepo {
         longitude: Double,
         latitude: Double
     ): Flow<Result<UserAddress>>
-
+    suspend fun getTopRated(): Flow<Result<List<Product>>>
 
 }

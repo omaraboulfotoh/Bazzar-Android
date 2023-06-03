@@ -96,5 +96,7 @@ class HomeUseCase @Inject constructor(private val homeRepo: HomeRepo) {
         latitude: Double
     ) = homeRepo.getAddressFromMap(longitude, latitude)
 
+    suspend fun getTopRated() = homeRepo.getTopRated()
+
 
 }

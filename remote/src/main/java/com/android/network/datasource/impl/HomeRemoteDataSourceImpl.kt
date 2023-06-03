@@ -132,4 +132,6 @@ class HomeRemoteDataSourceImpl @Inject constructor(private val apiServices: Home
         longitude: Double,
         latitude: Double
     ) = apiServices.getAddressFromMap(longitude, latitude)
+
+    override suspend fun getTopRated()= apiServices.getTopRated()
 }

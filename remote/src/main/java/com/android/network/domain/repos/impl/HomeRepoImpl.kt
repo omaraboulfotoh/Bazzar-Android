@@ -914,6 +914,32 @@ class HomeRepoImpl @Inject constructor(var homeRemoteDataSource: HomeRemoteDataS
                 emit(Result.Error(UserAddress(), throwable.message))
             }
         }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
+
+    override suspend fun getTopRated(): Flow<Result<List<Product>>> =
+        flow {
+            try {
+                homeRemoteDataSource.getTopRated().let {
+                    if (it.isSuccessful) {
+                        emit(
+                            Result.Success(
+                                data = it.body()?.data ?: emptyList(),
+                                hasMoreData = it.body()?.hasMoreData,
+                                message = it.body()?.message,
+                                code = it.body()?.code
+                            )
+                        )
+                    } else Result.Error(
+                        listOf<Product>(), handleErrorIn400(it.errorBody().toString())
+                    )
+                }
+            } catch (throwable: Throwable) {
+                emit(
+                    Result.Error(
+                        listOf<Product>(), throwable.message
+                    )
+                )
+            }
+        }.onStart { emit(Result.Loading()) }.flowOn(Dispatchers.IO)
 }
 
 fun handleErrorIn400(errorBody: String): String {

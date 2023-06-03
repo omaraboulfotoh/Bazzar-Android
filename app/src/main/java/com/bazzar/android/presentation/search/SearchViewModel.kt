@@ -66,7 +66,7 @@ class SearchViewModel @Inject constructor(
     fun init() = executeCatching({
         val recentSearchList = prefersManager.getRecentSearchList()
         setState { copy(recentSearchList = recentSearchList) }
-        homeUseCase.getAllProductList(SearchProductRequest(categoryId = 0)).collect {
+        homeUseCase.getTopRated().collect {
             when (it) {
                 is Result.Error -> {}
                 is Result.Loading -> globalState.loading(true)

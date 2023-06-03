@@ -74,5 +74,6 @@ interface HomeRemoteDataSource {
         latitude: Double
     ): Response<BaseWrapper<UserAddress>>
 
+    suspend fun getTopRated(): Response<BaseWrapper<List<Product>>>
 
 }
