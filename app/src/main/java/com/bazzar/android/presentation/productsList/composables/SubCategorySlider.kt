@@ -53,7 +53,7 @@ fun SubCategorySlider(
                 ) {
                     RemoteImageCard(
                         imageUrl = category.imagePath,
-                        contentScale = if (category.isSelected) ContentScale.Crop else ContentScale.Inside,
+                        contentScale = if (category.isSelected) ContentScale.Fit else ContentScale.Inside,
                         modifier = Modifier
                             .fillMaxSize(),
                         background = BazzarTheme.colors.white

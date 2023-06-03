@@ -50,7 +50,7 @@ fun ImageViewerIndicator(
                     .clip(RoundedCornerShape(22.dp))
                     .clickable { onImageClick(index) },
                 imageUrl = item,
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Fit,
                 background = BazzarTheme.colors.white,
                 withShimmer = true,
             )

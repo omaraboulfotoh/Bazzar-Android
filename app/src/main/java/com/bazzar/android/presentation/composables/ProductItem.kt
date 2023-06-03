@@ -78,7 +78,7 @@ fun ProductItem(
             ) {
                 RemoteImage(
                     imageUrl = product.imagePath,
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.Fit,
                     background = BazzarTheme.colors.white,
                     modifier = Modifier
                         .fillMaxSize()

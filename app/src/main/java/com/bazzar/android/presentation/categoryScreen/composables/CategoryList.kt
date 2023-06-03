@@ -154,7 +154,7 @@ fun LazyListScope.CategoryList(
                                 RemoteImageCard(
                                     imageUrl = item.imagePath,
                                     withShimmer = true,
-                                    contentScale = ContentScale.Crop,
+                                    contentScale = ContentScale.Fit,
                                     modifier = Modifier
                                         .width(160.dp)
                                         .height(100.dp)

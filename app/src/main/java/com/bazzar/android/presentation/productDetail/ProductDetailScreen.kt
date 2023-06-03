@@ -47,35 +47,39 @@ fun ProductDetailScreen(
     viewModel.sideEffect { effect ->
         when (effect) {
             is ProductDetailContract.Effect.Navigation.GoToBack -> navigator.navigateUp()
-            is ProductDetailContract.Effect.ShareProduct ->
-                context.shareText(effect.shareText, effect.shareLink)
+            is ProductDetailContract.Effect.ShareProduct -> context.shareText(
+                effect.shareText,
+                effect.shareLink
+            )
 
-            is ProductDetailContract.Effect.Navigation.GoToCart ->
-                navigator.navigate(CartScreenDestination)
+            is ProductDetailContract.Effect.Navigation.GoToCart -> navigator.navigate(
+                CartScreenDestination
+            )
 
             is ProductDetailContract.Effect.Navigation.GoToProductBrandList -> navigator.navigate(
                 ProductScreenDestination(brand = effect.brand)
             )
 
-            is ProductDetailContract.Effect.Navigation.GoToImageViewer ->
-                navigator.navigate(
-                    ImageViewerScreenDestination(
-                        imagePathsList = ArrayList(effect.imagePathList),
-                        product = effect.product,
-                        bazaar = bazaar
-                    )
+            is ProductDetailContract.Effect.Navigation.GoToImageViewer -> navigator.navigate(
+                ImageViewerScreenDestination(
+                    imagePathsList = ArrayList(effect.imagePathList),
+                    product = effect.product,
+                    bazaar = bazaar,
+                    showBuyButton = effect.showBuyButton
                 )
+            )
 
-            is ProductDetailContract.Effect.Navigation.GoToOpenProduct ->
-                navigator.navigate(ProductDetailScreenDestination(product = effect.product))
+            is ProductDetailContract.Effect.Navigation.GoToOpenProduct -> navigator.navigate(
+                ProductDetailScreenDestination(product = effect.product)
+            )
 
-            is ProductDetailContract.Effect.Navigation.GoToTalkToUs ->
-                buildUrlIntent(SocialMedia.WHATS_APP + effect.whatsAppNumber).apply {
-                    context.startActivity(this)
-                }
+            is ProductDetailContract.Effect.Navigation.GoToTalkToUs -> buildUrlIntent(SocialMedia.WHATS_APP + effect.whatsAppNumber).apply {
+                context.startActivity(this)
+            }
 
-            ProductDetailContract.Effect.Navigation.GoToLogin ->
-                navigator.navigate(LoginScreenDestination())
+            ProductDetailContract.Effect.Navigation.GoToLogin -> navigator.navigate(
+                LoginScreenDestination()
+            )
         }
     }
     // init logic

@@ -209,7 +209,9 @@ class ProductDetailViewModel @Inject constructor(
         imagePaths.add(0, clickedImage)
         setEffect {
             Effect.Navigation.GoToImageViewer(
-                imagePathList = imagePaths, product = currentState.productDetail
+                imagePathList = imagePaths,
+                product = currentState.productDetail,
+                showBuyButton = currentState.selectedItemDetail?.itemBalance.orZero() > 0
             )
         }
     }

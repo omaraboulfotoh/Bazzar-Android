@@ -12,7 +12,8 @@ class ImageViewerContract {
         val product: Product? = null,
         val currentIndicatorIndex: Int = 0,
         val showSuccessAddedToCart: Boolean = false,
-        val bazaar: BazaarModel? = null
+        val bazaar: BazaarModel? = null,
+        val showBuyButton :Boolean = false
     ) : ViewState
 
     sealed class Event : ViewEvent {

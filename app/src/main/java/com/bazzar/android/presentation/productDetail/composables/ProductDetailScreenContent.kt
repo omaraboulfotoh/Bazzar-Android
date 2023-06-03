@@ -105,7 +105,7 @@ fun ProductDetailScreenContent(
                         },
                         onProductFavClicked = { itemIndex ->
                             onSendEvent(Event.OnRelatedItemFavClicked(itemIndex))
-                        }, OnProductAddToCartClicked = {itemIndex ->
+                        }, OnProductAddToCartClicked = { itemIndex ->
                             onSendEvent(Event.OnProductAddToCartClicked(itemIndex))
                         }, showViewAll = false
                     )
@@ -124,7 +124,7 @@ fun ProductDetailScreenContent(
                     modifier = Modifier.align(Alignment.End),
                     onClick = { onSendEvent(Event.OnTackToUsClicked) }
                 )
-                if (state.productDetail?.isSoldOut.orFalse().not())
+                if (state.selectedItemDetail?.itemBalance.orZero() > 0)
                     BuyItem(
                         modifier = Modifier
                             .align(Alignment.End)

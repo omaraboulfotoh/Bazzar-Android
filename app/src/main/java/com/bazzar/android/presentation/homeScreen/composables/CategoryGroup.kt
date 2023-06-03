@@ -65,7 +65,7 @@ fun LazyListScope.CategoryGroup(
                 )
                 RemoteImage(
                     imageUrl = category.imagePath,
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.Fit,
                     withShimmer = true,
                     modifier = Modifier
                         .align(Alignment.TopCenter)

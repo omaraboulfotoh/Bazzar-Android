@@ -101,13 +101,12 @@ fun IndicatorImageSlider(
                             .fillMaxSize()
                             .clickable { onImageClicked(page) },
                         imageUrl = (imagePathList[page]),
-                        contentScale = ContentScale.Crop,
+                        contentScale = ContentScale.Fit,
                         background = BazzarTheme.colors.white,
                         withShimmer = true,
                     )
                 }
-
-
+                
                 // badges
                 Column(
                     modifier = Modifier
