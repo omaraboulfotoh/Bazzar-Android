@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.bazzar.android.R
@@ -83,7 +84,10 @@ fun ExclusiveView(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun SoldOutView(modifier: Modifier = Modifier) {
+fun SoldOutView(
+    modifier: Modifier = Modifier,
+    style: TextStyle = BazzarTheme.typography.body2Bold.copy(fontSize = 14.sp)
+) {
     Box(
         modifier = modifier
     ) {

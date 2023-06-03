@@ -77,7 +77,8 @@ fun ProductCartItem(
                                 .fillMaxSize()
                                 .align(Alignment.Center)
                                 .height(24.dp)
-                                .padding(horizontal = BazzarTheme.spacing.xs)
+                                .padding(horizontal = 2.dp),
+                            BazzarTheme.typography.body2Bold.copy(fontSize = 12.sp)
                         )
                     }
                 }
