@@ -20,7 +20,7 @@
     <string name="category_brands_title">ماركات بازار</string>
     <string name="brand_search_title">البحث بإسم الماركة</string>
     <string name="brand_search_cancel">إلغاء</string>
-    <string name="footer_menu_profile">الملف الشخصي</string>
+    <string name="footer_menu_profile">حسابي</string>
     <string name="footer_menu_cart">السلة</string>
     <string name="footer_menu_bazzar">بازار</string>
     <string name="home_featured_category">الفئات المميزة</string>
@@ -30,7 +30,7 @@
     <string name="home">الرئيسية</string>
     <string name="categories">الفئات</string>
     <string name="cart">السلة</string>
-    <string name="profile">الملف الشخصي</string>
+    <string name="profile">حسابي</string>
     <string name="sort">الترتيب</string>
     <string name="filter">التصفية</string>
     <string name="sorting">الترتيب</string>
@@ -40,14 +40,13 @@
     <string name="filter_brand">الماركة</string>
     <string name="filter_color">اللون</string>
     <string name="filter_size">الحجم</string>
-    <string name="product_bazar_category">فئة BAZAR</string>
     <string name="see_more">شاهد المزيد</string>
     <string name="related_product">المنتجات ذات الصلة</string>
     <string name="give_rate">تقييم المنتج</string>
     <string name="sold_by">مباع بواسطة:</string>
     <string name="product_description">وصف المنتج</string>
     <string name="terms_and_condition">شروط وأحكام BZAAARZ وسياسة الخصوصية</string>
-    <string name="bazzar">Bzarz</string>
+    <string name="bazzar">البازارات</string>
     <string name="login">تسجيل الدخول</string>
     <string name="Create_new_account">إنشاء حساب جديد</string>
     <string name="Continue_as_a_guest">تابع كضيف</string>
@@ -64,7 +63,7 @@
     <string name="password_error_validation">يجب أن تحتوي كلمة المرور على أرقام وأحرف كبيرة وأحرف صغيرة وحرف رمزي</string>
     <string name="email">البريد الإلكتروني</string>
     <string name="phone_number">رقم الهاتف</string>
-    <string name="well_will_send">سنرسل </string>
+    <string name="well_will_send">سنرسل</string>
     <string name="whatsApp">واتساب</string>
     <string name="otp_message">الرسالة تحتوي على رقم OTP.</string>
     <string name="otp_message_password">الرسالة تحتوي على كلمة مرور.</string>
@@ -225,6 +224,6 @@
     <string name="btn_save">حفظ</string>
     <string name="delete_address">حذف العنوان</string>
     <string name="delete_address_message">هل انت متأكد من انك تريد حذف هذا العنوان؟</string>
-    <string name="exit">Exit</string>
-    <string name="exit_description">Are you sure you want to exit application</string>
+    <string name="exit">الخروج</string>
+    <string name="exit_description">هل انت متأكد من الخروج من التطبيق</string>
 </resources>
