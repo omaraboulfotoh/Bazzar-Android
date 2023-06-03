@@ -189,7 +189,7 @@ fun ProductScreenContent(
         FilterDialog(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(vertical = BazzarTheme.spacing.m),
+                .padding(all = BazzarTheme.spacing.m),
             show = state.showFilterDialog,
             selectedFilterType = state.selectedFilterType,
             selectedFiltersToShow = state.filterListToShow,
