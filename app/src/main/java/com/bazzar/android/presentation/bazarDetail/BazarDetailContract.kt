@@ -52,6 +52,7 @@ class BazarDetailContract {
     sealed class Event : ViewEvent {
         data class OnSubCategoryClicked(val categoryIndex: Int) : Event()
         data class OnSearchTermChanged(val searchTerm: String) : Event()
+        data class OnSearchClicked(val term: String? = null) : Event()
         data class OnSliderClicked(val sliderItemIndex: Int) : Event()
         data class OnProductClicked(val itemIndex: Int) : Event()
         data class OnProductFavClicked(val itemIndex: Int) : Event()

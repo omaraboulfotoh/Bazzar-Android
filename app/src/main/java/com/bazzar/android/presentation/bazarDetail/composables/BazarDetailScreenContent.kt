@@ -10,27 +10,37 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.presentation.bazarDetail.BazarDetailContract
+import com.bazzar.android.presentation.bazarListScreen.BazarListContract
 import com.bazzar.android.presentation.common.gridItems
 import com.bazzar.android.presentation.composables.BazzarAppBar
+import com.bazzar.android.presentation.composables.Caption
 import com.bazzar.android.presentation.composables.ProductItem
 import com.bazzar.android.presentation.composables.SearchTextInput
 import com.bazzar.android.presentation.composables.SuccessAddedToCart
@@ -49,6 +59,9 @@ fun BazarDetailScreenContent(
     state: BazarDetailContract.State,
     onSendEvent: (BazarDetailContract.Event) -> Unit,
 ) {
+
+    val focusManager = LocalFocusManager.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -91,42 +104,76 @@ fun BazarDetailScreenContent(
                     }
 
                 })
+
+            // search view
+            Box(
+                Modifier
+                    .height(36.dp)
+                    .padding(horizontal = BazzarTheme.spacing.m)
+                    .fillMaxWidth()
+            ) {
+                SearchTextInput(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(24.dp))
+                        .background(BazzarTheme.colors.white)
+                        .border(
+                            width = 0.5.dp,
+                            color = BazzarTheme.colors.stroke,
+                            shape = RoundedCornerShape(24.dp)
+                        ),
+                    hint = stringResource(id = R.string.product_search_title),
+                    value = state.searchTerm ?: "",
+                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
+                    keyboardActions = KeyboardActions(onSearch = {
+                        focusManager.clearFocus()
+                        onSendEvent(BazarDetailContract.Event.OnSearchClicked())
+                    }),
+                    childRowModifier = Modifier.padding(vertical = BazzarTheme.spacing.xs),
+                    onValueChange = {
+                        onSendEvent(BazarDetailContract.Event.OnSearchTermChanged(it))
+                    },
+                    textStyle = BazzarTheme.typography.captionBold.copy(color = BazzarTheme.colors.primaryButtonColor),
+                    cursorColor = SolidColor(BazzarTheme.colors.primaryButtonColor),
+                    leadingIcon = {
+                        Icon(
+                            modifier = Modifier
+                                .padding(
+                                    start = BazzarTheme.spacing.briefingIconsDimen,
+                                    end = BazzarTheme.spacing.s
+                                )
+                                .clickable {
+                                    focusManager.clearFocus()
+                                    onSendEvent(BazarDetailContract.Event.OnSearchClicked())
+                                },
+                            painter = painterResource(id = R.drawable.search_icon),
+                            tint = BazzarTheme.colors.primaryButtonColor,
+                            contentDescription = ""
+                        )
+                    }
+                )
+                if (state.searchTerm.isNullOrEmpty().not())
+                    Caption(
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .align(Alignment.CenterEnd)
+                            .padding(horizontal = BazzarTheme.spacing.m)
+                            .clickable {
+                                focusManager.clearFocus()
+                                onSendEvent(BazarDetailContract.Event.OnSearchClicked(""))
+                            },
+                        text = stringResource(id = R.string.cancel),
+                        textAlign = TextAlign.Center,
+                        isBold = true,
+                        color = BazzarTheme.colors.bottomNavBarSelected
+                    )
+            }
+
             // show brands
             LazyColumn(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.s)
             ) {
-                item {
-                    SearchTextInput(modifier = Modifier
-                        .padding(top = BazzarTheme.spacing.l)
-                        .padding(horizontal = BazzarTheme.spacing.m)
-                        .fillMaxWidth()
-                        .border(
-                            width = 1.dp,
-                            color = BazzarTheme.colors.stroke,
-                            shape = RoundedCornerShape(24.dp)
-                        ),
-                        childRowModifier = Modifier.padding(vertical = BazzarTheme.spacing.m),
-                        hint = stringResource(id = R.string.product_search_title),
-                        value = state.searchTerm ?: "",
-                        onValueChange = {
-                            onSendEvent(
-                                BazarDetailContract.Event.OnSearchTermChanged(
-                                    it
-                                )
-                            )
-                        },
-                        textStyle = BazzarTheme.typography.body2.copy(color = BazzarTheme.colors.primaryButtonColor),
-                        cursorColor = SolidColor(BazzarTheme.colors.primaryButtonColor),
-                        leadingIcon = {
-                            Icon(
-                                modifier = Modifier.padding(horizontal = BazzarTheme.spacing.s),
-                                painter = painterResource(id = R.drawable.search_icon),
-                                tint = BazzarTheme.colors.primaryButtonColor,
-                                contentDescription = ""
-                            )
-                        })
-                }
                 if (state.slider.size > 1) item {
                     IndicatorHomeImageSlider(imagePathList = state.slider.mapNotNull {
                         it.imagePath ?: ""

@@ -11,6 +11,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -35,6 +36,7 @@ fun SearchScreenHeader(
                     .padding(start = BazzarTheme.spacing.xxl)
                     .fillMaxWidth()
                     .background(BazzarTheme.colors.white)
+                    .clip(RoundedCornerShape(24.dp))
                     .border(
                         width = 1.dp,
                         color = BazzarTheme.colors.stroke,

@@ -46,7 +46,7 @@ class BazarDetailViewModel @Inject constructor(
             Event.OnShareCLicked -> shareLink()
             Event.ReachedListEnd -> loadMoreProducts()
             is Event.OnSliderClicked -> handleSliderAction(event.sliderItemIndex)
-            is Event.OnSearchTermChanged -> {}
+            is Event.OnSearchTermChanged -> setState { copy(searchTerm = event.searchTerm) }
             is Event.OnProductFavClicked -> handleProductFav(event.itemIndex)
             is Event.OnProductAddToCartClicked -> addProductToCart(event.itemIndex)
             Event.OnContinueShoppingClicked -> setState {
@@ -97,7 +97,22 @@ class BazarDetailViewModel @Inject constructor(
                 event.filter,
                 event.isSelect
             )
+
+            is Event.OnSearchClicked -> handleSearchItems(
+                event.term ?: currentState.searchTerm.orEmpty()
+            )
         }
+    }
+
+    private fun handleSearchItems(searchTerm: String) {
+        val updatedRequest = currentState.searchRequest.copy(
+            searchKey = if (searchTerm.isEmpty()) null else searchTerm, pageIndex = 0
+        )
+        // update the state
+        setState { copy(searchRequest = updatedRequest, searchTerm = searchTerm) }
+
+        // load the new list
+        loadProductData(updatedRequest)
     }
 
     private fun addProductToCart(itemIndex: Int) = executeCatching({
