@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.main
 
+import com.android.local.SharedPrefersManager
 import com.bazzar.android.R
 import com.bazzar.android.presentation.app.ConfirmationDialogParams
 import com.bazzar.android.presentation.app.IGlobalState
@@ -17,9 +18,11 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     globalState: IGlobalState,
+    private val sharedPrefersManager: SharedPrefersManager
 ) : BaseViewModel<Event, State, Effect>(globalState) {
 
     init {
+        setState { copy(isLTR = sharedPrefersManager.getAppLanguage() == SharedPrefersManager.LANGUAGE_EN) }
         executeCatching({
             EventBus.subscribe<MainEvent> { event ->
                 when (event) {

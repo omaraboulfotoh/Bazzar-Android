@@ -11,6 +11,7 @@ class MainContract {
         val tabIndex: Int = 0,
         val direction: Direction = BottomNavItemDestination.Home.direction,
         val numOfCartItems: Int = 0,
+        val isLTR: Boolean = false
     ) : ViewState
 
     sealed class Event : ViewEvent {

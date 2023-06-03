@@ -50,6 +50,7 @@ fun MBCBottomNavigation(
     navController: NavController,
     selectedIndex: Int = 0,
     numOfCartItems: Int = 0,
+    isLTR: Boolean,
     selectedDestination: Direction = BottomNavItemDestination.Home.direction,
     onTabSelected: (Int) -> Unit,
 ) {
@@ -160,7 +161,10 @@ fun MBCBottomNavigation(
                     Image(
                         modifier = Modifier
                             .size(24.dp)
-                            .padding(start = 2.dp)
+                            .padding(
+                                start = if (isLTR) 0.dp else 2.dp,
+                                end = if (isLTR) 2.dp else 0.dp
+                            )
                             .align(Alignment.BottomCenter),
                         contentScale = ContentScale.FillBounds,
                         imageVector = ImageVector.vectorResource(id = items[selectedIndex].vectorResSelected),

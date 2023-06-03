@@ -61,6 +61,7 @@ fun MainScreen(
                 selectedDestination = state.direction,
                 selectedIndex = state.tabIndex,
                 numOfCartItems = state.numOfCartItems,
+                isLTR = state.isLTR,
                 onTabSelected = {
                     viewModel.setEvent(MainContract.Event.OnNavItemSelected(it))
                 }
