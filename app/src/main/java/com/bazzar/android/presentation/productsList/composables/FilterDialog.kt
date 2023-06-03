@@ -51,6 +51,8 @@ fun FilterDialog(
     onSelectUnselectFilter: (filter: Filter, isSelect: Boolean) -> Unit,
     onMinPriceChanged: (minPrice: Int) -> Unit,
     onMaxPriceChanged: (maxPrint: Int) -> Unit,
+    showCategory: Boolean = true,
+    showBrands: Boolean = true,
     onApply: () -> Unit,
     onRest: () -> Unit,
     onDismiss: () -> Unit,
@@ -83,7 +85,7 @@ fun FilterDialog(
                 Text(
                     text = stringResource(id = R.string.filters),
                     style = BazzarTheme.typography.subtitle1Bold,
-                    fontSize =  18.sp,
+                    fontSize = 18.sp,
                     color = colorResource(id = R.color.prussian_blue)
                 )
 
@@ -94,6 +96,8 @@ fun FilterDialog(
                         numOfSelectedBrandFilters = numOfSelectedBrandFilters,
                         numOfSelectedColorFilters = numOfSelectedColorFilters,
                         numOfSelectedSizeFilters = numOfSelectedSizeFilters,
+                        showCategory = showCategory,
+                        showBrands = showBrands,
                         onFilterTypeClick = onFilterTypeClick
                     )
                     FilterSelectionList(

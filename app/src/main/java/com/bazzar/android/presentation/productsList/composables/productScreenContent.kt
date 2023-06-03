@@ -219,6 +219,8 @@ fun ProductScreenContent(
             numOfSelectedSizeFilters = state.numOfSelectedSizeFilters,
             minPrice = state.selectedFilterMinPrice ?: 0,
             maxPrice = state.selectedFilterMaxPrice ?: 3000,
+            showBrands = state.brand == null,
+            showCategory = state.category == null,
             onFilterTypeClick = { onSendEvent(ProductContract.Event.OnFilterTypeClicked(it)) },
             onSelectUnselectFilter = { filter, isSelect ->
                 onSendEvent(ProductContract.Event.OnSelectUnselectFilter(filter, isSelect))

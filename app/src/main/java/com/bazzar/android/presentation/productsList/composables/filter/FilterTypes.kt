@@ -22,6 +22,8 @@ fun FilterTypes(
     numOfSelectedColorFilters: Int = 0,
     numOfSelectedSizeFilters: Int = 0,
     selectedFilterType: FilterType?,
+    showCategory :Boolean = false,
+    showBrands:Boolean = false,
     onFilterTypeClick: (filterType: FilterType) -> Unit
 ) {
     Column(
@@ -37,12 +39,14 @@ fun FilterTypes(
             isSelected = selectedFilterType == FilterType.FILTER_PRICE,
             onFilterTypeClick = { onFilterTypeClick(FilterType.FILTER_PRICE) }
         )
+        if(showCategory)
         FilterTypeItem(
             title = stringResource(id = R.string.filter_category),
             isSelected = selectedFilterType == FilterType.FILTER_CATEGORY,
             numOfSelectedFilters = numOfSelectedCategoryFilters,
             onFilterTypeClick = { onFilterTypeClick(FilterType.FILTER_CATEGORY) }
         )
+        if(showBrands)
         FilterTypeItem(
             title = stringResource(id = R.string.filter_brand),
             isSelected = selectedFilterType == FilterType.FILTER_BRAND,

@@ -360,14 +360,11 @@ class ProductViewModel @Inject constructor(
                         copy(
                             sortFilter = sortFilterResponse.data,
                             categoryFilterList = sortFilterResponse.data?.categoryList?.map {
-                                it.copy(
-                                    isSelected = false
-                                )
+                                it.copy(isSelected = false)
                             },
                             brandFilterList = sortFilterResponse.data?.brandList?.map {
-                                it.copy(
-                                    isSelected = false
-                                )
+
+                                it.copy(isSelected = currentState.brand?.id == it.id)
                             },
                             colorFilterList = sortFilterResponse.data?.colorList?.map {
                                 it.copy(
@@ -408,15 +405,19 @@ class ProductViewModel @Inject constructor(
         val minPrice = currentState.selectedFilterMinPrice ?: 0
 
         setState { copy(showFilterDialog = false) }
+        val searchRequest = currentState.searchRequest.copy(
+            pageIndex = 0,
+            maxPrice = maxPrice,
+            minPrice = minPrice,
+            brandList = brandFilters,
+            colorList = colorFilters,
+            sizeList = sizeFilters,
+        )
+
         loadProductData(
-            currentState.searchRequest.copy(
-                pageIndex = 0,
-                maxPrice = maxPrice,
-                minPrice = minPrice,
-                brandList = brandFilters,
-                colorList = colorFilters,
-                sizeList = sizeFilters,
-            )
+            if (currentState.brand != null)
+                searchRequest.copy(categoryId = categoryFilters.firstOrNull())
+            else searchRequest
         )
     }
 
