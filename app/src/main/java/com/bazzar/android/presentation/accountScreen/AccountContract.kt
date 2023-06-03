@@ -28,6 +28,7 @@ class AccountContract {
         object OnInstagramClicked : Event()
         object OnFacebookClicked : Event()
         object OnTwitterClicked : Event()
+        object OnSnapchatClicked : Event()
         object OnLogOutClicked : Event()
         object OnDeleteMyAccountClicked : Event()
         object OnSignupClicked : Event()
@@ -49,6 +50,7 @@ class AccountContract {
             object GoToFacebookPage : Navigation()
             object GoToInstagramPage : Navigation()
             object GoToTwitterPage : Navigation()
+            object GoToSnapchatPage: Navigation()
             object OnRestartApp : Navigation()
         }
     }

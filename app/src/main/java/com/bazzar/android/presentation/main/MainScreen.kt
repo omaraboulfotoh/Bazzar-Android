@@ -60,6 +60,7 @@ fun MainScreen(
                 modifier = Modifier.fillMaxWidth(),
                 selectedDestination = state.direction,
                 selectedIndex = state.tabIndex,
+                numOfCartItems = state.numOfCartItems,
                 onTabSelected = {
                     viewModel.setEvent(MainContract.Event.OnNavItemSelected(it))
                 }

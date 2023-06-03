@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -29,12 +30,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.bazzar.android.R
 import com.bazzar.android.presentation.NavGraphs
 import com.bazzar.android.presentation.composables.OverLine
 import com.bazzar.android.presentation.theme.BazzarTheme
@@ -43,11 +46,12 @@ import com.ramcosta.composedestinations.spec.Direction
 
 @Composable
 fun MBCBottomNavigation(
-    navController: NavController,
-    onTabSelected: (Int) -> Unit,
-    selectedIndex: Int = 0,
     modifier: Modifier,
-    selectedDestination: Direction = BottomNavItemDestination.Home.direction
+    navController: NavController,
+    selectedIndex: Int = 0,
+    numOfCartItems: Int = 0,
+    selectedDestination: Direction = BottomNavItemDestination.Home.direction,
+    onTabSelected: (Int) -> Unit,
 ) {
     val items = listOf(
         BottomNavItemDestination.Home,
@@ -144,19 +148,29 @@ fun MBCBottomNavigation(
                     ),
                 contentAlignment = Alignment.Center,
             ) {
-                Image(
-                    modifier = Modifier.size(24.dp),
-                    contentScale = ContentScale.FillBounds,
-                    imageVector = ImageVector.vectorResource(id = items[selectedIndex].vectorResSelected),
-                    contentDescription = stringResource(id = items[selectedIndex].title)
-                )
+                Box(contentAlignment = Alignment.Center) {
+                    if (selectedIndex == 3 && numOfCartItems > 0) {
+                        Text(
+                            modifier = Modifier.padding(start = 8.dp),
+                            text = "$numOfCartItems",
+                            style = BazzarTheme.typography.captionMedium,
+                            color = colorResource(id = R.color.deep_sky_blue)
+                        )
+                    }
+                    Image(
+                        modifier = Modifier.size(24.dp),
+                        contentScale = ContentScale.FillBounds,
+                        imageVector = ImageVector.vectorResource(id = items[selectedIndex].vectorResSelected),
+                        contentDescription = stringResource(id = items[selectedIndex].title)
+                    )
+                }
             }
             OverLine(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 8.dp),
                 text = stringResource(id = items[selectedIndex].title).uppercase(),
-                color = BazzarTheme.colors.bottomNavBarSelected,
+                color = colorResource(id = R.color.light_gray),
                 maxLines = 1,
                 style = BazzarTheme.typography.subtitle1SemiBold.copy(fontSize = 11.sp),
                 textAlign = TextAlign.Center,

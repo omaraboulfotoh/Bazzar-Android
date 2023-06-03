@@ -26,6 +26,10 @@ class MainViewModel @Inject constructor(
                     is MainEvent.ChangeBottomTap -> {
                         triggerTapClicked(event.tapIndex, event.additionalValue, true)
                     }
+
+                    is MainEvent.OnCartNumberChange -> {
+                        setState { copy(numOfCartItems = event.number) }
+                    }
                 }
             }
         })
@@ -36,7 +40,7 @@ class MainViewModel @Inject constructor(
     override fun handleEvents(event: Event) {
         when (event) {
             is Event.OnNavItemSelected -> triggerTapClicked(event.tabIndex)
-            Event.OnBackClicked -> handleBackAction()
+            is Event.OnBackClicked -> handleBackAction()
         }
     }
 
