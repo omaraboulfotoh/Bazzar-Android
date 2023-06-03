@@ -214,6 +214,7 @@ fun ProductCartItem(
                                 product.price.toString().nullIfEmpty()
                                     ?: stringResource(R.string.zero_price)
                             )
+                            append(" ")
                         }
                         withStyle(
                             style = SpanStyle(

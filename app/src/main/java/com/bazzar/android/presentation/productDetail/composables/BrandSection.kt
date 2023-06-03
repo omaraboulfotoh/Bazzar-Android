@@ -115,6 +115,7 @@ fun BrandSection(
                         )
                     ) {
                         append(newPrice ?: oldPrice)
+                        append(" ")
                     }
                     withStyle(
                         style = SpanStyle(
@@ -145,6 +146,7 @@ fun BrandSection(
                             )
                         ) {
                             append(oldPrice)
+                            append(" ")
                         }
                         withStyle(
                             style = SpanStyle(

@@ -125,51 +125,6 @@ fun ProductWishList(
                         maxLines = 3,
                         modifier = Modifier.fillMaxWidth()
                     )
-
-//                    Text(
-//                        text = buildAnnotatedString {
-//                            withStyle(
-//                                style = SpanStyle(
-//                                    fontFamily = FontFamily(Font(R.font.siwa_heavy)),
-//                                    fontSize = 10.sp
-//                                )
-//                            ) {
-//                                append(stringResource(R.string.color))
-//                            }
-//                            withStyle(
-//                                style = SpanStyle(
-//                                    fontFamily = FontFamily(Font(R.font.siwa_regular)),
-//                                    fontSize = 14.sp
-//                                )
-//                            ) {
-//                                append(product.selectedItemDetails?.colorTitle.orEmpty())
-//                            }
-//                        }, modifier = Modifier.fillMaxWidth()
-//                    )
-
-//                    Text(
-//                        text = buildAnnotatedString {
-//                            withStyle(
-//                                style = SpanStyle(
-//                                    fontFamily = FontFamily(Font(R.font.siwa_heavy)),
-//                                    fontSize = 10.sp
-//                                )
-//                            ) {
-//                                append(stringResource(R.string.size))
-//                            }
-//                            withStyle(
-//                                style = SpanStyle(
-//                                    fontFamily = FontFamily(Font(R.font.siwa_regular)),
-//                                    fontSize = 14.sp
-//                                )
-//                            ) {
-//                                append(product.selectedItemDetails?.sizeTitle.orEmpty())
-//                            }
-//                        }, style = MaterialTheme.typography.subtitle2.copy(
-//
-//                        ), modifier = Modifier.fillMaxWidth()
-//                    )
-
                 }
                 Column(
                     modifier = Modifier
@@ -206,6 +161,7 @@ fun ProductWishList(
                                     product.price.toString().nullIfEmpty()
                                         ?: stringResource(R.string.zero_price)
                                 )
+                                append(" ")
                             }
                             withStyle(
                                 style = SpanStyle(
@@ -233,25 +189,27 @@ fun ProductWishList(
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Box(modifier = Modifier
-                    .size(24.dp)
-                    .clickable { onAddToCartClicked() }) {
-                    Image(
+                if (product.isSoldOut.orFalse().not()) {
+                    Box(modifier = Modifier
+                        .size(24.dp)
+                        .clickable { onAddToCartClicked() }) {
+                        Image(
+                            modifier = Modifier
+                                .size(20.dp)
+                                .align(Alignment.Center),
+                            contentScale = ContentScale.FillBounds,
+                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_cart),
+                            contentDescription = "ic_cart"
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(BazzarTheme.spacing.xs))
+                    Divider(
                         modifier = Modifier
-                            .size(20.dp)
-                            .align(Alignment.Center),
-                        contentScale = ContentScale.FillBounds,
-                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_cart),
-                        contentDescription = "ic_cart"
+                            .fillMaxHeight()
+                            .width(1.dp)
+                            .padding(vertical = BazzarTheme.spacing.xxs)
                     )
                 }
-                Spacer(modifier = Modifier.width(BazzarTheme.spacing.xs))
-                Divider(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .width(1.dp)
-                        .padding(vertical = BazzarTheme.spacing.xxs)
-                )
                 Spacer(modifier = Modifier.width(BazzarTheme.spacing.xs))
                 Box(modifier = Modifier
                     .size(24.dp)

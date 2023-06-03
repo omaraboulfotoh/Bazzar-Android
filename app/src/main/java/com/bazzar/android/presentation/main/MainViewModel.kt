@@ -1,5 +1,7 @@
 package com.bazzar.android.presentation.main
 
+import com.bazzar.android.R
+import com.bazzar.android.presentation.app.ConfirmationDialogParams
 import com.bazzar.android.presentation.app.IGlobalState
 import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavItemDestination
@@ -43,7 +45,16 @@ class MainViewModel @Inject constructor(
             setState { copy(tabIndex = 0, direction = BottomNavItemDestination.Home.direction) }
             setEffect { Effect.NavigateToDirection(BottomNavItemDestination.Home.direction) }
         } else {
-            setEffect { Effect.OnBackClicked }
+            globalState.confirmationDialog(params = ConfirmationDialogParams(
+                title = R.string.exit,
+                description = R.string.exit_description,
+                positiveButtonTitle = R.string.yes,
+                negativeButtonTitle = R.string.cancel,
+                onPositive = {
+                    setEffect { Effect.OnBackClicked }
+                }
+            ))
+
         }
     }
 

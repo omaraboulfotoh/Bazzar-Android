@@ -179,6 +179,7 @@ fun ProductItem(
                                             product.oldPrice.toString()
                                         } else product.price.toString()
                                     )
+                                    append(" ")
                                 }
                                 withStyle(
                                     style = SpanStyle(fontFamily = FontFamily(Font(R.font.siwa_regular)))
@@ -201,6 +202,7 @@ fun ProductItem(
                                         style = SpanStyle(fontFamily = FontFamily(Font(R.font.siwa_heavy)))
                                     ) {
                                         append(product.price.toString())
+                                        append(" ")
                                     }
                                     withStyle(
                                         style = SpanStyle(fontFamily = FontFamily(Font(R.font.siwa_regular)))
@@ -213,17 +215,18 @@ fun ProductItem(
                             )
                         }
                     }
-                    Image(
-                        modifier = Modifier
-                            .size(28.dp)
-                            .clickable {
-                                onAddToCartClicked(product.id.orZero())
-                            },
+                    if (product.isSoldOut.orFalse().not())
+                        Image(
+                            modifier = Modifier
+                                .size(28.dp)
+                                .clickable {
+                                    onAddToCartClicked(product.id.orZero())
+                                },
 
-                        painter = painterResource(id = R.drawable.ic_add_to_cart),
-                        contentScale = ContentScale.Fit,
-                        contentDescription = "ic_add_to_cart"
-                    )
+                            painter = painterResource(id = R.drawable.ic_add_to_cart),
+                            contentScale = ContentScale.Fit,
+                            contentDescription = "ic_add_to_cart"
+                        )
 
                 }
                 // bottom space

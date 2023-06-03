@@ -8,7 +8,7 @@
     <string name="done">تم</string>
     <string name="unknown">غير معروف</string>
     <string name="success">نجاح</string>
-    <string name="home_screen_featured_bzarz">البزارات المميزة</string>
+    <string name="home_screen_featured_bzarz">البازارات المميزة</string>
     <string name="home_screen_view_all">عرض الكل</string>
     <string name="home_screen_products_group">مجموعة المنتجات</string>
     <string name="home_screen_product_price">د.ك.</string>
@@ -17,7 +17,7 @@
     <string name="category_category_toggle_title">الفئات</string>
     <string name="category_category_title">الفئات</string>
     <string name="category_brands_toggle_title">الماركات</string>
-    <string name="category_brands_title">ماركات بزار</string>
+    <string name="category_brands_title">ماركات بازار</string>
     <string name="brand_search_title">البحث بإسم الماركة</string>
     <string name="brand_search_cancel">إلغاء</string>
     <string name="footer_menu_profile">الملف الشخصي</string>
@@ -25,7 +25,7 @@
     <string name="footer_menu_bazzar">بازار</string>
     <string name="home_featured_category">الفئات المميزة</string>
     <string name="product_search_title">البحث عن منتج، ماركة، أو فئة.</string>
-    <string name="product_brands_title">إسم البزار</string>
+    <string name="product_brands_title">إسم البازار</string>
     <string name="product_items_counter"> منتج</string>
     <string name="home">الرئيسية</string>
     <string name="categories">الفئات</string>
@@ -225,4 +225,6 @@
     <string name="btn_save">حفظ</string>
     <string name="delete_address">حذف العنوان</string>
     <string name="delete_address_message">هل انت متأكد من انك تريد حذف هذا العنوان؟</string>
+    <string name="exit">Exit</string>
+    <string name="exit_description">Are you sure you want to exit application</string>
 </resources>

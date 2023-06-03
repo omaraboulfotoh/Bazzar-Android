@@ -91,6 +91,7 @@ fun CartSummary(cartCounter: Int? = 0, totalAmount: Double) {
                             )
                         ) {
                             append(totalAmount.toPriceFormat())
+                            append(" ")
                         }
 
                         withStyle(

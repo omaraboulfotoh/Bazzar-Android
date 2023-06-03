@@ -106,7 +106,6 @@ class BazarDetailViewModel @Inject constructor(
             return@executeCatching
         }
         val itemDetail = currentState.productList?.get(itemIndex) ?: return@executeCatching
-
         homeUseCase.getAllProductDetails(itemDetail.id.orZero()).collect { response ->
             when (response) {
                 is Result.Success -> {
