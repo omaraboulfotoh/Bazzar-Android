@@ -103,6 +103,9 @@ class CreateOrderViewModel @Inject constructor(
                             orderPromoCode = promoCode
                         )
                     }
+                    response.data?.discountErrorMessage?.let {
+                        globalState.error(it)
+                    }
                 }
             }
         }

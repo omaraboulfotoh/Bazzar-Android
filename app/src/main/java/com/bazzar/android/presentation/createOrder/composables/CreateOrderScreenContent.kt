@@ -10,11 +10,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -52,6 +55,7 @@ import com.bazzar.android.presentation.createOrder.CreateOrderContract.Event
 import com.bazzar.android.presentation.createOrder.CreateOrderContract.State
 import com.bazzar.android.presentation.theme.BazzarTheme
 import com.bazzar.android.presentation.theme.Shapes
+import com.bazzar.android.presentation.theme.Shapes_MediumX
 
 @Composable
 fun CreateOrderScreenContent(
@@ -240,22 +244,43 @@ fun CreateOrderScreenContent(
                         style = BazzarTheme.typography.body2Bold,
                         color = BazzarTheme.colors.primaryButtonColor
                     )
-                    TextInputField(
-                        text = state.promoCode.orEmpty(),
-                        onValueChange = {
-                            onSendEvent(Event.OnPromoCodeChanged(it))
-                        },
-                        keyboardActions = KeyboardActions(
-                            onDone = {
-                                onSendEvent(Event.OnPromoCodeSubmit)
-                            }
-                        ),
-                        placeholderColor = BazzarTheme.colors.primaryButtonColor,
-                        textColor = BazzarTheme.colors.primaryButtonColor,
-                        placeHolderStyle = BazzarTheme.typography.body2Bold,
-                        textStyle = BazzarTheme.typography.body2Bold,
-                        placeholder = stringResource(id = R.string.promo_code_placeholder)
-                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(60.dp)
+                    ) {
+                        TextInputField(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .align(Alignment.Center),
+                            text = state.promoCode.orEmpty(),
+                            onValueChange = {
+                                onSendEvent(Event.OnPromoCodeChanged(it))
+                            },
+                            keyboardActions = KeyboardActions(
+                                onDone = {
+                                    onSendEvent(Event.OnPromoCodeSubmit)
+                                }
+                            ),
+                            placeholderColor = BazzarTheme.colors.primaryButtonColor,
+                            textColor = BazzarTheme.colors.primaryButtonColor,
+                            placeHolderStyle = BazzarTheme.typography.body2Bold,
+                            textStyle = BazzarTheme.typography.body2Bold,
+                            placeholder = stringResource(id = R.string.promo_code_placeholder)
+                        )
+                        if (state.promoCode.isNullOrEmpty().not()) {
+                            PrimaryButton(
+                                modifier = Modifier
+                                    .align(Alignment.CenterEnd)
+                                    .width(80.dp)
+                                    .padding(BazzarTheme.spacing.xxs)
+                                    .fillMaxHeight(),
+                                shape = Shapes_MediumX,
+                                text = stringResource(id = R.string.apply),
+                                onClick = { onSendEvent(Event.OnPromoCodeSubmit) }
+                            )
+                        }
+                    }
                 }
 
                 // payment Methods

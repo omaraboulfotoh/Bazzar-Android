@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -30,6 +31,7 @@ fun PrimaryButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier.fillMaxWidth(),
+    shape: Shape = RoundedCornerShape(BazzarTheme.spacing.l),
     background: Color = BazzarTheme.colors.primaryButtonColor,
     disabledBackground: Color = BazzarTheme.colors.primaryButtonDisableColor,
     textColor: Color = BazzarTheme.colors.primaryButtonTextColor,
@@ -39,7 +41,7 @@ fun PrimaryButton(
 ) {
     Button(
         onClick = onClick,
-        shape = RoundedCornerShape(BazzarTheme.spacing.l),
+        shape = shape,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = background,
             disabledBackgroundColor = disabledBackground
@@ -53,9 +55,11 @@ fun PrimaryButton(
             .alpha(if (enabled) 1f else 0.5f),
         enabled = enabled
     ) {
-        Box(modifier = Modifier
-            .wrapContentSize()
-            .align(Alignment.CenterVertically)) {
+        Box(
+            modifier = Modifier
+                .wrapContentSize()
+                .align(Alignment.CenterVertically)
+        ) {
             MessageBodyBold(
                 modifier = Modifier
                     .wrapContentSize()

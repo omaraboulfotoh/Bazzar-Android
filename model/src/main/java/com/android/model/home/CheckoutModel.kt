@@ -19,5 +19,6 @@ data class CheckoutModel(
     @Json(name = "discountPromotionId") val discountPromotionId: Int? = null,
     @Json(name = "freeShippingMinOrderValue") val freeShippingMinOrderValue: Double? = null,
     @Json(name = "shippingMessage") val shippingMessage: String? = null,
+    @Json(name = "discountErrorMessage") val discountErrorMessage: String? = null,
     @Json(name = "paymentMethods") val paymentMethods: List<PaymentMethod>? = null,
 ) : Parcelable
