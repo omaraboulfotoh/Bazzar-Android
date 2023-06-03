@@ -41,7 +41,7 @@ sealed class BottomNavItemDestination(
     object Bazzars :
         BottomNavItemDestination(
             MainContract.BZAAARZ_TAB,
-            R.string.bazzar,
+            R.string.app_name,
             R.drawable.ic_bazzar_circular,
             R.drawable.ic_bazzar_circular_icon,
             BazarListScreenDestination
