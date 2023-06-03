@@ -138,6 +138,7 @@ fun CustomLazyRow(
     LazyRow(
         modifier = Modifier
             .height(222.dp)
+            .padding(horizontal = BazzarTheme.spacing.xxs)
             .wrapContentWidth(),
         horizontalArrangement = Arrangement.spacedBy(spaceBetweenItems),
     ) {

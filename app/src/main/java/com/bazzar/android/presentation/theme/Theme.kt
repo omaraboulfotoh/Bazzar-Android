@@ -40,7 +40,7 @@ fun BazzarComposeTheme(
 ) {
     val systemUiController = rememberSystemUiController()
     systemUiController.setSystemBarsColor(
-        color = Color.Black
+        color = Color(0xffF8F8F8)
     )
     CompositionLocalProvider(
         LocalAbsSpacing provides AbsSpacing(),

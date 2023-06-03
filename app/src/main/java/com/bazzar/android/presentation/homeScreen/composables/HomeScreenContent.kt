@@ -3,6 +3,7 @@ package com.bazzar.android.presentation.homeScreen.composables
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -33,74 +34,80 @@ fun HomeScreenContent(state: State, onSendEvent: (Event) -> Unit) {
             .background(BazzarTheme.colors.backgroundColor)
             .fillMaxSize()
     ) {
-        LazyColumn(
-            modifier = Modifier,
-            verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start,
         ) {
-            item {
-                HomeHeader(onSearchClicked = { onSendEvent(Event.OnSearchClicked) })
-            }
-            item {
-                IndicatorHomeImageSlider(imagePathList = state.slides1.orEmpty()
-                    .mapNotNull { it.imagePath ?: "" },
-                    modifier = Modifier.wrapContentHeight(),
-                    onSliderClicked = {
-                        onSendEvent(Event.OnSliderClicked(0, it))
-                    })
-            }
-            if (state.featuredBazzars.isNullOrEmpty().not())
+            HomeHeader(onSearchClicked = { onSendEvent(Event.OnSearchClicked) })
+            LazyColumn(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
+                horizontalAlignment = Alignment.Start,
+            ) {
                 item {
-                    FeaturedBazaarSlider(slides2 = state.featuredBazzars.orEmpty(),
-                        onShowAllClicked = {
-                            onSendEvent(Event.OnShowAllBazaars)
-                        }, onBazaarClicked = {
-                            onSendEvent(Event.OnBazaarClicked(it))
+                    IndicatorHomeImageSlider(imagePathList = state.slides1.orEmpty()
+                        .mapNotNull { it.imagePath ?: "" },
+                        modifier = Modifier.wrapContentHeight(),
+                        onSliderClicked = {
+                            onSendEvent(Event.OnSliderClicked(0, it))
                         })
                 }
-            if (state.featuredCategories.isNullOrEmpty().not())
-                CategoryGroup(state.featuredCategories.orEmpty(), onCategoryClicked = {
-                    onSendEvent(Event.OnCategoryClicked(it))
-                }, onShowAllClicked = {
-                    onSendEvent(Event.OnShowAllCategories)
-                })
-
-            state.categoryItems.orEmpty().forEachIndexed { index, productSection ->
-                item {
-                    ProductsGroup(productsList = productSection.items.orEmpty(),
-                        headerTitle = productSection.title.orEmpty(),
-                        onProductClicked = { itemId ->
-                            onSendEvent(Event.OnProductClicked(itemId, index))
-                        },
-                        onProductFavClicked = { itemId ->
-                            onSendEvent(Event.OnProductFavClicked(itemId, index))
-                        },
-                        onShowAllClicked = {
-                            onSendEvent(Event.OnShowAllProducts(index))
-                        },
-                        OnProductAddToCartClicked = { itemId ->
-                            onSendEvent(Event.OnProductAddToCartClicked(itemId, index))
-                        })
-                    Spacer(modifier = Modifier.height(BazzarTheme.spacing.s))
-                }
-            }
-
-            item {
-                IndicatorHomeImageSlider(state.slides2.orEmpty().mapNotNull { it.imagePath ?: "" },
-                    modifier = Modifier.wrapContentHeight(),
-                    onSliderClicked = {
-                        onSendEvent(Event.OnSliderClicked(1, it))
+                if (state.featuredBazzars.isNullOrEmpty().not())
+                    item {
+                        FeaturedBazaarSlider(
+                            slides2 = state.featuredBazzars.orEmpty(),
+                            onShowAllClicked = {
+                                onSendEvent(Event.OnShowAllBazaars)
+                            }, onBazaarClicked = {
+                                onSendEvent(Event.OnBazaarClicked(it))
+                            })
+                    }
+                if (state.featuredCategories.isNullOrEmpty().not())
+                    CategoryGroup(state.featuredCategories.orEmpty(), onCategoryClicked = {
+                        onSendEvent(Event.OnCategoryClicked(it))
+                    }, onShowAllClicked = {
+                        onSendEvent(Event.OnShowAllCategories)
                     })
-            }
-            if (state.featuredBrands.isNullOrEmpty().not())
-                FeaturedBrands(state.featuredBrands.orEmpty(), onBrandClicked = {
-                    onSendEvent(Event.OnBrandClicked(it))
-                }, onShowAllClicked = {
-                    onSendEvent(Event.OnShowAllBrands)
-                })
 
-            item {
-                Spacer(modifier = Modifier.height(BazzarTheme.spacing.m))
+                item {
+                    IndicatorHomeImageSlider(state.slides2.orEmpty()
+                        .mapNotNull { it.imagePath ?: "" },
+                        modifier = Modifier.wrapContentHeight(),
+                        onSliderClicked = {
+                            onSendEvent(Event.OnSliderClicked(1, it))
+                        })
+                }
+                if (state.featuredBrands.isNullOrEmpty().not())
+                    FeaturedBrands(state.featuredBrands.orEmpty(), onBrandClicked = {
+                        onSendEvent(Event.OnBrandClicked(it))
+                    }, onShowAllClicked = {
+                        onSendEvent(Event.OnShowAllBrands)
+                    })
+
+                state.categoryItems.orEmpty().forEachIndexed { index, productSection ->
+                    item {
+                        ProductsGroup(productsList = productSection.items.orEmpty(),
+                            headerTitle = productSection.title.orEmpty(),
+                            onProductClicked = { itemId ->
+                                onSendEvent(Event.OnProductClicked(itemId, index))
+                            },
+                            onProductFavClicked = { itemId ->
+                                onSendEvent(Event.OnProductFavClicked(itemId, index))
+                            },
+                            onShowAllClicked = {
+                                onSendEvent(Event.OnShowAllProducts(index))
+                            },
+                            OnProductAddToCartClicked = { itemId ->
+                                onSendEvent(Event.OnProductAddToCartClicked(itemId, index))
+                            })
+                        Spacer(modifier = Modifier.height(BazzarTheme.spacing.s))
+                    }
+                }
+
+                item {
+                    Spacer(modifier = Modifier.height(BazzarTheme.spacing.m))
+                }
             }
         }
 
