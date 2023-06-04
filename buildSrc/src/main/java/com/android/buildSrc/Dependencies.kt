@@ -196,4 +196,8 @@ object Dependencies {
     const val COIL = "io.coil-kt:coil-compose:${Versions.COIL}"
 
     const val WEB_BROWSER = "androidx.browser:browser:${Versions.WEB_BROWSER}"
+
+    // zoho
+    const val zohoBom = "com.zoho.apptics:apptics-bom:${Versions.zohoBom}"
+    const val zohoAppticsRC = "com.zoho.apptics:apptics-rc"
 }

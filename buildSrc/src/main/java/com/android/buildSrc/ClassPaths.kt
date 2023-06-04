@@ -13,6 +13,7 @@ object ClassPaths {
     const val googleServices="com.google.gms:google-services:${Versions.googleServicesVersion}"
     const val crashAnalyticsPlugin =
         "com.google.firebase:firebase-crashlytics-gradle:${Versions.crashAnalyticsPlugin}"
+    const val zohoPlugin = "com.zoho.apptics:apptics-plugin:${Versions.zohoPlugin}"
 }
 
 fun RepositoryHandler.addRepos() {
