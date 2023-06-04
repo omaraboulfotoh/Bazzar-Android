@@ -40,7 +40,7 @@ class BazarDetailViewModel @Inject constructor(
     override fun handleEvents(event: Event) {
         when (event) {
             is Event.OnSubCategoryClicked -> onSubCategorySelected(event.categoryIndex)
-            Event.OnBackIconClicked -> Effect.Navigation.GoToBack
+            Event.OnBackIconClicked -> setEffect { Effect.Navigation.GoToBack }
             is Event.OnProductClicked -> navigateToProductDetails(event.itemIndex)
             Event.OnFavouriteClicked -> handleFavAction()
             Event.OnShareCLicked -> shareLink()

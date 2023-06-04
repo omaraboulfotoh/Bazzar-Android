@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         handleNotificationClickWhenAppIsNotRunning()
         setContent {
             BazzarComposeTheme {
-                App(globalState)
+                App(globalState, intent.hasExtra("SkipSplash"))
                 NotificationPermissionRequester(
                     onPermissionGranted = { },
                     onPermissionDenied = { },

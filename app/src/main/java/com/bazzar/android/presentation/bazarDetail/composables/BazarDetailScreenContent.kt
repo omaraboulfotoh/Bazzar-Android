@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.bazarDetail.composables
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -57,6 +58,9 @@ fun BazarDetailScreenContent(
 
     val focusManager = LocalFocusManager.current
 
+//    BackHandler {
+//        onSendEvent(BazarDetailContract.Event.OnBackIconClicked)
+//    }
     Box(modifier = modifier) {
         Column(
             modifier = Modifier

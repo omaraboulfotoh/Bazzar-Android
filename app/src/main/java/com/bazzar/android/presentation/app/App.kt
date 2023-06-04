@@ -11,6 +11,7 @@ import com.bazzar.android.presentation.NavGraphs
 import com.bazzar.android.presentation.common.Progress
 import com.bazzar.android.presentation.composables.ConfirmationMessageDialog
 import com.bazzar.android.presentation.composables.DefaultMessageDialog
+import com.bazzar.android.presentation.destinations.MainScreenDestination
 import com.bazzar.android.presentation.theme.BazzarComposeTheme
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.ramcosta.composedestinations.DestinationsNavHost
@@ -19,7 +20,7 @@ import com.ramcosta.composedestinations.animations.rememberAnimatedNavHostEngine
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialNavigationApi::class)
 @Composable
-fun App(globalState: IGlobalState) {
+fun App(globalState: IGlobalState, hasExtra: Boolean) {
 
     val engine = rememberAnimatedNavHostEngine(
         navHostContentAlignment = Alignment.TopCenter,
@@ -36,7 +37,7 @@ fun App(globalState: IGlobalState) {
                 navController = navController,
                 navGraph = NavGraphs.root,
                 modifier = Modifier.padding(it),
-                startRoute = NavGraphs.root.startRoute
+                startRoute = if (hasExtra) MainScreenDestination else NavGraphs.root.startRoute
             )
 
             if (globalState.loadingState.value) {
