@@ -1,19 +1,28 @@
 package com.bazzar.android.presentation.bazarDetail
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.android.model.home.BazaarModel
 import com.bazzar.android.common.sideEffect
+import com.bazzar.android.common.startNewTaskMainActivity
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.DeepLinkConstants.BAZZAR_DETAILS_DEEP_LINK
 import com.bazzar.android.presentation.DeepLinkConstants.BAZZAR_DETAILS_HTTP_DEEP_LINK
 import com.bazzar.android.presentation.bazarDetail.composables.BazarDetailScreenContent
 import com.bazzar.android.presentation.common.shareText
+import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.destinations.CartScreenDestination
 import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.bazzar.android.presentation.destinations.ProductScreenDestination
+import com.bazzar.android.presentation.theme.BazzarTheme
 import com.ramcosta.composedestinations.annotation.DeepLink
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -40,34 +49,53 @@ fun BazarDetailScreen(
             is BazarDetailContract.Effect.Navigation.GoToProductDetails -> {
                 navigator.navigate(
                     ProductDetailScreenDestination(
-                        product = effect.product,
-                        bazaar = bazaar
+                        product = effect.product, bazaar = bazaar
                     )
                 )
             }
             // category, brand
-            is BazarDetailContract.Effect.Navigation.GoToBack -> navigator.navigateUp()
+            is BazarDetailContract.Effect.Navigation.GoToBack -> {
+                if (marketerId.isNullOrEmpty()) navigator.navigateUp()
+                else context.startNewTaskMainActivity()
+            }
+
             is BazarDetailContract.Effect.OnShareBazaar -> context.shareText(
-                effect.shareText,
-                effect.shareLink
+                effect.shareText, effect.shareLink
             )
 
             is BazarDetailContract.Effect.Navigation.GoToBrandProductsList -> navigator.navigate(
                 ProductScreenDestination(brand = effect.brand)
             )
 
-            is BazarDetailContract.Effect.Navigation.GoToCategoryProductsList ->
-                navigator.navigate(ProductScreenDestination(category = effect.category))
+            is BazarDetailContract.Effect.Navigation.GoToCategoryProductsList -> navigator.navigate(
+                ProductScreenDestination(category = effect.category)
+            )
 
-            BazarDetailContract.Effect.Navigation.GoToLogin ->
-                navigator.navigate(LoginScreenDestination())
+            BazarDetailContract.Effect.Navigation.GoToLogin -> navigator.navigate(
+                LoginScreenDestination()
+            )
 
-            BazarDetailContract.Effect.Navigation.GoToCart ->
-                navigator.navigate(CartScreenDestination)
+            BazarDetailContract.Effect.Navigation.GoToCart -> navigator.navigate(
+                CartScreenDestination
+            )
         }
     }
+
+    BackHandler {
+        if (marketerId.isNullOrEmpty()) navigator.navigateUp()
+        else context.startNewTaskMainActivity()
+    }
+
     // init logic
     viewModel.init(bazaar, marketerId)
 
-    BazarDetailScreenContent(state = state) { viewModel.setEvent(it) }
+    BazarDetailScreenContent(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(BazzarTheme.colors.backgroundColor)
+            .padding(bottom = if (marketerId.isNullOrEmpty()) BottomNavigationHeight else 0.dp),
+        state = state
+    ) {
+        viewModel.setEvent(it)
+    }
 }

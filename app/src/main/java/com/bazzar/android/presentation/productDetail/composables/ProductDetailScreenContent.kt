@@ -1,6 +1,5 @@
 package com.bazzar.android.presentation.productDetail.composables
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,7 +21,6 @@ import com.bazzar.android.common.toPriceFormat
 import com.bazzar.android.presentation.composables.BuyItem
 import com.bazzar.android.presentation.composables.IndicatorImageSlider
 import com.bazzar.android.presentation.composables.SuccessAddedToCart
-import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.homeScreen.composables.ProductsGroup
 import com.bazzar.android.presentation.productDetail.ProductDetailContract.Event
 import com.bazzar.android.presentation.productDetail.ProductDetailContract.State
@@ -30,16 +28,12 @@ import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
 fun ProductDetailScreenContent(
+    modifier: Modifier,
     state: State,
     onSendEvent: (Event) -> Unit,
 ) {
     Column {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(BazzarTheme.colors.backgroundColor)
-                .padding(bottom = BottomNavigationHeight)
-        ) {
+        Box(modifier = modifier) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize(),

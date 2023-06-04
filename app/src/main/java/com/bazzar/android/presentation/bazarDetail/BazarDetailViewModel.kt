@@ -384,10 +384,26 @@ class BazarDetailViewModel @Inject constructor(
                         isSortFiltersLoaded = true
                         copy(
                             sortFilter = sortFilterResponse.data,
-                            categoryFilterList = sortFilterResponse.data?.categoryList?.toList(),
-                            brandFilterList = sortFilterResponse.data?.brandList?.toList(),
-                            colorFilterList = sortFilterResponse.data?.colorList?.toList(),
-                            sizeFilterList = sortFilterResponse.data?.sizeList?.toList(),
+                            categoryFilterList = sortFilterResponse.data?.categoryList?.map {
+                                it.copy(
+                                    isSelected = false
+                                )
+                            },
+                            brandFilterList = sortFilterResponse.data?.brandList?.map {
+                                it.copy(
+                                    isSelected = false
+                                )
+                            },
+                            colorFilterList = sortFilterResponse.data?.colorList?.map {
+                                it.copy(
+                                    isSelected = false
+                                )
+                            },
+                            sizeFilterList = sortFilterResponse.data?.sizeList?.map {
+                                it.copy(
+                                    isSelected = false
+                                )
+                            },
                         )
                     }
 
@@ -434,10 +450,10 @@ class BazarDetailViewModel @Inject constructor(
             copy(
                 selectedFilterType = null,
                 filterListToShow = null,
-                categoryFilterList = sortFilter?.categoryList,
-                brandFilterList = sortFilter?.brandList,
-                colorFilterList = sortFilter?.colorList,
-                sizeFilterList = sortFilter?.sizeList,
+                categoryFilterList = sortFilter?.categoryList?.map { it.copy(isSelected = false) },
+                brandFilterList = sortFilter?.brandList?.map { it.copy(isSelected = false) },
+                colorFilterList = sortFilter?.colorList?.map { it.copy(isSelected = false) },
+                sizeFilterList = sortFilter?.sizeList?.map { it.copy(isSelected = false) },
                 selectedFilterMaxPrice = null,
                 selectedFilterMinPrice = null,
                 numOfSelectedSizeFilters = 0,
