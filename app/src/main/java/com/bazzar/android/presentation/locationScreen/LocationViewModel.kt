@@ -41,6 +41,7 @@ class LocationViewModel @Inject constructor(
     }
 
     private fun getAddressFromMap() = executeCatching({
+
         homeUseCase.getAddressFromMap(
             currentState.currentLatLng.longitude,
             currentState.currentLatLng.latitude

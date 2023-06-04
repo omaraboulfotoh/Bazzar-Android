@@ -153,7 +153,8 @@ private fun GoogleMapViewInColumn(
     onMyLocationClicked: (latLang: LatLng) -> Unit,
     onMapLoaded: () -> Unit,
 ) {
-    GoogleMap(modifier = modifier,
+    GoogleMap(
+        modifier = modifier,
         cameraPositionState = cameraPositionState,
         properties = mapProperties,
         uiSettings = uiSettings,
@@ -161,7 +162,5 @@ private fun GoogleMapViewInColumn(
         onMyLocationClick = {
             onMyLocationClicked.invoke(LatLng(it.latitude, it.longitude))
         },
-        onMyLocationButtonClick = {
-            true
-        })
+    )
 }
