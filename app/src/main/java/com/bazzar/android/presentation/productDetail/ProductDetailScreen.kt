@@ -14,6 +14,7 @@ import com.android.model.home.Product
 import com.bazzar.android.common.buildUrlIntent
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.startNewTaskMainActivity
+import com.bazzar.android.common.startNewTaskMainActivity
 import com.bazzar.android.common.viewState
 import com.bazzar.android.presentation.DeepLinkConstants.PRODUCT_DETAILS_DEEP_LINK
 import com.bazzar.android.presentation.DeepLinkConstants.PRODUCT_DETAILS_HTTP_DEEP_LINK
@@ -26,7 +27,6 @@ import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.bazzar.android.presentation.destinations.ProductScreenDestination
 import com.bazzar.android.presentation.productDetail.composables.ProductDetailScreenContent
-import com.bazzar.android.presentation.theme.BazzarTheme
 import com.ramcosta.composedestinations.annotation.DeepLink
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -59,8 +59,11 @@ fun ProductDetailScreen(
                 if (itemId.isNullOrEmpty()) navigator.navigateUp()
                 else context.startNewTaskMainActivity()
             }
-            is ProductDetailContract.Effect.ShareProduct ->
-                context.shareText(effect.shareText, effect.shareLink)
+
+            is ProductDetailContract.Effect.ShareProduct -> context.shareText(
+                effect.shareText,
+                effect.shareLink
+            )
 
             is ProductDetailContract.Effect.Navigation.GoToCart ->
                 navigator.navigate(CartScreenDestination)

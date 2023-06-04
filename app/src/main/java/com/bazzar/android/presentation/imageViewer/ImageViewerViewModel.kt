@@ -44,6 +44,7 @@ class ImageViewerViewModel @Inject constructor(
                 }
                 publishMainEventBut(MainContract.CART_TAB)
             }
+
             is Event.OnBackClicked -> setEffect { Effect.Navigation.GoBack }
         }
     }
@@ -72,13 +73,19 @@ class ImageViewerViewModel @Inject constructor(
         }
     })
 
-    fun init(imagePathsList: List<String>, product: Product?, bazaar: BazaarModel?) {
+    fun init(
+        imagePathsList: List<String>,
+        product: Product?,
+        bazaar: BazaarModel?,
+        showBuyButton: Boolean
+    ) {
         setState {
             copy(
                 imagePathsList = imagePathsList,
                 currentIndicatorIndex = 0,
                 product = product,
-                bazaar = bazaar
+                bazaar = bazaar,
+                showBuyButton = showBuyButton
             )
         }
     }

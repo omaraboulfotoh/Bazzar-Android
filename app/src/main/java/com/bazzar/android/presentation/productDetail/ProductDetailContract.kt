@@ -51,7 +51,11 @@ class ProductDetailContract {
             object GoToLogin : Navigation()
             object GoToBack : Navigation()
             data class GoToTalkToUs(val whatsAppNumber: String) : Navigation()
-            data class GoToImageViewer(val imagePathList: List<String>, val product: Product?) :
+            data class GoToImageViewer(
+                val imagePathList: List<String>,
+                val product: Product?,
+                val showBuyButton: Boolean
+            ) :
                 Navigation()
 
             data class GoToProductBrandList(val brand: Brand) : Navigation()

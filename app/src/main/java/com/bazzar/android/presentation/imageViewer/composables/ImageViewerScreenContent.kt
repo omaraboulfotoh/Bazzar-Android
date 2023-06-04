@@ -48,19 +48,20 @@ fun ImageViewerScreenContent(
                 onImageClick = { onSendEvent(ImageViewerContract.Event.OnIndicatorClicked(it)) }
             )
         }
-        BuyItem(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(end = BazzarTheme.spacing.m, bottom = BazzarTheme.spacing.m)
-                .advancedShadow(
-                    cornersRadius = 33.dp,
-                    shadowBlurRadius = 15.dp,
-                    alpha = 0.5f,
-                    offsetX = 5.dp,
-                    offsetY = 5.dp,
-                ),
-            onBuyNowClicked = { onSendEvent(ImageViewerContract.Event.OnBuyNowClicked) }
-        )
+        if (state.showBuyButton)
+            BuyItem(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(end = BazzarTheme.spacing.m, bottom = BazzarTheme.spacing.m)
+                    .advancedShadow(
+                        cornersRadius = 33.dp,
+                        shadowBlurRadius = 15.dp,
+                        alpha = 0.5f,
+                        offsetX = 5.dp,
+                        offsetY = 5.dp,
+                    ),
+                onBuyNowClicked = { onSendEvent(ImageViewerContract.Event.OnBuyNowClicked) }
+            )
         SuccessAddedToCart(
             modifier = Modifier.align(Alignment.BottomCenter),
             show = state.showSuccessAddedToCart,

@@ -20,7 +20,8 @@ fun ImageViewerScreen(
     navigator: DestinationsNavigator,
     imagePathsList: ArrayList<String>,
     product: Product? = null,
-    bazaar: BazaarModel? = null
+    bazaar: BazaarModel? = null,
+    showBuyButton: Boolean = false
 ) {
     // state
     val state = viewModel.viewState()
@@ -37,7 +38,7 @@ fun ImageViewerScreen(
     }
 
     LaunchedEffect(Unit) {
-        viewModel.init(imagePathsList, product, bazaar)
+        viewModel.init(imagePathsList, product, bazaar, showBuyButton)
     }
 
     ImageViewerScreenContent(state = state) { viewModel.setEvent(it) }
