@@ -105,9 +105,8 @@ class CartViewModel @Inject constructor(
         val productsList = currentState.productCartList.orEmpty().toMutableList()
         val item = productsList[itemIndex]
         when (action) {
-            ItemOperation.ADD_ONE -> if (item.itemBalance.orZero() > item.qty.orZero()) {
+            ItemOperation.ADD_ONE ->
                 updateItem(item.itemDetailId.orZero(), item.qty.orZero().plus(1))
-            }
 
             ItemOperation.MINUS_ONE -> if (item.qty.orZero() > 1) {
                 updateItem(item.itemDetailId.orZero(), item.qty.orZero().minus(1))
