@@ -56,7 +56,6 @@ class CartViewModel @Inject constructor(
         }
     }
 
-
     private fun addProductToCart(itemIndex: Int) = executeCatching({
         if (sharedPrefersManager.isUserLongedIn().not()) {
             setEffect { CartContract.Effect.Navigation.GoToLogin(showGuest = true) }
@@ -78,8 +77,10 @@ class CartViewModel @Inject constructor(
                         ).collect { response ->
                             when (response) {
                                 is Result.Error -> globalState.error(response.message.orEmpty())
-                                is Result.Success -> {
+                                is Result.Success -> if (response.data.orFalse()) {
                                     loadCart()
+                                } else {
+                                    globalState.error(response.message.orEmpty())
                                 }
 
                                 else -> {}
@@ -148,7 +149,12 @@ class CartViewModel @Inject constructor(
         homeUseCase.updateCartQuantity(itemDetailId, qty).collect { response ->
             when (response) {
                 is Result.Error -> globalState.error(response.message.orEmpty())
-                is Result.Success -> loadCart()
+                is Result.Success -> if (response.data.orFalse()) {
+                    loadCart()
+                } else {
+                    globalState.error(response.message.orEmpty())
+                }
+
                 else -> {}
             }
         }
