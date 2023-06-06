@@ -78,6 +78,7 @@ class SharedPrefersManager @Inject constructor(private val sharedPreferences: Sh
 
     fun logout() {
         sharedPreferences.edit().remove(Constants.sharedPreference_user_data).commit()
+        sharedPreferences.edit().remove(Constants.sharedPreference_fcm_token).commit()
     }
 
     fun isUserLongedIn(): Boolean {

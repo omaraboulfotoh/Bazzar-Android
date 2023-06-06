@@ -42,6 +42,8 @@ import com.android.model.home.Product
 import com.bazzar.android.R
 import com.bazzar.android.common.nullIfEmpty
 import com.bazzar.android.common.orFalse
+import com.bazzar.android.common.orZero
+import com.bazzar.android.common.toPriceFormat
 import com.bazzar.android.presentation.composables.RemoteImageCard
 import com.bazzar.android.presentation.productsList.composables.DiscountView
 import com.bazzar.android.presentation.productsList.composables.ExclusiveView
@@ -158,8 +160,7 @@ fun ProductWishList(
                                 )
                             ) {
                                 append(
-                                    product.price.toString().nullIfEmpty()
-                                        ?: stringResource(R.string.zero_price)
+                                    product.price.orZero().toPriceFormat()
                                 )
                                 append(" ")
                             }

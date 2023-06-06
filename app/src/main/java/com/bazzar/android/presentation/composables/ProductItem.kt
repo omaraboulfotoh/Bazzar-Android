@@ -38,6 +38,7 @@ import com.android.model.home.Product
 import com.bazzar.android.R
 import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
+import com.bazzar.android.common.toPriceFormat
 import com.bazzar.android.presentation.bazarDetail.BazarDetailContract
 import com.bazzar.android.presentation.productsList.composables.DiscountView
 import com.bazzar.android.presentation.productsList.composables.ExclusiveView
@@ -176,8 +177,8 @@ fun ProductItem(
                                 ) {
                                     append(
                                         if (product.discountPercentage.orZero() > 0) {
-                                            product.oldPrice.toString()
-                                        } else product.price.toString()
+                                            product.oldPrice.orZero().toPriceFormat()
+                                        } else product.price.orZero().toPriceFormat()
                                     )
                                     append(" ")
                                 }
@@ -201,7 +202,7 @@ fun ProductItem(
                                     withStyle(
                                         style = SpanStyle(fontFamily = FontFamily(Font(R.font.siwa_heavy)))
                                     ) {
-                                        append(product.price.toString())
+                                        append(product.price.orZero().toPriceFormat())
                                         append(" ")
                                     }
                                     withStyle(
