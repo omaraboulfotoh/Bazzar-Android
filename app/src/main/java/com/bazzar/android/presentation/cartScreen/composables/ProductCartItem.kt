@@ -3,7 +3,18 @@ package com.bazzar.android.presentation.cartScreen.composables
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -23,14 +34,13 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.android.model.home.Product
 import com.bazzar.android.R
-import com.bazzar.android.common.nullIfEmpty
 import com.bazzar.android.common.orFalse
 import com.bazzar.android.common.orZero
+import com.bazzar.android.common.toPriceFormat
 import com.bazzar.android.presentation.composables.RemoteImageCard
 import com.bazzar.android.presentation.productsList.composables.SoldOutView
 import com.bazzar.android.presentation.theme.BazzarTheme
@@ -211,10 +221,7 @@ fun ProductCartItem(
                                 fontFamily = FontFamily(Font(R.font.siwa_heavy)),
                             )
                         ) {
-                            append(
-                                product.price.toString().nullIfEmpty()
-                                    ?: stringResource(R.string.zero_price)
-                            )
+                            append(product.price.orZero().toPriceFormat())
                             append(" ")
                         }
                         withStyle(

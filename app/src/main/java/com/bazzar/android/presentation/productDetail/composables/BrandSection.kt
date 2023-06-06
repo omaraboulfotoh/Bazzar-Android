@@ -41,6 +41,7 @@ fun BrandSection(
     productTitle: String,
     oldPrice: String,
     newPrice: String?,
+    hasDiscount: Boolean,
     modifier: Modifier = Modifier,
     onBrandClicked: () -> Unit
 ) {
@@ -135,7 +136,7 @@ fun BrandSection(
                     fontFamily = FontFamily(Font(R.font.siwa_bold))
                 )
             )
-            if (newPrice.isNullOrEmpty().not())
+            if (newPrice.isNullOrEmpty().not() && hasDiscount)
                 Text(
                     text =
                     buildAnnotatedString {

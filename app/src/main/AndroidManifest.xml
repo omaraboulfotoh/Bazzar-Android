@@ -25,6 +25,7 @@
         <activity
             android:name=".presentation.app.MainActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.BazzarAndroid">
 
             <intent-filter>
@@ -44,54 +45,54 @@
             </intent-filter>
 
             <!-- product details deeplink -->
-<!--            <intent-filter android:label="@string/app_name">-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
+            <!--            <intent-filter android:label="@string/app_name">-->
+            <!--                <action android:name="android.intent.action.VIEW" />-->
 
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+            <!--                <category android:name="android.intent.category.DEFAULT" />-->
+            <!--                <category android:name="android.intent.category.BROWSABLE" />-->
 
-<!--                <data-->
-<!--                    android:host="product-details"-->
-<!--                    android:scheme="bazzar" />-->
-<!--            </intent-filter>-->
+            <!--                <data-->
+            <!--                    android:host="product-details"-->
+            <!--                    android:scheme="bazzar" />-->
+            <!--            </intent-filter>-->
 
-<!--            &lt;!&ndash; end product details deeplink &ndash;&gt;-->
+            <!--            &lt;!&ndash; end product details deeplink &ndash;&gt;-->
 
-<!--            &lt;!&ndash; product list deeplink &ndash;&gt;-->
-<!--            <intent-filter android:label="@string/app_name">-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
+            <!--            &lt;!&ndash; product list deeplink &ndash;&gt;-->
+            <!--            <intent-filter android:label="@string/app_name">-->
+            <!--                <action android:name="android.intent.action.VIEW" />-->
 
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+            <!--                <category android:name="android.intent.category.DEFAULT" />-->
+            <!--                <category android:name="android.intent.category.BROWSABLE" />-->
 
-<!--                <data-->
-<!--                    android:host="brand-product-list"-->
-<!--                    android:scheme="bazzar" />-->
-<!--            </intent-filter>-->
+            <!--                <data-->
+            <!--                    android:host="brand-product-list"-->
+            <!--                    android:scheme="bazzar" />-->
+            <!--            </intent-filter>-->
 
-<!--            <intent-filter android:label="@string/app_name">-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
+            <!--            <intent-filter android:label="@string/app_name">-->
+            <!--                <action android:name="android.intent.action.VIEW" />-->
 
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+            <!--                <category android:name="android.intent.category.DEFAULT" />-->
+            <!--                <category android:name="android.intent.category.BROWSABLE" />-->
 
-<!--                <data-->
-<!--                    android:host="category-product-list"-->
-<!--                    android:scheme="bazzar" />-->
-<!--            </intent-filter>-->
-<!--            &lt;!&ndash; end product list deeplink &ndash;&gt;-->
+            <!--                <data-->
+            <!--                    android:host="category-product-list"-->
+            <!--                    android:scheme="bazzar" />-->
+            <!--            </intent-filter>-->
+            <!--            &lt;!&ndash; end product list deeplink &ndash;&gt;-->
 
-<!--            &lt;!&ndash; bazzar details deeplink &ndash;&gt;-->
-<!--            <intent-filter android:label="@string/app_name">-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
+            <!--            &lt;!&ndash; bazzar details deeplink &ndash;&gt;-->
+            <!--            <intent-filter android:label="@string/app_name">-->
+            <!--                <action android:name="android.intent.action.VIEW" />-->
 
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+            <!--                <category android:name="android.intent.category.DEFAULT" />-->
+            <!--                <category android:name="android.intent.category.BROWSABLE" />-->
 
-<!--                <data-->
-<!--                    android:host="bazzar-details"-->
-<!--                    android:scheme="bazzar" />-->
-<!--            </intent-filter>-->
+            <!--                <data-->
+            <!--                    android:host="bazzar-details"-->
+            <!--                    android:scheme="bazzar" />-->
+            <!--            </intent-filter>-->
             <!-- end bazzar details deeplink -->
         </activity>
         <service

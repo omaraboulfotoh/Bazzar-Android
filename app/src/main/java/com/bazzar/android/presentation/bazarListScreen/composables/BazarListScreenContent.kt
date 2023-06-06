@@ -42,7 +42,7 @@ fun BazarListScreenContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         BazzarAppBar(
-            title = stringResource(id = R.string.bazzar),
+            title = stringResource(id = R.string.app_name),
             navigationIcon = null
         )
         SearchTextInput(

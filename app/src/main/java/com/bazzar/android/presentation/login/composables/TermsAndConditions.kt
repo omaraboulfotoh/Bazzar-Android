@@ -43,7 +43,7 @@ fun TermsAndConditions(modifier: Modifier) {
                         fontFamily = FontFamily(Font(R.font.siwa_heavy))
                     )
                 ) {
-                    append(stringResource(id = R.string.bazzar))
+                    append(stringResource(id = R.string.app_name))
                 }
                 withStyle(
                     style = SpanStyle(

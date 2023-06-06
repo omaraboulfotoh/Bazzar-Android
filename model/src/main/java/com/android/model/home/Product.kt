@@ -55,7 +55,7 @@ data class ItemDetail(
     @Json(name = "sizeId") val sizeId: Int? = null,
     @Json(name = "sizeTitle") val sizeTitle: String? = null,
     @Json(name = "price") val price: Double? = null,
-    @Json(name = "discountPercentage") val discountPercentage: String? = null,
+    @Json(name = "discountPercentage") val discountPercentage: Double? = null,
     @Json(name = "oldPrice") val oldPrice: Double? = null,
     @Json(name = "sku") val sku: String? = null,
     @Json(name = "itemBalance") val itemBalance: Int? = null,

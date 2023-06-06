@@ -58,8 +58,9 @@ fun ProductDetailScreenContent(
                     BrandSection(productTitle = state.productDetail?.title.orEmpty(),
                         brandName = state.productDetail?.brandTitle.orEmpty(),
                         brandImagePath = state.productDetail?.brandImagePath.orEmpty(),
-                        newPrice = state.selectedItemDetail?.price?.toString(),
+                        newPrice = state.selectedItemDetail?.price.orZero().toPriceFormat(),
                         oldPrice = state.selectedItemDetail?.oldPrice.orZero().toPriceFormat(),
+                        hasDiscount = state.selectedItemDetail?.discountPercentage.orZero() > 0,
                         onBrandClicked = {
                             onSendEvent(Event.OnSeeMoreBrandClicked)
                         })
