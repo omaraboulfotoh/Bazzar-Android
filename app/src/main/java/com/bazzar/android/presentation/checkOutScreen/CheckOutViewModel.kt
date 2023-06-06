@@ -36,7 +36,9 @@ class CheckOutViewModel @Inject constructor(
     }
 
     private fun setAddressAsDefault() = executeCatching({
-        currentState.selectedAddress?.let { address ->
+        currentState.selectedAddress?.copy(
+            isDefault = currentState.selectedAddress?.isDefault.orFalse().not()
+        )?.let { address ->
             homeUseCase.updateUserAddress(userAddress = address).collect { response ->
                 when (response) {
                     is Result.Error -> globalState.error(response.message.orEmpty())

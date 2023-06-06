@@ -248,7 +248,7 @@ fun AccountScreenContent(
                             }
                             Text(
                                 modifier = Modifier
-                                    .clickable { },
+                                    .clickable { onSendEvent(AccountContract.Event.OnDeleteMyAccountClicked) },
                                 text = stringResource(id = R.string.delete_my_account),
                                 style = BazzarTheme.typography.body2Medium.copy(
                                     color = BazzarTheme.colors.discountText,

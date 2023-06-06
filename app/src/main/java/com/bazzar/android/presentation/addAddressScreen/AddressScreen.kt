@@ -31,7 +31,9 @@ fun AddressScreen(
     viewModel.sideEffect { effect ->
         when (effect) {
             is AddressContract.Effect.Navigation.ReturnToAddressBook -> {
-                navigator.popTo(AddressBookScreenDestination.route)
+                if (navigator.popBackStack()) {
+                    navigator.navigateUp()
+                }
             }
 
             is AddressContract.Effect.Navigation.GoToBack -> {

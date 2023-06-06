@@ -73,16 +73,17 @@ class AddressViewModel @Inject constructor(
                     is Result.Success -> {
                         val allGovernmentsAndAreas = areasResponse.data.orEmpty()
                         val governments = allGovernmentsAndAreas.filter { it.parentId == null }
-                        val areas = allGovernmentsAndAreas.filter { it.parentId != null }
 
                         val selectedArea =
                             if (userAddress.areaId == null) null
-                            else areas.find { it.id == userAddress.areaId }
+                            else allGovernmentsAndAreas.find { it.id == userAddress.areaId }
 
                         val selectedGovernment =
                             if (userAddress.governorateId == null) null
                             else governments.find { it.id == userAddress.governorateId }
 
+                        val areas =
+                            allGovernmentsAndAreas.filter { it.parentId == selectedGovernment?.id }
                         val userLatLng =
                             if (userAddress.latitude?.toDoubleOrNull() != null && userAddress.longitude?.toDoubleOrNull() != null)
                                 LatLng(
