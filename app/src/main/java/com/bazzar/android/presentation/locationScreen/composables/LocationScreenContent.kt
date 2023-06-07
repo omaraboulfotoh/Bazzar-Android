@@ -86,7 +86,7 @@ fun LocationScreenContent(
                 currentUserLocation = state.currentUserLocation,
                 mapToolbarEnabled = false,
                 onRequestPermission = { onSendEvent(Event.OnRequestPermission) },
-                onMyLocationButtonClick = { onSendEvent(Event.OnMyLocationButtonClick) },
+                onMyLocationClick = { onSendEvent(Event.OnMyLocationClick(it)) },
                 onColumnScrollingEnabledChanged = {
                     onSendEvent(
                         Event.OnColumnScrollingEnabledChanged(

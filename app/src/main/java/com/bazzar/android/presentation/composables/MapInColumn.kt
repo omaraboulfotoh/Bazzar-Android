@@ -56,7 +56,7 @@ fun MapInColumn(
     onLatLngChanged: (latLang: LatLng) -> Unit = { },
     onMapLoaded: () -> Unit = { },
     onRequestPermission: () -> Unit = { },
-    onMyLocationButtonClick: () -> Unit = { },
+    onMyLocationClick: (Location) -> Unit = { },
 ) {
 
     val uiSettings by remember(key1 = isUserLocationEnabled) {
@@ -79,7 +79,7 @@ fun MapInColumn(
         mutableStateOf(
             MapProperties(
                 isMyLocationEnabled = isUserLocationEnabled,
-                latLngBoundsForCameraTarget = latLngBoundsForCameraTarget,
+//                latLngBoundsForCameraTarget = latLngBoundsForCameraTarget,
                 minZoomPreference = 8f,
                 mapType = MapType.NORMAL,
             )
@@ -131,7 +131,7 @@ fun MapInColumn(
             cameraPositionState = cameraPositionState,
             uiSettings = uiSettings,
             mapProperties = mapProperties,
-            onMyLocationButtonClick = onMyLocationButtonClick,
+            onMyLocationClick = onMyLocationClick,
             onMapLoaded = {
                 isMapLoaded = true
                 onMapLoaded()
@@ -184,7 +184,7 @@ private fun GoogleMapViewInColumn(
     cameraPositionState: CameraPositionState,
     uiSettings: MapUiSettings,
     mapProperties: MapProperties,
-    onMyLocationButtonClick: () -> Unit,
+    onMyLocationClick: (location: Location) -> Unit,
     onMapLoaded: () -> Unit,
 ) {
     GoogleMap(
@@ -193,9 +193,6 @@ private fun GoogleMapViewInColumn(
         properties = mapProperties,
         uiSettings = uiSettings,
         onMapLoaded = onMapLoaded,
-        onMyLocationButtonClick = {
-            onMyLocationButtonClick.invoke()
-            true
-        }
+        onMyLocationClick = { onMyLocationClick.invoke(it) }
     )
 }

@@ -38,8 +38,9 @@ class LocationViewModel @Inject constructor(
                 setState { copy(startLatLng = event.latLng) }
                 handleOnLatLngChanged(event.latLng)
             }
+
             is Event.OnRequestPermission -> setState { copy(shouldRequestLocationPermissions = true) }
-            is Event.OnMyLocationButtonClick -> handleOnMyLocationButtonClick()
+            is Event.OnMyLocationClick -> setState { copy(currentUserLocation = event.location) }
         }
     }
 
@@ -92,6 +93,7 @@ class LocationViewModel @Inject constructor(
         val currentUserLocation = locationTracker.getCurrentLocation()
         setState { copy(currentUserLocation = currentUserLocation) }
     })
+
     fun init(userAddress: UserAddress?) {
         userAddress?.let {
             val currentLatLng =
