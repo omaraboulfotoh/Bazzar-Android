@@ -34,7 +34,7 @@ fun MapInColumn(
     modifier: Modifier = Modifier,
     googleMapModifier: Modifier = Modifier,
     startLatLng: LatLng,
-    isUserLocationEnabled: Boolean = true,
+    isUserLocationEnabled: Boolean ,
     scrollGesturesEnabled: Boolean = true,
     zoomGesturesEnabled: Boolean = true,
     rotationGesturesEnabled: Boolean = true,
@@ -55,7 +55,7 @@ fun MapInColumn(
             MapUiSettings(
                 compassEnabled = compassEnabled,
                 mapToolbarEnabled = mapToolbarEnabled,
-                myLocationButtonEnabled = isUserLocationEnabled,
+                myLocationButtonEnabled = true,
                 zoomControlsEnabled = zoomControlsEnabled,
                 indoorLevelPickerEnabled = indoorLevelPickerEnabled,
                 scrollGesturesEnabled = scrollGesturesEnabled,
