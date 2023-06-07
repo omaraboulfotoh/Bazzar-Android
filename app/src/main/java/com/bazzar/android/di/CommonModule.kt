@@ -1,14 +1,19 @@
 package com.bazzar.android.di
 
+import android.app.Application
 import android.content.Context
 import android.location.Geocoder
 import com.bazzar.android.BazzarApplication
 import com.bazzar.android.presentation.app.GlobalState
 import com.bazzar.android.presentation.app.IGlobalState
+import com.bazzar.android.utils.DefaultLocationTracker
 import com.bazzar.android.utils.IResourceProvider
+import com.bazzar.android.utils.LocationTracker
 import com.bazzar.android.utils.ResourceProvider
 import com.bazzar.android.utils.remoteconfig.FirebaseRemoteConfiguration
 import com.bazzar.android.utils.remoteconfig.RemoteConfiguration
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.Module
 import dagger.Provides
@@ -56,4 +61,21 @@ object CommonModule {
     ): RemoteConfiguration = FirebaseRemoteConfiguration(context, config).apply {
         init()
     }
+
+    @Provides
+    @Singleton
+    fun providesFusedLocationProviderClient(
+        application: Application
+    ): FusedLocationProviderClient =
+        LocationServices.getFusedLocationProviderClient(application)
+
+    @Provides
+    @Singleton
+    fun providesLocationTracker(
+        fusedLocationProviderClient: FusedLocationProviderClient,
+        application: Application
+    ): LocationTracker = DefaultLocationTracker(
+        fusedLocationProviderClient = fusedLocationProviderClient,
+        application = application
+    )
 }
