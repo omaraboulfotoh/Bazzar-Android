@@ -64,7 +64,7 @@ fun AddressItem(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    text = "${stringResource(id = R.string.address_number)}: ${address.id}",
+                    text = "${area.title.orEmpty()}, ${government.title.orEmpty()}",
                     style = BazzarTheme.typography.body2Bold,
                     fontSize = 14.sp,
                 )

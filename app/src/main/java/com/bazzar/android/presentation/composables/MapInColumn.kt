@@ -64,7 +64,7 @@ fun MapInColumn(
             MapUiSettings(
                 compassEnabled = compassEnabled,
                 mapToolbarEnabled = mapToolbarEnabled,
-                myLocationButtonEnabled = isUserLocationEnabled,
+                myLocationButtonEnabled = true,
                 zoomControlsEnabled = zoomControlsEnabled,
                 indoorLevelPickerEnabled = indoorLevelPickerEnabled,
                 scrollGesturesEnabled = scrollGesturesEnabled,
