@@ -79,7 +79,7 @@ fun MapInColumn(
         mutableStateOf(
             MapProperties(
                 isMyLocationEnabled = isUserLocationEnabled,
-//                latLngBoundsForCameraTarget = latLngBoundsForCameraTarget,
+                latLngBoundsForCameraTarget = latLngBoundsForCameraTarget,
                 minZoomPreference = 8f,
                 mapType = MapType.NORMAL,
             )
