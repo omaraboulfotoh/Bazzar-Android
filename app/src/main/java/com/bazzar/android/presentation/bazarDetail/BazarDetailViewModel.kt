@@ -159,7 +159,7 @@ class BazarDetailViewModel @Inject constructor(
         val list = currentState.productList?.toMutableList() ?: return@executeCatching
         val item = list[itemIndex]
         val isFav = item.isWishList.orFalse().not()
-        if (isFav.not()) {
+        if (isFav) {
             homeUseCase.addProductWishList(item.id.orZero()).collect { response ->
                 when (response) {
                     is Result.Success -> {
