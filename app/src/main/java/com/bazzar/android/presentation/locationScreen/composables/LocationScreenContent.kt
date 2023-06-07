@@ -13,8 +13,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,6 +26,7 @@ import com.bazzar.android.presentation.composables.BazzarAppBar
 import com.bazzar.android.presentation.composables.MapInColumn
 import com.bazzar.android.presentation.composables.bottomNavigation.BottomNavigationHeight
 import com.bazzar.android.presentation.composables.permissionRequester.LocationPermissionRequester
+import com.bazzar.android.presentation.composables.permissionRequester.isLocationPermissionsEnabled
 import com.bazzar.android.presentation.locationScreen.LocationContract.Event
 import com.bazzar.android.presentation.locationScreen.LocationContract.State
 import com.bazzar.android.presentation.theme.BazzarTheme
@@ -34,14 +37,23 @@ fun LocationScreenContent(
     onSendEvent: (Event) -> Unit
 ) {
 
-    LocationPermissionRequester(
-        onPermissionGranted = {
-            onSendEvent(Event.OnPermissionGranted)
-        },
-        onPermissionDenied = {
-            onSendEvent(Event.OnPermissionDenied)
-        }
-    )
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        val isLocationEnabled = context.isLocationPermissionsEnabled()
+        onSendEvent(if (isLocationEnabled) Event.OnPermissionGranted else Event.OnPermissionDenied)
+    }
+
+    if (state.shouldRequestLocationPermissions) {
+        LocationPermissionRequester(
+            onPermissionGranted = {
+                onSendEvent(Event.OnPermissionGranted)
+            },
+            onPermissionDenied = {
+                onSendEvent(Event.OnPermissionDenied)
+            }
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -71,7 +83,10 @@ fun LocationScreenContent(
                     .height(320.dp),
                 isUserLocationEnabled = state.isUserLocationEnabled,
                 startLatLng = state.startLatLng,
+                currentUserLocation = state.currentUserLocation,
                 mapToolbarEnabled = false,
+                onRequestPermission = { onSendEvent(Event.OnRequestPermission) },
+                onMyLocationButtonClick = { onSendEvent(Event.OnMyLocationButtonClick) },
                 onColumnScrollingEnabledChanged = {
                     onSendEvent(
                         Event.OnColumnScrollingEnabledChanged(

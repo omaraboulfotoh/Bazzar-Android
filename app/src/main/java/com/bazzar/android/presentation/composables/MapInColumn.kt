@@ -1,17 +1,23 @@
 package com.bazzar.android.presentation.composables
 
+import android.location.Location
 import android.view.MotionEvent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.QuestionMark
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInteropFilter
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
@@ -34,7 +40,8 @@ fun MapInColumn(
     modifier: Modifier = Modifier,
     googleMapModifier: Modifier = Modifier,
     startLatLng: LatLng,
-    isUserLocationEnabled: Boolean ,
+    currentUserLocation: Location? = null,
+    isUserLocationEnabled: Boolean = true,
     scrollGesturesEnabled: Boolean = true,
     zoomGesturesEnabled: Boolean = true,
     rotationGesturesEnabled: Boolean = true,
@@ -48,6 +55,8 @@ fun MapInColumn(
     onColumnScrollingEnabledChanged: (Boolean) -> Unit = { },
     onLatLngChanged: (latLang: LatLng) -> Unit = { },
     onMapLoaded: () -> Unit = { },
+    onRequestPermission: () -> Unit = { },
+    onMyLocationButtonClick: () -> Unit = { },
 ) {
 
     val uiSettings by remember(key1 = isUserLocationEnabled) {
@@ -97,6 +106,12 @@ fun MapInColumn(
         cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(startLatLng, 18f))
     }
 
+    LaunchedEffect(currentUserLocation) {
+        currentUserLocation?.let {
+            cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(LatLng(it.latitude, it.longitude), 18f))
+        }
+    }
+
     Box(modifier = modifier) {
         GoogleMapViewInColumn(
             modifier = googleMapModifier
@@ -116,7 +131,7 @@ fun MapInColumn(
             cameraPositionState = cameraPositionState,
             uiSettings = uiSettings,
             mapProperties = mapProperties,
-            onMyLocationClicked = onLatLngChanged,
+            onMyLocationButtonClick = onMyLocationButtonClick,
             onMapLoaded = {
                 isMapLoaded = true
                 onMapLoaded()
@@ -130,6 +145,25 @@ fun MapInColumn(
                 exit = fadeOut()
             ) {
                 CircularProgressIndicator(modifier = Modifier.wrapContentSize())
+            }
+        }
+
+        if (isUserLocationEnabled.not()) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(top = 16.dp, end = 16.dp)
+                    .size(24.dp)
+                    .background(colorResource(id = R.color.white))
+                    .clickable { onRequestPermission() },
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    modifier = Modifier.size(18.dp),
+                    imageVector = Icons.Rounded.QuestionMark,
+                    contentDescription = "",
+                    tint = colorResource(id = R.color.Gray59)
+                )
             }
         }
 
@@ -150,7 +184,7 @@ private fun GoogleMapViewInColumn(
     cameraPositionState: CameraPositionState,
     uiSettings: MapUiSettings,
     mapProperties: MapProperties,
-    onMyLocationClicked: (latLang: LatLng) -> Unit,
+    onMyLocationButtonClick: () -> Unit,
     onMapLoaded: () -> Unit,
 ) {
     GoogleMap(
@@ -159,8 +193,9 @@ private fun GoogleMapViewInColumn(
         properties = mapProperties,
         uiSettings = uiSettings,
         onMapLoaded = onMapLoaded,
-        onMyLocationClick = {
-            onMyLocationClicked.invoke(LatLng(it.latitude, it.longitude))
-        },
+        onMyLocationButtonClick = {
+            onMyLocationButtonClick.invoke()
+            true
+        }
     )
 }

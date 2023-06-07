@@ -11,16 +11,17 @@ import com.bazzar.android.presentation.base.BaseViewModel
 import com.bazzar.android.presentation.locationScreen.LocationContract.Effect
 import com.bazzar.android.presentation.locationScreen.LocationContract.Event
 import com.bazzar.android.presentation.locationScreen.LocationContract.State
+import com.bazzar.android.utils.LocationTracker
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @HiltViewModel
 class LocationViewModel @Inject constructor(
     iGlobalState: IGlobalState,
     private val geocoder: Geocoder,
-    private val homeUseCase: HomeUseCase
+    private val homeUseCase: HomeUseCase,
+    private val locationTracker: LocationTracker,
 ) : BaseViewModel<Event, State, Effect>(iGlobalState) {
     override fun setInitialState() = State()
 
@@ -37,6 +38,8 @@ class LocationViewModel @Inject constructor(
                 setState { copy(startLatLng = event.latLng) }
                 handleOnLatLngChanged(event.latLng)
             }
+            is Event.OnRequestPermission -> setState { copy(shouldRequestLocationPermissions = true) }
+            is Event.OnMyLocationButtonClick -> handleOnMyLocationButtonClick()
         }
     }
 
@@ -85,6 +88,10 @@ class LocationViewModel @Inject constructor(
         }
     })
 
+    private fun handleOnMyLocationButtonClick() = executeCatching({
+        val currentUserLocation = locationTracker.getCurrentLocation()
+        setState { copy(currentUserLocation = currentUserLocation) }
+    })
     fun init(userAddress: UserAddress?) {
         userAddress?.let {
             val currentLatLng =

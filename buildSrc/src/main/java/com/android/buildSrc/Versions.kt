@@ -6,6 +6,7 @@ object Versions {
     const val kotlinVersion = "1.7.10"
     const val googleServicesVersion = "4.3.14"
     const val crashAnalyticsPlugin = "2.9.5"
+    const val zohoPlugin = "0.1-beta4"
     const val coreKtxVersion = "1.7.0"
     const val appCompatVersion = "1.4.1"
     const val materialVersion = "1.5.0"
@@ -64,6 +65,7 @@ object Versions {
     const val GOOGLE_MAP = "2.11.4"
     const val GOOGLE_MAP_PLACES= "3.1.0"
     const val GOOGLE_MAP_UTILS = "2.11.2"
+    const val zohoBom = "0.1-beta5"
     object Android {
         const val ACTIVITY_COMPOSE = "1.4.0"
         const val COMPOSE = "1.3.0"

@@ -1,10 +1,13 @@
 package com.bazzar.android.presentation.composables.permissionRequester
 
 import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.core.content.ContextCompat
 
 @Composable
 fun LocationPermissionRequester(
@@ -33,4 +36,11 @@ fun LocationPermissionRequester(
             permissions.toTypedArray()
         )
     }
+}
+
+fun Context.isLocationPermissionsEnabled(): Boolean {
+    return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED &&
+           ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED
 }

@@ -172,6 +172,10 @@ dependencies {
     implementation(Dependencies.firebaseMessaging)
     implementation(Dependencies.firebaseDynamicLinks)
 
+    // Zoho
+    implementation platform(Dependencies.zohoBom)
+    implementation(Dependencies.zohoAppticsRC)
+
     //Unit Testing
     testImplementation(Dependencies.junit4)
     testImplementation(Dependencies.junitExtensionsKtx)
