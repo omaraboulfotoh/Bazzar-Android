@@ -5,6 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bazzar.android.common.sideEffect
 import com.bazzar.android.common.viewState
+import com.bazzar.android.presentation.destinations.LoginScreenDestination
 import com.bazzar.android.presentation.destinations.ProductDetailScreenDestination
 import com.bazzar.android.presentation.destinations.ProductScreenDestination
 import com.bazzar.android.presentation.search.composables.SearchScreenContent
@@ -25,8 +26,12 @@ fun SearchScreen(
             is SearchScreenContract.Effect.Navigation.GoBack -> navigator.navigateUp()
             is SearchScreenContract.Effect.Navigation.GoToProductScreen ->
                 navigator.navigate(ProductScreenDestination(searchTerm = effect.searchTerm))
+
             is SearchScreenContract.Effect.Navigation.GoToProductDetails ->
                 navigator.navigate(ProductDetailScreenDestination(product = effect.product))
+
+            SearchScreenContract.Effect.Navigation.GoToLogin ->
+                navigator.navigate(LoginScreenDestination())
         }
     }
 
