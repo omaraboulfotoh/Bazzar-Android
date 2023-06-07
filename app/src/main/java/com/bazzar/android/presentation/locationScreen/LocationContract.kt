@@ -25,10 +25,10 @@ class LocationContract {
         data class OnColumnScrollingEnabledChanged(val value: Boolean) : Event()
         data class OnLatLngChanged(val latLng: LatLng) : Event()
         data class OnSelectLocation(val latLng: LatLng) : Event()
+        data class OnMyLocationClick(val location: Location) : Event()
         object OnPermissionGranted : Event()
         object OnPermissionDenied : Event()
         object OnConfirmLocationClicked : Event()
-        object OnMyLocationButtonClick : Event()
         object OnRequestPermission : Event()
         object OnBackClicked : Event()
     }

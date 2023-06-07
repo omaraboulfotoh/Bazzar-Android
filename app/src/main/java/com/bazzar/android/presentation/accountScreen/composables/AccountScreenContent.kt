@@ -96,6 +96,14 @@ fun AccountScreenContent(
                             }
                     )
                 }
+                item {
+                    BarItem(
+                        modifier = Modifier,
+                        title = stringResource(id = R.string.address_book),
+                        iconPainter = painterResource(id = R.drawable.ic_location),
+                        onClick = { onSendEvent(AccountContract.Event.OnAddressesClicked) }
+                    )
+                }
                 if (state.isUserLoggedIn.not() && state.showWishList) {
                     item {
                         BarItem(
