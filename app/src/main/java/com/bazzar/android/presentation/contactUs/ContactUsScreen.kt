@@ -62,6 +62,8 @@ fun ContactUsScreen(
             ContactUsContract.Effect.Navigation.GoBack -> navigator.navigateUp()
         }
     }
+
+    viewModel.init()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -181,6 +183,7 @@ fun ContactUsScreen(
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                 InputMobileNumber(
                     phone = state.phoneNumber.orEmpty(),
+                    isArabic = state.isArabic,
                     onPhoneChanged = {
                         viewModel.setEvent(ContactUsContract.Event.OnPhoneChanged(it))
                     },

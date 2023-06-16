@@ -14,6 +14,7 @@ class RegisterContract {
         val phoneNumber: String? = null,
         val email: String? = null,
         val fullName: String? = null,
+        val isArabic: Boolean = false,
     ) : ViewState
 
     sealed class Gender {

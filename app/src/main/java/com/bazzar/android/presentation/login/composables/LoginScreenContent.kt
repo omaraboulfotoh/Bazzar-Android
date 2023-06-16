@@ -45,6 +45,7 @@ fun LoginScreenContent(
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
             InputMobileNumber(
                 phone = state.mobileNumber.orEmpty(),
+                isArabic = state.isArabic,
                 onPhoneChanged = {
                     onSendEvent(LoginContract.Event.OnPhoneChanged(it))
                 },

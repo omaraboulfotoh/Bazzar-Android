@@ -114,7 +114,12 @@ class LoginViewModel @Inject constructor(
 
     fun init(showGuest: Boolean) {
         if (isInitialized.not()) {
-            setState { copy(showGuest = showGuest) }
+            setState {
+                copy(
+                    showGuest = showGuest,
+                    isArabic = sharedPrefersManager.getAppLanguage() == SharedPrefersManager.LANGUAGE_AR
+                )
+            }
             isInitialized = true
         }
     }

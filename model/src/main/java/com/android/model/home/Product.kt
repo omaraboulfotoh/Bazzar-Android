@@ -26,7 +26,7 @@ data class Product(
     @Json(name = "isExclusive") val isExclusive: Boolean? = null,
     @Json(name = "price") val price: Double? = 0.0,
     @Json(name = "oldPrice") val oldPrice: Double? = null,
-    @Json(name = "discountPercentage") val discountPercentage: Double? = null,
+    @Json(name = "discountPercentage") val discountPercentage: Int? = null,
     @Json(name = "itemDetails") val itemDetails: List<ItemDetail>? = listOf(),
     @Json(name = "itemImages") val itemImages: List<ItemImages>? = listOf(),
     @Json(name = "relatedItems") val relatedItems: List<Product>? = listOf(),

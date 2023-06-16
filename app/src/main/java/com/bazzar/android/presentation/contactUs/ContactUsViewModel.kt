@@ -1,5 +1,6 @@
 package com.bazzar.android.presentation.contactUs
 
+import com.android.local.SharedPrefersManager
 import com.android.model.request.ContactUsRequest
 import com.android.network.domain.usecases.HomeUseCase
 import com.android.network.states.Result
@@ -19,10 +20,13 @@ import javax.inject.Inject
 class ContactUsViewModel @Inject constructor(
     globalState: IGlobalState,
     private val homeUseCase: HomeUseCase,
+    private val sharedPrefersManager: SharedPrefersManager
 ) :
     BaseViewModel<Event, State, Effect>(
         globalState
     ) {
+
+    private var isInitialized = false
     override fun setInitialState() = State()
 
     override fun handleEvents(event: Event) {
@@ -72,4 +76,11 @@ class ContactUsViewModel @Inject constructor(
         }
 
     })
+
+    fun init() {
+        if (isInitialized.not()) {
+            setState { copy(isArabic = sharedPrefersManager.getAppLanguage() == SharedPrefersManager.LANGUAGE_AR) }
+            isInitialized = true
+        }
+    }
 }

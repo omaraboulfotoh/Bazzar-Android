@@ -2,6 +2,7 @@ package com.bazzar.android.presentation.login.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -20,12 +21,18 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
 import com.bazzar.android.presentation.theme.BazzarTheme
 
 @Composable
-fun InputMobileNumber(phone: String = "", onPhoneChanged: (String) -> Unit, modifier: Modifier) {
+fun InputMobileNumber(
+    phone: String = "",
+    onPhoneChanged: (String) -> Unit,
+    isArabic: Boolean,
+    modifier: Modifier
+) {
     TextField(
         modifier = modifier,
         shape = RoundedCornerShape(32.5.dp),
@@ -43,13 +50,15 @@ fun InputMobileNumber(phone: String = "", onPhoneChanged: (String) -> Unit, modi
         ),
         placeholder = {
             Text(
+                modifier = Modifier.fillMaxWidth(),
                 text = stringResource(
                     id = R.string.enter_mobile_number
                 ),
                 style = MaterialTheme.typography.subtitle1.copy(
                     fontFamily = FontFamily(Font(R.font.siwa_regular)),
                     color = colorResource(id = R.color.prussian_blue)
-                )
+                ),
+                textAlign = if (isArabic) TextAlign.End else TextAlign.Start
             )
         },
         singleLine = true,

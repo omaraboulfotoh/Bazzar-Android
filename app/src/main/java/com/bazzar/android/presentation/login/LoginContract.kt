@@ -9,6 +9,7 @@ class LoginContract {
         val mobileNumber: String? = "",
         val password: String? = "",
         val showGuest: Boolean = true,
+        val isArabic: Boolean = false,
     ) : ViewState
 
     sealed class Event : ViewEvent {

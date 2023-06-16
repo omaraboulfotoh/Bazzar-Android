@@ -42,7 +42,7 @@ fun NewBadgeView(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun DiscountView(modifier: Modifier = Modifier, discount: Double) {
+fun DiscountView(modifier: Modifier = Modifier, discount: Int) {
     Box(
         modifier = modifier
     ) {
@@ -53,9 +53,9 @@ fun DiscountView(modifier: Modifier = Modifier, discount: Double) {
         )
         MultipleStylesInText(
             modifier = Modifier
-                .fillMaxSize()
+                .wrapContentSize()
                 .align(Alignment.Center),
-            text1 = stringResource(id = R.string.discount_format, discount),
+            text1 = "$discount % ",
             text2 = stringResource(id = R.string.off_text)
         )
     }
@@ -73,7 +73,7 @@ fun ExclusiveView(modifier: Modifier = Modifier) {
         )
         MessageBody(
             modifier = Modifier
-                .fillMaxSize()
+                .wrapContentSize()
                 .align(Alignment.Center),
             text = stringResource(id = R.string.exclusive),
             color = BazzarTheme.colors.white,

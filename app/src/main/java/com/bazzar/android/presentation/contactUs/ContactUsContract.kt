@@ -12,6 +12,7 @@ class ContactUsContract {
         val fullName: String? = null,
         val subject: String? = null,
         val message: String? = null,
+        val isArabic:Boolean = false
     ) : ViewState
 
     sealed class Event : ViewEvent {

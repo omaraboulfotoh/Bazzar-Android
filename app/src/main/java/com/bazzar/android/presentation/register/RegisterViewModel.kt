@@ -81,6 +81,7 @@ class RegisterViewModel @Inject constructor(
 
     fun init() {
         if (isInitialized.not()) {
+            setState { copy(isArabic = sharedPrefersManager.getAppLanguage() == SharedPrefersManager.LANGUAGE_AR) }
             isInitialized = true
         }
     }

@@ -34,7 +34,7 @@ fun IndicatorImageSlider(
     isFav: Boolean,
     showExclusiveBadge: Boolean,
     showDiscountBadge: Boolean = false,
-    discount: Double? = 0.0,
+    discount: Int?,
     onBackClicked: () -> Unit,
     onShareClicked: () -> Unit,
     onFavClick: () -> Unit,

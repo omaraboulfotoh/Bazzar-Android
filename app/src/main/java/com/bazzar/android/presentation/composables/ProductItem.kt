@@ -97,6 +97,7 @@ fun ProductItem(
                 // draw the item for discount and exclusive if exist
                 Column(
                     modifier = Modifier.align(Alignment.TopStart)
+                        .padding(top = BazzarTheme.spacing.m)
                 ) {
 
                     // check for discount

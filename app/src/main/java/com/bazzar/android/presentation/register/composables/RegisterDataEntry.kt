@@ -37,6 +37,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -48,6 +49,7 @@ fun RegisterDataEntry(
     isTermsChecked: Boolean = false,
     fullName: String,
     phone: String,
+    isArabic: Boolean,
     modifier: Modifier,
     onCreateAccount: () -> Unit,
     onPhoneChanged: (String) -> Unit,
@@ -141,9 +143,11 @@ fun RegisterDataEntry(
                     shape = RoundedCornerShape(32.5.dp),
                     placeholder = {
                         Text(
+                            modifier = Modifier.fillMaxWidth(),
                             text = stringResource(id = R.string.type_number),
                             style = BazzarTheme.typography.caption,
-                            color = BazzarTheme.colors.primaryButtonColor
+                            color = BazzarTheme.colors.primaryButtonColor,
+                            textAlign = if (isArabic) TextAlign.End else TextAlign.Start
                         )
                     },
                     leadingIcon = {

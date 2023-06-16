@@ -40,6 +40,7 @@ fun RegisterScreenContent(
             modifier = Modifier.fillMaxWidth(),
             fullName = state.fullName.orEmpty(),
             phone = state.phoneNumber.orEmpty(),
+            isArabic = state.isArabic,
             isTermsChecked = state.isAgreeTermsAndConditions,
             onPhoneChanged = {
                 onSendEvent(RegisterContract.Event.OnPhoneChanged(it))

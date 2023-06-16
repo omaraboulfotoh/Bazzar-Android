@@ -81,8 +81,8 @@ fun MultipleStylesInText(
             withStyle(
                 style = SpanStyle(
                     fontFamily = montserrat,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Normal
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
                 )
             ) {
                 append(text1)
@@ -91,13 +91,15 @@ fun MultipleStylesInText(
             withStyle(
                 style = SpanStyle(
                     fontFamily = montserrat,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
+                    fontSize = 8.sp,
+                    fontWeight = FontWeight.Normal
                 )
             ) {
                 append(text2)
             }
-        }
+        },
+        modifier = modifier,
+        textAlign = TextAlign.Center,
     )
 }
 

@@ -135,7 +135,7 @@
     <string name="all">الكل</string>
     <string name="availables">متوفر</string>
     <string name="new_text">جديد</string>
-    <string name="discount_format">%f%</string>
+    <string name="discount_format">%d %</string>
     <string name="off_text">خصم</string>
     <string name="exclusive">حصري</string>
     <string name="soldout">نفذت الكمية</string>
