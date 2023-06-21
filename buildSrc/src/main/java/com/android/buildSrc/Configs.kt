@@ -6,7 +6,7 @@ object Configs {
     const val applicationId = "com.bazzar.android"
     const val minSdkVersion = 24
     const val targetSdkVersion = 33
-    const val versionCode = 14
-    const val versionName = "1.0.10"
+    const val versionCode = 15
+    const val versionName = "1.0.15"
     const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 }
