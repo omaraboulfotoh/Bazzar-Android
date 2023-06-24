@@ -9,11 +9,13 @@ import kotlinx.android.parcel.Parcelize
 @JsonClass(generateAdapter = true)
 data class Product(
     @Json(name = "id") val id: Int? = null,
+    @Json(name = "cartId") val cartId: Int? = null,
     @Json(name = "itemId") val itemId: Int? = null,
     @Json(name = "itemDetailId") val itemDetailId: Int? = null,
     @Json(name = "title") val title: String? = null,
     @Json(name = "itemTitle") val itemTitle: String? = null,
     @Json(name = "description") val description: String? = null,
+    @Json(name = "marketerName") val marketerName: String? = null,
     @Json(name = "displayOrder") val displayOrder: Int? = null,
     @Json(name = "imagePath") val imagePath: String? = null,
     @Json(name = "brandId") val brandId: Int? = null,

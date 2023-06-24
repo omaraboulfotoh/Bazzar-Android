@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -25,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -58,184 +61,235 @@ fun ProductCartItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(145.dp)
+            .height(175.dp)
             .clip(RoundedCornerShape(20.dp))
             .background(Color.White)
             .clickable { onItemClicked() },
     ) {
-        Row(
+        Column(
             modifier = Modifier.padding(BazzarTheme.spacing.s),
-            horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
-            verticalAlignment = Alignment.Top
+            verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xs),
+            horizontalAlignment = Alignment.Start
         ) {
-            Column(
+            Row(
                 modifier = Modifier
-                    .wrapContentSize()
-                    .fillMaxHeight(),
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.SpaceBetween
+                    .fillMaxWidth()
+                    .weight(1f),
+                horizontalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.m),
+                verticalAlignment = Alignment.Top
             ) {
-                Box(modifier = Modifier.size(88.dp)) {
-                    RemoteImageCard(
-                        imageUrl = product.imagePath,
-                        modifier = Modifier.fillMaxSize(),
-                        withShimmer = true
-                    )
-                    if (product.isSoldOut.orFalse()) {
-                        SoldOutView(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .align(Alignment.Center)
-                                .height(24.dp)
-                                .padding(horizontal = 2.dp),
-                            BazzarTheme.typography.body2Bold.copy(fontSize = 12.sp)
+                Column(
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .fillMaxHeight(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Box(modifier = Modifier.size(88.dp)) {
+                        RemoteImageCard(
+                            imageUrl = product.imagePath,
+                            modifier = Modifier.fillMaxSize(),
+                            withShimmer = true
                         )
+                        if (product.isSoldOut.orFalse()) {
+                            SoldOutView(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .align(Alignment.Center)
+                                    .height(24.dp)
+                                    .padding(horizontal = 2.dp),
+                                BazzarTheme.typography.body2Bold.copy(fontSize = 12.sp)
+                            )
+                        }
+                    }
+
+                    Row(
+                        Modifier.width(73.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Image(
+                            modifier = Modifier.clickable { onMinusClicked() },
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_minus),
+                            contentDescription = null
+                        )
+                        Text(
+                            text = product.qty.orZero().toString(),
+                            style = MaterialTheme.typography.overline.copy(
+                                color = colorResource(id = R.color.prussian_blue),
+                                fontFamily = FontFamily(Font(R.font.siwa_heavy))
+                            )
+                        )
+                        Image(
+
+                            painter = painterResource(R.drawable.ic_plus),
+                            modifier = Modifier.clickable { onPlusClicked() },
+                            contentDescription = null
+                        )
+
                     }
                 }
 
-                Row(
-                    Modifier.width(73.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                // product info
+                Column(
+                    modifier = Modifier
+                        .weight(2f)
+                        .fillMaxHeight(),
+                    horizontalAlignment = Alignment.Start,
+                    verticalArrangement = Arrangement.Top
                 ) {
-                    Image(
-                        modifier = Modifier.clickable { onMinusClicked() },
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_minus),
-                        contentDescription = null
-                    )
+
+                    // product brand title
                     Text(
-                        text = product.qty.orZero().toString(),
-                        style = MaterialTheme.typography.overline.copy(
-                            color = colorResource(id = R.color.prussian_blue),
+                        modifier = Modifier.fillMaxWidth(),
+                        maxLines = 1,
+                        text = product.brandTitle.orEmpty(),
+                        style = MaterialTheme.typography.subtitle2.copy(
                             fontFamily = FontFamily(Font(R.font.siwa_heavy))
                         )
                     )
-                    Image(
 
-                        painter = painterResource(R.drawable.ic_plus),
-                        modifier = Modifier.clickable { onPlusClicked() },
-                        contentDescription = null
+                    // product title
+                    Text(
+                        text = product.itemTitle ?: product.title.orEmpty(),
+                        style = MaterialTheme.typography.subtitle2.copy(
+                            fontFamily = FontFamily(Font(R.font.siwa_regular))
+                        ),
+                        maxLines = 2,
+                        modifier = Modifier.fillMaxWidth()
                     )
 
+                    // product color
+                    Text(
+                        text = buildAnnotatedString {
+                            withStyle(
+                                style = SpanStyle(
+                                    fontFamily = FontFamily(Font(R.font.siwa_heavy)),
+                                    fontSize = 10.sp
+                                )
+                            ) {
+                                append(stringResource(R.string.color))
+                                append(" ")
+                            }
+                            withStyle(
+                                style = SpanStyle(
+                                    fontFamily = FontFamily(Font(R.font.siwa_regular)),
+                                    fontSize = 14.sp
+                                )
+                            ) {
+                                append(product.colorTitle.orEmpty())
+                            }
+                        }, modifier = Modifier.fillMaxWidth()
+                    )
+
+                    // product size
+                    Text(
+                        text = buildAnnotatedString {
+                            withStyle(
+                                style = SpanStyle(
+                                    fontFamily = FontFamily(Font(R.font.siwa_heavy)),
+                                    fontSize = 10.sp
+                                )
+                            ) {
+                                append(stringResource(R.string.size))
+                                append(" ")
+                            }
+                            withStyle(
+                                style = SpanStyle(
+                                    fontFamily = FontFamily(Font(R.font.siwa_regular)),
+                                    fontSize = 14.sp
+                                )
+                            ) {
+                                append(product.sizeTitle.orEmpty())
+                            }
+                        }, style = MaterialTheme.typography.subtitle2.copy(
+
+                        ), modifier = Modifier.fillMaxWidth()
+                    )
+                }
+
+                // price field
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxHeight(),
+                ) {
+                    Text(
+                        modifier = Modifier.align(Alignment.BottomEnd),
+                        text = buildAnnotatedString {
+                            withStyle(
+                                style = SpanStyle(
+                                    fontFamily = FontFamily(Font(R.font.siwa_heavy)),
+                                )
+                            ) {
+                                append(product.price.orZero().toPriceFormat())
+                                append(" ")
+                            }
+                            withStyle(
+                                style = SpanStyle(
+                                    fontFamily = FontFamily(Font(R.font.siwa_regular)),
+                                )
+                            ) {
+                                append(stringResource(R.string.home_screen_product_price))
+                            }
+                        },
+                        style = MaterialTheme.typography.subtitle2.copy(
+
+                        ),
+                    )
                 }
             }
 
-            Column(
+            // footer
+            Divider(
                 modifier = Modifier
-                    .weight(2f)
-                    .fillMaxHeight(),
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.spacedBy(BazzarTheme.spacing.xxs)
+                    .fillMaxWidth()
+                    .height(0.5.dp), color = BazzarTheme.colors.stroke
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(20.dp)
             ) {
                 Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    maxLines = 1,
-                    text = product.brandTitle.orEmpty(),
-                    style = MaterialTheme.typography.subtitle2.copy(
-                        fontFamily = FontFamily(Font(R.font.siwa_heavy))
-                    )
-                )
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    maxLines = 2,
-                    text = product.itemTitle.orEmpty(),
-                    style = MaterialTheme.typography.subtitle2.copy(
-                        fontFamily = FontFamily(Font(R.font.siwa_regular))
-                    )
-                )
-
-                Text(
-                    text = product.title.orEmpty(),
-                    style = MaterialTheme.typography.subtitle2.copy(
-                        fontFamily = FontFamily(Font(R.font.siwa_regular))
-                    ),
-                    maxLines = 2,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Text(
-                    text = buildAnnotatedString {
-                        withStyle(
-                            style = SpanStyle(
-                                fontFamily = FontFamily(Font(R.font.siwa_heavy)),
-                                fontSize = 10.sp
-                            )
-                        ) {
-                            append(stringResource(R.string.color))
-                        }
-                        withStyle(
-                            style = SpanStyle(
-                                fontFamily = FontFamily(Font(R.font.siwa_regular)),
-                                fontSize = 14.sp
-                            )
-                        ) {
-                            append(product.colorTitle.orEmpty())
-                        }
-                    }, modifier = Modifier.fillMaxWidth()
-                )
-
-                Text(
-                    text = buildAnnotatedString {
-                        withStyle(
-                            style = SpanStyle(
-                                fontFamily = FontFamily(Font(R.font.siwa_heavy)),
-                                fontSize = 10.sp
-                            )
-                        ) {
-                            append(stringResource(R.string.size))
-                        }
-                        withStyle(
-                            style = SpanStyle(
-                                fontFamily = FontFamily(Font(R.font.siwa_regular)),
-                                fontSize = 14.sp
-                            )
-                        ) {
-                            append(product.sizeTitle.orEmpty())
-                        }
-                    }, style = MaterialTheme.typography.subtitle2.copy(
-
-                    ), modifier = Modifier.fillMaxWidth()
-                )
-
-            }
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight(),
-                verticalArrangement = Arrangement.SpaceBetween,
-                horizontalAlignment = Alignment.End
-            ) {
-                Image(
                     modifier = Modifier
-                        .padding(BazzarTheme.spacing.xxs)
-                        .clickable {
-                            onDeleteClicked()
-                        },
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_trash),
-                    contentDescription = null
-                )
-                Text(
+                        .wrapContentSize()
+                        .align(Alignment.CenterStart),
                     text = buildAnnotatedString {
                         withStyle(
                             style = SpanStyle(
                                 fontFamily = FontFamily(Font(R.font.siwa_heavy)),
+                                fontSize = 10.sp
                             )
                         ) {
-                            append(product.price.orZero().toPriceFormat())
+                            append(stringResource(R.string.sold_by))
                             append(" ")
                         }
                         withStyle(
                             style = SpanStyle(
                                 fontFamily = FontFamily(Font(R.font.siwa_regular)),
+                                fontSize = 12.sp
                             )
                         ) {
-                            append(stringResource(R.string.home_screen_product_price))
+                            append(product.marketerName ?: stringResource(id = R.string.app_name))
                         }
-                    },
-                    style = MaterialTheme.typography.subtitle2.copy(
-
-                    ),
+                    }, style = MaterialTheme.typography.subtitle2.copy(
+                    )
                 )
+
+                Box(modifier = Modifier
+                    .size(20.dp)
+                    .align(Alignment.CenterEnd)
+                    .clickable { onDeleteClicked() }) {
+                    Image(
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .align(Alignment.BottomEnd),
+                        contentScale = ContentScale.Fit,
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_trash),
+                        contentDescription = null
+                    )
+                }
             }
         }
     }

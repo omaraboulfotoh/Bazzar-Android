@@ -106,10 +106,10 @@ class CartViewModel @Inject constructor(
         val item = productsList[itemIndex]
         when (action) {
             ItemOperation.ADD_ONE ->
-                updateItem(item.itemDetailId.orZero(), item.qty.orZero().plus(1))
+                updateItem(item.cartId.orZero(), item.qty.orZero().plus(1))
 
             ItemOperation.MINUS_ONE -> if (item.qty.orZero() > 1) {
-                updateItem(item.itemDetailId.orZero(), item.qty.orZero().minus(1))
+                updateItem(item.cartId.orZero(), item.qty.orZero().minus(1))
             } else {
                 handleItemAction(itemIndex, ItemOperation.DELETE)
             }
@@ -122,7 +122,7 @@ class CartViewModel @Inject constructor(
                         positiveButtonTitle = R.string.delete,
                         negativeButtonTitle = R.string.cancel,
                         onPositive = {
-                            deleteItem(item.itemDetailId.orZero())
+                            deleteItem(item.cartId.orZero())
                         },
                     )
                 )

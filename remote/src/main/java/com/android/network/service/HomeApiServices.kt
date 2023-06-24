@@ -154,7 +154,7 @@ interface HomeApiServices {
 
     @POST("Cart/DeleteCartItem?=33")
     suspend fun deleteFromCart(
-        @Query("ItemDetailId") itemDetailId: Int,
+        @Query("CartId") cartId: Int,
         @Query("AddToWishList") addToWishList: Boolean = false,
     ): Response<BaseWrapper<Boolean>>
 
@@ -166,7 +166,8 @@ interface HomeApiServices {
 
     @POST("Cart/UpdateCartQty")
     suspend fun updateCartQuantity(
-        @Query("ItemDetailId") itemDetailId: Int, @Query("Qty") qty: Int
+        @Query("CartId") cartId: Int,
+        @Query("Qty") qty: Int
     ): Response<BaseWrapper<Boolean>>
 
 
