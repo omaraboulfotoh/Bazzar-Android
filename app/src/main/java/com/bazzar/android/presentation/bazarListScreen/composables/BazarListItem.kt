@@ -35,6 +35,7 @@ import com.bazzar.android.presentation.theme.BazzarTheme
 fun BazarListItem(
     modifier: Modifier = Modifier,
     item: BazaarModel,
+    showLike: Boolean = true,
     onClick: () -> Unit,
     onFavClicked: (Int) -> Unit
 ) {
@@ -75,18 +76,19 @@ fun BazarListItem(
             )
         }
 
-        Box(modifier = Modifier
-            .align(Alignment.TopEnd)
-            .defaultMinSize(minWidth = 40.dp, minHeight = 40.dp)
-            .clickable { onFavClicked(item.id.orZero()) }) {
-            Image(
-                modifier = Modifier.align(Alignment.TopEnd),
-                painter = painterResource(
-                    id = if (item.isWishList.orFalse())
-                        R.drawable.ic_fav_active else R.drawable.ic_fav_product
-                ),
-                contentDescription = null,
-            )
-        }
+        if (showLike)
+            Box(modifier = Modifier
+                .align(Alignment.TopEnd)
+                .defaultMinSize(minWidth = 40.dp, minHeight = 40.dp)
+                .clickable { onFavClicked(item.id.orZero()) }) {
+                Image(
+                    modifier = Modifier.align(Alignment.TopEnd),
+                    painter = painterResource(
+                        id = if (item.isWishList.orFalse())
+                            R.drawable.ic_fav_active else R.drawable.ic_fav_product
+                    ),
+                    contentDescription = null,
+                )
+            }
     }
 }

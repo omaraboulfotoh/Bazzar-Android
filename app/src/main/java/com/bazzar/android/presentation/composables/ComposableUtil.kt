@@ -62,21 +62,33 @@ fun SemiCircleImageView(imagePath: String, text: String, modifier: Modifier) {
         Box(
             modifier = Modifier
                 .clip(CircleShape)
-                .background(Color.Unspecified, CircleShape)
-                .padding(all = 5.dp)
                 .size(126.dp)
                 .align(Alignment.TopCenter)
-                .background(BazzarTheme.colors.white),
-        ) {
-            RemoteImageCard(
-                imageUrl = imagePath,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .width(126.dp)
-                    .height(126.dp)
-                    .clip(CircleShape)
+                .padding(top = 5.dp)
+                .background(colorResource(id = R.color.prussian_blue))
 
-            )
+
+        ) {
+            Box(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .height(120.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.TopCenter)
+                    .background(BazzarTheme.colors.white)
+
+
+            ) {
+                RemoteImage(
+                    imageUrl = imagePath,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(CircleShape)
+
+                )
+            }
+
         }
         Text(
             text = text,

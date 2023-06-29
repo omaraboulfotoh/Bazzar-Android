@@ -43,7 +43,7 @@
 
                 <data android:scheme="https" />
                 <data android:scheme="http" />
-                <data android:host="www.bzaaarz.com" />
+                <data android:host="admin.bzaaarz.com" />
             </intent-filter>
 
             <!-- end bazzar details deeplink -->
