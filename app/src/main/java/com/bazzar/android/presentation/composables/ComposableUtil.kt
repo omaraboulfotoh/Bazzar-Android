@@ -64,7 +64,7 @@ fun SemiCircleImageView(imagePath: String, text: String, modifier: Modifier) {
                 .clip(CircleShape)
                 .size(126.dp)
                 .align(Alignment.TopCenter)
-                .padding(top = 5.dp)
+                .padding(5.dp)
                 .background(colorResource(id = R.color.prussian_blue))
 
 
