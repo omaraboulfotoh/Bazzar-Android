@@ -13,7 +13,7 @@ data class SearchProductRequest(
     @Json(name = "brandList") val brandList: List<Int> = emptyList(),
     @Json(name = "searchKey") val searchKey: String? = null,
     @Json(name = "sorting") val sorting: String? = null,
-    @Json(name = "pageSize") val pageSize: Int = 20,
+    @Json(name = "pageSize") val pageSize: Int = 50,
     @Json(name = "pageIndex") val pageIndex: Int = 0,
     @Json(name = "maxPrice") val maxPrice: Int = 0,
     @Json(name = "minPrice") val minPrice: Int = 0,

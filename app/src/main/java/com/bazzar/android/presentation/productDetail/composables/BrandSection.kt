@@ -26,6 +26,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.bazzar.android.R
@@ -66,7 +67,6 @@ fun BrandSection(
                 background = BazzarTheme.colors.white,
                 modifier = Modifier
                     .size(22.dp)
-                    .clip(Shapes.medium)
                     .padding(2.dp)
                     .border(1.dp, color = BazzarTheme.colors.stroke),
                 contentScale = ContentScale.Fit
@@ -143,7 +143,8 @@ fun BrandSection(
                         withStyle(
                             style = SpanStyle(
                                 fontFamily =
-                                FontFamily(Font(R.font.siwa_heavy))
+                                FontFamily(Font(R.font.siwa_heavy)),
+                                textDecoration = TextDecoration.LineThrough
                             )
                         ) {
                             append(oldPrice)
@@ -152,7 +153,8 @@ fun BrandSection(
                         withStyle(
                             style = SpanStyle(
                                 fontFamily =
-                                FontFamily(Font(R.font.siwa_regular))
+                                FontFamily(Font(R.font.siwa_regular)),
+                                textDecoration = TextDecoration.LineThrough
                             )
                         ) {
                             append(

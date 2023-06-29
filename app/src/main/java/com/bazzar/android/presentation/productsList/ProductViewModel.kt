@@ -249,7 +249,8 @@ class ProductViewModel @Inject constructor(
                     0,
                     updatedCategory.copy(
                         title = allText,
-                        isSelected = true
+                        isSelected = true,
+                        imagePath = null,
                     )
                 )
             }

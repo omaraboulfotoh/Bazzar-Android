@@ -65,14 +65,17 @@ fun SemiCircleImageView(imagePath: String, text: String, modifier: Modifier) {
                 .background(Color.Unspecified, CircleShape)
                 .padding(all = 5.dp)
                 .size(126.dp)
-                .align(Alignment.TopCenter),
+                .align(Alignment.TopCenter)
+                .background(BazzarTheme.colors.white),
         ) {
             RemoteImageCard(
                 imageUrl = imagePath,
-                contentScale = ContentScale.Crop, modifier = Modifier
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
                     .width(126.dp)
                     .height(126.dp)
                     .clip(CircleShape)
+
             )
         }
         Text(

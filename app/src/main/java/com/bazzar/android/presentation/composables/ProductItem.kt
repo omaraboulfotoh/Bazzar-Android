@@ -32,6 +32,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.android.model.home.Product
@@ -96,7 +97,8 @@ fun ProductItem(
 
                 // draw the item for discount and exclusive if exist
                 Column(
-                    modifier = Modifier.align(Alignment.TopStart)
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
                         .padding(top = BazzarTheme.spacing.m)
                 ) {
 
@@ -174,7 +176,14 @@ fun ProductItem(
                             modifier = Modifier.align(Alignment.Start),
                             text = buildAnnotatedString {
                                 withStyle(
-                                    style = SpanStyle(fontFamily = FontFamily(Font(R.font.siwa_heavy)))
+                                    style = if (product.discountPercentage.orZero() > 0) {
+                                        SpanStyle(
+                                            fontFamily = FontFamily(Font(R.font.siwa_heavy)),
+                                            textDecoration = TextDecoration.LineThrough
+                                        )
+                                    } else {
+                                        SpanStyle(fontFamily = FontFamily(Font(R.font.siwa_heavy)))
+                                    }
                                 ) {
                                     append(
                                         if (product.discountPercentage.orZero() > 0) {
@@ -184,7 +193,14 @@ fun ProductItem(
                                     append(" ")
                                 }
                                 withStyle(
-                                    style = SpanStyle(fontFamily = FontFamily(Font(R.font.siwa_regular)))
+                                    style = if (product.discountPercentage.orZero() > 0) {
+                                        SpanStyle(
+                                            fontFamily = FontFamily(Font(R.font.siwa_regular)),
+                                            textDecoration = TextDecoration.LineThrough
+                                        )
+                                    } else {
+                                        SpanStyle(fontFamily = FontFamily(Font(R.font.siwa_regular)))
+                                    }
                                 ) {
                                     append(stringResource(id = R.string.home_screen_product_price))
                                 }

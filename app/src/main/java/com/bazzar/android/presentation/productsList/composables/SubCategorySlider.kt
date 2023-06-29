@@ -12,9 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.android.model.home.Category
+import com.bazzar.android.R
 import com.bazzar.android.presentation.composables.OverLine
 import com.bazzar.android.presentation.composables.RemoteImageCard
 import com.bazzar.android.presentation.theme.BazzarTheme
@@ -53,6 +55,8 @@ fun SubCategorySlider(
                 ) {
                     RemoteImageCard(
                         imageUrl = category.imagePath,
+                        placeholder = if (index == 0) painterResource(id = R.drawable.ic_all_cats) else
+                            painterResource(id = R.drawable.ic_new_placeholder),
                         contentScale = if (category.isSelected) ContentScale.Fit else ContentScale.Inside,
                         modifier = Modifier
                             .fillMaxSize(),

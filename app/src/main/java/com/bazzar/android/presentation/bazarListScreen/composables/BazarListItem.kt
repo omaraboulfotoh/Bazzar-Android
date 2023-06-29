@@ -61,7 +61,8 @@ fun BazarListItem(
             RemoteImage(
                 modifier = Modifier
                     .size(126.dp)
-                    .clip(CircleShape),
+                    .clip(CircleShape)
+                    .background(BazzarTheme.colors.white),
                 contentScale = ContentScale.Crop,
                 imageUrl = item.imagePath
             )
